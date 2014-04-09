@@ -1,0 +1,103 @@
+body {
+    background-color: #FFFFFF;
+}
+/*.input {*/
+    /*background-color: #FFFEE3;*/
+/*}*/
+/*.button {*/
+    /*background-image: url(../images/button2.gif); */
+    /*border-width: 1px; */
+    /*color: #2B452A;*/
+    /*border-color: #2D6328;*/
+/*}*/
+p {
+    font-family: Arial, Helevetica, sans-serif;
+}
+a {
+    color: #2136F6;
+    font-family: Arial, Helevetica, sans-serif;
+}
+a:hover {
+    color: #981912;
+}
+em {
+    font-style: normal;
+}
+/*.z1 {*/
+    /*font-size: 28px;*/
+    /*color: #3C6194;*/
+/*}*/
+/*.z2 {*/
+    /*font-size: 22px;*/
+    /*color: #3C6194;*/
+    /*margin-bottom: 10px;*/
+/*}*/
+.zag2 {
+    font-size: 13px;
+    color: #264769;
+    font-weight: bold;
+}
+/*.zagtable {*/
+    /*font-size: 13px;*/
+    /*color: #000000;*/
+    /*font-weight: bold;*/
+/*}*/
+.bodytable {
+    background-color: #E9F0F1;
+}
+/*.bodytablecat {*/
+    /*background-color: #FAF7C8;*/
+/*}*/
+.help {
+    font-size: 80%;
+    color: #434565;
+}
+.link {
+    color: #10557B;
+}
+p.menu {
+    font-size: 12px;
+    font-family: Arial, Helevetica, sans-serif;
+    margin-top: 3px;
+}
+a.menu {
+    font-size: 13px;
+    color: #A90303;
+}
+a.menu:hover {
+    color: #293A9D;
+}
+/*.boxmenu {*/
+    /*border-top-style: solid;*/
+    /*border-bottom-style: solid;*/
+    /*border-width: 1px;*/
+    /*border-color: #89A6C3;*/
+    /*padding: 7px;*/
+    /*padding-left: 20px;*/
+    /*padding-right: 20px;*/
+    /*background-color: #E0EFF5;*/
+/*}*/
+.tableheader {
+    background-color: #8DB1CA;
+}
+.tableheaderhide {
+    background-color: #BAC3CA;
+}
+.help {
+    color: #3C505E;
+}
+/*.topadmin {*/
+    /*background-color: #DAF6FF;*/
+    /*height: 60;*/
+    /*width: 100%;*/
+    /*border-bottom-style: solid;*/
+    /*border-width: 6px;*/
+    /*border-color: #9CBED4;*/
+/*}*/
+/*.catname {*/
+    /*font-size: 15px;*/
+    /*font-weight: bold;*/
+/*}*/
+/*.txt {*/
+    /*text-align: justify;*/
+/*}*/

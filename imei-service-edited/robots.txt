@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /icons/
+Disallow: /images/
+Disallow: /original/
+Disallow: /js/
+Disallow: /css/
+Disallow: /oop/
+Disallow: /command/
+Disallow: /class/
+Disallow: /config/
+Disallow: /dmn/

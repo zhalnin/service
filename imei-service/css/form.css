@@ -1,0 +1,502 @@
+h1, h2, h3, h4, h5, h6 {
+    font-size: 11px;
+    font-weight: normal;
+}
+body, input, textarea, button, legend {
+    color: #333333;
+    /*font: 11px/1.5 "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;*/
+}
+
+
+.box:after, .shaded-box:after, .sb-heading:after, .sb-body:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+#showcase > section > div.box {
+    border: 0 none;
+    box-shadow: 1px 0 0 0 #D2D2D2, -1px 0 0 0 #D2D2D2, 0 1px 0 0 #B6B6B6, 0 2px 0 0 #D2D2D2, 2px 0 0 0 #E6E6E6, -2px 0 0 0 #E6E6E6, 0 3px 0 0 #E6E6E6, 0 -1px 0 0 #E6E6E6;
+}
+#showcase #shipping-box {
+    position: relative;
+}
+#showcase .box {
+    margin: 0;
+}
+.box-nomargin {
+    border-radius: 0 0 0 0;
+    border-top: 0 none;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.box {
+    margin-bottom: 11px;
+}
+.ptn {
+    padding-top: 0;
+}
+.box {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+    margin: 0 4px 8px;
+    padding: 10px 10px 0;
+    position: relative;
+}
+element.style {
+    opacity: 1;
+}
+/*#showcase .is-stepped {*/
+    /*background-size: 25px 25px;*/
+    /*float: left;*/
+    /*height: 25px;*/
+    /*margin: 14px -10px 13px 7px;*/
+    /*width: 25px;*/
+/*}*/
+/*.stepnumber2 {*/
+    /*background: url("../images/module-counter-2.png") no-repeat scroll 0 0 transparent;*/
+/*}*/
+/*element.style {*/
+    /*opacity: 1;*/
+/*}*/
+#showcase .box .heading.primary {
+    background: none repeat scroll 0 center transparent;
+    color: black;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 20px 0 0 27px;
+}
+.box .heading.primary {
+    background: none repeat scroll 0 center transparent;
+    color: black;
+    font: 24px "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    padding: 18px 0 0 24px;
+    top: -9px;
+    background: url("../images/h2.png") repeat scroll left top / 1px 50px #224274;
+    color: white;
+    padding-top: 5px;
+}
+.box .heading {
+    border-radius: 4px 4px 0 0;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 -11px;
+    padding: 10px 10px 5px;
+    position: relative;
+    top: -11px;
+}
+#showcase h2 {
+    display: inline-block;
+}
+
+#showcase #shipping {
+    margin-top: -12px;
+}
+#showcase .step {
+    clear: both;
+    margin-top: 0;
+    padding-top: 0;
+    position: relative;
+}
+#showcase #shipping-box.box .step .step-content {
+    margin-right: 13px;
+    padding: 9px 0 14px;
+}
+#showcase .step .step-content {
+    margin-left: 14px;
+    padding: 12px 0;
+}
+#showcase .step .summary-edit-link, #showcase .step .step-content, #showcase .step .step-continue {
+    transition: opacity 120ms linear 0s;
+}
+.top-divided {
+    border-top: 1px solid #D5D5D5;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+#showcase #shipping-contact-form {
+    font-size: 12px;
+    padding: 14px 0 15px 26px;
+    position: relative;
+}
+#showcase .step .edit {
+    padding: 5px;
+}
+#showcase .step .step-mode {
+    transition: opacity 350ms linear 0s;
+}
+#showcase .step-mode .gs {
+    min-height: 0;
+}
+.grid-1of2, .grid-2of4, .grid-3of6, .grid-4of8, .grid-5of10, .grid-8of16, .grid-10of20 {
+    width: 50%;
+}
+.gs {
+    float: left;
+    min-height: 1px;
+}
+.user-form-block {
+    position: relative;
+}
+#showcase .user-form-fieldset {
+    clear: both;
+}
+fieldset {
+    border: 0 none;
+}
+#showcase .step.edit .edit legend {
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+#showcase .user-form-fieldset .label {
+    font-weight: bold;
+}
+#showcase .user-form-fieldset .label, #showcase #payment-form-astro .legend strong, #showcase #shipping-user-country, #showcase #shipping-user-lookup .city-state-fields.prompt {
+    color: #111111;
+}
+#showcase .user-form-fieldset .label, #showcase #shipping-user-recent-addresses, #showcase #shipping-step-defaults .saveAsDefault-field label, #showcase #purchase-totals-section .order-summary, #showcase .invoice-form-box p, #showcase .invoice-form-box label {
+    font-size: 12px;
+}
+#showcase .step .user-form-block fieldset:first-child > div {
+    margin-bottom: 14px;
+}
+#showcase .step .user-form-block fieldset > div {
+    margin-left: 11px;
+    padding-top: 5px;
+}
+.user-form-block .fieldset-content {
+    margin-bottom: 18px;
+}
+.user-form-block .fieldset-content, .user-form-block .fieldset-extended-content {
+    padding: 0 15px;
+}
+#showcase .step .user-form-block fieldset > div .mbs {
+    margin-bottom: 10px;
+}
+#showcase .user-address.fieldset-content div.mbs {
+    margin-bottom: 9px;
+}
+.mbs {
+    margin-bottom: 5px;
+}
+#showcase .firstName-field.field-with-placeholder, #showcase .daytimePhoneAreaCode-field.field-with-placeholder, #showcase .mobilePhoneAreaCode-field.field-with-placeholder, #showcase .city-field.field-with-placeholder, #showcase .state-field.field-with-placeholder, #showcase .eveningPhoneAreaCode-field.field-with-placeholder {
+    padding-right: 4px;
+}
+.placeholder-field, .field-with-placeholder {
+    display: inline-block;
+    position: relative;
+}
+#showcase .user-address.fieldset-content .field-with-placeholder label.placeholder, #showcase .user-contact.fieldset-content .field-with-placeholder label.placeholder, #showcase .payment-method-form .field-with-placeholder label.placeholder, #showcase .payment-method-box .extended-fields .field-with-placeholder label.placeholder, #showcase .payment-method-box .payment-method .field-with-placeholder label.placeholder, #showcase .invoice-form-box .field-with-placeholder label.placeholder {
+    padding: 7px 4px 10px 8px;
+}
+.placeholder-field .placeholder, .field-with-placeholder label, label.field-with-placeholder .placeholder {
+    color: #999999;
+    opacity: 1;
+    padding: 4px;
+    pointer-events: none;
+    position: absolute;
+    transition: color 200ms linear 0s;
+    white-space: nowrap;
+}
+#showcase .user-address.fieldset-content .field-with-placeholder label > span, #showcase .user-contact.fieldset-content .field-with-placeholder label > span, #showcase .payment-method-form .field-with-placeholder label > span, #showcase .MX-extended .field-with-placeholder label > span, #showcase .payment-method-box .extended-fields .field-with-placeholder label > span, #showcase .payment-method-box .international-card .field-with-placeholder label > span, #showcase .invoice-form-box .field-with-placeholder label > span {
+    color: #8C8C8C;
+    font-size: 12px;
+}
+#showcase .shipping-box .firstName-field input, #showcase .payment-method-box .firstName-field input {
+    width: 134px;
+}
+#showcase .firstName-field input {
+    width: 130px;
+}
+#showcase .firstName-field input, #showcase .lastName-field input, #showcase .companyName-field input, #showcase .daytimePhoneAreaCode-field input, #showcase .daytimePhone-field input,  #showcase .udidPhone-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .postalCode-field input, #showcase .state-field input, #showcase .mobilePhoneAreaCode-field input, #showcase .mobilePhone-field input, #showcase .password-field input, #showcase .metadata-cpf-field input, #showcase .metadata-contact-footer-field input, #showcase .metadata-cnpj-field input, #showcase .metadata-legalName-field input, #showcase .district-field input, #showcase .daytimeAreaAndPhone-field input, #showcase .accountHolderName-field input, #showcase .bankCardNumber-field input, #showcase .mobilePhoneNumber-field input, #showcase .emailAddress-field input, #showcase .customerIdCardNumber-field input, #showcase .invoiceHeader-field input, #showcase .taxPayer-field input, #showcase .bankName-field input, #showcase .bankAccount-field input, #showcase .suburb-field input, #showcase .city-field input, #showcase .businessRegNumber-field input, #showcase .companyDistrict-field input, #showcase .repName-field input, #showcase .companyStreet-field input, #showcase .industryType-field input, #showcase .companyStreet2-field input, #showcase .businessType-field input, #showcase .shipping-user-address-neighborhood-field input, #showcase .eveningPhoneAreaCode-field input, #showcase .eveningPhone-field input, #showcase .suffix-field input, #showcase .lastNamePhonetic-field input, #showcase .firstNamePhonetic-field input, #showcase .cardNumber-field input, #showcase .securityCode-field input, #showcase .loanNumber-field input, #showcase .county-field input, #showcase .companyKey-field input, #showcase .legalName-field input, #showcase .taxRegNumber-field input, #showcase .metadata-ie-field input, #showcase .registrationCode-field input, #showcase .okpoNumber-field input, #showcase .taxIdentificationNumber-field input {
+    border: 1px solid #D6D6D6;
+    box-shadow: 0 1px 1px #AAAAAA inset;
+    font-size: 12px;
+    height: 24px;
+    text-indent: 4px;
+}
+.firstName-field input, .firstNamePhonetic-field input {
+    width: 120px;
+}
+.placeholder-field .input, .field-with-placeholder input {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 #E5E5E5 inset;
+    padding: 3px 2px;
+}
+#showcase .shipping-box .lastName-field input, #showcase .payment-method-box .lastName-field input {
+    width: 228px;
+}
+#showcase .lastName-field input {
+    width: 183px;
+}
+
+.lastName-field input, .lastNamePhonetic-field input {
+    width: 185px;
+}
+.companyName-field input, .street-field input, .street2-field input, .street3-field input, .password-field input, .metadata-cpf-field input, .metadata-contact-footer-field input, .metadata-cnpj-field input, .metadata-legalName-field input, .district-field input, .daytimeAreaAndPhone-field input, .accountHolderName-field input, .bankCardNumber-field input, .mobilePhoneNumber-field input, .emailAddress-field input, .customerIdCardNumber-field input, .invoiceHeader-field input, .taxPayer-field input, .bankName-field input, .bankAccount-field input, .suburb-field input, .city-field input, .businessRegNumber-field input, .companyDistrict-field input, .repName-field input, .companyStreet-field input, .industryType-field input, .companyStreet2-field input, .businessType-field input, .shipping-user-address-neighborhood-field input {
+    width: 314px;
+}
+#showcase .shipping-box .daytimePhoneAreaCode-field input, #showcase .shipping-box .mobilePhoneAreaCode-field input, #showcase .shipping-box .eveningPhoneAreaCode-field input, #showcase .payment-method-box .daytimePhoneAreaCode-field input, #showcase .payment-method-box .mobilePhoneAreaCode-field input, #showcase .payment-method-box .eveningPhoneAreaCode-field input {
+    width: 95px;
+}
+#showcase .daytimePhoneAreaCode-field input, #showcase .mobilePhoneAreaCode-field input, #showcase .eveningPhoneAreaCode-field input {
+    width: 82px;
+}
+.daytimePhoneAreaCode-field input, .mobilePhoneAreaCode-field input, .eveningPhoneAreaCode-field input {
+    width: 74px;
+}
+.daytimePhone-field input, .eveningPhone-field input, .mobPhoneOpt-field input {
+    width: 231px;
+}
+#showcase .shipping-box .daytimePhone-field input, #showcase .payment-method-box .daytimePhone-field input, #showcase .payment-method-box .eveningPhone-field input {
+    width: 267px;
+}
+.udidPhone-field input {
+    width: 376px;
+}
+#showcase .shipping-box .udidPhone-field input, #showcase .payment-method-box .udidPhone-field input {
+    width: 327px;
+}
+#showcase .shipping-box .companyName-field input, #showcase .shipping-box .street-field input, #showcase .shipping-box .street2-field input, #showcase .shipping-box .street3-field input, #showcase .shipping-box .emailAddress-field input, #showcase .shipping-box .suburb-field input, #showcase .shipping-box .metadata-cnpj-field input, #showcase .shipping-box .metadata-legalName-field input, #showcase .payment-method-box .companyName-field input, #showcase .payment-method-box .street-field input, #showcase .payment-method-box .street2-field input, #showcase .payment-method-box .street3-field input, #showcase .payment-method-box .emailAddress-field input, #showcase .payment-method-box .suburb-field input {
+    width: 376px;
+}
+#showcase .companyName-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .emailAddress-field input {
+    width: 327px;
+}
+#showcase .shipping-box .US .postalCode-field input, #showcase .shipping-box .CA .postalCode-field input, #showcase .shipping-box .MX .postalCode-field input, #showcase .shipping-box .JP .postalCode-field input, #showcase .payment-method-box .CA .postalCode-field input, #showcase .payment-method-box .MX .postalCode-field input, #showcase .payment-method-box .JP .postalCode-field input, #showcase .payment-method-box .US .postalCode-field input {
+    width: 98px;
+}
+#showcase .US .postalCode-field input {
+    width: 90px;
+}
+.postalCode-field input {
+    width: 82px;
+}
+#showcase .user-address.fieldset-content .city-state-fields.prompt {
+    display: inline-block;
+    line-height: 10px;
+    padding-left: 7px;
+}
+.US .mobilePhone-field input {
+    width: 231px;
+}
+.mobilePhone-field input {
+    width: 314px;
+}
+#showcase .shipping-box .CA .mobilePhone-field input, #showcase .shipping-box .US .mobilePhone-field input, #showcase .shipping-box .BR .mobilePhone-field input {
+    width: 267px;
+}
+#showcase .shipping-box .mobilePhone-field input {
+    width: 376px;
+}
+
+#showcase .legend {
+    margin-left: 10px;
+}
+p {
+    margin-bottom: 12px;
+}
+.separated-link {
+    border-left: 1px solid #666666;
+    margin-left: 9px;
+    padding-left: 12px;
+}
+p a {
+    display: inline;
+}
+a {
+    color: #0085CF;
+}
+.text-action, .link, a {
+    color: #0088CC;
+    cursor: pointer;
+    text-decoration: none;
+}
+a {
+    border: 0 none;
+    text-decoration: none;
+}
+#showcase #shipping-summary-astro, #showcase #shipping-contact-form #payment-form-astro ul {
+    font-size: 12px;
+}
+.form-astro.with-seperator .info-list {
+    margin: 0 0 23px 8px;
+}
+ul, ol {
+    list-style: none outside none;
+}
+#showcase #payment-form-astro .info-list li {
+    margin-bottom: 9px;
+}
+#showcase .substep li {
+    color: #7D7D7D;
+}
+.info-list li {
+    color: #666666;
+    list-style-type: disc;
+    margin: 0 0 5px 25px;
+}
+li {
+    margin-bottom: 2px;
+}
+li, em {
+    font-style: normal;
+}
+#showcase .step-continue {
+    background: url("../images/step-continue.png") repeat-x scroll left bottom transparent;
+    border-bottom: 1px solid #D5D5D5;
+    margin: 10px -10px 10px -10px;
+}
+.clear {
+    clear: both;
+}
+#showcase .continue-content {
+    border-top: 1px solid #D5D5D5;
+    height: 34px;
+    margin-top: -4px !important;
+    padding: 14px 22px 12px;
+}
+.grid-3of4, .grid-6of8, .grid-12of16, .grid-15of20 {
+    width: 75%;
+}
+.r-align {
+    text-align: right;
+}
+.grid-1of4, .grid-2of8, .grid-4of16, .grid-5of20 {
+    width: 25%;
+}
+.grid4 {
+    width: 25%;
+    margin: 20px auto;
+}
+.button.rect.transactional {
+    background: linear-gradient(#00C307, #039103) repeat scroll 0 0 transparent;
+    border: 1px solid #20A623;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.button.rect.blues {
+    background: linear-gradient(#37AAEA, #117ED2) repeat scroll 0 0 transparent;
+    border: 1px solid #1992D9;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+.button {
+    background-color: transparent;
+    border: 0 none;
+    border-collapse: separate;
+    cursor: pointer;
+    display: inline-block;
+    font: 11px/1.5 "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    overflow: visible;
+    position: relative;
+}
+a img, *:link img, *:visited img, button {
+    border: 0 none;
+}
+button {
+    cursor: pointer;
+}
+
+.button.transactional > span, .button.transactional.disabled:hover > span {
+    background-color: #039909;
+    border-color: #039909;
+}
+/*.button.transactional.blues > span, .button.transactional.blues.disabled:hover > span {*/
+    /*background-color: #2673cb;*/
+    /*border-color: #2e83db;*/
+/*}*/
+button {
+    background: none repeat scroll 0 0 transparent;
+}
+
+.button.rect > span {
+    background: none repeat scroll 0 center transparent;
+    border: 0 none;
+    box-shadow: none;
+    color: #FFFFFF;
+    font-size: 13px;
+    line-height: 15px;
+    padding: 9px 28px;
+}
+
+
+.button > span {
+    background: url("../images/button_colors.png") repeat-x scroll 0 0 / 8px 22px #224272;
+    border: 1px solid #224272;
+    border-radius: 11px 11px 11px 11px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    color: white;
+    display: inline-block;
+    font: 12px/1 "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
+    letter-spacing: 0;
+    opacity: 1;
+    padding: 4px 25px;
+    position: relative;
+    text-align: center;
+    transition: opacity 800ms ease 0s;
+    white-space: nowrap;
+    word-spacing: 0;
+}
+.button > span, .button.disabled:hover > span, .button.primary > span, .button.primary.disabled:hover > span {
+    background-color: #224272;
+    border-color: #224272;
+}
+
+.button.rect:hover>span,.button.rect:focus>span{background-color:transparent;border-color:transparent;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
+
+.button.rect.transactional,.button.rect.transactional{
+    background:#00C307;
+    background:-webkit-linear-gradient(#00C307, #039103);
+    background:-moz-linear-gradient(#00C307, #039103);
+    background:linear-gradient(#00C307, #039103)
+}
+
+.button.rect.transactional:hover,.button.rect.transactional:focus{
+    background:#006c00;
+    background:-webkit-linear-gradient(#00b300,#006c00);
+    background:-moz-linear-gradient(#00b300,#006c00);
+    background:linear-gradient(#00b300,#006c00)
+}
+.button.rect.transactional:active,.button.rect.transactional.active{
+    -webkit-box-shadow:0 1px 0 #0e0,inset 0 0 9px rgba(0,0,0,0.5);
+    -moz-box-shadow:0 1px 0 #0e0,inset 0 0 9px rgba(0,0,0,0.5);
+    box-shadow:0 1px 0 #0e0,inset 0 0 9px rgba(0,0,0,0.5)
+}
+
+
+.button.rect.transactional.blues:focus{background: #1b65bf;background:-webkit-linear-gradient(#449ada, #1b65bf);background:-moz-linear-gradient(#449ada, #1b65bf);background:linear-gradient(#00b300,#006c00)}
+.button.rect.transactional.blues:hover>span,.button.rect.transactional.blues:focus>span{background-color:transparent;border-color:transparent;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
+
+.button.rect.transactional.blues{
+    background: #449ada;
+    background:-webkit-linear-gradient(#449ada, #2673cb);
+    background:-moz-linear-gradient(#449ada, #2673cb);
+    background:linear-gradient(#449ada, #2673cb)
+}
+
+.button.rect.transactional.blues:hover,.button.rect.transactional.blues:focus{
+    background: #1b65bf;
+    background:-webkit-linear-gradient(#449ada, #1b65bf);
+    background:-moz-linear-gradient(#449ada, #1b65bf);
+    background:linear-gradient(#449ada, #1b65bf)
+}
+.button.rect.transactional.blues:active,.button.rect.transactional.blues.active{
+    -webkit-box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5);
+    -moz-box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5);
+    box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5)
+}

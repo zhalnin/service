@@ -1,0 +1,77 @@
+@charset "utf-8";
+    body, table{background-color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px}
+    a{color: #2136F6;}
+    a:hover{color: #981912;}
+    p{margin:  10px 0 7px 0}
+    input{background-color: #F5F5F5; border-width: 2px}
+
+    /*Стиль для названия системы*/
+    .title{font-size: 18px; color: #253064; margin:  5px 0 0 0}
+    /*Название страницы ( по функционалу)*/
+    .namepage{font-size: 16px; color: #3C6194; margin: 10px 30px 5px 0}
+    .hiddenrow{background-color: #fce0fc; color: #818181}
+
+    /*Таблица с самыми верхними навигационными ссылками и названием приложения*/
+    table.topmenu{color: #7C7C7C; background-color: #F5F5F5; width: 100%;
+            border-bottom-style: solid; border-width: 1px; border-color: #777777;}
+    table.topmenu td{padding: 0 0 5px 0;}
+    table.topmenu a{color: #5C7792;}
+
+    /*Самая нижняя ячейка таблицы с упоминанием об авторстве счетчика*/
+    table tr.authors td{border-top-style: solid; border-color: #D2D2D2; border-top-width: 3px;
+             padding: 0 0 0 20px; border-color: #E4E4E4; height: 30px; color: #4D4D4D; }
+    table tr.authors td a{color: #2B5077;}
+    table tr.authors td a:hover{color: #1B3CD6;}
+
+    /*Ячейка таблицы, в которой распологается меню*/
+    td.menu{width: 20%; padding: 10px 7px 20px 25px; border-right-style: solid;
+            border-width: 1px; border-color: #000000;}
+    td.menu div{padding: 5px 0 5px 0;}
+    td.menu div.active a{color: #000000; font-weight: bold;}
+
+    /*Ячейка таблицы, в которой располагаются основные данные из таблицы*/
+    td.main{padding: 10px 0 5px 0;}
+
+    /*Стили для основных таблиц со статистическими данными*/
+    table.table{background-color: #F5F5F5; border-bottom-style: solid; border-width: 1px;
+            border-left-style: solid; border-color: #656565;}
+    table.table td{padding:  3px 5px 3px 5px; border-top-style: solid; border-width: 1px;
+        border-right-style: solid; border-color: #656565;}
+    table.table tr.header td{border-color: #D2D2D2; color: #FFFFFF; padding: 5px 5px 5px 5px;
+        background-color: #122580; font-weight: bold;}
+    table.table tr td.header{border-color: #D2D2D2; color: #FFFFFF; padding: 5px 5px 5px 5px;
+        background-color: #122580; font-weight: bold;}
+    table.table tr.header td a{color: #FFFFFF;}
+    table.table tr.header td a:hover{color: #FFFFCC;}
+    table.table tr td.header a{color: #FFFFFF;}
+    table.table tr td.header a:hover{color: #FFFFCC;}
+
+    /*Таблицы в powercounter*/
+    table.table tr.subtitle td{padding: 3px 0 3px 10px; color: #000000; background-color: #EBEBEB;
+        border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #000000; }
+    table.table td.field{background-color: #E3E3E3; color: #264769 ; font-weight: bold; padding-left: 10px; text-align: left;}
+    /*table td.field{background-color: #E3E3E3; color: #264769 ; font-weight: bold; padding-left: 10px; text-align: left;}*/
+
+    /*Красный цвет для выходных дней*/
+    table.table tr.red td{color: #FF0000;}
+    table.table tr.red td a:link{color: #FF0000;}
+    table.table tr.red td a:hover{color: #FF0000;}
+    table.table tr.red td a:visited{color: #FF0000;}
+
+    /*Название поля для форм*/
+    td.field{color: #264769; font-weight: bold; padding-right: 10px;}
+
+    /*Меню второго уровня, записанное в списке   ---  найти!!!!!!!*/
+    /*ul.menu li.active a{color: #000000; font-weight: bold;}*/
+        ul.menu li.active a{color: red; font-weight: bold;}
+
+    /*Кнопки в формах*/
+    .button{background-color: #04277B; color: #FFFFFF; font-weight: bold;}
+
+    /*Текстовая область*/
+    textarea{background-color: #F5F5F5; border-width: 2px;}
+
+    /*Выпадающий список*/
+    select{background-color: #F5F5F5; border-width: 2px;}
+
+    .help{color: #264769; font-weight: bold; padding-left: 10px; text-align: left;}

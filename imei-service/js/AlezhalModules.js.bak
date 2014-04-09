@@ -1,0 +1,756 @@
+/**
+ * Created by zhalnin on 05/01/14.
+ */
+
+var AM = {
+
+    /**
+     * DOM object
+     */
+    DOM: {
+        /**
+         *
+         * @param $id
+         * @returns {HTMLElement}
+         */
+        $: function( $id ) {
+            if( typeof $id == 'string' ) {
+                return document.getElementById( $id );
+            }
+        },
+
+        // Функция обнаружения элементов по имени тега внутри HTML DOM-документа
+        tag: function(name, root) {
+            // Если конкретный элемент не предоставлен, вести поиск по всему
+            // документу
+            return (root || document).getElementsByTagName(name);
+        },
+
+        // Ищем родительский элемент
+        parent: function(elem, num) {
+            num = num || 1;
+            for(var i = 0; i < num; i++) {
+                if(elem != null) {
+                    elem = elem.parentNode;
+                }
+            }
+            return elem;
+        },
+
+        // Ищем предыдущий сестринский элемент
+        prev: function(elem) {
+            do {
+                elem = elem.previousSibling;
+            }
+            while(elem && elem.nodeType != 1);
+            return elem;
+        },
+
+        // Ищем следующий сестринский эелемент
+        next: function(elem) {
+            do{
+                elem = elem.nextSibling;
+            }
+            while(elem && elem.nodeType != 1);
+            return elem;
+        },
+
+        // Ищем первый дочерний элемент
+        first: function(elem) {
+            elem = elem.firstChild;
+            return elem && elem.nodeType != 1 ? this.next(elem) : elem;
+        },
+
+
+        // Ищем последний дочерний элемент
+        last: function(elem) {
+            elem = elem.lastChild;
+            return elem && elem.nodeType != 1 ? this.prev(elem) : elem;
+        },
+
+
+        //  Вставка элемента перед другим элементом
+        before: function (parent, before, elem) {
+            // Выяснение, предоставлен ли родительский (parent) узел
+            if(elem == null) {
+                elem = before;
+                before = parent;
+                parent = before.parentNode;
+            }
+
+            // Получение нового массива элементов
+            var elems = this.checkElem(elem);
+            // Обратный перебор элементов массива,
+            // поскольку мы добавляем элементы к началу
+            for(var i = elems.length - 1; i >= 0; i-- )
+            {
+                parent.insertBefore(elems[i], before);
+            }
+        },
+
+
+        //  Добавление элемента в качестве дочернего к другому элементу
+        append: function(parent, elem) {
+            // Получение массива элементов
+            var elems = this.checkElem(elem);
+
+            // Добавление всех элементов к родительскому элементу
+            for(var i = 0; i <= elems.length-1; i++){
+                parent.appendChild(elems[i]);
+            }
+        },
+
+
+        //  Вспомогательная для before и append
+        checkElem: function( a ) {
+            //console.log(a);
+            var r = [];
+            // Превращение аргумента в массив, если он еще им не является
+            if( a.constructor != Array ) a = [a];
+            //console.log(a);
+            for(var i = 0; i < a.length; i++) {
+                //console.log(a);
+                // Если это строка
+                if(a[i].constructor == String)  {
+                    //console.log("string");
+                    // Создание временного элемента для помещения в него HTML
+                    var div = document.createElement("div");
+
+                    // Вставка HTML, для превращения его в DOM-структуру
+                    div.innerHTML = a[i];
+
+                    // Обратное извлечение DOM-структуры из временного DIV-элемента
+                    for(var j = 0; j < div.childNodes.length; j++) {
+                        //console.log(div.childNodes.length);
+                        r[r.length] = div.childNodes[j];
+                    }
+                }
+                else if(a[i].length)  {
+                    //console.log("not string");
+                    // Если это массив DOM-узлов
+                    for(var j = 0; j < a[i].length; j++) {
+                        r[r.length] = a[i][j];
+                    }
+                }
+                else {
+                    //console.log("DOM-node");
+                    // Иначе, предположение, что это DOM-узел
+                    r[r.length] = a[i];
+                    //console.log(r);
+                }
+            }
+            return r;
+        },
+
+
+        //  Создание нового DOM-элемента
+        create: function( elem ) {
+            return document.createElementNS ?
+                document.createElementNS('http://www.w3.org/1999/xhtml', elem) :
+                document.createElement( elem );
+        },
+
+
+        //  Удаление из DOM отдельного узла
+        remove: function( elem ) {
+            if(elem) elem.parentNode.removeChild(elem);
+        },
+
+        stopDefault: function(e) {
+            e = AM.Event.getEvent(e);
+            // Предотвращение исходных действий браузера (W3C)
+            if(e && e.preventDefault)
+            {
+                e.preventDefault();
+            }
+            else
+            {
+                // Ссылка на остановку действия браузера в IE
+                window.event.returnValue = false;
+            }
+            return false;
+        },
+
+
+        // Установка горизонтальной позиции элемента
+        setX: function( elem, pos ) {
+            // Установка CSS-свойства 'left' с использование единицы измерения,
+            // выраженной в пикселах
+            elem.style.left = pos + "px";
+        },
+
+        // Установка вертикальной позиции элемента
+        setY: function( elem, pos ) {
+            // Установка CSS-свойства 'top' с использованием единицы измерения,
+            // выраженной в пикселах
+            elem.style.top = pos + "px";
+        },
+
+        // Определение высоты области просмотра
+        windowHeight: function() {
+            // Сокращение на случай использования IE6 в строгом
+            // (strict) режиме
+            var de = document.documentElement;
+
+            // Использование свойства браузера innerHeight, если оно доступно
+            return self.innerHeight ||
+                // в противном случае попытка получить высоту из корневого узла
+                ( de && de.clientHeight ) ||
+                // И наконец, попытка получить высоту из элемента body
+                document.body.clientHeight;
+        },
+
+        // Определение ширины области просмотра
+        windowWidth: function() {
+            // Сокращение на случай испльзования IE6 в строгом
+            // (strict) режиме
+            var de = document.documentElement;
+
+            // Использование свойства браузера innerWidth, если оно доступно
+            return self.innerWidth ||
+                // в противном случае попытка получить ширину из корневого узла
+                (de && de.clientWidth) ||
+                // И наконец, попытка получить высоту из элемента body
+                document.body.clientWidth;
+        },
+
+
+        // Функция для определения величины горизонтальной прокрутки браузера
+        scrollX: function() {
+            // Сокращение на случай использования IE6 в строгом
+            // (strict)режиме
+            var de = document.documentElement;
+
+            // Использование свойства браузера pageXOffset, если оно доступно
+            return self.pageXOffset ||
+                // в противном случае попытка получить прокрутку слева из
+                // корневого узла
+                (de && de.scrollLeft) ||
+                // и наконец, попытка получить прокурутку слева из элемента body
+                document.body.scrollLeft;
+        },
+
+        // Определение величины вертикальной прокрутки браузера
+        scrollY: function(){
+            // Сокращение на случай использования IE6 в строгом
+            // (strict) режиме
+            var de = document.documentElement;
+
+            // Использование свойства браузера pageYOffset, если оно доступно
+            return self.pageYOffset ||
+                // в противном случае попытка получить прокрутку сверху из
+                // корневого узла
+                ( de && de.scrollTop ) ||
+                // и наконец, попытка получить прокрутку сверху из элемента body
+                document.body.scrollTop;
+        },
+
+
+        // Получение текущей высоты элемента(с использованием вычисляемого CSS
+        getHeight: function( elem ){
+            // Получение вычисялемого значения CSS и извлечения необходимого
+            // числового значения
+            return parseInt( AM.DOM.getStyle( elem, 'height' ));
+        },
+
+        // Получение текущей ширины элемента ( с использованием вычисляемого CSS)
+        getWidth: function( elem ) {
+            // Получение вычисляемого значения CSS и извлечение необходимого
+            // числового значения
+            return parseInt( AM.DOM.getStyle( elem, 'width' ));
+        },
+
+
+
+        /**
+         * Insert text into tags
+         * either textContent or innerText
+         * @param element
+         */
+        getInnerText: function(element) {
+            return (typeof element.textContent == "string") ?
+                element.textContent : element.innerText;
+        },
+
+        setInnerText: function(element, text) {
+            if(typeof element.textContent == "string") {
+                element.textContent = text;
+            }
+            else {
+                element.innerText = text;
+            }
+        },
+
+        //   Получение свойства style( name ) определенного элемента ( elem )
+        getStyle: function( elem, name) {
+            // Если свойство присутствует в style[], значит, оно было
+            // недавно установлено ( и является теущим)
+            if(elem.style[name]) {
+                return elem.style[name];
+            }
+            // В противном случае, попытка воспользоваться методом IE
+            else if(elem.currentStyle)
+                return elem.currentStyle[name];
+
+            // Или методом W3C, если он существует
+            else if(document.defaultView && document.defaultView.getComputedStyle){
+                // Вместо textAlign в нем используется традиционное правило
+                // написания стиля - 'text-align'
+                name = name.replace(/([A-Z])/g,"-$1");
+                name = name.toLowerCase();
+
+                // Получение объекта style и получение значения свойства
+                // (если оно существует)
+                var s = document.defaultView.getComputedStyle(elem,"");
+                return s && s.getPropertyValue(name);
+
+                // В противном случае, мы используем какой-то другой браузер
+            }
+            else
+                return null;
+        },
+
+        // Функция сокрытия элемента (с использование свойства display)
+        hide: function( elem ){
+            // Определение текущего состояния свойства display
+            var curDisplay = AM.DOM.getStyle( elem, 'display');
+
+            // Запоминание состояния свойства display на будущее
+            if( curDisplay != 'none' )
+                elem.$oldDisplay = curDisplay;
+
+            // Установка display в none (сокрытие элемента)
+            elem.style.display = 'none';
+        },
+
+        // Функция показа элемента (с использование свойства display)
+        show: function( elem ){
+            // Возвращение свойства display к тому значеню, которое им
+            // использовалось, или использование
+            // 'block', если предыдущее состояние этого свойства не было
+            // сохранено
+            elem.style.display = elem.$oldDisplay || 'block';
+        },
+
+        //  Корректировка уровня прозрачности элемента
+        setOpacity: function( elem, level ){
+            // Если существуют какие-нибудь фильтры, значит,
+            // мы имеем дело с IE, и нужно устанавливать фильта Alpha
+            if( elem.filters ){
+                //        elem.filters.alpha.opacity = level;
+                elem.style.filters = 'alpha(opacity='+ level + ')';
+
+            }
+            // В противном случае мы используем W3C-свойство opacity
+            else
+                elem.style.opacity = level / 100;
+        },
+
+
+        // Медленное проявление скрытого элемента за счет увеличения
+        // в течение секунды его непрозрачности
+        fadeIn: function( elem, to, speed ){
+            // Начало непрозрачности с 0
+            AM.DOM.setOpacity(elem, 0);
+            // Отображение элемента ( но вы его не увидите, пока непрозрачность
+            // равна 0)
+            AM.DOM.show( elem );
+            // Мы собираем я за секунду показать анимацию, состоящую из
+            // 20 "кадров"
+            for( var i = 0; i <= 100; i+=5) {
+                //        alert("i - "+i);
+                // Замкнутое выражение, гарантирующее, что у нас в распоряжении
+                // находится именно та переменная 'i', которая нам нужна
+                (function() {
+                    var opacity = i;
+                    //            alert("pos - "+opacity);
+                    // Установка времени ожидания для совершения будущих
+                    //  действий в определенное время
+                    setTimeout(function() {
+                        //                alert("second i - "+i);
+                        //                alert("second pos - "+opacity);
+                        // Установка новой степени прозрачности элемента
+                        AM.DOM.setOpacity( elem, (opacity / 100) * to );
+                    }, (i + 1) * speed);
+                })();
+            }
+        },
+
+        // Медленное скрывание открытого элемента за счет увеличения
+        // в течение секунды его непрозрачности
+        fadeOut: function( elem, to, speed ){
+            // Начало непрозрачности с 1
+            //    setOpacity(elem, 1);
+            // Отображение элемента ( но вы его не увидите, пока непрозрачность
+            // равна 0)
+            //    hide( elem );
+
+            // Мы собираемся за секунду показать анимацию, состоящую из
+            // 20 "кадров"
+            for( var i = 0; i < 0; i+=5)
+            {
+                // Замкнутое выражение, гарантирующее, что у нас в распоряжении
+                // находится именно та переменная 'i', которая нам нужна
+                (function()
+                {
+                    var opacity = i;
+//                    console.log("first pos - "+opacity);
+                    //            console.log(pos);
+                    // Установка времени ожидания для совершения будущих
+                    //  действий в определенное время
+                    setTimeout(function()
+                    {
+                        // Установка новой степени прозрачности элемента
+//                        console.log("p - "+p);
+
+                        AM.DOM.setOpacity( elem, 100 - opacity );
+                        if(opacity == 95)
+                            AM.DOM.hide( elem );
+                    }, (i + 1) * speed);
+                })();
+            }
+        },
+
+
+        /**
+         *  Retrieving Selected Text
+         * @param textbox
+         */
+        getSelectedText: function(element) {
+            if(typeof element.selectionStart == "number") {
+                return element.value.substring(element.selectionStart, element.selectionEnd);
+            }
+            else if(document.selection) {
+                return document.selection.createRange().text;
+            }
+        },
+
+        /**
+         *  Retrieving Selected Text - crossbrowser
+         * @param textbox
+         */
+        selectText: function(textbox, startIndex, stopIndex) {
+            if(textbox.setSelectionRange) {
+                textbox.setSelectionRange(startIndex, stopIndex);
+            }
+            else if(textbox.createTextRange) {
+                var range = textbox.createTextRange();
+                range.collapse(true);
+                range.moveStart("character", startIndex);
+                range.moveEnd("character", stopIndex - startIndex);
+                range.select();
+            }
+            textbox.focus();
+        }
+
+
+    },
+
+
+
+
+
+    /**
+     * Ajax object
+     */
+    Ajax: {
+
+        // Извлечение правильных данных из ответа HTTP
+        httpData: function(response, dataType) {
+//            console.log('httpData:');
+            // Получение заголовка content-type
+            var ct = response.getResponseHeader("Content-Type");
+            // Если не предоставлен тип по умолчанию, определение
+            // не возвращена ли с сервера какая-либо форма XML
+            var data = !dataType && ct && ct.indexOf("xml") >= 0;
+            // Получение объекта XML-документа, если сервер вернул XML,
+            // если нет - возвращение полученного с сервера текстового
+            // содержимого
+            data = dataType == "xml" || data ? response.responseXML : response.responseText;
+            // Если указан тип "script", выполнение возвращенного текста,
+            // реагируя на него, как на JavaScript
+            if(dataType == "script")
+                eval.call(window, data);
+//            console.log('httpData: --- '.data);
+            // Возвращение данных, полученных в ответе
+            return data;
+        },
+
+        // Определение успешности получения ответа HTTP
+        httpSuccess: function(response) {
+            try {
+//                console.log('httpSuccess:');
+                // Если состояние сервера предоставлено не было, и мы
+                // фактически сделали запрос к локальному файлу,
+                // значит, он прошел успешно
+                return !response.status && location.protocol == "file:" ||
+                    // нас устраивает любой код состояния в диапазоне 200
+                    (response.status >= 200 && response.status < 300) ||
+                    // запрос прошел успешно, если документ не подвергся
+                    // изменениям
+                    response.status == 304 ||
+                    // если файл не подвергался изменениям, Safari возвращает
+                    // пустое состояние
+                    navigator.userAgent.indexOf("Safari") >= 0
+                        && typeof response.status == "undefined";
+            }
+            catch(e){}
+            // Если проверка состояния не удалась, следует предположить,
+            // что запрос тоже закончился неудачей
+            return false;
+        },
+
+        ajax: function( options ){
+//            console.log('ajax:');
+            // Загрузка объекта параметров по умолчанию, если пользователь не
+            // представил никаких значений
+            options = {
+                // Метод http-запроса
+                method: options.mode || "POST",
+                // URL на который должен быть послан запрос
+                url: options.url || "",
+                // Время ожидания ответа на запрос
+                timeout: options.timeout || 50000,
+                // Функция, запускаемая перед отправкой - типа прогресс
+                onStart: options.onStart || function(){},
+                // Функция, запускаемая после получения данных - типа прогресс
+                onEnd: options.onEnd || function(){},
+                // Функция, вызываемая, когда запрос неудачен, успешен
+                // или завершен (успешно или нет)
+                onComplete: options.onComplete || function(){},
+                onError: options.onError || function(){},
+                onSuccess: options.onSuccess || function(){},
+                // Тип данных, которые будут возвращены с сервера
+                // по умолчанию просто определить, какие данные были
+                // возвращены, и действовать соответственно
+                dataType: options.dataType || "",
+                getParams: options.getParams || "",
+                postParams: options.postParams || ""
+            };
+            // Создание объекта запроса
+            var xhr = new XMLHttpRequest();
+            options.onStart();
+            // Если метод GET и параметры не пусты
+            if( options.method == 'GET' && options.getParams != "" ) {
+//                console.log('options.method==GET');
+                // Открытие асинхронного запроса GET и добавляем параметры в строку запроса
+                xhr.open(options.method, options.url+"?"+options.getParams, true);
+            }
+            // Если метод POST и параметры не пусты
+            if( options.method == 'POST' && options.postParams != "" ) {
+//                console.log('options.method==POST');
+//                console.log('method-'+options.method+'url-'+options.url);
+                // Открытие асинхронного запроса POST
+                xhr.open(options.method, options.url, true);
+            }
+            // Ожидание отклика на запрос в течение 5 секунд
+            // перед тем, как от него отказаться
+            var timeoutLength = options.timeout;
+            // Отслеживание факта успешного завершения запроса
+            var requestDone = false;
+            // Инициализация функции обратного вызова, которая будет запущена через
+            // 5 секунд, отменяя запрос (если он не будет к тому времени выполнен)
+            setTimeout(function()
+            {
+                requestDone = true;
+            }, timeoutLength);
+
+            var that = this;
+            // Отслеживание обновления состояния документа
+            xhr.onreadystatechange = function() {
+//                console.log('onreadystatechange');
+                // ????????, ?????? ???????? ??????
+                // ? ????????, ?? ??????? ?? ????? ???????
+                if(xhr.readyState == 4 && !requestDone) {
+//                    console.log('xhr.readyState==4');
+                    // ???????? ?????????? ???????
+                    if(that.httpSuccess(xhr)) {
+//                        console.log('httpSuccess()');
+//                        console.log(that.httpData(xhr, options.dataType));
+                        // ?????????? ? ?????? ?????? ??????? ????????? ??????
+                        // ? ???????, ????????????? ? ???????
+                        options.onSuccess(that.httpData(xhr, options.dataType));
+                        options.onEnd();
+                    }
+                    else {
+//                        console.log("error - onreadystatechange");
+                        // ? ????????? ?????? ???????? ??????, ??????? ?????
+                        // ????????? ??????? ????????? ?????? ??? ????????? ??????
+                        options.onError();
+                    }
+                    // ?????????? ??????? ????????? ??????, ????????? ? ???????????
+                    // ???????
+                    options.onComplete();
+                    // ????????? ?????????? ? ????????
+                    xhr = null;
+                }
+            };
+            // Если метод GET и параметры не пусты
+            if( options.method == 'GET' && options.getParams != "" ) {
+//                console.log('xhr.send()');
+                // Установка соединения с сервером
+                xhr.send();
+            }
+            // Если метод POST и параметры не пусты
+            if( options.method == 'POST' && options.postParams != "" ) {
+//                console.log('xhr.send()');
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Установка соединения с сервером
+                xhr.send(options.postParams);
+            }
+        },
+
+        // Сериализация набора данных AJAX
+        // Может воспринимать два различных пипа объектов:
+        // - массив элементов ввода
+        // - хэш, составленный из пар ключ-значение
+        // Функция возвращает последовательную строку данных
+        serialize: function(a) {
+            // Набор результатов сериализации
+            var s = [];
+            // Если передан массив, предположение, что он является массивом
+            // элементов формы
+            if(a.constructor == Array)
+            {
+                // Сериализация элементов формы
+                for(var i = 0; i < a.length; i++)
+                    s.push(a[i].name + "=" + encodeURIComponent(a[i].value));
+                // Если нет, предположение, что это объект, состоящий
+                // из пар ключ-значение
+            }
+            else
+            {
+                // Сериализация пар ключ-значение
+                for(var j in a)
+                    s.push(j+ "=" + encodeURIComponent(a[j]));
+            }
+            // возврат результатов сериализации
+            return s.join("&");
+        }
+    },
+
+
+    /**
+     * Event object
+     */
+    Event: {
+
+        /**
+         * Событие event кроссбраузерное
+         * @param event
+         * @returns event
+         */
+        getEvent: function(event){
+            return event ? event : window.event;
+        },
+
+        /**
+         * Кроссбраузерное определение target событияa
+         * @param event
+         * @returns target
+         */
+        getTarget: function(event){
+            return event.target ? event.target : event.srcElement;
+        },
+
+        /**
+         * Библиотека addEvent/removeEvent
+         *
+         * @param element
+         * @param type
+         * @param handler
+         */
+        // addEvent/removeEvent written by Dean Edwards, 2005
+        // with input from Tino Zijdel
+        // http://dian.edwards.name/weblog/2005/10/add-event/
+        // Добавляем событие ( элемент, тип события, обработчик )
+        addEvent: function(element, type, handler) {
+
+            //console.log(element, type, handler);
+//            console.log("16");
+            // присвоение каждому обработчику события уникального ID
+            if(!handler.$$guid) {
+
+                handler.$$guid = this.guid++;
+            }
+            //console.log("18");
+            // создание хэш-таблицы видов событий для элемента
+            if(!element.events) {
+                // создаем объект 'events'
+                element.events = {};
+                //console.log('19');
+            }
+            // создание хэш-таблицы обработчиков событий для каждой пары
+            // элемент-событие
+            var handlers = element.events[type];
+            //console.log("20");
+            // если у элемента не было сохранено данного типа события, то
+            if(!handlers) {
+                // то к объекту 'events' добавляем свойство '[type]' - тип события
+                handlers = element.events[type] = {};
+                //console.log('21');
+                // сохранение существующего обработчика события
+                // (если он существует)
+                if(element["on" + type]) {
+                    // к обработчику(объект) добавляем тип события
+                    handlers[0] = element["on" + type];
+                    //console.log("22");
+                }
+            }
+
+            // сохранение обработчика события в хэш-таблице
+            // handlers[1] = window.events['load'][0] = window['load']
+            handlers[handler.$$guid] = handler;
+            //console.log("23");
+            // назначение глобального обработчика события для выполнения
+            // всей работы
+            element["on" + type] = this.handleEvent;
+            //console.log("24");
+        },
+
+        guid: 1,
+
+        // обработчик события (load)
+        handleEvent: function( event ) {
+            //console.log('27');
+            var returnValue = true;
+            // захват объекта события (IE использует глобальный объект события)
+            event = event || this.fixEvent(window.event);
+            //console.log("28");
+            // получение ссылки на хэш-таблицу обработчиков событий
+            var handlers = this.events[event.type];
+            //console.log("29");
+            // выполнение каждого обработчика события
+            for(var i in handlers) {
+                //console.log("30");
+                this.$$handleEvent = handlers[i];
+                if(this.$$handleEvent(event) === false) {
+                    //console.log("31");
+                    returnValue = false;
+                }
+            }
+            //console.log('32');
+            return returnValue;
+        },
+
+
+        fixEvent: function(event) {
+            //console.log('33');
+            // добавление стандартных методов событий W3C
+            event.preventDefault = this.preventDefault;
+            event.stopPropagation = this.stopPropagation;
+            return event;
+        },
+
+        preventDefault: function() {
+            this.returnValue = false;
+        },
+
+        stopPropagation: function() {
+            this.cancelBubble = true;
+        }
+    }
+
+
+};
+
