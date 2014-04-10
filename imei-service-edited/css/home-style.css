@@ -963,11 +963,11 @@ span #uah.currency{
 #main-slogan {
     margin-bottom: 9px;
 }
-#news-main h2 {
+.news-header h2 {
     display: inline-block;
     font-size: 24px;
     margin-bottom: 0;
-    padding: 22px 0;
+    padding: 12px 0;
     text-align: center;
     width: auto;
 }
@@ -1188,27 +1188,39 @@ span #uah.currency{
     padding: 10px 10px 0;
     /*position: relative;*/
 }
+.guest-form-box > h2 {
+    font-size: 16px;
+    margin-bottom: 0;
+
+}
 .primary {
     background: none repeat scroll 0 center rgba(0, 0, 0, 0);
     color: #000000;
     font-size: 24px;
     font-weight: normal;
-    padding: 20px 0 0 27px;
+    padding: 5px 0 0 27px;
+
 }
 .guest-all-form {
     position: relative;
-    margin-top: -12px;
+    /*margin-top: -12px;*/
     /*margin: 20px;*/
     font-size: 12px;
-    padding: 14px 0 15px 26px;
+    /*padding: 14px 0 15px 26px;*/
     /*position: relative;*/
     /*float: left;*/
+    clear: both;
 }
 .guestbook-all-reply {
+    display: inline-block;
+    width: 100%;
+}
+.guestbook-all-reply>span {
     margin: 2px;
     /*width: 60px;*/
-    text-align: right;
-    /*clear: both;*/
+    float: right;
+    position: relative;
+
 }
 .page-navigator {
     margin: 9px;
@@ -1317,6 +1329,7 @@ span #uah.currency{
     padding: 0 8px 0 1px;
     color: #989898;
 }
+
 
 
 

@@ -452,53 +452,89 @@ var AM = {
          * @param str2 - конечный тег
          */
         tagInsert: function(obj, str1, str2) {
-            if(document.selection) {
-                // Сохраняем выделенный текст
-                var aim = document.selection.createRange();
+            try {
+
+                var aim,
+                    res,
+                    start,
+                    end,
+                    startLen,
+                    endLen,
+                    allLen,
+                    subLen,
+                    ar;
+//                AM.DOM.consoleLog(obj);
+//                AM.DOM.pageLog("start");
+                if(document.selection) {
+
+                    // Сохраняем выделенный текст
+                    aim = document.selection.createRange();
+
+                    //
+                    // Здесь возможно вместо aim.text надо будет использовать просто aim
+                    //
+                    // Сохраняем текст из позиции 0 до начала выделения
+                    start = obj.value.substring(0, aim.text);
+                    // Сохраняем текст от конца выделения до конца
+                    end = obj.value.substring(aim.text);
+                    // Начальная позиция выделенного текста
+                    // - это длина текста до начала выделения + длина открывающего тега
+                    startLen = start.length + str1.length;
+                    // Длина текста от конца выделения до конца строки
+                    endLen = end.length;
+                    // Длина всего текста
+                    allLen = obj.value.length;
+                    // Конечная позиция выделенного текста
+                    // - это длина текста от конца выделения до конца строки + длина закрывающего тега
+                    subLen = allLen - endLen + str2.length - 1;
+                    // Добавляем startLen и subLen к массиву
+                    ar = [startLen, subLen];
 
 
-                // Подсчитываем начальную позицию выделенного элемента + длина тега
-                var st = obj.value.indexOf(aim.text) + str1.length;
-                // Подсчитываем конечную позицию выделенного элемента + длина этго элемента + длина тега
-                var en = obj.value.indexOf(aim.text) + aim.text.length + str1.length;
-                // Добавляем start и end к массиву
-                var ar = [st, en];
+                    // К найденной фразе добавляем спереди и сзади теги
+                    aim.text = str1+aim.text+str2;
+
+                    // Вызываем функцию для создания выделения после добавления тегов
+                    AM.DOM.selectText(obj,ar[0],ar[1]);
+
+                } else if(document.getSelection) {
+
+                    // Сохраняем текст из позиции 0 до начала выделения
+                    start = obj.value.substring(0, obj.selectionStart);
+                    // Сохраняем выделенный текст
+                    aim = obj.value.substring(obj.selectionStart, obj.selectionEnd);
+                    // Сохраняем текст от конца выделения до конца
+                    end = obj.value.substring(obj.selectionEnd);
+
+                    // Начальная позиция выделенного текста
+                    // - это длина текста до начала выделения + длина открывающего тега
+                    startLen = start.length + str1.length;
+                    // Длина текста от конца выделения до конца строки
+                    endLen = end.length;
+                    // Длина всего текста
+                    allLen = obj.value.length;
+                    // Конечная позиция выделенного текста
+                    // - это длина текста от конца выделения до конца строки + длина закрывающего тега
+                    subLen = allLen - endLen + str2.length - 1;
+
+                    // Добавляем startLen и subLen к массиву
+                    ar = [startLen, subLen];
 
 
-                // К найденной фразе добавляем спереди и сзади теги
-                aim.text = str1+aim.text+str2;
+                    // К найденной фразе добавляем начало строки до выделения спереди, начальный тег
+                    // затем само выделение конечный тег и окончание строки после выделения
+                    res = start+str1+aim+str2+end;
+                    // Возвращаем результат обратно в элемент
+                    obj.value = res;
 
-                // Вызываем функцию для создания выделения после добавления тегов
-                AM.DOM.selectText(obj,ar[0],ar[1]);
+                    // Вызываем функцию для создания выделения после добавления тегов
+                    AM.DOM.selectText(obj,ar[0],ar[1]);
 
-            } else if(document.getSelection) {
-                // Сохраняем текст из позиции 0 до начала выделения
-                var start = obj.value.substring(0, obj.selectionStart);
-                // Сохраняем выделенный текст
-                var aim = obj.value.substring(obj.selectionStart, obj.selectionEnd);
-                // Сохраняем текст от конца выделения до конца
-                var end = obj.value.substring(obj.selectionEnd);
-
-
-                // Подсчитываем начальную позицию выделенного элемента + длина тега
-                var st = obj.value.indexOf(aim) + str1.length;
-                // Подсчитываем конечную позицию выделенного элемента + длина этго элемента + длина тега
-                var en = obj.value.indexOf(aim) + aim.length + str1.length;
-                // Добавляем start и end к массиву
-                var ar = [st, en];
-
-
-                // К найденной фразе добавляем начало строки до выделения спереди, начальный тег
-                // затем само выделение конечный тег и окончание строки после выделения
-                var res = start+str1+aim+str2+end;
-                // Возвращаем результат обратно в элемент
-                obj.value = res;
-
-                // Вызываем функцию для создания выделения после добавления тегов
-                AM.DOM.selectText(obj,ar[0],ar[1]);
-
-            } else {
-                alert('no');
+                } else {
+                    alert('no');
+                }
+            } catch (ex) {
+                console.log(ex);
             }
         },
         /**
@@ -559,7 +595,7 @@ var AM = {
          * @param elem
          * @param prop
          */
-         restoreCSS: function ( elem, prop ) {
+        restoreCSS: function ( elem, prop ) {
             // Переустановка всех свойств и возвращение им первоначальных значений
             for( var i in prop )
                 elem.style[ i ] = prop[i];
@@ -699,7 +735,7 @@ var AM = {
          * @param elem
          * @param name
          */
-         hasAttributes: function(name, elem) {
+        hasAttributes: function(name, elem) {
 //            console.log(elem);
             return elem.getAttribute(name) != null;
         },
@@ -888,6 +924,39 @@ var AM = {
                 while(node !== null);
                 return false;
             }
+        },
+        /**
+         * Console logging
+         * @param message
+         */
+        consoleLog: function(message) {
+            if(typeof console == "object") {
+                console.log(message);
+            } else if(typeof opera == "object") {
+                opera.postError(message);
+            } else if(typeof java == "object" && typeof java.lang == "object") {
+                java.lang.System.out.println(message);
+            }
+        },
+        /**
+         * Page logging
+         * @param message
+         */
+        pageLog: function(message){
+            var console = document.getElementById("droptarget");
+            if(console === null) {
+                console = document.createElement("div");
+                console.id = "debuginfo";
+                console.style.background = "#dedede";
+                console.style.border = "1px solid silver";
+                console.style.padding = "5px";
+                console.style.width = "400px";
+                console.style.position = "absolute";
+                console.style.right = "0px";
+                console.style.top = "0px";
+                document.body.appendChild(console);
+            }
+            console.innerHTML += "<p>"+ message +"</p>";
         }
 
 
@@ -921,8 +990,8 @@ var AM = {
          * @param element
          */
         getElementLeft: function(element) {
-            var actualLeft = element.offsetLeft;
-            var current = element.offsetParent;
+            var actualLeft = element.offsetLeft,
+                current = element.offsetParent;
 
             while(current !== null) {
                 actualLeft += current.offsetLeft;
@@ -935,8 +1004,8 @@ var AM = {
          * @param element
          */
         getElementTop: function(element) {
-            var actualTop = element.offsetTop;
-            var current = element.offsetParent;
+            var actualTop = element.offsetTop,
+                current = element.offsetParent;
 
             while(current !== null) {
                 actualTop += current.offsetTop;
@@ -1101,7 +1170,7 @@ var AM = {
          * @returns {*|Number|event.layerY|layerY}
          */
         getElementY: function (e) {
-        // Определение соответствующего смещения элемента
+            // Определение соответствующего смещения элемента
             return ( e && e.layerY )|| window.event.offsetY;
         },
         /**
@@ -1110,14 +1179,14 @@ var AM = {
          * @param e
          * @returns {Number|*}
          */
-         getX: function(e) {
+        getX: function(e) {
             // Нормализация объекта события
             e = e || window.event;
 
             // Сначала получение позиции из браузеров, не относящихся к IE,
             // а затем из IE
             return e.pageX || e.clientX + document.body.scrollLeft;
-         },
+        },
         /**
          * Получение горизонтальной позиции указателя мыши относительно всего
          * пространства страницы
@@ -1548,7 +1617,7 @@ var AM = {
          */
         mouseoverHandler: function(event) {
             event = event || window.event;
-                relatedTarget = event.relatedTarget || event.fromElement;
+            relatedTarget = event.relatedTarget || event.fromElement;
             // для mouseover
             // relatedTarget - элемент, с которого пришел курсор мыши
 //            if (!event.relatedTarget && event.fromElement) {
@@ -1563,7 +1632,7 @@ var AM = {
          */
         mouseoutHandler: function(event) {
             event = event || window.event;
-                relatedTarget = event.relatedTarget || event.toElement;
+            relatedTarget = event.relatedTarget || event.toElement;
             // для mouseout
             // relatedTarget - элемент, на который перешел курсор мыши
             return relatedTarget;
@@ -1686,6 +1755,14 @@ var AM = {
             event.stopPropagation = AM.Event.stopPropagation;
             return event;
         },
+
+        preventDefault: function() {
+            AM.Event.returnValue = false;
+        },
+
+        stopPropagation: function() {
+            AM.Event.cancelBubble = true;
+        },
         /**
          * Предотвращение исходных действий браузера
          * @param event
@@ -1716,14 +1793,114 @@ var AM = {
                 // прекращения всплытия события, существующим в IE
                 window.event.cancelBubble = true;
             }
+        }
+    },
+
+    Query: {
+        /**
+         * Parse query string
+         * return object with entire for each argument
+         * @param url (string)
+         * @returns {{}}
+         */
+        getQueryStringArgs: function( url ){
+            var qs = "";
+            // Проверяем, передана строка для парсинга или нет
+            if( url == null ) {
+                // Получаем строку запроса без ?
+                qs = (location.search.length > 0 ? location.search.substring(1) : "");
+            } else {
+                qs = ( url.indexOf("?") ? url.substring(url.indexOf("?")+1) : "" );
+            }
+            // Объект для хранения данных
+            var args = {},
+            // Получаем отдельные части
+                items = qs.length ? qs.split("&"): [],
+                item = null,
+                name = null,
+                value = null,
+            // Используем для цикла
+                i = 0,
+                len = items.length;
+            // Сохраняем каждую часть в объект args, как args[name][value]
+            for(i=0;i<len;i++){
+                item = items[i].split("=");
+                name = decodeURIComponent(item[0]);
+                value = decodeURIComponent(item[1]);
+
+                if(name.length){
+                    args[name] = value;
+                }
+            }
+            return args;
         },
 
-        preventDefault: function() {
-            AM.Event.returnValue = false;
+        /**
+         * Возвращает полную строку запроса
+         * @param url
+         * @returns {string}
+         */
+        getQueryString: function(url){
+            if(typeof url == "string"){
+                var pos = url.indexOf("?");
+                if(pos != -1){
+                    return decodeURIComponent(url.substring(pos+1));
+                }
+            }
+            return "";
         },
 
-        stopPropagation: function() {
-            AM.Event.cancelBubble = true;
+        /**
+         * Собирает строку запроса
+         * @param url
+         * @param name
+         * @param value
+         * @returns {*}
+         */
+        addQueryStringArg: function(url,name,value){
+            if(url.indexOf("?") == -1){
+                url += "?";
+            } else {
+                url += "&";
+            }
+            url += encodeURIComponent(name)+ "=" + encodeURIComponent(value);
+            return url;
+        }
+    },
+
+    XML: {
+
+        /**
+         * XML Parser
+         * @param xml
+         */
+        parseXml: function(xml) {
+            var xmldom = null;
+
+            if(typeof DOMParser != "undefined") {
+                console.log(typeof DOMParser);
+                xmldom = (new DOMParser()).parseFromString(xml, "text/xml");
+                var errors = xmldom.getElementsByTagName("parsererror");
+                if(errors.length)
+                {
+                    throw new Error("XML parsing error:" + errors[0].textContent);
+                }
+            }
+            else if (typeof ActiveXObject() != "undefined")
+            {
+                xmldom = createDocument();
+                xmldom.loadXml(xml);
+                if(xmldom.parseError != 0)
+                {
+                    throw new Error("XML parsing error: " + xmldom.parseError.reason);
+                }
+
+            }
+            else
+            {
+                throw new Error("No XML parser available.");
+            }
+            return xmldom;
         }
     }
 

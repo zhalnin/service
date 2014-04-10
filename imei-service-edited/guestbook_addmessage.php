@@ -115,7 +115,7 @@
 
 
 ?>
-        <div class="guestbook-all-addmessage main-content">
+        <div id="guestbook-form" class="guestbook-all-addmessage main-content">
             <div class="guest-form-box">
                 <h2 class="h2 primary">Добавить сообщение</h2>
                 <div class="guest-all-form top-divided">
@@ -186,13 +186,14 @@
                                 <input type="hidden" name="client_ip" value="<?php echo $ipAddress; ?>" />
                                 <input type="hidden" name="client_browser" value="<?php echo $browser; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
+                                <input type="hidden" name="guestbookReply" value="" id="guestbookReply" />
 
 
 
-                                <div class="" style="">
+                                <div id="submit-button" class="" style="">
                                     <div class="">
                                         <div id="shipping-step-defaults" style="">
-                                            <div id="shipping-continue-button" class="button rect transactional" title="Отправить" value="click" type="submit" style="visibility: visible">
+                                            <div id="shipping-continue-button" class="button rect transactional" title="Отправить" value="click" type="submit" >
                                                     <span style="">
                                                         <span class="effect"></span>
                                                         <span class="label"> Отправить </span>
@@ -203,8 +204,8 @@
                                 </div><!-- gs grid-3of4 -->
 
 
-                                <div class="" style="">
-                                    <div id="shipping-button" class="button rect transactional blues" title="Отмена" type="button" style="visibility: hidden">
+                                <div id="cancel-button" style="">
+                                    <div id="shipping-button" class="button rect transactional blues" title="Отмена" type="button">
                                         <span style="">
                                             <span class="effect"></span>
                                             <span class="label"> Отмена </span>

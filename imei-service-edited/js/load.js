@@ -14,41 +14,51 @@ AM.Event.addEvent(window, 'load', function() {
         window.scrollTo(0,0);
         // look for first form in page
         var form = document.getElementsByTagName('form')[0],
-        // look for button to send
+            // look for button to send
             button_send = AM.DOM.$("shipping-continue-button"),
-        // look for button to reload
+            // look for button to reload
             button_reload = AM.DOM.$("shipping-button"),
             button_detail = AM.DOM.$("detail-button"),
-        // create block for overlay to show when ajax send
+            // create block for overlay to show when ajax send
             overlay = document.createElement("div"),
-        // create element <div> for image
+            // create element <div> for image
             div_img = document.createElement("div"),
-        // create element <img>
+            // create element <img>
             overlay_img = document.createElement("img"),
-        // create fragment element
+            // create fragment element
             fragment_overlay = document.createDocumentFragment(),
-        // length of elements
+            // length of elements
             len,
-        // index of iteration
+            // index of iteration
             i,
             // блок <div> с кнопкой submit
-            submitButton = AM.DOM.$('chipping-continue-button-submit');
+            submitButton = AM.DOM.$('chipping-continue-button-submit'),
+            cancelButton = AM.DOM.$('cancel-button');
 
 
-        var div2 = document.getElementsByClassName('guestbook-all-reply');
-        console.log(div2);
+
+        // В Гостевой - находим блок <div class='guestbook-all-reply'> - в нем кнопка "Ответить" на комментарий
+        // Используем замыкание для назначения каждому отдельному блоку <a></a> HTML-коллекции событие "click",
+        // для предотвращения нативной функции (переход по ссылке). Перемещаем блок с формой к нужному комментарию и
+        // скроллим страницу в область видимости этого комментария
+        var divGuestbookAllReply = document.getElementsByClassName('guestbook-all-reply');
         ( function() {
-            for(var i = 0, len = div2.length; i < len; i++ ) {
+            for( var i = 0, len = divGuestbookAllReply.length; i < len; i++ ) {
                 ( function( num )  {
-                    var diva = div2[num].getElementsByTagName('a');
-                    AM.Event.addEvent(diva[0], 'click', function( e ) {
-                        AM.Event.stopDefault(e);
-                        console.log('a');
-                    } );
+                    var diva = AM.DOM.tag( 'a', divGuestbookAllReply[num] );
+                    AM.Event.addEvent(diva[0], 'click', function( event ) {
+                        AM.Event.stopDefault(event);
 
+                        var guestbookForm = AM.DOM.$('guestbook-form'),
+                            guestbookReply = AM.DOM.$('guestbookReply'),
+                            am = AM.Query.getQueryStringArgs( diva[0].href );
+
+                        guestbookReply.value = "id_parent="+am['id_parent'];
+                        divGuestbookAllReply[num].appendChild(guestbookForm);
+                        AM.DOM.parent( divGuestbookAllReply[num] ).scrollIntoView(true);
+                    } );
                 })( i );
             }
-
          })();
 
 
@@ -76,9 +86,7 @@ AM.Event.addEvent(window, 'load', function() {
                 location.reload();
             });
         }
-//        } else {
-//            return null;
-//        }
+
 
 
         // or if is not key=='Enter' use button_send 'click'
@@ -93,6 +101,16 @@ AM.Event.addEvent(window, 'load', function() {
             });
         } else {
             return null;
+        }
+
+        // Проверяем наличие на странице кнопки "Отмена" - для отмены ответа на комментарий,
+        // если есть, то назначаем событие для возврата всей формы вниз страницы
+        if(cancelButton != null ) {
+            AM.Event.addEvent(cancelButton, 'click', function( event ) {
+                var newsMain = AM.DOM.$('news-main');
+                var guestbookForm = AM.DOM.$('guestbook-form');
+                AM.DOM.append( newsMain, guestbookForm );
+            });
         }
 
 
@@ -225,7 +243,7 @@ AM.Event.addEvent(window, 'load', function() {
 
     } catch(e) {
 //        alert('error in load.js');
-//        console.log(e.message);
+        console.log(e.message);
     }
 
 } );

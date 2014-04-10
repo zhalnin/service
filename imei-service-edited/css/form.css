@@ -609,7 +609,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 textarea {
-    height: 130px !important;
+    height: 100px !important;
     overflow: auto;
     resize: none;
     width: 450px;
@@ -641,4 +641,24 @@ textarea {
 .chipping-continue-button-submit {
     display: none;
     /*visibility: hidden;*/
+}
+#cancel-button {
+    /*position: relative;*/
+    float: right;
+    text-align: right;
+    /*padding-bottom: 10px;*/
+    /*width: 200px;*/
+    display: inline-block;
+}
+#submit-button {
+    display: inline-block;
+}
+.header-cancel {
+    height: 70px;
+    display: inline-block;
+    width: 100%;
+    
+}
+#guestbook-form {
+    position: relative;
 }

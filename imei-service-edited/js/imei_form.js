@@ -73,8 +73,9 @@ var AMForm = {
         else if( AMForm.validateForm(form) == true ){
             // if button pressed for the first time
             if( this.watchedForm == false ) {
+                console.log(form.action);
                 // set value in field 'action' in input
-                form.action = "sendMail.php";
+//                form.action = "sendMail.php";
 //                console.log("form.submit()");
                 // submit form for Unlock, Carrier check, Blacklist Check
                 form.submit();

@@ -61,7 +61,7 @@ function selectRecursion($id2, $page ) {
                     }
                     ?>
                 </div>
-                <div class="guestbook-all-reply" id="<?php print $result2['id']; ?>"><a href="?page=<?php print $page; ?>&id_parent=<?php print $result2['id']; ?>">Ответить</a></div>
+                <div class="guestbook-all-reply" id="<?php print $result2['id']; ?>"><span><a href="?id_parent=<?php print $result2['id']; ?>">Ответить</a></span></div>
 
                 <?php selectRecursion($result2['id'], $page ); ?>
 
