@@ -24,6 +24,9 @@
             if( empty( $_POST['name'] ) ) {
                 $valid = "";
                 $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Имя</li>";
+            } elseif( iconv_strlen( trim( ( $_POST['name']) ,'utf-8') ) < 2 ) {
+                $valid = "";
+                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Имя должно содержать не менее двух букв</li>";
             }
 //            if( empty( $_POST['city'] ) ) {
 //                $valid = "";
@@ -32,6 +35,9 @@
             if( empty( $_POST['email'] ) ) {
                 $valid = "";
                 $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: E-mail</li>";
+            } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $_POST['email'] ) ) {
+                $valid = "";
+                $error .= "<li style='color: rgb(255, 0, 0);'>Введите ваш действительный E-mail</li>";
             }
 //            if( empty( $_POST['url'] ) ) {
 //                $valid = "";
@@ -40,24 +46,36 @@
             if( empty( $_POST['message'] ) ) {
                 $valid = "";
                 $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Сообщение</li>";
+            } elseif( iconv_strlen( $_POST['message'] , 'utf-8') < 3 ) {
+                $valid = "";
+                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Сообщение не должно иметь менее 3-х символов</li>";
             }
+
 //            if( empty( $_POST['code'] ) ) {
 //                $valid = "";
 //                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо указать код с картинки</li>";
 //            }
             if( $_SESSION['code'] != $_POST['code'] ) {
                 $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Указанный код с картинки не верный</li>";
+                $error .= "<li style='color: rgb(255, 0, 0);'>Указанный код с картинки неверный</li>";
             }
-            if( isset( $_POST['id_parent'] ) ) {
-                $id_parent = htmlspecialchars( stripslashes( $_POST['id_parent'] ), ENT_QUOTES );
-            } else {
+            if( isset( $_POST['id_parent_post'] ) ) {
+                $id_parent = htmlspecialchars( stripslashes( $_POST['id_parent_post'] ), ENT_QUOTES );
+            }
+            if( isset( $_GET['id_parent'] ) ) {
+                $id_parent = htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES );
+            }
+            if( ! isset( $id_parent ) ) {
                 $id_parent = 0;
             }
-            if( isset( $_POST['guestbookReply'] ) ) {
-                $id_parent = htmlspecialchars( stripslashes( $_POST['guestbookReply'] ), ENT_QUOTES );
-            } else {
-                $id_parent = 0;
+            if( isset( $_GET['page'] ) ) {
+                $page = htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
+            }
+            if( isset( $_POST['page'] ) ) {
+                $page = htmlspecialchars( stripslashes( $_POST['page'] ), ENT_QUOTES );
+            }
+            if( !isset( $page ) ) {
+                $page = 1;
             }
 
             $name = htmlspecialchars( stripslashes( $_POST['name'] ), ENT_QUOTES );
@@ -115,6 +133,17 @@
         }
 
         if( empty( $valid ) || ! empty( $error ) ) {
+        if( isset( $_GET['id_parent'] ) ) {
+            if( isset( $_GET['page'] ) ) {
+                $page = "&page=".htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
+            } else {
+                $page = "&page=1";
+            }
+            $id_parent = "?id_parent=".htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES ).$page;
+        } else {
+            $id_parent = "";
+        }
+
 
 ?>
         <div id="guestbook-form" class="guestbook-all-addmessage main-content">
@@ -123,7 +152,7 @@
                 <div class="guest-all-form top-divided">
 <!--                    <form method="POST" action="guestbook.php">-->
 <!--                    <form method="POST" name="guestbook-form" action="faq2.php?id_parent=70">-->
-                    <form method="POST" action="guestbook.php">
+                    <form method="POST" action="guestbook.php<?php echo $id_parent; ?>">
                         <fieldset>
 
                             <legend><strong class="label">Заполните все обязательные поля</strong></legend>
@@ -188,7 +217,8 @@
                                 <input type="hidden" name="client_ip" value="<?php echo $ipAddress; ?>" />
                                 <input type="hidden" name="client_browser" value="<?php echo $browser; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
-                                <input type="hidden" name="guestbookReply" value="" id="guestbookReply" />
+                                <input type="hidden" name="id_parent_post" value="" id="guestbookReply" />
+                                <input type="hidden" name="page" value="<?php echo $page; ?>" />
 
 
 

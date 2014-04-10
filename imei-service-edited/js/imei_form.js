@@ -17,7 +17,7 @@ var AMForm = {
         email: {
             msg: "Введите корректный электронный адрес",
                 test: function(obj, load) {
-                return !obj.value || /^[a-z0-9_+.-]+\@([a-z0-9-]+\.)+[a-z]{2,4}$/i.test(obj.value);
+                return !obj.value || /^[a-z0-9_+.-]+\@(?:[a-z0-9-]+\.)+[a-z]{2,4}$/i.test(obj.value);
             }
         },
         imei: {

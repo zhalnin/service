@@ -81,7 +81,7 @@ include( "utils/utils.getIP.php" );
                             }
                             ?>
                         </div>
-                        <div class="guestbook-all-reply"><span><a href="?id_parent=<?php print $pm['id']; ?>" >Ответить</a></span></div>
+                        <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $pm['id']; ?>" >Ответить</a></span></div>
                         <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
                         <!--                    если находим их, то выводим чуть ниже родительского поста,
                                                 , в функции проходим рекурсивно по всем постам, если они имеют id_parent

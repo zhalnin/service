@@ -640,7 +640,6 @@ textarea {
 }
 .chipping-continue-button-submit {
     display: none;
-    visibility: hidden;
 }
 #cancel-button {
     /*position: relative;*/
