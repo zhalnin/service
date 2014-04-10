@@ -53,7 +53,7 @@ AM.Event.addEvent(window, 'load', function() {
                             guestbookReply = AM.DOM.$('guestbookReply'),
                             am = AM.Query.getQueryStringArgs( diva[0].href );
 
-                        guestbookReply.value = "id_parent="+am['id_parent'];
+                        guestbookReply.value = am['id_parent'];
                         divGuestbookAllReply[num].appendChild(guestbookForm);
                         AM.DOM.parent( divGuestbookAllReply[num] ).scrollIntoView(true);
                     } );
@@ -117,13 +117,13 @@ AM.Event.addEvent(window, 'load', function() {
 
 
         // if window is loaded, look for input elements, if elements disabled, make it enabled
-        for( i=0,len=elements.length; i<len; i++ ) {
-            if( elements[i].nodeName == 'INPUT' && elements[i].type != 'hidden' &&
-                elements[i].type != 'submit' && elements[i].type != 'button' ) {
-                elements[i].value = '';
-                elements[i].disabled = false;
-            }
-        }
+//        for( i=0,len=elements.length; i<len; i++ ) {
+//            if( elements[i].nodeName == 'INPUT' && elements[i].type != 'hidden' &&
+//                elements[i].type != 'submit' && elements[i].type != 'button' ) {
+//                elements[i].value = '';
+//                elements[i].disabled = false;
+//            }
+//        }
 
 
         // add id to block <div id='overlay'>
@@ -160,7 +160,7 @@ AM.Event.addEvent(window, 'load', function() {
                 // set flag to true - stop watchForm()
                 checking = true;
                 // если это не добавить, то при нажатии на Enter перегружается форма
-                AM.DOM.stopDefault(event);
+                AM.Event.stopDefault(event);
 //                // scroll window to x=0 and y=0
 //                window.scrollTo(0,0);
                 // start 'watchForm();

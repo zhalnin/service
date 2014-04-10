@@ -82,7 +82,7 @@ function gen_img(){
 
     }
 
-    $color = imagecolorallocate($im, rand( 0, 200 ), rand( 0, 100 ), rand( 0 , 200 ) );
+    $color = imagecolorallocate($im, rand( 0, 150 ), rand( 0, 100 ), rand( 0 , 150 ) );
     imagettftext( $im, $font_arr[$rnd_arr]['size'], rand( -4, 4 ), rand( 10, 45 ), rand( 20, 35 ),
         $color, "src/".$font_arr[$rnd_arr]["fname"] , $code);
 

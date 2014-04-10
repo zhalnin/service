@@ -37,13 +37,13 @@ var AMForm = {
         name: {
             msg: "Имя должно быть длиной больше 3-х символов",
             test: function(obj) {
-                return obj.value.length > 3;
+                return !obj.value || obj.value.length > 2;
             }
         },
         textarea: {
             msg: "Текст должен быть длиной минимум из двух слов",
             test: function(obj) {
-                return !obj.value || obj.value.match( new RegExp("[-a-z0-9_.]{1,20} [-a-z0-9_.]{1,20}"));
+                return !obj.value || obj.value.match( new RegExp("[-a-zа-я0-9_.]{1,20} [-a-zа-я0-9_.]{1,20}",'i'));
 //                return obj.value.length >= 10;
             }
         }
@@ -73,7 +73,7 @@ var AMForm = {
         else if( AMForm.validateForm(form) == true ){
             // if button pressed for the first time
             if( this.watchedForm == false ) {
-                console.log(form.action);
+//                alert(form.action);
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
 //                console.log("form.submit()");
@@ -110,7 +110,7 @@ var AMForm = {
             if(elem[i].nodeName != 'FIELDSET' && elem[i].type != 'hidden'){
                 result =  function(num){
 
-
+//                console.log(elem[num]);
 
 //                    // для теста
 //                    AM.Event.addEvent(elem[num], 'click', function(){
@@ -122,6 +122,7 @@ var AMForm = {
 
                     // при фокусе на элементе span "подсказка" убирается
                     AM.Event.addEvent(elem[num],'focus',function(event){
+//                        console.log(1);
 //                        console.log(elem[num]);
                         //его родитель label делаем невидимым
 //                        AM.DOM.prev(elem[num]).style.display = "none";
@@ -133,6 +134,7 @@ var AMForm = {
 
                     // при смене фокуса с элемента span "подсказка" появляется
                     AM.Event.addEvent(elem[num],'blur',function(event){
+//                        console.log(2);
                         // если значение пустое
                         if(elem[num].value == '') {
                             // делаем его родителя label видимым
@@ -144,12 +146,14 @@ var AMForm = {
 
                     // при изменении значения поля, проверяем его на корректность
                     AM.Event.addEvent(elem[num], "change", function(event){
+//                        console.log(3);
                        that.validateField(elem[num]);
                     });
 
                     // при загрузке страницы фокус находится на первом элементе управления
                     // при нажатии на клавишу убирается "подсказка"
                     AM.Event.addEvent( elem[num], "keypress", function( event ) {
+//                        console.log(4);
                         var e = AM.Event.getEvent( event );
                         if(e.keyCode != 13 || e.keyCode != 9 ) {
                             AM.DOM.prev(elem[num]).style.opacity = 0.5;
@@ -158,18 +162,22 @@ var AMForm = {
                     } );
 
                     // при вставке из памяти элемента управления "подсказка" убирается
+                    // но, если поле value элемента управления пустое, то отображается подсказка(полупрозрачная)
                     AM.Event.addEvent( elem[num], "input", function( event ) {
-                        AM.DOM.prev(elem[num]).style.display = "none";
-//                        AM.DOM.prev(elem[num]).style.opacity = 0.5;
+//                        console.log(5);
+                        if( elem[num].value == ''  ) {
+                            AM.DOM.prev( elem[num]).style.display = "";
+                        } else {
+                            AM.DOM.prev(elem[num]).style.display = "none";
+
+                        }
                     } );
 
-                    // если в элементе управления есть "подсказка", то фокусируемся на нем, но текст в "подсказке" отображается
-                    if(AM.DOM.prev(elem[1]).style.display == "") {
-                        // Фокус на первом элементе управления
-//                        elem[1].focus();
-                        AM.DOM.prev(elem[1]).style.display = "";
-                    }
 
+                    if( elem[num].value != "" ) {
+//                        console.log(6);
+                        AM.DOM.prev( elem[num] ).style.display = "none";
+                    }
                 }(i);
             }
         }
@@ -224,12 +232,15 @@ var AMForm = {
         }
         // если есть хоть одна ошибка
         if( error.length ) {
+            // то фокусируем страницу на форме
+            var guestbookForm = AM.DOM.$('guestbook-form');
+            guestbookForm.scrollIntoView(true);
             // возвращаем результат False
-            return res = false;
+            return false;
             // если ошибок нет
         } else {
             // возвращаем результат True
-            return res = true;
+            return true;
         }
     },
 

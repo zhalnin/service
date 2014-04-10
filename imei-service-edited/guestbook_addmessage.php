@@ -49,8 +49,13 @@
                 $valid = "";
                 $error .= "<li style='color: rgb(255, 0, 0);'>Указанный код с картинки не верный</li>";
             }
-            if( isset( $_GET['id_parent'] ) ) {
-                $id_parent = htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES );
+            if( isset( $_POST['id_parent'] ) ) {
+                $id_parent = htmlspecialchars( stripslashes( $_POST['id_parent'] ), ENT_QUOTES );
+            } else {
+                $id_parent = 0;
+            }
+            if( isset( $_POST['guestbookReply'] ) ) {
+                $id_parent = htmlspecialchars( stripslashes( $_POST['guestbookReply'] ), ENT_QUOTES );
             } else {
                 $id_parent = 0;
             }
@@ -98,8 +103,7 @@
                         $header = "From: zhalnin@mail.com\r\n";
                         $header .= "Reply-to: zhalnin@mail.com \r\n";
                         $header .= "Content-type: text/plane; charset=utf-8\r\n";
-
-                        mail($to,$subject,$body,$header);
+//                        mail($to,$subject,$body,$header);
                     } else {
                         print "<html><head>\n";
                         print "<meta http-equiv='Refresh' content='0; url=guestbook.php?page=$page'>\n";
@@ -110,9 +114,7 @@
             }
         }
 
-        if( empty( $valid ) ) {
-
-
+        if( empty( $valid ) || ! empty( $error ) ) {
 
 ?>
         <div id="guestbook-form" class="guestbook-all-addmessage main-content">
@@ -121,8 +123,9 @@
                 <div class="guest-all-form top-divided">
 <!--                    <form method="POST" action="guestbook.php">-->
 <!--                    <form method="POST" name="guestbook-form" action="faq2.php?id_parent=70">-->
-                    <form method="POST">
+                    <form method="POST" action="guestbook.php">
                         <fieldset>
+
                             <legend><strong class="label">Заполните все обязательные поля</strong></legend>
                             <div class="fieldset-content">
                                 <div class="mbs">
@@ -131,7 +134,6 @@
                                         <input type="text" name="name" id="name" maxlength="25" class="name" value="<?php echo $name; ?>" />
                                     </span>
                                 </div>
-
                                 <div class="mbs">
                                     <span class="form-field field-with-placeholder">
                                         <label class="placeholder" for="city"><span>Город</span></label>
@@ -225,7 +227,7 @@
 
 <?php
             if( ! empty( $error ) ) {
-                print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'><ins>Неудача, выполните следующие рекомендации:</ins>";
+                print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
                 print "<ul>\n";
                 print $error;
                 print "</ul>\n";
