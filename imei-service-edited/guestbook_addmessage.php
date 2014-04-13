@@ -184,12 +184,20 @@
                                     </span>
                                 </div>
 
+
+
+
                                 <div class="mbs">
                                     <span class="form-field field-with-placeholder">
                                         <label class="placeholder" for="message"><span>Сообщение ( обязательно )</span></label>
                                         <textarea class="textarea" cols="42" rows="5" name="message" class="textarea" id="message"><?php echo $message; ?></textarea>
                                     </span>
                                 </div>
+
+
+
+
+
 
                                 <div class="mbs">
                                     <span  class="capcha">
