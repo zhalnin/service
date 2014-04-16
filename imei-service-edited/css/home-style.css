@@ -292,6 +292,12 @@ a:link, a:visited, a:active {
 
 .main-content, .rounded {
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+
 }
 .main-content {
     -moz-border-bottom-colors: none;
