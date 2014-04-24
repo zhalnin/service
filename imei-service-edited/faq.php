@@ -188,7 +188,7 @@ require_once("templates/top.php");
                             if($position['url'] != 'article') {
                                 echo "<p><a href=\"".htmlspecialchars($position['url'])."\"
                                 class=\"main_txt_lnk\">
-                                ".htmlspecialchars($position['name'])."</a></p>";
+                                ".htmlspecialchars( stripslashes( $position['name'] ) )."</a></p>";
                             } else {
                                 echo "<p><a href=\"$_SERVER[PHP_SELF]?id_catalog=$_GET[id_catalog]&".
                                     "id_position=$position[id_position]\"
@@ -220,8 +220,8 @@ require_once("templates/top.php");
                     // ссылкой - осуществляем редирект
                     if($position['url'] != 'article') {
                         echo "<HTML><HEAD>
-                                            <META HTTP-EQUIV='Refresh' CONTENT='0; URL=$position[url]'>
-                                            </HEAD></HTML>";
+                                    <META HTTP-EQUIV='Refresh' CONTENT='0; URL=$position[url]'>
+                                </HEAD></HTML>";
                         exit();
                     }
 
@@ -257,7 +257,7 @@ require_once("templates/top.php");
     </div><!--        End of news-main-->
 
 
-    <div id="main-guestbook"></div>
+<!--    <div id="main-guestbook"></div>-->
 
     <?php
     require_once("templates/bottom.php");

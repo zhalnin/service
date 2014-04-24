@@ -71,7 +71,7 @@ include( "utils/utils.getIP.php" );
                         </div>
 
                         <div class='guestbook-all-image'>
-                            <img src="files/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $pm['name']; ?>" >
+                            <img src="images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $pm['name']; ?>" >
                         </div>
 
                         <div class='guestbook-all-info'>

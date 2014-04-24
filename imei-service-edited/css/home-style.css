@@ -27,7 +27,7 @@ body #showcase .row img.hero-image.flushleft.logo {
 #main {
     margin: 0 auto;
     width: 980px;
-    /*position: relative;*/
+    position: static;
 }
 
 
@@ -116,26 +116,46 @@ a:link, a:visited, a:active {
 /*#header #navigation li#nav-home a span {*/
     /*background-position: 50% -4px;*/
 /*}*/
+/*#header #navigation li#nav-unlock a span {*/
+    /*background-position: 50% -37px;*/
+/*}*/
+/*#header #navigation li#nav-udid a span {*/
+    /*background-position: 50% -67px;*/
+/*}*/
+/*#header #navigation li#nav-carrier a span {*/
+    /*background-position: 50% -98px;*/
+/*}*/
+/*#header #navigation li#nav-fast_check a span {*/
+    /*background-position: 50% -135px;*/
+/*}*/
+/*#header #navigation li#nav-blacklist a span {*/
+    /*background-position: 50% -172px;*/
+/*}*/
+/*#header #navigation li#nav-faq a span {*/
+    /*background-position: 50% -209px;*/
+/*}*/
+
+
 #header #navigation li#nav-home a span {
-    background-position: 37px 8px;
+background-position: 37px 8px;
 }
 #header #navigation li#nav-unlock a span {
-    background-position: 24px -18px;
+background-position: 24px -18px;
 }
 #header #navigation li#nav-udid a span {
-    background-position: 8px -44px;
+background-position: 8px -44px;
 }
 #header #navigation li#nav-carrier a span {
-    background-position: 18px -70px;
+background-position: 18px -70px;
 }
 #header #navigation li#nav-fast_check a span {
-    background-position: 6px -97px;
+background-position: 6px -97px;
 }
 #header #navigation li#nav-blacklist a span {
-    background-position: 42px -127px;
+background-position: 42px -127px;
 }
 #header #navigation li#nav-faq a span {
-    background-position: 36px -158px;
+background-position: 36px -159px;
 }
 
 
@@ -173,7 +193,7 @@ a:link, a:visited, a:active {
     height: 30px;
     margin: 3px auto;
     width: 100%;
-    position: absolute;
+    /*position: absolute;*/
 }
 
 
@@ -1105,6 +1125,9 @@ span #uah.currency{
     width: 70%;
     float: right;
     font-size: 14px;
+}
+.faq-info p {
+    /*font-size: 14px;*/
 }
 .faq-footer {
     height: 20px;

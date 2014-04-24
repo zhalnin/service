@@ -51,7 +51,7 @@ function selectRecursion($id2, $page ) {
                 </div>
 
                 <div class='guestbook-all-image'>
-                    <img src="files/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $result2['name']; ?>" >
+                    <img src="images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $result2['name']; ?>" >
                 </div>
 
                 <div class='guestbook-all-info'>

@@ -23,7 +23,7 @@ require_once("count.php");
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link href="css/home-style.css" type="text/css" rel="stylesheet">
     <link href="css/form.css" type="text/css" rel="stylesheet">
-    <link href="css/wysisyg.css" type="text/css" rel="stylesheet">
+<!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
     <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
     <script type="text/javascript" src="js/AlezhalModules.js"></script>
     <script type="text/javascript" src="js/helperFunctions.js"></script>
