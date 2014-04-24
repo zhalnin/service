@@ -113,26 +113,29 @@ a:link, a:visited, a:active {
 /*}*/
 
 /*Для 7-ми элементов*/
+/*#header #navigation li#nav-home a span {*/
+    /*background-position: 50% -4px;*/
+/*}*/
 #header #navigation li#nav-home a span {
-    background-position: 50% -4px;
+    background-position: 37px 8px;
 }
 #header #navigation li#nav-unlock a span {
-    background-position: 50% -37px;
+    background-position: 24px -18px;
 }
 #header #navigation li#nav-udid a span {
-    background-position: 50% -67px;
+    background-position: 8px -44px;
 }
 #header #navigation li#nav-carrier a span {
-    background-position: 50% -98px;
+    background-position: 18px -70px;
 }
 #header #navigation li#nav-fast_check a span {
-    background-position: 50% -135px;
+    background-position: 6px -97px;
 }
 #header #navigation li#nav-blacklist a span {
-    background-position: 50% -172px;
+    background-position: 42px -127px;
 }
 #header #navigation li#nav-faq a span {
-    background-position: 50% -209px;
+    background-position: 36px -158px;
 }
 
 
@@ -163,12 +166,14 @@ a:link, a:visited, a:active {
 
 /*Для 7-ми элементов*/
 #header #navigation li a span {
-    background: url("../images/globalnav_text_7.png") no-repeat scroll 50% 0 transparent;
+    /*background: url("../images/globalnav_text_7.png") no-repeat scroll 50% 0 transparent;*/
+    background: url("../images/globalnav_text_7.svg") no-repeat scroll 50% 0 transparent;
     /*background: url("../images/ed/globalnav_text_en.png") no-repeat scroll 50% 0 transparent;*/
     display: block;
     height: 30px;
     margin: 3px auto;
     width: 100%;
+    position: absolute;
 }
 
 
