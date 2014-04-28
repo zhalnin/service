@@ -87,7 +87,6 @@ function refferer($begin, $end, $page, $pnumber)
                 GROUP BY name
                 ORDER BY hits DESC
                 LIMIT $start, $pnumber";
-
     $ref = mysql_query($query);
     $i = $start + 1;
     if(!$ref)

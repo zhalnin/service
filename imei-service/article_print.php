@@ -44,7 +44,19 @@ $type_catalog = "";
 //require_once("templates/top.php");
 
 
-print_page($par['name']);
+print_page($par[name]);
+
+
+
+
+//echo "<div class='faq-title'>
+//    <h1 class=h2>".$par[name]."</h1>
+//</div>
+//<div class='faq-image'>
+//
+//</div>";
+//echo "<div class='faq-all-info'>";
+
 
 
 
@@ -81,6 +93,7 @@ if(mysql_num_rows($par) > 0)
         if(!$img) exit("Ошибка при извлечении изображений");
         if(mysql_num_rows($img))
         {
+
 
             // Извлекаем изображения
             unset($img_arr);
@@ -128,7 +141,7 @@ if(mysql_num_rows($par) > 0)
                 {
 //                    $image_print .= "</td><table cellpadding=5>";
 //                      $image_print .= "<tr valign=top>";
-                    $image_print .= "<td class=\"main_txt column last\">".$img_arr[$i]."</td>";
+                    $image_print .= "<td class=\"main_txt \">".$img_arr[$i]."</td>";
                     if($k == 2)
                     {
                         $k = -1;
@@ -138,55 +151,56 @@ if(mysql_num_rows($par) > 0)
             }
         }
 
+
         // Выясняем тип параграфа
-        $class = "rightpanel_txt column last";
+        $class = "rightpanel_txt ";
         switch($paragraph['type'])
         {
             case 'text':
-                $class = "main_txt column last";
+                $class = "main_txt ";
                 echo "<div align=$align class=\"$class\">".
                     nl2br(print_page($paragraph['name'])).
                     "<br/>$image_print</div>";
                 break;
             case 'title_h1':
-                $class = "main_ttl column last";
-                echo "<h1 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h1 align=$align class=\"$class h1\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h1>";
                 break;
             case 'title_h2':
-                $class = "main_ttl column last";
-                echo "<h2 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h2 align=$align class=\"$class h2\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h2>";
                 break;
             case 'title_h3':
-                $class = "main_ttl column last";
-                echo "<h3 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h3 align=$align class=\"$class h3\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h3>";
                 break;
             case 'title_h4':
-                $class = "main_ttl column last";
-                echo "<h4 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h4 align=$align class=\"$class h4\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h4>";
                 break;
             case 'title_h5':
-                $class = "main_ttl column last";
-                echo "<h5 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h5 align=$align class=\"$class h5\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h5>";
                 break;
             case 'title_h6':
-                $class = "main_ttl column last";
-                echo "<h6 align=$align class=\"$class\">".
+                $class = "main_ttl ";
+                echo "<h6 align=$align class=\"$class h6\">".
                     print_page($paragraph['name']).
                     "<br/>$image_print</h6>";
                 break;
             case 'list':
                 $arr = explode("\r\n", $paragraph['name']);
-                $class = "main_txt column last";
+                $class = "main_txt ";
                 if(!empty($arr))
                 {
                     echo "<div align=$align class=\"$class\"><ul>";
@@ -200,6 +214,8 @@ if(mysql_num_rows($par) > 0)
         }
 
     }
+//    echo "</div> ";
+//    echo "</div> ";
 }
 echo "<div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.back(); >
                                 <div id=\"button_back\" class=\"button rect transactional blues\" title=\"Сбросить\" type=\"button\" style=\"\">
@@ -238,3 +254,16 @@ echo "<div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.
     //-->
 </script>
 
+
+
+
+
+<!--echo "<div class='faq-title'>-->
+<!--    <h1 class=h2>$subcatalog[name]</h1>-->
+<!--</div>-->
+<!--<div class='faq-image'>-->
+<!--    <img alt='IMEI-service - Вопросы' src='images/Apple_logo_black_shadow.png'/>-->
+<!--</div>";-->
+<!--echo "<div class='faq-all-info'>";-->
+<!--    require_once("article_print.php");-->
+<!--    echo "</div> ";-->

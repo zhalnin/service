@@ -83,8 +83,7 @@ try
                                     "Изображение",
                                     false,
                                     $_FILES,
-                                    "../../files/article/",
-                                    "paragraph_");
+                                    "../../files/article/");
     $type           = new FieldSelect("type",
                                     "Тип параграфа",
                                     array("text"      => "Параграф",

@@ -57,6 +57,7 @@ try
     $id_parent = $_GET['id_parent'];
     $title = $catalog['name'];
     $id_catalog = $catalog[id_catalog];
+    $keywords = "unlock iPhone,официальный анлок,AT&T,Orange,UK,USA,Bouygues,Telia,SFR,Vodafone,T-mobile,Verizon";
     $description = "Официальный анлок iPhone. Стоимость разлочки iPhone зависит от оператора, к которому он привязан.";
 
 
@@ -108,9 +109,7 @@ if(mysql_num_rows($res)){
     <div class="row block grid2col row block border">
     <img class="hero-image flushleft" alt="<?php echo $catalog[alt];?>" src="<?php echo $catalog[urlpict];?>">
     <div class="column last">
-    <h1>
-        <a href="<?php echo $_SERVER[PHP_SELF] .'?ctr='.$ctr.'&id_parent='.$id_parent ?>"><?php echo $catalog[name];?></a>
-    </h1>
+    <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?ctr='.$ctr.'&id_parent='.$id_parent ?>"><?php echo $catalog[name];?></a></h1>
     <div class='column last dividerdownmidi'>
         <div>
             <div style='width: 130px; float: left; margin: 10px 0 20px 50px;'><b>Оператор</b></div>
@@ -154,7 +153,7 @@ if(mysql_num_rows($res)){
                                 <form method="post">
                                     <fieldset style="">
                                         <legend style="">
-                                            <strong class="label"><b><?php echo $parent_catalog[order_title];?>Б/b></strong>
+                                            <strong class="label"><b><?php echo $parent_catalog[order_title];?></b></strong>
                                         </legend>
                                         <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
 

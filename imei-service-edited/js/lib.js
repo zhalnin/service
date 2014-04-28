@@ -81,37 +81,37 @@ function parseResult(responseText){
 }
 
 
-/**
- * Позиционирование затемнения по середние экрана
- */
-function adjustOverlay() {
-    // Обнаружение галереи
-    var obj = AM.DOM.$("overlay");
-    // Определение существования галереи
-    if(!obj) return;
-    // Определение ее текущей высоты и ширины
-    var w = AM.Position.getWidth(obj),
-        h = AM.Position.getHeight(obj),
-    // Вертикальное позиционирование контейнера по середине окна
-        t = AM.Position.scrollY() + ( AM.Position.windowHeight() / 2 ) - ( h / 2 );
-    // Но не выше верхней части страницы
-    if(t < 0) t = 0;
-    // Горизонтальное позиционирование контейнера по середине окна
-    var l = AM.Position.scrollX() + ( AM.Position.windowWidth() / 2 ) - ( w / 2 );
-    // Но не левее, чем левый край страницы
-    if(l < 0) l = 0;
-    // Установка выверенной позиции элемента
-    AM.Position.setY(obj, t);
-    AM.Position.setX(obj, l);
-}
+///**
+// * Позиционирование затемнения по середние экрана
+// */
+//function adjustOverlay() {
+//    // Обнаружение галереи
+//    var obj = AM.DOM.$("overlay");
+//    // Определение существования галереи
+//    if(!obj) return;
+//    // Определение ее текущей высоты и ширины
+//    var w = AM.Position.getWidth(obj),
+//        h = AM.Position.getHeight(obj),
+//    // Вертикальное позиционирование контейнера по середине окна
+//        t = AM.Position.scrollY() + ( AM.Position.windowHeight() / 2 ) - ( h / 2 );
+//    // Но не выше верхней части страницы
+//    if(t < 0) t = 0;
+//    // Горизонтальное позиционирование контейнера по середине окна
+//    var l = AM.Position.scrollX() + ( AM.Position.windowWidth() / 2 ) - ( w / 2 );
+//    // Но не левее, чем левый край страницы
+//    if(l < 0) l = 0;
+//    // Установка выверенной позиции элемента
+//    AM.Position.setY(obj, t);
+//    AM.Position.setX(obj, l);
+//}
 
 /**
  * Перепозиционирование затемнения на весь экран
  */
 function adjustAllOverlay() {
-    if( id("overlay") != undefined ) {
+    if( AM.DOM.$("overlay") != undefined ) {
         // Обнаружение затемнения
-        var overl = id("overlay");
+        var overl = AM.DOM.$("overlay");
         // Установка его размеров по высоте и ширине текущей страницы
         // (что будет полезным при использовании прокрутки)
         overl.style.height = AM.Position.scrollY() + AM.Position.windowHeight()+ "px";
@@ -120,27 +120,27 @@ function adjustAllOverlay() {
 }
 
 
-function adjust() {
-//    console.log('adjust');
-    // Обнаружение галереи
-    var obj = AM.DOM.$("gallery");
-    // Определение существования галереи
-    if(!obj) return;
-    // Определение ее текущей высоты и ширины
-    var w = AM.Position.getWidth(obj),
-        h = AM.Position.getHeight(obj),
-    // Вертикальное позиционирование контейнера по середине окна
-        t = AM.Position.scrollY() + ( AM.Position.windowHeight() / 2 ) - ( h / 2 );
-    // Но не выше верхней части страницы
-    if(t < 0) t = 0;
-    // Горизонтальное позиционирование контейнера по середине окна
-    var l = AM.Position.scrollX() + ( AM.Position.windowWidth() / 2 ) - ( w / 2 );
-    // Но не левее, чем левый край страницы
-    if(l < 0) l = 0;
-    // Установка выверенной позиции элемента
-    AM.Position.setY(obj, t);
-    AM.Position.setX(obj, l);
-}
+//function adjust() {
+////    console.log('adjust');
+//    // Обнаружение галереи
+//    var obj = AM.DOM.$("gallery");
+//    // Определение существования галереи
+//    if(!obj) return;
+//    // Определение ее текущей высоты и ширины
+//    var w = AM.Position.getWidth(obj),
+//        h = AM.Position.getHeight(obj),
+//    // Вертикальное позиционирование контейнера по середине окна
+//        t = AM.Position.scrollY() + ( AM.Position.windowHeight() / 2 ) - ( h / 2 );
+//    // Но не выше верхней части страницы
+//    if(t < 0) t = 0;
+//    // Горизонтальное позиционирование контейнера по середине окна
+//    var l = AM.Position.scrollX() + ( AM.Position.windowWidth() / 2 ) - ( w / 2 );
+//    // Но не левее, чем левый край страницы
+//    if(l < 0) l = 0;
+//    // Установка выверенной позиции элемента
+//    AM.Position.setY(obj, t);
+//    AM.Position.setX(obj, l);
+//}
 
 function adjustElem( elem ) {
 //    console.log('adjust');

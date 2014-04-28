@@ -98,6 +98,7 @@ try
                 $_GET['end']    = 0;
                 $_GET['srch']   = "total";
             }
+
             // Элемент постраничной навигации
             if(empty($_GET['page'])) $page = 1;
             else $page = intval($_GET['page']);
@@ -120,9 +121,8 @@ catch(ExceptionObject $exc)
 {
   require("../utils/exception_object.php");
 }
-function searchquery($begin, $end, $srch, $page, $pnumber)
+function searchquery($begin, $end, $srch,  $page, $pnumber)
 {
-
     // Объявляем имена таблиц глобальными
     global $tbl_searchquerys, $tbl_pages;
     // Формируем WHERE-условие для временного интервала

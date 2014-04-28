@@ -91,7 +91,6 @@ try
         $_GET['date'] = intval($_GET['date']);
         $query = "SELECT * FROM $tbl_arch_refferer_week
                     WHERE putdate_begin LIKE '".date("Y-m-d",$_GET['date'])."%'";
-
         $ipt = mysql_query($query);
         if(!$ipt)
         {

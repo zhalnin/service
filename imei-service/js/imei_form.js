@@ -17,7 +17,7 @@ var AMForm = {
         email: {
             msg: "Введите корректный электронный адрес",
                 test: function(obj, load) {
-                return !obj.value || /^[a-z0-9_+.-]+\@([a-z0-9-]+\.)+[a-z]{2,4}$/i.test(obj.value);
+                return !obj.value || /^[a-z0-9_+.-]+\@(?:[a-z0-9-]+\.)+[a-z]{2,4}$/i.test(obj.value);
             }
         },
         imei: {
@@ -33,6 +33,19 @@ var AMForm = {
                 obj.value = obj.value.replace(new RegExp("\\s+",'g'),'');
                 return !obj.value || /^[a-z0-9]{40}$/.test(obj.value);
             }
+        },
+        name: {
+            msg: "Имя должно быть длиной больше 3-х символов",
+            test: function(obj) {
+                return !obj.value || obj.value.length > 2;
+            }
+        },
+        textarea: {
+            msg: "Текст должен быть длиной минимум из двух слов",
+            test: function(obj) {
+                return !obj.value || obj.value.match( new RegExp("[-a-zа-я0-9_.]{1,20} [-a-zа-я0-9_.]{1,20}",'i'));
+//                return obj.value.length >= 10;
+            }
         }
     },
 
@@ -44,7 +57,7 @@ var AMForm = {
      * @param form
      */
     watchForm: function(form) {
-        if( ( this.validateForm(form) == true ) && AM.DOM.$('mode') != null ) {
+        if( ( AMForm.validateForm(form) == true ) && AM.DOM.$('mode') != null ) {
             // if button pressed for the first time
             if( this.watchedForm == false ){
                 // take params from input
@@ -57,11 +70,12 @@ var AMForm = {
                 this.watchedForm = true;
             }
         }
-        else if( this.validateForm(form) == true ){
+        else if( AMForm.validateForm(form) == true ){
             // if button pressed for the first time
             if( this.watchedForm == false ) {
+//                alert(form.action);
                 // set value in field 'action' in input
-                form.action = "sendMail.php";
+//                form.action = "sendMail.php";
 //                console.log("form.submit()");
                 // submit form for Unlock, Carrier check, Blacklist Check
                 form.submit();
@@ -96,7 +110,7 @@ var AMForm = {
             if(elem[i].nodeName != 'FIELDSET' && elem[i].type != 'hidden'){
                 result =  function(num){
 
-
+//                console.log(elem[num]);
 
 //                    // для теста
 //                    AM.Event.addEvent(elem[num], 'click', function(){
@@ -108,46 +122,62 @@ var AMForm = {
 
                     // при фокусе на элементе span "подсказка" убирается
                     AM.Event.addEvent(elem[num],'focus',function(event){
+//                        console.log(1);
+//                        console.log(elem[num]);
                         //его родитель label делаем невидимым
-                        AM.DOM.prev(elem[num]).style.display = "none";
+//                        AM.DOM.prev(elem[num]).style.display = "none";
+                        //его родитель label делаем полупрозрачным
+                        AM.DOM.prev(elem[num]).style.opacity = 0.5;
                         // при фокусе на элементе, выделяем весь текст - удобно при ошибке заполнения
                         AM.DOM.selectText(elem[num],0,elem[num].value.length);
                     });
 
                     // при смене фокуса с элемента span "подсказка" появляется
                     AM.Event.addEvent(elem[num],'blur',function(event){
+//                        console.log(2);
                         // если значение пустое
-                        if(this.value == '') {
+                        if(elem[num].value == '') {
                             // делаем его родителя label видимым
                             AM.DOM.prev(elem[num]).style.display = "";
+                            // делаем его родителя label видимым
+                            AM.DOM.prev(elem[num]).style.opacity = 1;
                         }
                     });
 
                     // при изменении значения поля, проверяем его на корректность
                     AM.Event.addEvent(elem[num], "change", function(event){
+//                        console.log(3);
                        that.validateField(elem[num]);
                     });
 
                     // при загрузке страницы фокус находится на первом элементе управления
                     // при нажатии на клавишу убирается "подсказка"
                     AM.Event.addEvent( elem[num], "keypress", function( event ) {
+//                        console.log(4);
                         var e = AM.Event.getEvent( event );
-                        if(e.keyCode != 13 ) {
-                            AM.DOM.prev(elem[num]).style.display = "none";
+                        if(e.keyCode != 13 || e.keyCode != 9 ) {
+                            AM.DOM.prev(elem[num]).style.opacity = 0.5;
+//                            AM.DOM.prev(elem[num]).style.display = "none";
                         }
                     } );
 
                     // при вставке из памяти элемента управления "подсказка" убирается
+                    // но, если поле value элемента управления пустое, то отображается подсказка(полупрозрачная)
                     AM.Event.addEvent( elem[num], "input", function( event ) {
-                        AM.DOM.prev(elem[num]).style.display = "none";
+//                        console.log(5);
+                        if( elem[num].value == ''  ) {
+                            AM.DOM.prev( elem[num]).style.display = "";
+                        } else {
+                            AM.DOM.prev(elem[num]).style.display = "none";
+
+                        }
                     } );
 
-                    // если в элементе управления есть "подсказка", то фокусируемся на нем, но текст в "подсказке" отображается
-                    if(AM.DOM.prev(elem[1]).style.display == "") {
-                        elem[1].focus();
-                        AM.DOM.prev(elem[1]).style.display = "";
-                    }
 
+                    if( elem[num].value != "" ) {
+//                        console.log(6);
+                        AM.DOM.prev( elem[num] ).style.display = "none";
+                    }
                 }(i);
             }
         }
@@ -177,23 +207,23 @@ var AMForm = {
             // если это не <fieldset>, не имеет аттрибут 'hidden' и имеет название класса
             if( elem[i].nodeName !== 'FIELDSET' && elem[i].type != 'hidden' && elem[i].className ) {
                 // делаем проверку данного поля
-                this.validateField(elem[i]);
+                AMForm.validateField(elem[i]);
                 // если отсутствует значение элемента
                 if( elem[i].value == '' ) {
                     // и нет элемента 'span', где размещена ошибка
                     if( ! AM.DOM.next( elem[i] ) ) {
                         // добавляем блок с ошибкой
-                        this.showErrors( elem[i],"Поле не заполнено" );
+                        AMForm.showErrors( elem[i],"Поле не заполнено" );
                         // если блок с ошибкой уже существуют, удаляем его
                     } else {
-                        this.hideErrors( AM.DOM.next( elem[i] ) );
+                        AMForm.hideErrors( AM.DOM.next( elem[i] ) );
                     }
                     // добавляем в массив ошибок значение
                     error[i] = "error";
                     // если значение элемента присутствует
                 } else {
                     // проверяем данное поле, если оно не удовлетворяет условию
-                    if( this.validateField( elem[i] ) == false ) {
+                    if( AMForm.validateField( elem[i] ) == false ) {
                         // добавляем в массив ошибок значение
                         error[i] = "error";
                     }
@@ -202,12 +232,15 @@ var AMForm = {
         }
         // если есть хоть одна ошибка
         if( error.length ) {
+            // то фокусируем страницу на форме
+            var guestbookForm = AM.DOM.$('guestbook-form');
+            guestbookForm.scrollIntoView(true);
             // возвращаем результат False
-            return res = false;
+            return false;
             // если ошибок нет
         } else {
             // возвращаем результат True
-            return res = true;
+            return true;
         }
     },
 
@@ -231,17 +264,17 @@ var AMForm = {
             }
             else {
                 errors[this.check[name].msg] = '';
-                this.hideErrors(elem);
+                AMForm.hideErrors(elem);
             }
         }
         if(errors.length){
             if( AM.DOM.next(elem) ) {
-                this.hideErrors( AM.DOM.next(elem) );
+                AMForm.hideErrors( AM.DOM.next(elem) );
             }
-            this.showErrors(elem, errors);
+            AMForm.showErrors(elem, errors);
             res = false
         } else if(  AM.DOM.next(elem) ) {
-            this.hideErrors( AM.DOM.next(elem) );
+            AMForm.hideErrors( AM.DOM.next(elem) );
         }
         return res;
     },

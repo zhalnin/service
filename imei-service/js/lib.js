@@ -114,8 +114,8 @@ function adjustAllOverlay() {
         var overl = id("overlay");
         // Установка его размеров по высоте и ширине текущей страницы
         // (что будет полезным при использовании прокрутки)
-        overl.style.height = scrollY() + windowHeight()+ "px";
-        overl.style.width = scrollX() + windowWidth()+"px";
+        overl.style.height = AM.Position.scrollY() + AM.Position.windowHeight()+ "px";
+        overl.style.width = AM.Position.scrollX() + AM.Position.windowWidth()+"px";
     }
 }
 

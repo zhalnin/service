@@ -17,8 +17,8 @@ $tbl_searchquerys   = 'powercounter_searchquerys';
 
 // Параметры соединения
 $dblocation         = 'localhost';
-$dbname             = 'imei-service';
-$dbuser             = 'root';
+$dbname             = 'zhalnin_imei';
+$dbuser             = 'zhalnin';
 $dbpasswd           = 'zhalnin5334';
 
 $ip = $_SERVER['REMOTE_ADDR'];
@@ -36,7 +36,6 @@ if(empty($ip)) $ip = '0.0.0.0';
 // Соединяемся с сервером базы данных
 $dbcnx = @mysql_connect($dblocation,$dbuser,$dbpasswd);
 if(!$dbcnx) return;
-
 // Выбираем базу данных
 if(!@mysql_select_db($dbname, $dbcnx)) exit();
 // Если название не указано - формируем URL
@@ -47,7 +46,7 @@ if(empty($titlepage))
 
 
 // Экранируем спец_символы
-$titlepage = mysql_real_escape_string($titlepage);
+$titlepage = mysql_escape_string($titlepage);
 // Проверяем нет ли такой страницы в базе данных
 $query = "SELECT id_page FROM $tbl_pages
             WHERE title = '$titlepage'";
@@ -95,7 +94,7 @@ if($pgs)
 }
 // Пользовательский агент
 $useragent = $_SERVER['HTTP_USER_AGENT'];
-//$browser = 'none';
+$browser = 'none';
 // Выясняем браузер
 if(strpos($useragent, "Mozilla")    !== false) $browser = 'mozilla';
 if(strpos($useragent, "MSIE")       !== false) $browser = 'msie';
@@ -211,7 +210,7 @@ if(!empty($reff) && $search != 'none' && $search != 'own_site')
                     '$quer',
                     NOW(),
                     INET_ATON('$ip'),
-                    $id_page,
+                    '$id_page',
                     '$search')";
     @mysql_query($query);
 }

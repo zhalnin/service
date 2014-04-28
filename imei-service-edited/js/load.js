@@ -10,8 +10,19 @@
 
 AM.Event.addEvent(window, 'load', function() {
     try{
+
+//        var iframeTD = AM.DOM.$('iframe_td');
+//        var iframe2 = document.createElement('iframe');
+//        iframe2.id = 'iframe_redactor';
+//        iframe2.setAttribute('name','iframe_redactor');
+//        iframe2.style.width = 200+'px';
+//        iframe2.style.height = 200+'px';
+//        iframeTD.appendChild(iframe2);
+
+
+
         // scroll window to x=0 and y=0
-        window.scrollTo(0,0);
+//        window.scrollTo(0,0);
         // look for first form in page
         var form = document.getElementsByTagName('form')[0],
             // look for button to send
@@ -21,19 +32,28 @@ AM.Event.addEvent(window, 'load', function() {
             button_detail = AM.DOM.$("detail-button"),
             // create block for overlay to show when ajax send
             overlay = document.createElement("div"),
-            // create element <div> for image
-            div_img = document.createElement("div"),
-            // create element <img>
-            overlay_img = document.createElement("img"),
+//            // create element <div> for image
+//            div_img = document.createElement("div"),
+//            // create element <img>
+//            overlay_img = document.createElement("img"),
             // create fragment element
-            fragment_overlay = document.createDocumentFragment(),
+//            fragment_overlay = document.createDocumentFragment(),
             // length of elements
-            len,
+            len, lenj,
             // index of iteration
-            i,
+            i, j,
             // блок <div> с кнопкой submit
             submitButton = AM.DOM.$('chipping-continue-button-submit'),
-            cancelButton = AM.DOM.$('cancel-button');
+            cancelButton = AM.DOM.$('cancel-button'),
+
+            theIframe = AM.DOM.$('iframe_redactor'),
+            doc = theIframe.contentWindow.document || theIframe.contentDocument,
+            editorTR = AM.DOM.$('editorTR'),
+            editorTD = AM.DOM.tag('td', editorTR),
+            editorResize = AM.DOM.$('editorResize'),
+            wysiwyg_toolbar = AM.DOM.$('wysiwyg_toolbar');
+
+        adjustAllOverlay();
 
 
         // В Гостевой - находим блок <div class='guestbook-all-reply'> - в нем кнопка "Ответить" на комментарий
@@ -54,6 +74,16 @@ AM.Event.addEvent(window, 'load', function() {
 
                         guestbookReply.value = am['id_parent'];
                         divGuestbookAllReply[num].appendChild(guestbookForm);
+
+                        setTimeout( function() {
+                            var iframes = document.getElementsByTagName('iframe');
+                            for (var j = 0, lenj = iframes.length, doc; j < lenj; ++j) {
+                                doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
+                                doc.designMode = "On";
+                            }
+
+                        }, 1000 );
+
                         AM.DOM.parent( divGuestbookAllReply[num] ).scrollIntoView(true);
                     } );
                 })( i );
@@ -124,28 +154,11 @@ AM.Event.addEvent(window, 'load', function() {
 //            }
 //        }
 
+        var wysiwyg = new WysiwygObject();
 
         // add id to block <div id='overlay'>
         overlay.id = "overlay";
-        // add <div id='div_img'>
-        div_img.id = "div_img";
-        // add to <img src='images/loading2.gif'>
-        overlay_img.src = "images/loading2.gif";
-        // add <div style=align:center>
-        div_img.style.align = "center";
-        // add <img style=width:100px>
-        overlay_img.style.width = 100+"px";
-        // add <img style=height:75px>
-        overlay_img.style.height = 75+"px";
-
-        // add <img> to <div id='div_img'>
-//        div_img.appendChild(overlay_img);
-        AM.DOM.append(div_img, overlay_img);
-        // add <div id='div_img'><img></div> to <div id='overlay'>
-//        overlay.appendChild(div_img);
-        AM.DOM.append(overlay, div_img);
-        // Добавление затемнения к DOM пока скрыто, до запуска ajax
-//        document.body.appendChild(overlay);
+        overlay.onclick = wysiwyg.hideOverlay;
         AM.DOM.append(document.body, overlay);
 
 
@@ -172,19 +185,19 @@ AM.Event.addEvent(window, 'load', function() {
         AM.Event.addEvent(document, 'scroll', function(event) {
           adjustAllOverlay();
         } );
-        // если изменяем размер окна, то экран "ожидания" оптимизируется по всему экрану
-        AM.Event.addEvent(window, 'resize', function(event) {
-            adjustAllOverlay();
-//            console.log("scroll");
-          adjustOverlay();
-//            adjustElem( 'overlay' );
-        } );
-        // если изменяем размер окна, то экран "ожидания" оптимизируется
-        AM.Event.addEvent(document, 'resize', function(event) {
-//            console.log("resize");
-            adjustOverlay();
-//            adjustElem( 'overlay' );
-        } );
+//        // если изменяем размер окна, то экран "ожидания" оптимизируется по всему экрану
+//        AM.Event.addEvent(window, 'resize', function(event) {
+//            adjustAllOverlay();
+////            console.log("scroll");
+//          adjustOverlay();
+////            adjustElem( 'overlay' );
+//        } );
+//        // если изменяем размер окна, то экран "ожидания" оптимизируется
+//        AM.Event.addEvent(document, 'resize', function(event) {
+////            console.log("resize");
+//            adjustOverlay();
+////            adjustElem( 'overlay' );
+//        } );
 
 
 
@@ -236,13 +249,70 @@ AM.Event.addEvent(window, 'load', function() {
             console.log(e.message);
         }
 
-//        adjustOverlay();
-//        showOverlay();
-//        adjustOverlay();
+        var editor_span = AM.DOM.$('editorSpan'),
+            modal_preview = document.createElement("div");
+
+        modal_preview.id = "modal_preview";
+        AM.DOM.attr( modal_preview, 'class', 'modal_preview' );
+        modal_preview.innerHTML = '<div id="modalPreviewTitle">Предпросмотр</div>'+
+            '<div id="modalPreviewContent"></div>';
+        document.body.appendChild(modal_preview);
+
+
+
+
+
+        var modal = document.createElement("div");
+        modal.id = "modal";
+        modal.innerHTML = '<div id="modalContent"></div>' +
+            '<div id="modalTitle"></div>';
+        document.body.appendChild(modal);
+
+        for( j = 0, lenj = editorTD.length; j < lenj; j++ ) {
+            with( { num: j }) {
+                AM.Event.addEvent( AM.DOM.first(editorTD[num]), 'click', function( event ) {
+                    AM.Event.stopDefault( event );
+                    var getX = AM.Position.getX(event),
+                        getY = AM.Position.getY(event),
+                        targetId = AM.DOM.first(editorTD[num]).id;
+
+                    switch ( targetId ) {
+                        case "uploadImage":
+                            doUploadImg(getX, getY);
+                            break;
+                        case "url":
+                            doURL(getX, getY);
+                            break;
+                        case "image":
+                            doImg(getX, getY);
+                            break;
+                        default:
+                            doStyle(targetId);
+                            break;
+                    }
+                });
+            }
+        }
+        new DragObject( editorResize, wysiwyg_toolbar, theIframe );
+
+
+
+
+
+        (function() {
+            setTimeout( function() {
+                var iframes = document.getElementsByTagName('iframe');
+                for (var j = 0, leni = iframes.length, doc; j < leni; ++j) {
+                    doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
+                    doc.designMode = "On";
+                }
+
+            }, 1000 );
+        }());
 
     } catch(e) {
 //        alert('error in load.js');
         console.log(e.message);
     }
 
-} );
+});

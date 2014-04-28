@@ -47,7 +47,7 @@ class FieldTextInt extends FieldText {
     // Min value should be more than max value
     if($this->_min_value > $this->_max_value)
     {
-      throw Exception("Минимальное значение должно
+      throw new Exception("Минимальное значение должно
                       быть больше максимального
                       значения. Поле \"{$this->_caption}\".");
     }

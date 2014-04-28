@@ -1,12 +1,11 @@
-h1, h2, h3, h4, h5, h6 {
-    font-size: 11px;
-    font-weight: normal;
-}
-body, input, textarea, button, legend {
-    color: #333333;
+/*h1, h2, h3, h4, h5, h6 {*/
+    /*font-size: 11px;*/
+    /*font-weight: normal;*/
+/*}*/
+/*body, input, textarea, button, legend {*/
+    /*color: #333333;*/
     /*font: 11px/1.5 "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;*/
-}
-
+/*}*/
 
 .box:after, .shaded-box:after, .sb-heading:after, .sb-body:after {
     clear: both;
@@ -159,6 +158,7 @@ fieldset {
     font-size: 12px;
     padding-bottom: 5px;
 }
+
 
 #showcase .user-form-fieldset .label {
     font-weight: bold;
@@ -499,4 +499,165 @@ button {
     -webkit-box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5);
     -moz-box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5);
     box-shadow:0 1px 0 #61d2ee,inset 0 0 9px rgba(0,0,0,0.5)
+}
+
+
+
+
+
+
+
+
+
+
+/* Отредактировал */
+
+legend {
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+fieldset:first-child > div {
+    margin-bottom: 14px;
+}
+.fieldset-content {
+    margin: 0 0 18px 11px;
+    padding: 5px 15px 0 15px;
+}
+fieldset > div .mbs {
+    margin-bottom: 10px;
+}
+.field-with-placeholder {
+    display: inline-block;
+    position: relative;
+}
+.placeholder {
+    color: #999999;
+    opacity: 1;
+    padding: 4px;
+    pointer-events: none;
+    position: absolute;
+    transition: color 200ms linear 0s;
+    white-space: nowrap;
+}
+.placeholder-field .input, .field-with-placeholder input {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 0 #E5E5E5 inset;
+    -webkit-box-shadow:0 1px 0 #E5E5E5 inset;
+    -moz-box-shadow:0 1px 0 #E5E5E5 inset;
+    padding: 3px 2px;
+}
+.field-with-placeholder label > span {
+    color: #8C8C8C;
+    font-size: 12px;
+}
+.form-field input {
+    border: 1px solid #D6D6D6;
+    box-shadow: 0 1px 1px #AAAAAA inset;
+    -webkit-box-shadow:0 1px 1px #AAAAAA inset;
+    -moz-box-shadow:0 1px 1px #AAAAAA inset;
+    font-size: 13px;
+    height: 24px;
+    text-indent: 4px;
+    width: 376px;
+}
+.code input {
+    width: 155px;
+}
+.capcha {
+    background-color: #D6D6D6;
+    position: relative;
+    display: inline-block;
+    color: #999999;
+    /*padding: 4px;*/
+    /*margin: 4px;*/
+    pointer-events: none;
+    transition: color 200ms linear 0s;
+    white-space: nowrap;
+    box-shadow: 1px 1px 1px #AAAAAA inset;
+    -webkit-box-shadow:1px 1px 1px #AAAAAA inset;
+    -moz-box-shadow:1px 1px 1px #AAAAAA inset;
+}
+.capcha img {
+    margin: 5px 6px 0 0;
+}
+.capcha > span {
+    position: relative;
+}
+.field-with-placeholder label.placeholder {
+    padding: 7px 4px 10px 8px;
+}
+legend .label {
+    font-weight: bold;
+    color: #111111;
+    font-size: 12px;
+}
+
+
+.form-field textarea {
+    border: 1px solid #D6D6D6;
+    box-shadow: 0 1px 1px #AAAAAA inset;
+    font-size: 13px;
+    /*height: 24px;*/
+    text-indent: 4px;
+    /*width: 376px;*/
+}
+textarea:focus, input[type="text"]:focus {
+    box-shadow: 0 0 6px #0088CC;
+    outline: 0 none;
+}
+
+textarea {
+    height: 100px !important;
+    overflow: auto;
+    resize: none;
+    width: 450px;
+    background: none repeat scroll 0 0 white;
+    border-radius: 4px 4px 4px 4px;
+    padding: 3px 2px;
+    border: 1px solid #D6D6D6;
+    box-shadow: 0 1px 1px #AAAAAA inset;
+    -webkit-box-shadow:0 1px 1px #AAAAAA inset;
+    -moz-box-shadow:0 1px 1px #AAAAAA inset;
+    font-size: 12px;
+    text-indent: 4px;
+}
+.placeholder-field .input, .field-with-placeholder input {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 #E5E5E5 inset;
+    -webkit-box-shadow:0 1px 0 #E5E5E5 inset;
+    -moz-box-shadow:0 1px 0 #E5E5E5 inset;
+    padding: 3px 2px;
+}
+.guestbook-error {
+    margin: 0 6px;
+    width: 100%;
+    position: relative;
+
+}
+.chipping-continue-button-submit {
+    display: none;
+}
+#cancel-button {
+    /*position: relative;*/
+    float: right;
+    text-align: right;
+    /*padding-bottom: 10px;*/
+    /*width: 200px;*/
+    display: inline-block;
+}
+#submit-button {
+    display: inline-block;
+}
+.header-cancel {
+    height: 70px;
+    display: inline-block;
+    width: 100%;
+    
+}
+#guestbook-form {
+    position: relative;
 }

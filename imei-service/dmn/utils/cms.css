@@ -2,35 +2,35 @@
     body, table{background-color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 12px}
     a{color: #2136F6;}
     a:hover{color: #981912;}
-    p{margin:  10px 0 7px 0}
+    p{margin:  10px 0px 7px 0px}
     input{background-color: #F5F5F5; border-width: 2px}
 
     /*Стиль для названия системы*/
-    .title{font-size: 18px; color: #253064; margin:  5px 0 0 0}
+    .title{font-size: 18px; color: #253064; margin:  5px 0px 0px 0px}
     /*Название страницы ( по функционалу)*/
-    .namepage{font-size: 16px; color: #3C6194; margin: 10px 30px 5px 0}
+    .namepage{font-size: 16px; color: #3C6194; margin: 10px 30px 5px 0px}
     .hiddenrow{background-color: #fce0fc; color: #818181}
 
     /*Таблица с самыми верхними навигационными ссылками и названием приложения*/
     table.topmenu{color: #7C7C7C; background-color: #F5F5F5; width: 100%;
             border-bottom-style: solid; border-width: 1px; border-color: #777777;}
-    table.topmenu td{padding: 0 0 5px 0;}
+    table.topmenu td{padding: 0px 0px 5px 0px;}
     table.topmenu a{color: #5C7792;}
 
     /*Самая нижняя ячейка таблицы с упоминанием об авторстве счетчика*/
     table tr.authors td{border-top-style: solid; border-color: #D2D2D2; border-top-width: 3px;
-             padding: 0 0 0 20px; border-color: #E4E4E4; height: 30px; color: #4D4D4D; }
+             padding: 0px 0px 0px 20px; border-color: #E4E4E4; height: 30px; color: #4D4D4D; }
     table tr.authors td a{color: #2B5077;}
     table tr.authors td a:hover{color: #1B3CD6;}
 
     /*Ячейка таблицы, в которой распологается меню*/
     td.menu{width: 20%; padding: 10px 7px 20px 25px; border-right-style: solid;
             border-width: 1px; border-color: #000000;}
-    td.menu div{padding: 5px 0 5px 0;}
+    td.menu div{padding: 5px 0px 5px 0px;}
     td.menu div.active a{color: #000000; font-weight: bold;}
 
     /*Ячейка таблицы, в которой располагаются основные данные из таблицы*/
-    td.main{padding: 10px 0 5px 0;}
+    td.main{padding: 10px 0px 5px 0px;}
 
     /*Стили для основных таблиц со статистическими данными*/
     table.table{background-color: #F5F5F5; border-bottom-style: solid; border-width: 1px;
@@ -47,7 +47,7 @@
     table.table tr td.header a:hover{color: #FFFFCC;}
 
     /*Таблицы в powercounter*/
-    table.table tr.subtitle td{padding: 3px 0 3px 10px; color: #000000; background-color: #EBEBEB;
+    table.table tr.subtitle td{padding: 3px 0px 3px 10px; color: #000000; background-color: #EBEBEB;
         border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #000000; }
     table.table td.field{background-color: #E3E3E3; color: #264769 ; font-weight: bold; padding-left: 10px; text-align: left;}
     /*table td.field{background-color: #E3E3E3; color: #264769 ; font-weight: bold; padding-left: 10px; text-align: left;}*/

@@ -29,11 +29,20 @@ try
                                     "Название",
                                     true,
                                     $_POST['name']);
-
+    $preview       = new FieldTextarea("preview",
+                                    "Превью",
+                                    true,
+                                    $_POST['preview'],
+                                    50,
+                                    10,
+                                    200);
     $body           = new FieldTextarea("body",
                                         "Содержимое",
                                         true,
-                                        $_POST['body']);
+                                        $_POST['body'],
+                                        60,
+                                        20,
+                                        1000);
     $date           = new FieldDatetime("date",
                                         "Дата новости",
                                         $_POST['date']);
@@ -69,6 +78,7 @@ try
                                             false,
                                             $_REQUEST['page']);
     $form           = new Form(array("name"     => $name,
+                                    "preview"   => $preview,
                                     "body"      => $body,
                                     "date"      => $date,
                                     "hidedate"  => $hidedate,
@@ -143,12 +153,12 @@ try
                 $settings = mysql_fetch_array($set);
             }
 			resizeimg("files/news/$str","files/news/s_$str" , $settings['width_news'], $settings['height_news']);
-			
             // Формируем SQL-запрос на добавление
             // новостного сообщения
             $query = "INSERT INTO $tbl_news
                         VALUES (NULL,
                                 '{$form->fields[name]->value}',
+                                '{$form->fields[preview]->value}',
                                 '{$form->fields[body]->value}',
                                 '{$form->fields[date]->get_mysql_format()}',
                                 '$hidedate',
@@ -162,7 +172,7 @@ try
                                 '$showhidepict')";
             if(!mysql_query($query))
             {
-                throw new ExceptionMySQL($mysql_error(),
+                throw new ExceptionMySQL(mysql_error(),
                                         $query,
                                         "Ошибка добавления новостного
                                         сообщения");

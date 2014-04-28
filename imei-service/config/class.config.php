@@ -10,7 +10,6 @@
 define("DEBUG",1);
 
 function __autoload($class_name) {
-//    echo $class_name;
   include 'class/class.' . $class_name . '.php';
 }
 ?>

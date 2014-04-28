@@ -22,6 +22,7 @@ class FieldTextarea extends Field {
   protected $_readonly;
   // Prohibition of transfer line
   protected $_wrap;
+  protected $maxlength;
 
   // Class constructor
   public function __construct($name,
@@ -89,6 +90,12 @@ class FieldTextarea extends Field {
     } else {
         $rows = "";
     }
+
+      if( !empty( $this->maxlength ) ) {
+          $maxlength = "maxlength=\"".$this->maxlength."\"";
+      } else {
+          $maxlength = "";
+      }
 
     // Check if disabled is set
     if($this->_disabled) $disabled = "disabled";

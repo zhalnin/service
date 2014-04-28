@@ -6,6 +6,8 @@
  * Time: 15:03
  * To change this template use File | Settings | File Templates.
  */
+session_start();
+$sid_add_message = session_id();
  error_reporting(E_ALL & ~E_NOTICE);
 require_once("count.php");
 ?>
@@ -21,6 +23,7 @@ require_once("count.php");
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link href="css/home-style.css" type="text/css" rel="stylesheet">
     <link href="css/form.css" type="text/css" rel="stylesheet">
+<!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
     <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
     <script type="text/javascript" src="js/AlezhalModules.js"></script>
     <script type="text/javascript" src="js/helperFunctions.js"></script>
@@ -29,9 +32,8 @@ require_once("count.php");
     <script type="text/javascript" src="js/lib.js"></script>
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/currency.js"></script>
+    <script type="text/javascript" src="js/wysiwyg.js"></script>
 </head>
 <body>
-
-
 
 

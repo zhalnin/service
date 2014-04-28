@@ -189,9 +189,7 @@ function robots($begin = 1, $end = 0, $id_page = "")
     // Все время
     if($begin == 0 && $end == 0)
     {
-
-//        $end = " FROM $tbl_arch_robots $where $tmp";
-        $end = " FROM $tbl_arch_robots $where";
+        $end = "FROM $tbl_arch_robots $where";
         // Формируем SQL-запросы
         $query['ynd'] = "SELECT SUM(yandex)     $end";
         $query['ram'] = "SELECT SUM(rambler)    $end";
@@ -212,12 +210,10 @@ function robots($begin = 1, $end = 0, $id_page = "")
         $last_day = query_result($query);
         if($last_day)
         {
-
             // Формируем WHERE-условие
             $where = "WHERE putdate < '".date("Y-m-01", $last_day)."'";
             // Формируем SQL-запросы
             unset($query);
-//            $end = " FROM $tbl_arch_robots_month $where $tmp";
             $end = " FROM $tbl_arch_robots_month $where";
             $query['ynd'] = "SELECT SUM(yandex)     $end";
             $query['ram'] = "SELECT SUM(rambler)    $end";
@@ -236,9 +232,7 @@ function robots($begin = 1, $end = 0, $id_page = "")
     // Общий случай
     else
     {
-
         // Формируем SQL-запросы
-//        $end = " FROM $tbl_arch_robots $where $tmp";
         $end = " FROM $tbl_arch_robots $where";
         $query['ynd'] = "SELECT SUM(yandex)     $end";
         $query['ram'] = "SELECT SUM(rambler)    $end";

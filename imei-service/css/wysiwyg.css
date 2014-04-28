@@ -1,0 +1,165 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, fieldset, form, label,
+legend, caption, table, tr, tbody, tfoot, thead {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 100%;
+    list-style: none outside none;
+    margin: 0;
+    outline: 0 none;
+    padding: 0;
+}
+.defaultSkin .mceStatusbar {
+    background: none repeat scroll 0 0 #F6F6F6;
+    color: #000000;
+    display: block;
+    font-family: 'MS Sans Serif',sans-serif,Verdana,Arial;
+    font-size: 9pt;
+    height: 20px;
+    line-height: 16px;
+    overflow: visible;
+}
+.mceLayout tr.mceFirst {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.defaultSkin table.mceLayout tr.mceFirst td {
+    border-top: 1px solid #999999;
+}
+.defaultSkin tr.mceFirst table.mceToolbar tr td {
+    padding-right: 2px;
+}
+.defaultSkin table.mceLayout tr.mceLast td {
+    border-bottom: 1px solid #CCCCCC;
+}
+.defaultSkin table, .defaultSkin tbody, .defaultSkin a,
+.defaultSkin img, .defaultSkin tr, .defaultSkin div,
+.defaultSkin td, .defaultSkin iframe, .defaultSkin span,
+.defaultSkin *, .defaultSkin .mceText {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-collapse: separate;
+    color: #000000;
+    cursor: default;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+    width: auto;
+}
+
+.defaultSkin table td {
+    vertical-align: middle;
+}
+.defaultSkin span.mce_bold {
+    background-position: -48px -44px;
+    height: 21px;
+    width: 23px;
+}
+.defaultSkin a.mce_bold {
+    height: 21px;
+    width: 23px;
+}
+.defaultSkin a.mce_italic, .defaultSkin a.mce_strikethrough {
+    height: 21px;
+    width: 24px;
+}
+.defaultSkin a.mce_underline {
+    margin-right: 2px;
+    width: 22px;
+}
+.defaultSkin a.mce_justifycenter, .defaultSkin a.mce_justifyleft, .defaultSkin a.mce_justifyright {
+    height: 21px;
+    width: 23px;
+}
+
+.defaultSkin .mceIcon {
+    background: url("../icons/iconmaster.gif") no-repeat scroll 20px 20px rgba(0, 0, 0, 0);
+}
+.defaultSkin a.mce_bullist, .defaultSkin a.mce_numlist,
+.defaultSkin a.mce_indent, .defaultSkin a.mce_outdent {
+    height: 23px;
+    width: 28px;
+}
+.defaultSkin a.mce_image {
+    height: 22px;
+    margin-right: 4px;
+    width: 24px;
+}
+.defaultSkin a.mce_link {
+    height: 22px;
+    width: 30px;
+}
+
+.defaultSkin table.mceLayout {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: -moz-use-text-color #CCCCCC -moz-use-text-color #999999;
+    border-image: none;
+    border-style: none solid;
+    border-width: 0 1px;
+    position: relative;
+    width: 100%;
+}
+.defaultSkin .mceIframeContainer {
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.defaultSkin table.mceToolbar {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    margin-left: 0;
+    padding-left: 3px;
+    border: 0 none;
+    height: 29px;
+}
+.defaultSkin a.mce_bold:hover span.mce_bold {
+    background-position: -48px -65px;
+}
+.defaultSkin span.mce_italic {
+    background-position: -24px -44px;
+}
+.defaultSkin span.mce_underline {
+    background-position: -100px -92px;
+}
+.defaultSkin span.mce_strikethrough {
+    background-position: 0 -44px;
+}
+.defaultSkin span.mce_justifyleft {
+    background-position: 0 -44px;
+}
+.defaultSkin span.mce_justifycenter {
+    background-position: 0 -44px;
+}
+.defaultSkin span.mce_justifyright {
+    background-position: 0 -44px;
+}
+.defaultSkin span.mce_image {
+    background-position: -477px 0;
+}
+.defaultSkin span.mce_link {
+    background-position: -27px 0;
+}
+.defaultSkin .mceStatusbar a.mceResize {
+    background: url("../icons/icons_wysiwyg.gif") repeat scroll -800px 0 rgba(0, 0, 0, 0);
+    cursor: se-resize;
+    display: block;
+    float: right;
+    height: 20px;
+    width: 20px;
+}

@@ -43,10 +43,10 @@ try
        border=0
        width=100%>
     <tr class='header'>
-        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=1&end=0'>Сегодня</a></td>
-        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=2&end=1'>Вчера</a></td>
+        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=1&end=0'> Сегодня </a></td>
+        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=2&end=1'> Вчера </a></td>
         <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=7&end=0'>За 7 дней</a></td>
-        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=30&end=0'>За 30 дней</a></td>
+        <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=30&end0='>За 30 дней</a></td>
         <td width=<?= 100/5 ?>% align=center><a href='time.php?begin=0&end=0'>За все время</a></td>
     </tr>
 </table><br><br>
@@ -72,10 +72,8 @@ try
     // Заполняем временную страницу
     for($i = $begin; $i > $end; $i--)
     {
-
         // Формируем WHERE-условие для временного интервала
         $where = where_interval($begin, $end);
-
         // Формируем запрос
         $query = "INSERT INTO $tbl_thits
                   SELECT ROUND((max(unix_timestamp(putdate))-min(unix_timestamp(putdate)))/60)*60+60
@@ -94,20 +92,19 @@ try
                                     "Ошибка заполнения временной таблицы");
         }
     }
-    $query1 = "SELECT COUNT(hits) AS total
+    $query = "SELECT COUNT(hits) AS total
                 FROM $tbl_thits
                 GROUP BY hits
                 ORDER BY total DESC
                 LIMIT 1";
-    $total = query_result($query1);
+    $total = query_result($query);
 
-    $query2 = "SELECT hits,
+    $query = "SELECT hits,
                 COUNT(hits) AS total
               FROM $tbl_thits
               GROUP BY hits
               ORDER BY hits";
-
-    $res = mysql_query($query2);
+    $res = mysql_query($query);
     if(!$res)
     {
         throw new ExceptionMySQL(mysql_error(),

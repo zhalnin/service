@@ -52,7 +52,8 @@ $parent_catalog = mysql_fetch_array($res);
 // Название каталога
 $title = $parent_catalog['name'];
 $parent = $parent_catalog[id_catalog];
-$description = "За проверку по IMEI всего 45 рублей. Проверка по IMEI iPhone поможет определить, к какому оператору привязан аппарат.";
+$keywords = "imei,check,iPhone,instant check,check status, проверка по IMEI, узнать оператора";
+$description = "Проверка iPhone по IMEI iPhone поможет определить дату первой активации, к какому оператору привязан iPhone, статус Find My iPhone всего за 30 рублей, что займет несколько минут.";
 
 require_once("templates/top.php");
 ?>

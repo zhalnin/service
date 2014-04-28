@@ -67,8 +67,7 @@ try
                                         "Изображение",
                                         false,
                                         $_FILES,
-                                        "../../images/country_flag/",
-                                        "unlock_");
+                                        "../../images/country_flag/");
     $alt                = new FieldText("alt",
                                     "ALT-тег",
                                     false,

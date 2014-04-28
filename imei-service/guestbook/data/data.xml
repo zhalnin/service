@@ -1,0 +1,3 @@
+<options>
+    <dsn>mysql:host=localhost;dbname=talking</dsn>
+</options>

@@ -7,8 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
  
-function resizeimg($big, $small, $width, $height)
-{
+function resizeimg($big, $small, $width, $height) {
     // Имя файла с масштабируемой копией
     $big = "../../$big";
     // Имя файла с уменьшенной копией
@@ -20,8 +19,7 @@ function resizeimg($big, $small, $width, $height)
     $size_img = getimagesize($big);
     list($width_src, $height_src) = getimagesize($big);
     // Если размеры меньше, то масштабирования не нужно
-    if(($width_src < $width) && ($height_src < $height))
-    {
+    if(($width_src < $width) && ($height_src < $height)) {
         copy($big, $small);
         return true;
     }
@@ -30,12 +28,9 @@ function resizeimg($big, $small, $width, $height)
 
     // Вычисляем размеры уменьшенной копии, чтобы при
     // масштабировании сохранились пропорции исходного изображения
-    if($ratio<$src_ratio)
-    {
+    if($ratio<$src_ratio) {
         $height = $width/$src_ratio;
-    }
-    else
-    {
+    } else {
         $width = $height*$src_ratio;
     }
     // Создаем пустое изображение по заданным размерам

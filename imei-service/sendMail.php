@@ -24,8 +24,9 @@ $body = '
 
 try
 {
-    $email =            "imei_service@icloud.com";
-//    $email = "zhalnin78@gmail.com";
+    //$email =            "imei_service@icloud.com";
+    //$email = "zhalnin78@gmail.com";
+    $email = "support@imei-service.ru";
     $email_client =     $_POST['email'];
     $imei =             $_POST['imei'];
     $udid =             $_POST['udid'];

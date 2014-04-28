@@ -58,9 +58,7 @@ try
                GROUP BY putdate_begin
                ORDER BY putdate_begin DESC
                LIMIT $first, $pnumber";
-
     $arh = mysql_query($query);
-
     if(!$arh)
     {
         throw new ExceptionMySQL(mysql_error(),
@@ -90,9 +88,7 @@ try
     // за неделю
     if(!empty($_GET['date']))
     {
-
         $_GET['date'] = intval($_GET['date']);
-
         $query = "SELECT * FROM $tbl_arch_deep_week
                     WHERE putdate_begin LIKE '".date("Y-m-d",$_GET['date'])."%'";
         $ipt = mysql_query($query);
@@ -104,7 +100,6 @@ try
         }
         if(mysql_num_rows($ipt))
         {
-
             echo "<table class=table
                          width=100%
                          border=0
@@ -162,7 +157,6 @@ try
                     <td><img src=images/parm.gif border=0 width=".(100*$arch_deep['visitmore']/$total)."% height=6</td>
                  </tr>\r\n";
         }
-
         echo "</table>";
     }
 

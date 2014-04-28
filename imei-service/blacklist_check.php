@@ -53,7 +53,8 @@ try
     // Название каталога
     $title = $parent_catalog['name'];
     $parent = $parent_catalog[id_catalog];
-    $description = "Определить статус аппарата(blacklist) за 150 рублей. Проверка iPhone на blacklist позволит определить: был ваш аппарат занесен в черный список как потерянный или украденный.";
+    $keywords = "проверка на blacklist,blacklist,iPhone,imei,checkmend";
+    $description = "Проверка iPhone на blacklist позволит определить: был ли ваш аппарат занесен в черный список как потерянный, украденный или имеется задолженность по контракту. Стоимость проверки iPhone на blacklist всего 60 рублей, займет от нескольких минут до нескольких часов, в зависимости от оператора.";
 
     require_once("templates/top.php");
     ?>

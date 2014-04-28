@@ -59,10 +59,20 @@ try
                                 "Название",
                                 true,
                                 $_REQUEST['name']);
+    $preview       = new FieldTextarea("preview",
+                                    "Превью",
+                                    true,
+                                    $_REQUEST['preview'],
+                                    50,
+                                    10,
+                                    200);
     $body       = new FieldTextarea("body",
                                     "Содержимое",
                                     true,
-                                    $_REQUEST['body']);
+                                    $_REQUEST['body'],
+                                    60,
+                                    20,
+                                    600);
     $date       = new FieldDatetime("date",
                                     "Дата новости",
                                     $_REQUEST['date']);
@@ -109,6 +119,7 @@ try
                                         "Удалить изображение",
                                         $_REQUEST['delimg']);
         $form       = new Form(array("name"     => $name,
+                                    "preview"   => $preview,
                                     "body"      => $body,
                                     "date"      => $date,
                                     "hidedate" => $hidedate,
@@ -211,8 +222,10 @@ try
                 }
                 else
                 {
-                    $settings['width'] = 150;
-                    $settings['height'] = 133;
+//                    $settings['width'] = 150;
+//                    $settings['height'] = 133;
+                    $settings['width'] = 276;
+                    $settings['height'] = 153;
                 }
                 // Формируем малое изобажение
                 resizeimg("files/news/$var", "files/news/s_$var", $settings['width_news'], $settings['height_news']);
@@ -223,6 +236,7 @@ try
             // Формируем SQL-запрос на добавление новости
             $query = "UPDATE $tbl_news
                         SET name = '{$form->fields['name']->value}',
+                            preview = '{$form->fields['preview']->value}',
                             body = '{$form->fields['body']->value}',
                             putdate = '{$form->fields['date']->get_mysql_format()}',
                             hidedate = '{$hidedate}',

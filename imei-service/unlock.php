@@ -53,7 +53,8 @@ try
     // Название каталога
     $title = $parent_catalog['name'];
     $parent = $parent_catalog[id_catalog];
-    $description = "Анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com и ваш аппарат будет сим фри";
+    $keywords = "unlock iPhone,официальный анлок,AT&T,все операторы,official unlock";
+    $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
 
 
 
