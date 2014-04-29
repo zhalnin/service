@@ -195,7 +195,7 @@ function previewPost() {
         'method':'POST',
         'url': 'ajax_handle.php',
         'postParams': 'mode=preview&text='+result,
-        'onSuccess': handleResult
+        'onSuccess': handleResultPreview
     });
 
 }
@@ -208,29 +208,51 @@ function sendPost() {
     AM.Position.setX(modal_preview, editor_span_width);
     AM.Position.setY(modal_preview, editor_span_height);
     var content = wysiwyg.doc().body.innerHTML;
+    var result = content.replace(/&nbsp;/, '' );
     AM.Ajax.ajax({
         'method':'POST',
         'url': 'ajax_handle.php',
-        'postParams': 'text='+content,
+        'postParams': 'mode=submit&text='+result,
         'onSuccess': handleResult
     });
 }
 
-function handleResult( response ) {
+function handleResultPreview( response ) {
     wysiwyg.showOverlay();
     var img = AM.DOM.$("modalPreviewContent");
     if(img.firstChild){
         img.removeChild(img.firstChild);
     }
     var dialog_response = "<div class=\"dialog_response main-modal rounded shadowed\" style='width: 700px;'>"+response+"</div>";
-//    var form = '<div class="two main-modal shadowed rounded""><label for="filename">Выберите файл</label><input type="file" name="filename" id="filename" /></div>'+
-//        '<p>Максимальный размер файла: 2.0 MB. </p>' +
-//        '<p>Изображение будет сжато до размера 450px в ширину или 600px в высоту. </p>'+
-//        '<div class="two"><label for="submit"></label><input type="submit" value="Отправить &rarr;" id="submit" /></div>'
-//        ;
     img.innerHTML=dialog_response;
-//    img.innerHTML = form;
     AM.DOM.fadeIn(modal_preview, 100, 10);
+
+//    wysiwyg.openModal('preivew');
+//    AM.DOM.$('showmsg').innerHTML = response;
+}
+
+//function handleResult( response ) {
+//    wysiwyg.showOverlay();
+//    var img = AM.DOM.$("modalPreviewContent");
+//    if(img.firstChild){
+//        img.removeChild(img.firstChild);
+//    }
+//    var dialog_response = "<div class=\"dialog_response main-modal rounded shadowed\" style='width: 700px;'>"+response+"</div>";
+//    img.innerHTML=dialog_response;
+//    AM.DOM.fadeIn(modal_preview, 100, 10);
+//
+////    wysiwyg.openModal('preivew');
+////    AM.DOM.$('showmsg').innerHTML = response;
+//}
+function handleResult( response ) {
+//    wysiwyg.showOverlay();
+//    var img = AM.DOM.$("modalPreviewContent");
+//    if(img.firstChild){
+//        img.removeChild(img.firstChild);
+//    }
+//    var dialog_response = "<div class=\"dialog_response main-modal rounded shadowed\" style='width: 700px;'>"+response+"</div>";
+//    img.innerHTML=dialog_response;
+//    AM.DOM.fadeIn(modal_preview, 100, 10);
 
 //    wysiwyg.openModal('preivew');
 //    AM.DOM.$('showmsg').innerHTML = response;

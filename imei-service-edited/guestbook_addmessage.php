@@ -43,13 +43,13 @@
 //                $valid = "";
 //                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: URL</li>";
 //            }
-            if( empty( $_POST['message'] ) ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Сообщение</li>";
-            } elseif( iconv_strlen( $_POST['message'] , 'utf-8') < 3 ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Сообщение не должно иметь менее 3-х символов</li>";
-            }
+//            if( empty( $_POST['message'] ) ) {
+//                $valid = "";
+//                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Сообщение</li>";
+//            } elseif( iconv_strlen( $_POST['message'] , 'utf-8') < 3 ) {
+//                $valid = "";
+//                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Сообщение не должно иметь менее 3-х символов</li>";
+//            }
 
 //            if( empty( $_POST['code'] ) ) {
 //                $valid = "";
@@ -91,13 +91,13 @@
 
             if( empty( $error ) ) {
 
-                $PDO = new PDO("mysql:host=localhost;dbname=talking", 'root', 'zhalnin5334', array(
+                $PDO = new PDO("mysql:host=localhost;dbname=imei-service", 'root', 'zhalnin5334', array(
                     PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
                     PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES UTF8'
                 ) );
 
-                $insertStmt = "INSERT INTO guest (name,
+                $insertStmt = "INSERT INTO system_guestbook (name,
                                                     city,
                                                     email,
                                                     url,
@@ -188,7 +188,7 @@
 
 
 
-                                <div class="mbs">
+                                <div class="mbsIframe">
 <!--                                    <span class="form-field field-with-placeholder">-->
 <!--                                        <label class="placeholder" for="message"><span>Сообщение ( обязательно )</span></label>-->
 <!--                                        <textarea class="textarea" cols="42" rows="5" name="message" class="textarea" id="message">--><?php //echo $message; ?><!--</textarea>-->
@@ -230,7 +230,7 @@
                                             </tr>
                                             <tr class="editorIFrame" id="editorIFrame">
                                                 <td class="" id="iframe_td">
-                                                    <iframe id="iframe_redactor" name="iframe_redactor" ></iframe>
+                                                    <iframe id="iframe_redactor" name="iframe_redactor" class="iframe_redactor" ></iframe>
                                                 </td>
                                             </tr>
                                             <tr class="editorLast">

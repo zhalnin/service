@@ -73,6 +73,32 @@ var AMForm = {
         else if( AMForm.validateForm(form) == true ){
             // if button pressed for the first time
             if( this.watchedForm == false ) {
+
+
+
+
+
+
+
+                var theIframe = AM.DOM.$('iframe_redactor'),
+                    editorSpan = AM.DOM.$('editorSpan'),
+                    modal_preview = AM.DOM.$('modal_preview'),
+                    editor_span = AM.DOM.$('editorSpan'),
+                    editor_span_width = AM.Position.getElementLeft(editor_span),
+                    editor_span_height = AM.Position.getElementTop(editor_span);
+                AM.Position.setX(modal_preview, editor_span_width);
+                AM.Position.setY(modal_preview, editor_span_height);
+                var content = wysiwyg.doc().body.innerHTML;
+                var result = content.replace(/&nbsp;/, '' );
+                 AM.Ajax.ajax({
+                    'method':'POST',
+                    'url': 'ajax_handle.php',
+                    'postParams': 'mode=submit&text='+result,
+                    'onSuccess': function () { alert(response) }
+                });
+
+
+
 //                alert(form.action);
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
@@ -230,11 +256,52 @@ var AMForm = {
                 }
             }
         }
+
+
+        // Проверяем iFrame в гостевой книге
+        if( AM.DOM.$('iframe_redactor') != null ) {
+
+                var theIframe = AM.DOM.$('iframe_redactor'),
+                    editorSpan = AM.DOM.$('editorSpan'),
+                    modal_preview = AM.DOM.$('modal_preview'),
+                    editor_span = AM.DOM.$('editorSpan'),
+                    editor_span_width = AM.Position.getElementLeft(editor_span),
+                    editor_span_height = AM.Position.getElementTop(editor_span);
+                AM.Position.setX(modal_preview, editor_span_width);
+                AM.Position.setY(modal_preview, editor_span_height);
+                var content = wysiwyg.doc().body.innerHTML;
+                var result = content.replace(/&nbsp;/, '' );
+
+            if( result.length >= 5 ) {
+                if(  AM.DOM.next( editorSpan ) != null ) {
+                    AMForm.hideErrors( editorSpan  );
+                }
+//                AM.Ajax.ajax({
+//                    'method':'POST',
+//                    'url': 'ajax_handle.php',
+//                    'postParams': 'mode=submit&text='+result,
+//                    'onSuccess': this.handleResult
+//                });
+            } else {
+                if(  AM.DOM.next( editorSpan ) == null ) {
+                    // добавляем блок с ошибкой
+                    AMForm.showErrors( editorSpan,"Поле не заполнено" );
+                }
+                error[i + 1] = "error";
+            }
+        }
+
+
+
+
         // если есть хоть одна ошибка
         if( error.length ) {
-            // то фокусируем страницу на форме
-            var guestbookForm = AM.DOM.$('guestbook-form');
-            guestbookForm.scrollIntoView(true);
+            if( AM.DOM.$('guestbook-form') != null ) {
+                // то фокусируем страницу на форме
+                var guestbookForm = AM.DOM.$('guestbook-form');
+                guestbookForm.scrollIntoView(true);
+
+            }
             // возвращаем результат False
             return false;
             // если ошибок нет
@@ -243,6 +310,7 @@ var AMForm = {
             return true;
         }
     },
+
 
 
     /**
@@ -256,7 +324,6 @@ var AMForm = {
             res = true,
             name,
             re;
-
         for( name in this.check) {
             re = new RegExp("(^|\\s+)"+name+"(\\s+|$)");
             if(re.test(elem.className) && !this.check[name].test(elem, load )) {

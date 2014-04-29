@@ -22,7 +22,7 @@
 function selectRecursion($id2, $page ) {
     $value = array();
     if( ! isset( $value['db'] ) ) {
-        $value['db'] = new PDO( 'mysql:host=localhost;dbname=talking','root','zhalnin5334',
+        $value['db'] = new PDO( 'mysql:host=localhost;dbname=imei-service','root','zhalnin5334',
             array(
                 PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
@@ -33,7 +33,7 @@ function selectRecursion($id2, $page ) {
         return $value['dsn'];
     }
     $dsn = $value['db'];
-    $sth2 = $dsn->prepare("SELECT * FROM guest WHERE id_parent=:id_parent AND hide='show'");
+    $sth2 = $dsn->prepare("SELECT * FROM system_guestbook WHERE id_parent=:id_parent AND hide='show'");
     $sth2->bindValue(':id_parent', intval( $id2 ), PDO::PARAM_INT );
     $sth2->execute();
     while( $result2 = $sth2->fetch() ) {

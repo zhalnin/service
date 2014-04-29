@@ -53,7 +53,7 @@ include( "utils/utils.getIP.php" );
 
 
                 // Находим все посты, которые не имеют id_parent (значит они родительские)
-                $pagerMysql = new \guestbook\add\PagerMysql('guest', " WHERE id_parent = 0 AND hide='show' ", " ORDER BY putdate DESC ", 10, 3, "");
+                $pagerMysql = new \guestbook\add\PagerMysql('system_guestbook', " WHERE id_parent = 0 AND hide='show' ", " ORDER BY putdate DESC ", 10, 3, "");
                 // Выводим постраничную навигацию
                 echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
                 // В цикле получаем результат запроса и выводим его на страницу

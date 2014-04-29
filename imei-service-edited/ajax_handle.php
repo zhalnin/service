@@ -8,13 +8,10 @@
  */
 
 if( ( $_POST['mode'] == 'preview' ) && isset( $_POST['text'] ) ) {
-//    echo "Добавим к БД";
-//    echo "<br />";
-//    echo "ok";
 
     echo $_POST['text'];
 
-} else {
+} elseif( $_POST['mode'] == 'submit' ) {
     echo "Добавим к БД";
     echo "<br />";
     echo "ok";

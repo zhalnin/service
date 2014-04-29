@@ -44,14 +44,45 @@ AM.Event.addEvent(window, 'load', function() {
             i, j,
             // блок <div> с кнопкой submit
             submitButton = AM.DOM.$('chipping-continue-button-submit'),
-            cancelButton = AM.DOM.$('cancel-button'),
+            cancelButton = AM.DOM.$('cancel-button');
 
-            theIframe = AM.DOM.$('iframe_redactor'),
-            doc = theIframe.contentWindow.document || theIframe.contentDocument,
-            editorTR = AM.DOM.$('editorTR'),
-            editorTD = AM.DOM.tag('td', editorTR),
-            editorResize = AM.DOM.$('editorResize'),
-            wysiwyg_toolbar = AM.DOM.$('wysiwyg_toolbar');
+            if( AM.DOM.$('iframe_redactor') != null ) {
+                theIframe = AM.DOM.$('iframe_redactor'),
+                doc = theIframe.contentWindow.document || theIframe.contentDocument,
+                editorTR = AM.DOM.$('editorTR'),
+                editorTD = AM.DOM.tag('td', editorTR),
+                editorResize = AM.DOM.$('editorResize'),
+                wysiwyg_toolbar = AM.DOM.$('wysiwyg_toolbar');
+
+                for( j = 0, lenj = editorTD.length; j < lenj; j++ ) {
+                    with( { num: j }) {
+                        AM.Event.addEvent( AM.DOM.first(editorTD[num]), 'click', function( event ) {
+                            AM.Event.stopDefault( event );
+                            var getX = AM.Position.getX(event),
+                                getY = AM.Position.getY(event),
+                                targetId = AM.DOM.first(editorTD[num]).id;
+
+                            switch ( targetId ) {
+                                case "uploadImage":
+                                    doUploadImg(getX, getY);
+                                    break;
+                                case "url":
+                                    doURL(getX, getY);
+                                    break;
+                                case "image":
+                                    doImg(getX, getY);
+                                    break;
+                                default:
+                                    doStyle(targetId);
+                                    break;
+                            }
+                        });
+                    }
+                }
+
+                new DragObject( editorResize, wysiwyg_toolbar, theIframe );
+
+            }
 
         adjustAllOverlay();
 
@@ -208,8 +239,7 @@ AM.Event.addEvent(window, 'load', function() {
          * @param height
          * @param adm
          */
-        function show_img(id_image,width,height,adm)
-        {
+        function show_img(id_image,width,height,adm) {
             var a,
                 b,
                 url;
@@ -267,33 +297,34 @@ AM.Event.addEvent(window, 'load', function() {
         modal.innerHTML = '<div id="modalContent"></div>' +
             '<div id="modalTitle"></div>';
         document.body.appendChild(modal);
+//            for( j = 0, lenj = editorTD.length; j < lenj; j++ ) {
+//                with( { num: j }) {
+//                    AM.Event.addEvent( AM.DOM.first(editorTD[num]), 'click', function( event ) {
+//                        AM.Event.stopDefault( event );
+//                        var getX = AM.Position.getX(event),
+//                            getY = AM.Position.getY(event),
+//                            targetId = AM.DOM.first(editorTD[num]).id;
+//
+//                        switch ( targetId ) {
+//                            case "uploadImage":
+//                                doUploadImg(getX, getY);
+//                                break;
+//                            case "url":
+//                                doURL(getX, getY);
+//                                break;
+//                            case "image":
+//                                doImg(getX, getY);
+//                                break;
+//                            default:
+//                                doStyle(targetId);
+//                                break;
+//                        }
+//                    });
+//                }
+//            }
 
-        for( j = 0, lenj = editorTD.length; j < lenj; j++ ) {
-            with( { num: j }) {
-                AM.Event.addEvent( AM.DOM.first(editorTD[num]), 'click', function( event ) {
-                    AM.Event.stopDefault( event );
-                    var getX = AM.Position.getX(event),
-                        getY = AM.Position.getY(event),
-                        targetId = AM.DOM.first(editorTD[num]).id;
 
-                    switch ( targetId ) {
-                        case "uploadImage":
-                            doUploadImg(getX, getY);
-                            break;
-                        case "url":
-                            doURL(getX, getY);
-                            break;
-                        case "image":
-                            doImg(getX, getY);
-                            break;
-                        default:
-                            doStyle(targetId);
-                            break;
-                    }
-                });
-            }
-        }
-        new DragObject( editorResize, wysiwyg_toolbar, theIframe );
+//        new DragObject( editorResize, wysiwyg_toolbar, theIframe );
 
 
 
