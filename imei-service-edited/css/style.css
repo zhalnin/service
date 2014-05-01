@@ -462,3 +462,13 @@ span.editor_link.active {
     font: 12px/1 "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,sans-serif;
     margin: 2px 0 0 2px;
 }
+
+#refreshCode {
+    background: url("../icons/refresh_13x12.png") no-repeat scroll 0 0 transparent;
+    width: 12px;
+    height: 13px;
+    float: right;
+    display: block;
+    margin: 9px 0 0 10px;
+    position: relative;
+}

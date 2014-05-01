@@ -55,7 +55,7 @@ function selectRecursion($id2, $page ) {
                 </div>
 
                 <div class='guestbook-all-info'>
-                    <p class='ptext'><?php echo nl2br( $result2['message'] ); ?></p>
+                    <p class='ptext'><?php echo html_entity_decode( $result2['message'] ); ?></p>
                     <?php if( ! empty( $result2['answer'] ) && $result2['answer'] != '-' ) {
                         print "<p class='panswer'><b><i>Администратор:</i></b>&nbsp;".nl2br($result2['answer'])."</p>";
                     }

@@ -75,7 +75,7 @@ include( "utils/utils.getIP.php" );
                         </div>
 
                         <div class='guestbook-all-info'>
-                            <p class='ptext'><?php echo nl2br( $pm['message'] ); ?></p>
+                            <p class='ptext'><?php echo html_entity_decode( $pm['message'] ); ?></p>
                             <?php if( ! empty( $pm['answer'] ) && $pm['answer'] != '-' ) {
                                 print "<p class='panswer'><b><i>Администратор:</i></b>&nbsp;".nl2br($pm['answer'])."</p>";
                             }

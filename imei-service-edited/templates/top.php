@@ -28,12 +28,12 @@ require_once("count.php");
     <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
     <script type="text/javascript" src="js/AlezhalModules.js"></script>
     <script type="text/javascript" src="js/helperFunctions.js"></script>
+    <script type="text/javascript" src="js/wysiwyg.js"></script>
     <script type="text/javascript" src="js/imei_form.js"></script>
     <script type="text/javascript" src="js/utilities.js"></script>
     <script type="text/javascript" src="js/lib.js"></script>
     <script type="text/javascript" src="js/load.js"></script>
     <script type="text/javascript" src="js/currency.js"></script>
-    <script type="text/javascript" src="js/wysiwyg.js"></script>
     <script type="text/javascript" src="js/dragMaster.js"></script>
 
 </head>

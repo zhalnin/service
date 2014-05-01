@@ -46,6 +46,13 @@ AM.Event.addEvent(window, 'load', function() {
             submitButton = AM.DOM.$('chipping-continue-button-submit'),
             cancelButton = AM.DOM.$('cancel-button');
 
+        if( AM.DOM.$('refreshCode') != null ) {
+            var refreshCode = AM.DOM.$('refreshCode');
+            AM.Event.addEvent( refreshCode, 'click', function( event ) {
+                refreshCodes();
+            });
+        }
+
             if( AM.DOM.$('iframe_redactor') != null ) {
                 theIframe = AM.DOM.$('iframe_redactor'),
                 doc = theIframe.contentWindow.document || theIframe.contentDocument,
@@ -155,7 +162,7 @@ AM.Event.addEvent(window, 'load', function() {
             AM.Event.addEvent(button_send, 'click', function(event){
                 // scroll window to x=0 and y=0
                 window.scrollTo(0,0);
-                //stopDefault(e);
+                AM.Event.stopDefault(event);
                 AMForm.watchForm(form);
                 //            showOverlay();
             });
@@ -327,6 +334,16 @@ AM.Event.addEvent(window, 'load', function() {
 //        new DragObject( editorResize, wysiwyg_toolbar, theIframe );
 
 
+        function refreshCodes() {
+            console.log('click');
+            AM.Ajax.ajax({
+                'method': 'POST',
+                'url': 'guestbook/capcha/capcha.php',
+                'postParams': '',
+                'onSuccess': function() { console.log('y'); },
+                'onError': function() { console.log('n'); }
+            });
+        }
 
 
 

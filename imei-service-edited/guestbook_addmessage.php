@@ -24,9 +24,6 @@
             if( empty( $_POST['name'] ) ) {
                 $valid = "";
                 $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Имя</li>";
-            } elseif( iconv_strlen( trim( ( $_POST['name']) ,'utf-8') ) < 2 ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Имя должно содержать не менее двух букв</li>";
             }
 //            if( empty( $_POST['city'] ) ) {
 //                $valid = "";
@@ -46,7 +43,8 @@
 //            if( empty( $_POST['message'] ) ) {
 //                $valid = "";
 //                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Сообщение</li>";
-//            } elseif( iconv_strlen( $_POST['message'] , 'utf-8') < 3 ) {
+//            }
+//            elseif( iconv_strlen( $_POST['message'] , 'utf-8') < 3 ) {
 //                $valid = "";
 //                $error .= "<li style='color: rgb(255, 0, 0);'>Поле: Сообщение не должно иметь менее 3-х символов</li>";
 //            }
@@ -86,10 +84,27 @@
             $time = new DateTime;
             $putdate = $time->format('Y-m-d H:i:s');
             $sendmail = false;
+?>
+
+
+
+            <script type="text/javascript">
+                AM.Event.addEvent( window, 'load', function() {
+                    var textareaIframe = AM.DOM.$('textareaIframe').value;
+                    var amp = textareaIframe.replace(/&amp;/g,'');
+                    var nbsp = amp.replace(/&nbsp;/g,'');
+                     wysiwyg.doc().body.innerHTML = nbsp;
+                });
+            </script>
+<?php
+
 
 
 
             if( empty( $error ) ) {
+
+
+
 
                 $PDO = new PDO("mysql:host=localhost;dbname=imei-service", 'root', 'zhalnin5334', array(
                     PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
@@ -143,6 +158,13 @@
         } else {
             $id_parent = "";
         }
+
+//foreach ($_POST as $p => $v ) {
+//    print "$p - $v";
+//    print "<br />";
+//
+//}
+
 
 
 ?>
@@ -265,9 +287,11 @@
                                 <div class="mbs">
                                     <span class="form-field field-with-placeholder code">
                                         <label class="placeholder" for="code"><span>Введите код с картинки</span></label>
-                                        <input type="text" name="code" class="required" id="code">
+                                        <span id="refreshCode" title="Обновить код на картинке"></span>
+                                        <input type="text" name="code" class="code" id="code">
                                     </span>
                                 </div>
+
 
                                 <div id="chipping-continue-button-submit" class="mbs">
                                     <span>
@@ -282,8 +306,9 @@
                                 <input type="hidden" name="client_browser" value="<?php echo $browser; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
                                 <input type="hidden" name="id_parent_post" value="" id="guestbookReply" />
+                                <input type="hidden" name="codeConfirm" value="" id="codeConfirm" />
                                 <input type="hidden" name="page" value="<?php echo $page; ?>" />
-
+                                <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $_POST['message']; ?></textarea>
 
 
                                 <div id="submit-button" class="" style="">
@@ -330,10 +355,10 @@
           echo "</div>";
         }
     } catch (Exception $ex) {
-        file_put_contents( dirname(__FILE__).'/error.txt', $ex->getMessage()."\r\n", FILE_APPEND );
         print $ex->getMessage();
+//        file_put_contents( "dirname(__FILE__).'/error.txt'", $ex->getMessage()."\r\n", FILE_APPEND );
     } catch ( PDOException $ex ) {
-        file_put_contents( dirname(__FILE__).'/error_pdo.txt', $ex->getMessage()."\r\n", FILE_APPEND );
         print $ex->getMessage();
+//        file_put_contents( "dirname(__FILE__).'/error_pdo.txt'", $ex->getMessage()."\r\n", FILE_APPEND );
     }
 ?>
