@@ -92,8 +92,14 @@ try
 
 
 
-    <div id="main"  class="main-content">
-    <div id="slogan">Быстро - Качественно - Надежно<span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
+    <div id="main"  class="">
+
+        <div id="main-slogan" class="main-content">
+            <div id="slogan">Быстро - Качественно - Надежно</div>
+        </div>
+
+    <div id="news-main" class="main-content">
+    <div id="slogan"><span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
     <div id="showcase" class="content">
 
 
@@ -128,11 +134,10 @@ if(mysql_num_rows($res)){
             </div>";
     }
     echo "</div>
-                    <div class=\"dividerdownbottom\"; style='width: 700px; height: 40px; clear : both;'>
-                    </div>
+                <div class=\"dividerdownbottom\"; style='width: 700px; height: 40px; clear : both;'></div>
                     </div>
                 </div>
-            </div>";
+            </div>";  // End of design
 }
     ?>
 <!--    <div style='width: 203px; float: left; margin: 10px 0 0 2px;' id='cost'>".$subcatalog[compatible]."</div>-->
@@ -196,8 +201,8 @@ if(mysql_num_rows($res)){
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>  <!--  End of shipping-contact-form -->
+                </div>  <!--  End of step-content top-divided -->
                 <div class="step-continue part-edit clear" style="">
                     <div class="continue-content clearfix">
                         <div class="gs grid-3of4" style="">
@@ -214,19 +219,20 @@ if(mysql_num_rows($res)){
                         </div>
                         <div class="gs grid-1of4 gs-last r-align" style="">
                             <div id="shipping-button" class="button rect transactional blues" title="Сбросить" type="button" style="">
-                                    <span style="">
-                                        <span class="effect"></span>
-                                        <span class="label"> Сбросить </span>
-                                    </span>
+                                <span style="">
+                                    <span class="effect"></span>
+                                    <span class="label"> Сбросить </span>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
+            </div>  <!-- End of shipping -->
+        </div>  <!--  End of shipping-box -->
+    </div>  <!-- End of hero selfclear -->
+    </div>  <!-- End of showcase -->
+    </div>  <!-- End of news-main -->
+    </div>  <!-- End of main -->
 
 
 

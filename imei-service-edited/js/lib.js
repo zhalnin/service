@@ -37,8 +37,8 @@ function start_ajax(param){
             console.log('error in ajax - file lib.js' );
         },
         onSuccess: parseResult,
-        onStart: showOverlay,
-        onEnd: hideOverlay,
+        onStart: wysiwyg.showOverlay,
+        onEnd: wysiwyg.hideOverlay,
         postParams: "url="+urlIMEI+"/?imei="+param
     });
 }
@@ -59,8 +59,8 @@ function start_post_ajax(param){
             console.log('error in ajax - file lib.js' );
         },
         onSuccess: parseResult,
-        onStart: showOverlay,
-        onEnd: hideOverlay,
+        onStart: wysiwyg.showOverlay,
+        onEnd: wysiwyg.hideOverlay,
         postParams: "url="+urlIMEI+"&urlParser="+urlParser+"&ime_i="+param
     });
 }
@@ -165,36 +165,3 @@ function adjustElem( elem ) {
     AM.Position.setX(obj, l);
 }
 
-
-
-/**
- * Скрытие затемнения и текущей галереи
- */
-function hideOverlay() {
-//    console.log('hideOverlay()');
-    // Обеспечение перезапуска значения и галереи
-    curImage = null;
-    // и скрытия затемнения и галереи
-    AM.DOM.hide( AM.DOM.$( "overlay" ) );
-
-}
-
-/**
- * Проявление затемнения
- */
-function showOverlay() {
-//    console.log("showOverlay()");
-    // Обнаружение затемнения
-    var over = AM.DOM.$("overlay"),
-        div_img = AM.DOM.$('div_img');
-
-
-    // Установка его размеров по высоте и ширине текущей страницы
-    // (что будет полезным при использовании прокрутки)
-    div_img.style.marginTop = '150px';
-    over.style.height = AM.Position.windowHeight()+ "px";
-    over.style.width = AM.Position.windowWidth()+"px";
-
-    // и проявление
-    AM.DOM.fadeIn(over, 50, 3);
-}

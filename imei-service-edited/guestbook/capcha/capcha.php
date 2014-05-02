@@ -101,6 +101,7 @@ function gen_img(){
 
     ImagePNG( $im );
     ImageDestroy( $im );
+
 }
 
 gen_img();

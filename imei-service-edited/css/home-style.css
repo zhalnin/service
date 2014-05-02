@@ -1030,6 +1030,26 @@ span #uah.currency{
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     opacity: 0.8;
 }
+.news-string-body {
+    color: #666666;
+    height: 400px;
+    width: 960px;
+    /*width: 306px;*/
+    /*float: left;*/
+    text-align: left;
+    padding: 10px 10px 0;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+}
+.news-string-body:hover {
+    box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
+    -khtml-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -ms-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -o-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -moz-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -webkit-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    opacity: 0.8;
+}
 .border-left-right {
     border-left: 1px solid #DADADA;
     border-right: 1px solid #DADADA;

@@ -463,12 +463,19 @@ span.editor_link.active {
     margin: 2px 0 0 2px;
 }
 
+#guestbook-form .mbs.capchaField {
+   width: 170px;
+}
+.refreshDiv {
+    width: 190px;
+    position: relative;
+}
 #refreshCode {
     background: url("../icons/refresh_13x12.png") no-repeat scroll 0 0 transparent;
     width: 12px;
     height: 13px;
     float: right;
     display: block;
-    margin: 9px 0 0 10px;
-    position: relative;
+    margin: 10px 0 0 1px;
+    /*position: relative;*/
 }

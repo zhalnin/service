@@ -28,14 +28,14 @@ try
 //mail("zhalninpal@me.com","test","test");
 ?>
 <script type="text/javascript">
-    /**
-          * For detail-button
-          * To view whole news
-          * @param url
-          */
-    function detail_button(url) {
-        location.href=url;
-    }
+    /**
+     * For detail-button
+     * To view whole news
+     * @param url
+     */
+    function detail_button(url) {
+        location.href=url;
+    }
 
 </script>
 <div id="header">
@@ -49,18 +49,18 @@ try
         <li id="nav-faq"><a href="faq.php"><span>Вопросы</span></a></li>
     </ul>
 </div>
-<div id="main" class="">
-<div id="main-slogan" class="main-content">
-    <div id="slogan">Быстро - Качественно - Надежно</div>
-</div>
+    <div id="main" class="">
+        <div id="main-slogan" class="main-content">
+            <div id="slogan">Быстро - Качественно - Надежно</div>
+        </div>
 <!--        End of main-slogan-->
 
-<div id="news-main" class="main-content">
-<div id="" class="news-content clear-fix">
-<div id='' class="news-header">
-    <h2  class="h2">Новости</h2>
-</div>
-<div class='news-container'>
+        <div id="news-main" class="main-content">
+                <div id="" class="news-content clear-fix">
+                    <div id='' class="news-header">
+                        <h2  class="h2">Новости</h2>
+                    </div>
+                    <div class='news-container'>
 
 <!--                        <div class='news-body superlink' onclick="detail_button('?id_news=1')">-->
 <!--                            <div class='news-title'>-->
@@ -104,93 +104,93 @@ try
 
 
 <?php
-// Если GET-параметр id_news не передан - выводим
-// список новостных сообщений
-if(empty($_GET['id_news']))
-{
-    $_GET['page'] = intval($_GET['page']);
-
-    // Количество сообщений на странице
-    $pnumber = 100;
-    // Количество ссылок в постраничной навигации
-    $page_link = 3;
-
-    // Объявляем объект постраничной навигации
-    $obj = new PagerMysql($tbl_news,
-        "WHERE hide = 'show' ",
-        "ORDER BY pos",
-        $pnumber,
-        $page_link);
-    // Получаем содержимое текущей страницы
-    $news = $obj->get_page();
-
-    // Если имеется хотя бы одна запись - выводим ее
-    if(!empty($news))
+    // Если GET-параметр id_news не передан - выводим
+    // список новостных сообщений
+    if(empty($_GET['id_news']))
     {
+        $_GET['page'] = intval($_GET['page']);
 
-        $urlpict = "";
-        for($i = 0; $i < count($news); $i++)
+        // Количество сообщений на странице
+        $pnumber = 100;
+        // Количество ссылок в постраничной навигации
+        $page_link = 3;
+
+        // Объявляем объект постраничной навигации
+        $obj = new PagerMysql($tbl_news,
+            "WHERE hide = 'show' ",
+            "ORDER BY pos",
+            $pnumber,
+            $page_link);
+        // Получаем содержимое текущей страницы
+        $news = $obj->get_page();
+
+        // Если имеется хотя бы одна запись - выводим ее
+        if(!empty($news))
         {
-            if($news[$i]['hidedate'] != 'hide' ) {
-                $editdate = date('d.m.Y H:i', strtotime($news[$i]['putdate']));
-                $putdate =  "<span id=\"datetime\">".$editdate."</span>";
-            } else {
-                $putdate = "";
-            }
-            if($news[$i]['urlpict'] != '' && $news[$i]['hidepict'] != 'hide')
+
+            $urlpict = "";
+            for($i = 0; $i < count($news); $i++)
             {
-                $alt = $news[$i]['alt'];
-                $photo_print = " src='{$news[$i]['urlpict']}' alt='$alt' width='276' height='153'";
-                $img = "<img class='' $photo_print />";
+                 if($news[$i]['hidedate'] != 'hide' ) {
+                    $editdate = date('d.m.Y H:i', strtotime($news[$i]['putdate']));
+                    $putdate =  "<span id=\"datetime\">".$editdate."</span>";
+                } else {
+                    $putdate = "";
+                }
+                if($news[$i]['urlpict'] != '' && $news[$i]['hidepict'] != 'hide')
+                {
+                    $alt = $news[$i]['alt'];
+                    $photo_print = " src='{$news[$i]['urlpict']}' alt='$alt' width='276' height='153'";
+                    $img = "<img class='' $photo_print />";
 
-            } else {
-                $img = "";
-            }
-            if($news[$i]['url'] != '' && $news[$i]['url'] != '-')
-            {
-                $href = "href='".$news[$i]['url']."'";
-                $val_href = $news[$i]['urltext'];
-            }
-            $detail = "";
+                } else {
+                    $img = "";
+                }
+                if($news[$i]['url'] != '' && $news[$i]['url'] != '-')
+                {
+                    $href = "href='".$news[$i]['url']."'";
+                    $val_href = $news[$i]['urltext'];
+                }
+                $detail = "";
 
-            $url = "?id_news=".$news[$i]['id_news'];
+                $url = "?id_news=".$news[$i]['id_news'];
 
-            // Если индекс при модульном делении равен 1, т.е.
-            // 0 или 1 или  2 % 3 == 1
-            // 0 % 3 = 0
-            // 1 % 3 = 1
-            // 2 % 3 = 2
-            // 3 % 3 = 0
-            // 4 % 3 = 1
-            // 5 % 3 = 2
-            // нам нужен только средний элемент(2), который равен при делении 1,
-            // чтобы назначить ему border-left и border-right
-//            if( $i % 3 == 1 ) {
-//                $borderleft = 'border-left-right';
-//
-//            } else {
-//                $borderleft = "";
-//            }
-//            // Высчитываем разницу между количеством блоков на три в ряд
-//            // эту разницу вычитаем из общего количества и назначаем нижний border для тех,
-//            // которые не самые нижние
-//            $count = count( $news );
-//            $diff = $count % 3;
-//            // Если весь нижний ряд заполнен, то убираем у него стиль border-bottom
-//            if ( $diff == 0 ) {
-//                $diff = 3;
-//            }
-//            if( $i < $count-$diff ) {
-//                $borderbottom = 'border-bottom';
-//            } else {
-//                $borderbottom = "";
-//            }
+                // Если индекс при модульном делении равен 1, т.е.
+                // 0 или 1 или  2 % 3 == 1
+                // 0 % 3 = 0
+                // 1 % 3 = 1
+                // 2 % 3 = 2
+                // 3 % 3 = 0
+                // 4 % 3 = 1
+                // 5 % 3 = 2
+                // нам нужен только средний элемент(2), который равен при делении 1,
+                // чтобы назначить ему border-left и border-right
+                if( $i % 3 == 1 ) {
+                    $borderleft = 'border-left-right';
 
-
+                } else {
+                    $borderleft = "";
+                }
+                // Высчитываем разницу между количеством блоков на три в ряд
+                // эту разницу вычитаем из общего количества и назначаем нижний border для тех,
+                // которые не самые нижние
+                $count = count( $news );
+                $diff = $count % 3;
+                // Если весь нижний ряд заполнен, то убираем у него стиль border-bottom
+                if ( $diff == 0 ) {
+                    $diff = 3;
+                }
+                if( $i < $count-$diff ) {
+                    $borderbottom = 'border-bottom';
+                } else {
+                    $borderbottom = "";
+                }
 
 
 
-            echo "<div class='news-string-body superlink $borderleft $borderbottom' onclick=\"detail_button('$url')\">
+
+
+                echo "<div class='news-body superlink $borderleft $borderbottom' onclick=\"detail_button('$url')\">
                             <div class='news-title'>
                                 <h1 class=\"h2\">".nl2br(print_page($news[$i]['name']))."</h1>
                             </div>
@@ -206,14 +206,14 @@ if(empty($_GET['id_news']))
 
 
 
+            }
         }
     }
-}
-// Если GET-параметр id_news передан - выводим полную
-// версию нвостного сообщения
-else
-{
-    require_once("news_print.php");
+    // Если GET-параметр id_news передан - выводим полную
+    // версию нвостного сообщения
+    else
+    {
+        require_once("news_print.php");
 
 //        echo "<div id='design'>
 //                <div class='row block grid2col row block border'>
@@ -233,7 +233,7 @@ else
 //                </div>
 //            </div>
 //        </div>";
-}
+    }
 
 
 
@@ -244,7 +244,7 @@ echo "
         </div><!-- End of news-main -->
         <div id=\"main-guestbook\"></div>";
 
-require_once("templates/bottom.php");
+    require_once("templates/bottom.php");
 }
 
 catch(ExceptionMySQL $exc)

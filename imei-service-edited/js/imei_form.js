@@ -48,31 +48,13 @@ var AMForm = {
 //                return obj.value.length >= 10;
             }
         }
-//        ,
-//        code: {
-//            msg: "",
-//            res: '',
-//            test: function( obj ) {
-//                AMForm.check.code.trueRes( obj );
-////                    var st = AMForm.check['code'].res;
-//                    return !obj.value;
-//
-//            },
-//            trueRes: function(obj) {
-////                console.log(obj);
-//                AM.Ajax.ajax( {
-//                    'method': 'POST',
-//                    'async': true,
-//                    'url': 'ajax_handle.php',
-//                    'postParams': 'codeConfirm='+obj.value,
-//                    'onSuccess': function(response) {
-//                        AM.DOM.$('codeConfirm').value = response
-////                        AMForm.check['code'].res = response;
-//                        return response;
-//                    }
-//                });
-//            }
-//        }
+        ,
+        code: {
+            msg: "Не верный код",
+            test: function( obj ) {
+                    return !obj.value ||  (  obj.value.match( new RegExp("[a-z0-9]{6}") ) ?  true : false );
+            }
+        }
     },
 
     // flag to indicate status of pressing button to send form (enter or click)
@@ -100,21 +82,11 @@ var AMForm = {
         if( AMForm.validateForm(form) == true ){
             // if button pressed for the first time
             if( this.watchedForm == false ) {
-                // Отправляем AJAX-запрос в ajax_handle.php
-                // чтобы из iframe отправить содержимое
-//                var content = wysiwyg.doc().body.innerHTML;
-//                var amp = content.replace(/&amp;/g,'&');
-//                var nbsp = amp.replace(/&nbsp;/g,'');
-//                     AM.Ajax.ajax({
-//                        'method':'POST',
-//                        'url': 'ajax_handle.php',
-//                        'postParams': 'mode=submit&text='+nbsp,
-//                        'onSuccess': handleResult,
-//                         'onError': handleError
-//                    });
 
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
+
+                wysiwyg.showOverlay();
 
                 setTimeout( function() {
                         // submit form for Unlock, Carrier check, Blacklist Check
@@ -249,20 +221,6 @@ var AMForm = {
             len,
             i;
 
-//        var code = elem['code'];
-//            AM.Ajax.ajax( {
-//                'method': 'POST',
-//                'async': true,
-//                'url': 'ajax_handle.php',
-//                'postParams': 'codeConfirm='+code.value,
-//                'onSuccess': function(response) {
-//                    AM.DOM.$('codeConfirm').value = response;
-////                        AMForm.check['code'].res = response;
-//                    return response;
-//                }
-//            });
-
-
         // находим все элементы формы и проверяем, чтобы поле value имело значение (первичная проверка
         // при submit)
         for( i= 0, len = elem.length; i<len; i++ ) {
@@ -300,27 +258,13 @@ var AMForm = {
         if( AM.DOM.$('iframe_redactor') != null ) {
 
                 var theIframe = AM.DOM.$('iframe_redactor'),
-                    editorSpan = AM.DOM.$('editorSpan'),
-                    modal_preview = AM.DOM.$('modal_preview'),
-                    editor_span = AM.DOM.$('editorSpan'),
-                    editor_span_width = AM.Position.getElementLeft(editor_span),
-                    editor_span_height = AM.Position.getElementTop(editor_span);
-                AM.Position.setX(modal_preview, editor_span_width);
-                AM.Position.setY(modal_preview, editor_span_height);
-                var content = wysiwyg.doc().body.innerHTML;
-                var amp = content.replace(/&amp;/g,'');
-                var nbsp = amp.replace(/&nbsp;/g,'');
+                    content = wysiwyg.doc().body.innerHTML,
+                    editorSpan = AM.DOM.$('editorSpan');
+//                content = content.replace(/&nbsp;/g,'');
 
-            if( nbsp.length >= 5 ) {
-                AM.Ajax.ajax({
-                    'method':'POST',
-                    'url': 'ajax_handle.php',
-                    'postParams': 'mode=submit&text='+nbsp,
-                    'onSuccess': handleResult,
-                    'onError': handleError
-                });
-
-
+            if( content.length >= 5 ) {
+                var textareaIframe = AM.DOM.$('textareaIframe');
+                textareaIframe.value = content;
 
                 if(  AM.DOM.next( editorSpan ) != null ) {
                     AMForm.hideErrors( editorSpan  );
@@ -341,10 +285,11 @@ var AMForm = {
         if( error.length ) {
             if( AM.DOM.$('guestbook-form') != null ) {
                 // то фокусируем страницу на форме
-                var guestbookForm = AM.DOM.$('guestbook-form');
-                guestbookForm.scrollIntoView(true);
+//                var guestbookForm = AM.DOM.$('guestbook-form');
+//                guestbookForm.scrollIntoView(true);
 
             }
+            AM.DOM.$('shipping-box').scrollIntoView(true);
             // возвращаем результат False
             return false;
             // если ошибок нет
@@ -352,6 +297,8 @@ var AMForm = {
             // возвращаем результат True
             return true;
         }
+
+
     },
 
 
@@ -412,6 +359,7 @@ var AMForm = {
         if( n == null) {
             AM.DOM.append(p,ul);
         }
+
     },
 
     hideErrors: function(elem) {

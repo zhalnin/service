@@ -87,13 +87,12 @@
 ?>
 
 
-
+<!--            Возвращаем текст в iFrame-->
             <script type="text/javascript">
                 AM.Event.addEvent( window, 'load', function() {
                     var textareaIframe = AM.DOM.$('textareaIframe').value;
-                    var amp = textareaIframe.replace(/&amp;/g,'');
-                    var nbsp = amp.replace(/&nbsp;/g,'');
-                     wysiwyg.doc().body.innerHTML = nbsp;
+//                   textareaIframe = textareaIframe.replace(/&nbsp;/,' ');
+                   wysiwyg.doc().body.innerHTML = textareaIframe;
                 });
             </script>
 <?php
@@ -169,7 +168,7 @@
 
 ?>
         <div id="guestbook-form" class="guestbook-all-addmessage main-content">
-            <div class="guest-form-box">
+            <div id="shipping-box" class="guest-form-box">
                 <h2 class="h2 primary">Добавить сообщение</h2>
                 <div class="guest-all-form top-divided">
 <!--                    <form method="POST" action="guestbook.php">-->
@@ -280,15 +279,18 @@
                                 <div class="mbs">
                                     <span  class="capcha">
                                         <label for="capcha"><span>&nbsp;</span></label>
-                                        <img src="guestbook/capcha/capcha.php" name="capcha" >
+                                        <img id="capchaImg" src="guestbook/capcha/capcha.php" name="capcha" />
                                     </span>
                                 </div>
 
-                                <div class="mbs">
+                                <div class="refreshDiv">
+                                    <span id="refreshCode" class="refreshCode" title="Обновить код на картинке"></span>
+                                </div>
+
+                                <div class="mbs capchaField">
                                     <span class="form-field field-with-placeholder code">
                                         <label class="placeholder" for="code"><span>Введите код с картинки</span></label>
-                                        <span id="refreshCode" title="Обновить код на картинке"></span>
-                                        <input type="text" name="code" class="code" id="code">
+                                        <input type="text" name="code" class="code" id="code" maxlength="6" />
                                     </span>
                                 </div>
 

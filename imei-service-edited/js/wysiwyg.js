@@ -202,22 +202,6 @@ function previewPost() {
 
 }
 
-//function sendPost() {
-//    var modal_preview = AM.DOM.$('modal_preview'),
-//        editor_span = AM.DOM.$('editorSpan'),
-//        editor_span_width = AM.Position.getElementLeft(editor_span),
-//        editor_span_height = AM.Position.getElementTop(editor_span);
-//    AM.Position.setX(modal_preview, editor_span_width);
-//    AM.Position.setY(modal_preview, editor_span_height);
-//    var content = wysiwyg.doc().body.innerHTML;
-//    var result = content.replace(/&nbsp;/, '' );
-//    AM.Ajax.ajax({
-//        'method':'POST',
-//        'url': 'ajax_handle.php',
-//        'postParams': 'mode=submit&text='+result,
-//        'onSuccess': handleResult
-//    });
-//}
 
 function handleResultPreview( response ) {
 //    var amp = response.replace(/&amp;/g,'&');
@@ -235,30 +219,7 @@ function handleResultPreview( response ) {
 //    AM.DOM.$('showmsg').innerHTML = response;
 }
 
-//function handleResult( response ) {
-//    wysiwyg.showOverlay();
-//    var img = AM.DOM.$("modalPreviewContent");
-//    if(img.firstChild){
-//        img.removeChild(img.firstChild);
-//    }
-//    var dialog_response = "<div class=\"dialog_response main-modal rounded shadowed\" style='width: 700px;'>"+response+"</div>";
-//    img.innerHTML=dialog_response;
-//    AM.DOM.fadeIn(modal_preview, 100, 10);
-//
-////    wysiwyg.openModal('preivew');
-////    AM.DOM.$('showmsg').innerHTML = response;
-//}
-function handleResult( response ) {
-    var textareaIframe = AM.DOM.$('textareaIframe');
 
-    var amp = response.replace(/&amp;/g,'');
-    var nbsp = amp.replace(/&nbsp;/g,'');
-
-//    console.log(nbsp);
-
-    textareaIframe.value = nbsp ;
-
-}
 function handleError( error ) {
     console.log( error );
 
