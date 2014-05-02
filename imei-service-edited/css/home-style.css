@@ -1431,10 +1431,124 @@ span #uah.currency{
 
 
 
+#addNav {
+    height: 42px;
+    margin-bottom: 9px;
+}
+#addNav-border {
+    border-left: 1px solid #DBDBDB;
+    width: 1px;
+    float: left;
+    position: relative;
+    height: 36px;
+    margin: 2px 0 2px 1px;
+}
+#nav-guestbook {
+    position: relative;
+    float: left;
+    width: 468px;
+
+}
+#nav-contact {
+    position: relative;
+    float: right;
+    width: 468px;
+}
+.addNav-body {
+    color: #666666;
+    /*height: 400px;*/
+    /*width: 960px;*/
+    /*float: left;*/
+    text-align: left;
+    padding: 10px 10px;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+}
+.addNav-body:hover {
+    box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
+    -khtml-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -ms-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -o-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -moz-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -webkit-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    opacity: 0.8;
+}
+.addNav-body > h3 {
+    text-align: center;
+}
 
 
 
 
-
-
-
+.contact-header h2 {
+    display: inline-block;
+    font-size: 24px;
+    margin-bottom: 0;
+    padding: 12px 0;
+    text-align: center;
+    width: auto;
+}
+.contact-content {
+    margin-bottom: 9px;
+}
+.contact-header {
+    text-align: center;
+}
+.contact-container {
+    border-top: 1px solid #DDDDDD;
+}
+.contact-string-body {
+    color: #666666;
+    height: 400px;
+    width: 960px;
+    /*width: 306px;*/
+    /*float: left;*/
+    text-align: left;
+    padding: 10px 10px 0;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+}
+.contact-string-body:hover {
+    box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
+    -khtml-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -ms-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -o-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -moz-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    -webkit-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    opacity: 0.8;
+}
+.contact-title {
+    line-height: 1.3em;
+    text-align: center;
+    height: 85px;
+}
+.contact-title > h1 {
+    display: inline-block;
+    line-height: 1.5em;
+    color: #333333;
+}
+.contact-image {
+    border-bottom: 1px solid #E4E4E4;
+    line-height: 100%;
+    margin-bottom: 12px;
+    padding-bottom: 23px;
+    text-align: center;
+}
+.contact-info {
+    margin: 20px;
+}
+.contact-info h3 {
+    text-align: center;
+    margin: 2px 0 20px;
+}
+.contact-info p {
+    margin: 10px 0;
+}
+.contact-footer {
+    height: 20px;
+    clear: both;
+    border-top: 1px solid #E4E4E4;
+}
+.contact-address li{
+    margin: 30px 0;
+}

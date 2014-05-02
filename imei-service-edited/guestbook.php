@@ -30,6 +30,14 @@ include( "utils/utils.getIP.php" );
     </div>
     <!--        End of main-slogan-->
 
+
+    <div id="addNav" class="main-content">
+        <a href="guestbook.php"><div id="nav-guestbook" class="addNav-body rounded"><h3 class="h3">Гостевая</h3></div></a>
+        <div id="addNav-border"></div>
+        <a href="contacts.php"><div id="nav-contact" class="addNav-body rounded"><h3 class="h3">Контакты</h3></div></a>
+    </div>
+
+
     <div id="news-main" class="main-content">
         <div id="" class="news-content clear-fix">
             <div id='' class="news-header">

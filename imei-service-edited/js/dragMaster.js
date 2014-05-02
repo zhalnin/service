@@ -14,13 +14,14 @@ function DragObject( element, elem_resize, iframe_resize ) {
 
     this.onDragMove = function(x, y, startY ) {
 
-//        console.log( AM.Position.fullHeight(elem_resize) );
+
+        console.log( AM.Position.fullHeight(elem_resize) );
 //        console.log( AM.Position.fullHeight(iframe_resize) );
 //        console.log( startY );
-//        console.log( y - startY );
+        console.log( y - startY );
 
 
-//        elem_resize.style.height =  AM.Position.fullHeight(elem_resize) + ( y - startY ) - mouseOffset.y + 'px';
+        elem_resize.style.height =  AM.Position.fullHeight(elem_resize) + ( y - startY ) - mouseOffset.y + 'px';
 //        elem_resize.style.height = y - mouseOffset.y + 'px';
 //        iframe_resize.style.height = y - mouseOffset.y - 60 + 'px';
     };
