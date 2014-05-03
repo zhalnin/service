@@ -1,98 +1,90 @@
 /**
  * Created by zhalnin on 26/04/14.
  */
-function DragObject( element, elem_resize, iframe_resize ) {
-    element.dragObject = this;
+function DragMove( element ) {
+    element.dragElement = this;
+    dragMaster.makeDraggable( element );
 
-    dragMaster.makeDraggable(element);
-
-    this.onDragStart = function( offset ) {
-        var s = element.style;
-//        s.position = 'absolute';
+    this.onStart = function(offset ) {
         mouseOffset = offset;
     };
 
-    this.onDragMove = function(x, y, startY ) {
-
-
-        console.log( AM.Position.fullHeight(elem_resize) );
-//        console.log( AM.Position.fullHeight(iframe_resize) );
-//        console.log( startY );
-        console.log( y - startY );
-
-
-        elem_resize.style.height =  AM.Position.fullHeight(elem_resize) + ( y - startY ) - mouseOffset.y + 'px';
-//        elem_resize.style.height = y - mouseOffset.y + 'px';
-//        iframe_resize.style.height = y - mouseOffset.y - 60 + 'px';
+    this.onMove = function( x, y, width, height ) {
+        element.style.height = height + y - mouseOffset.y - AM.Position.getElementTop(element) + 'px';
+//        element.style.width = width + x - mouseOffset.x - AM.Position.getElementLeft(element) + 'px';
+        AM.DOM.$('iframe_redactor').style.height = height + y - mouseOffset.y - AM.Position.getElementTop(element) - 60 + 'px';
+//        AM.DOM.$('iframe_redactor').style.width = width + x - mouseOffset.x - AM.Position.getElementLeft(element) + 'px';
+        if( parseInt(element.style.height ) <= 260 ) {
+            element.style.height = 260 + 'px';
+            AM.DOM.$('iframe_redactor').style.height = 200 + 'px';
+        }
     };
 
-    this.toString = function() {
-        return element.id;
-    };
 }
 
+
+
+
+
+
+
 var dragMaster = (function() {
+    var dragElement,
+        mousePoint,
+        height,
+        width;
 
-    var dragObject,
-        mouseDownAt,
-        startY;
-
-    function mouseDown(e) {
-//        console.log('mouseDown');
-        e = AM.Event.fixEventMouse(e);
-        if(e.which != 1 ) return;
-        mouseDownAt = { x: e.pageX , y: e.pageY, element: this };
-        startY = e.pageY;
+    function mouseDown( e ) {
+        AM.DOM.$('iframe_redactor').style.visibility = 'hidden';
+        e = AM.Event.fixEventMouse( e );
+        if(e.which != 1 ) { return; }
+        mousePoint = { x: e.pageX, y: e.pageY, element: this };
+        width = AM.Position.fullWidth(this);
+        height = AM.Position.fullHeight(this);
         addDocumentEventHandlers();
-
         return false;
     }
 
-    function mouseMove(e) {
-//        console.log('mouseMove');
-        e = AM.Event.fixEventMouse(e);
-        if( mouseDownAt ) {
-//            if( Math.abs(mouseDownAt.x - e.pageX) < 5 && Math.abs(mouseDownAt.y - e.pageY ) < 5 ) {
-//                return false;
-//            }
-            var elem = mouseDownAt.element;
-            dragObject = elem.dragObject;
-            var mouseOffset = AM.Event.getMouseOffset( elem, mouseDownAt.x, mouseDownAt.y );
-            mouseDownAt = null;
 
-
-            dragObject.onDragStart( mouseOffset );
+    function mouseMove( e ) {
+        e = AM.Event.fixEventMouse( e );
+        if( mousePoint ) {
+            var elem = mousePoint.element;
+            dragElement = elem.dragElement;
+            var mouseOffset = AM.Event.getMouseOffset( elem, mousePoint.x, mousePoint.y );
+            mousePoint = null;
+            dragElement.onStart( mouseOffset );
         }
 
-
-//        console.log(e.pageY);
-        dragObject.onDragMove(e.pageX, e.pageY, startY );
+        dragElement.onMove(e.pageX, e.pageY, width, height );
         return false;
     }
 
-    function mouseUp() {
-        console.log('mouseUp');
-        if( ! dragObject ) {
-            mouseDownAt = null
+
+
+    function mouseUp( ) {
+        AM.DOM.$('iframe_redactor').style.visibility = 'visible';
+        if( !dragElement ) {
+            mousePoint = null;
         }
         removeDocumentEventHandlers();
     }
 
+
+
     function addDocumentEventHandlers() {
-        AM.DOM.$('iframe_redactor').onmouseover = mouseUp;
         document.onmousemove = mouseMove;
-        window.onmouseup = mouseUp;
-        document.ondragstart = document.body.onselectstart = function() { return false; }
+        document.onmouseup = mouseUp;
+
     }
 
     function removeDocumentEventHandlers() {
-        document.onmousemove = window.onmouseup = document.ondragstart = document.body.onselectstart = null;
+        document.onmousemove = document.onmouseup = null;
+
     }
 
-
-    return  {
+    return {
         makeDraggable: function( element ) {
-//            console.log(element);
             element.onmousedown = mouseDown;
         }
     }

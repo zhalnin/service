@@ -262,9 +262,9 @@
                                                         <span class="label"> Предпросмотр </span>
                                                     </span>
                                                     </div>
-                                                    <a href="#" id="editorResize" class="editorResize" >
+                                                    <div id="editorResize" class="editorResize" >
                                                         <span class="editorIcon editorResize"></span>
-                                                    </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>

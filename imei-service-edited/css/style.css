@@ -89,6 +89,7 @@ table, tr, tbody, tfoot, thead {
 
 .editorIcon {
     background: url("../icons/iconmaster.gif") no-repeat scroll 20px 20px rgba(0, 0, 0, 0);
+
 }
 .editor_bold {
     height: 21px;
@@ -313,13 +314,13 @@ span.editor_link.active {
     height: 22px;
     width: 30px;
 }
-.editorStatusbar a.editorResize {
-    background: url("../icons/icons_wysiwyg.gif") repeat scroll -800px 0 rgba(0, 0, 0, 0);
-    cursor: se-resize;
+.editorStatusbar div.editorResize {
+    /*background: url("../icons/icons_wysiwyg.gif") repeat scroll -800px 0 rgba(0, 0, 0, 0);*/
+    cursor: s-resize;
     display: inline-block;
     float: right;
     height: 20px;
-    width: 20px;
+    width: 577px;
 }
 .editorStatusbar {
     width: 700px;

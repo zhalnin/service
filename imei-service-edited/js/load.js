@@ -87,7 +87,8 @@ AM.Event.addEvent(window, 'load', function() {
                     }
                 }
 
-                new DragObject( editorResize, wysiwyg_toolbar, theIframe );
+//                new DragObject( editorResize, wysiwyg_toolbar, theIframe );
+                new DragMove( wysiwyg_toolbar );
 
             }
 
