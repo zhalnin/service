@@ -329,7 +329,6 @@ class PagerMysql extends Pager {
                         {$this->where}
                         {$this->order}";
 
-
         $sth = self::$db->prepare( $selectCount );
         $result = $sth->execute();
         if( ! $result ) {
