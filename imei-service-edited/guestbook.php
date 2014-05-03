@@ -31,10 +31,9 @@ include( "utils/utils.getIP.php" );
     <!--        End of main-slogan-->
 
 
-    <div id="addNav" class="main-content">
-        <a href="guestbook.php"><div id="nav-guestbook" class="addNav-body rounded"><h3 class="h3">Гостевая</h3></div></a>
-        <div id="addNav-border"></div>
-        <a href="contacts.php"><div id="nav-contact" class="addNav-body rounded"><h3 class="h3">Контакты</h3></div></a>
+    <div id="addNav" class="">
+        <a href="guestbook.php"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
+        <a href="contacts.php"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
     </div>
 
 

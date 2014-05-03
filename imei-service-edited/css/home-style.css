@@ -1039,6 +1039,7 @@ span #uah.currency{
     text-align: left;
     padding: 10px 10px 0;
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    border-bottom: 1px solid #DADADA;
 }
 .news-string-body:hover {
     box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
@@ -1060,7 +1061,7 @@ span #uah.currency{
 .news-title {
     line-height: 1.3em;
     text-align: center;
-    height: 85px;
+    height: 60px;
 }
 .news-title > h1 {
     display: inline-block;
@@ -1070,9 +1071,10 @@ span #uah.currency{
 .news-image {
     border-bottom: 1px solid #E4E4E4;
     line-height: 100%;
-    margin-bottom: 12px;
+    margin: 0 auto 12px;
     padding-bottom: 23px;
     text-align: center;
+    width: 800px;
 }
 .news-info {
     margin: 1px 0 0 0;
@@ -1104,9 +1106,10 @@ span #uah.currency{
 .news-all-image {
     border-bottom: 1px solid #E4E4E4;
     line-height: 100%;
-    margin-bottom: 12px;
+    margin: 0 auto 12px;
     text-align: left;
     padding: 19px 0;
+    width: 800px;
 }
 .news-all-info {
     margin: 1px 0 0 0;
@@ -1225,6 +1228,21 @@ span #uah.currency{
 }
 .guestbook-all-info {
     margin: 1px 0 0 0;
+}
+.guestbook-all-info img {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 13px #999999;
+    -moz-box-shadow: 0 0 13px #999999;
+    -webkit-box-shadow: 0 0 13px #999999;
+    filter:
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=0,strength=1),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=45,strength=1),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=90,strength=2),
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=135,strength=3),*/
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=180,strength=0),*/
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=225,strength=3),*/
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=270,strength=2),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=315,strength=1);
 }
 .guestbook-all-footer {
     height: 20px;
@@ -1434,6 +1452,7 @@ span #uah.currency{
 #addNav {
     height: 42px;
     margin-bottom: 9px;
+    background: none;
 }
 #addNav-border {
     border-left: 1px solid #DBDBDB;
@@ -1455,7 +1474,8 @@ span #uah.currency{
     width: 468px;
 }
 .addNav-body {
-    color: #666666;
+    /*color: #666666;*/
+    background: -moz-linear-gradient(center top , #FEFEFE 0px, #FAFAFA 39%, #F7F7F7 69%, #F5F5F5 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
     /*height: 400px;*/
     /*width: 960px;*/
     /*float: left;*/
@@ -1508,14 +1528,7 @@ span #uah.currency{
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
 }
 .contact-string-body:hover {
-    box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
-    -khtml-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
-    -ms-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
-    -o-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
-    -moz-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
-    -webkit-box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px;
-    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
-    opacity: 0.8;
+
 }
 .contact-title {
     line-height: 1.3em;
@@ -1530,9 +1543,10 @@ span #uah.currency{
 .contact-image {
     border-bottom: 1px solid #E4E4E4;
     line-height: 100%;
-    margin-bottom: 12px;
+    margin: 0 auto 12px;
     padding-bottom: 23px;
     text-align: center;
+    width: 800px;
 }
 .contact-info {
     margin: 20px;

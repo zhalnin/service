@@ -284,7 +284,7 @@
                                 </div>
 
                                 <div class="refreshDiv">
-                                    <span id="refreshCode" class="refreshCode" title="Обновить код на картинке"></span>
+                                    <div id="refreshCode" class="refreshCode" title="Обновить код на картинке"></div>
                                 </div>
 
                                 <div class="mbs capchaField">

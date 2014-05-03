@@ -472,7 +472,7 @@ span.editor_link.active {
     position: relative;
 }
 #refreshCode {
-    background: url("../icons/refresh_13x12.png") no-repeat scroll 0 0 transparent;
+    background: url("../icons/refresh_13x12.png") no-repeat 0 0 scroll ;
     width: 12px;
     height: 13px;
     float: right;
