@@ -29,6 +29,9 @@ $tbl_photo_settings     = 'system_photo_settings';
 // Новости
 $tbl_news               = 'system_news';
 
+// Контакты
+$tbl_contactaddress     = 'system_contactaddress';
+
 /**
  * MySQL database; only one connection is allowed.
  */

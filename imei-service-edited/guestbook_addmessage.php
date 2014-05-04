@@ -102,9 +102,6 @@
 
             if( empty( $error ) ) {
 
-
-
-
                 $PDO = new PDO("mysql:host=localhost;dbname=imei-service", 'root', 'zhalnin5334', array(
                     PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
@@ -135,7 +132,7 @@
                         $header = "From: zhalnin@mail.com\r\n";
                         $header .= "Reply-to: zhalnin@mail.com \r\n";
                         $header .= "Content-type: text/plane; charset=utf-8\r\n";
-//                        mail($to,$subject,$body,$header);
+                        mail($to,$subject,$body,$header);
                     } else {
                         print "<html><head>\n";
                         print "<meta http-equiv='Refresh' content='0; url=guestbook.php?page=$page'>\n";

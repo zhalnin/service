@@ -8,9 +8,13 @@
  */
 //require_once( "config/class.config.php" );
 require_once ( "guestbook/add/class.PagerMysql.php" );
-require_once( "templates/top.php" );
 include( "utils/utils.getVerBrowser.php" );
 include( "utils/utils.getIP.php" );
+$title = "Гостевая книга";
+$keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
+$description = "Гостевая книга";
+require_once( "templates/top.php" );
+
 ?>
 
 <div id="header">

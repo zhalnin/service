@@ -497,7 +497,7 @@ background-position: 36px -159px;
 
 #footer #footer-content ol#breadcrumbs {
     background: none repeat scroll 0 0 transparent;
-    clear: both;
+    /*clear: both;*/
     color: #666666;
     float: none;
     font-size: 11px;
@@ -1516,6 +1516,7 @@ span #uah.currency{
 }
 .contact-container {
     border-top: 1px solid #DDDDDD;
+    height: 500px;
 }
 .contact-string-body {
     color: #666666;
@@ -1527,9 +1528,7 @@ span #uah.currency{
     padding: 10px 10px 0;
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
 }
-.contact-string-body:hover {
 
-}
 .contact-title {
     line-height: 1.3em;
     text-align: center;
@@ -1543,13 +1542,17 @@ span #uah.currency{
 .contact-image {
     border-bottom: 1px solid #E4E4E4;
     line-height: 100%;
-    margin: 0 auto 12px;
+    margin: 0 70px 12px;
     padding-bottom: 23px;
-    text-align: center;
-    width: 800px;
+    text-align: left;
+    width: 150px;
 }
 .contact-info {
+    clear: both;
+    float: right;
     margin: 20px;
+    position: relative;
+    top: -240px;
 }
 .contact-info h3 {
     text-align: center;
@@ -1557,12 +1560,42 @@ span #uah.currency{
 }
 .contact-info p {
     margin: 10px 0;
+    text-align: right;
+}
+.contact-info ul {
+    text-align: left;
+}
+.contact-address div {
+    display: inline-block;
+}
+
+#contactIconsDescr {
+    position:relative;
+    float:right;
+    margin: 15px
 }
 .contact-footer {
     height: 20px;
-    clear: both;
+    /*clear: both;*/
     border-top: 1px solid #E4E4E4;
 }
 .contact-address li{
     margin: 30px 0;
+}
+
+
+.image-shadow {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 13px #999999;
+    -moz-box-shadow: 0 0 13px #999999;
+    -webkit-box-shadow: 0 0 13px #999999;
+    filter:
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=0,strength=1),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=45,strength=1),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=90,strength=2),
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=135,strength=3),*/
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=180,strength=0),*/
+            /*progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=225,strength=3),*/
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=270,strength=2),
+        progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=315,strength=1);
 }

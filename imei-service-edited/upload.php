@@ -121,7 +121,7 @@ function nameServer() {
  * @param $small - $_FILES['<name>']['name'] - актуальный файл
  * @param $width - требуемая ширина
  * @param $height - требуемая высота
- * * @param $dir - директория для сохранения
+ * @param $dir - директория для сохранения
  * @return bool
  */
 function resizeimg( $big, $small, $width, $height, $dir ){

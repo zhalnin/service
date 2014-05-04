@@ -26,6 +26,26 @@ try
 //    $url = "?id_news=1";
 
 //mail("zhalninpal@me.com","test","test");
+try {
+    $PDO = new PDO("mysql:host=localhost;dbname=imei-service",'root','zhalnin5334',array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMEs UTF8',
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ));
+    $selectStmt = "SELECT * FROM system_contactaddress";
+    $sth = $PDO->query( $selectStmt );
+
+
+    if( $sth ) {
+            $contact = $sth->fetch();
+    } else {
+        throw new PDOException("Error while selecting data from system_contactaddress");
+    }
+
+
+} catch( PDOException $ex ) {
+    print $ex->getMessage();
+}
 ?>
 
 <div id="header">
@@ -47,40 +67,46 @@ try
 
 <div id="addNav" class="">
     <a href="guestbook.php"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
-    <a href="guestbook.php"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
+    <a href="contacts.php"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
 </div>
 
 
 <div id="news-main" class="main-content">
-<div id="" class="contact-content clear-fix">
+<div id="" class="contact-content">
 <div id='' class="contact-header">
     <h2  class="h2">Контакты</h2>
 </div>
 <div class='contact-container'>
 
-        <div class='contact-string-body superlink' onclick="detail_button('?id_news=1')">
+        <div class='contact-string-body' onclick="detail_button('?id_news=1')">
             <div class='contact-title'>
-                <h1>
-                    <a href="http://imei-service.ru">Наши контакты</a>
-                </h1>
+<!--                <h1>-->
+<!--                    <a href="http://imei-service.ru">Наши контакты</a>-->
+<!--                </h1>-->
             </div>
-            <div class='contact-image'>
-                <img class="" alt="Фото контрагента" src="files/news/Apple_logo_black_shadow.png" >
+            <div class='contact-image' >
+                <img alt="Фото контрагента" src="<?php echo $contact['photo_small']; ?>" >
             </div>
             <div class='contact-info'>
 
                 <h3 class="h3"><b>Мы рады вас приветствовать на нашем сайте!</b></h3>
-                <p><b>Вы можете связаться с нами по одному из указанных реквизитов:</b></p>
+                <p><b><?php echo $contact['name']; ?></b></p>
                     <ul class="contact-address">
-                        <li><b>Адрес электронной почты</b>
-                        -
-                        <a class="" href="http://imei-service.ru/unlock.php">imei_service@icloud.com</a></li>
-                        <li><b>Skype</b>
-                        -
-                        <a class="" href="http://imei-service.ru/udid.php">Skype</a></li>
-                        <li><b>Группа ВКонтакте</b>
-                        -
-                        <a class="" href="http://imei-service.ru/carrier_check.php">группа VKontakte</a></li>
+                        <li>
+                            <a class="" href="mailto:<?php echo $contact['email']; ?>"><div id="contactIcons"><img class="image-shadow" src="icons/50x50/email_50x49.png" />
+                                <div id="contactIconsDescr"> - <?php echo $contact['email']; ?></div>
+                            </div></a>
+                        </li>
+                        <li>
+                            <a class="" href="skype:<?php echo $contact['skype']; ?>?add"><div id="contactIcons"><img class="image-shadow" src="icons/50x50/skype_50x50.png" />
+                                <div id="contactIconsDescr"> - <?php echo $contact['skype']; ?></div>
+                            </div></a>
+                        </li>
+                        <li>
+                            <a class="" href="http://vk.com/<?php echo $contact['vk']; ?>"><div id="contactIcons"><img class="image-shadow" src="icons/50x50/vkGroup_50x50.png" />
+                                <div id="contactIconsDescr"> - группа VKontakte</div>
+                            </div></a>
+                        </li>
                     </ul>
             </div>
         </div>
