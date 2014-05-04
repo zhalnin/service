@@ -145,9 +145,14 @@ if(empty($_GET['id_news']))
             }
             if($news[$i]['urlpict'] != '' && $news[$i]['hidepict'] != 'hide')
             {
+                if( $i % 2 == 1 ) {
+                    $align = "text-align: right;";
+                } else if( $i % 2 == 0 ) {
+                    $align = "text-align: left;";
+                }
                 $alt = $news[$i]['alt'];
                 $photo_print = " src='{$news[$i]['urlpict']}' alt='$alt' width='276' height='153'";
-                $img = "<img class='' $photo_print />";
+                $img = "<img class=''  $photo_print />";
 
             } else {
                 $img = "";
@@ -200,7 +205,7 @@ if(empty($_GET['id_news']))
                             <div class='news-title'>
                                 <h1 class=\"h2\">".nl2br(print_page($news[$i]['name']))."</h1>
                             </div>
-                            <div class='news-image'>
+                            <div class='news-image' style=\"$align\">
                               $img
                             </div>
                             <div class='news-info'>
