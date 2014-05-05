@@ -80,7 +80,8 @@
             $city = htmlspecialchars( stripslashes( $_POST['city'] ), ENT_QUOTES );
             $email = htmlspecialchars( stripslashes( $_POST['email'] ), ENT_QUOTES );
             $url = htmlspecialchars( stripslashes( $_POST['url'] ), ENT_QUOTES );
-            $message = htmlspecialchars( stripslashes( $_POST['message'] ), ENT_QUOTES );
+//            $message = htmlspecialchars( stripslashes( $_POST['message'] ), ENT_QUOTES );
+            $message = $_POST['message'];
             $time = new DateTime;
             $putdate = $time->format('Y-m-d H:i:s');
             $sendmail = false;

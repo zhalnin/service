@@ -147,9 +147,9 @@ try {
                     <td>$strhide<br>
                         <a href=guestbookedit.php?$url>Редактировать</a><br>
                         <a href=# onclick=\"delete_position('guestbookdel.php?$url',".
-                "'Вы действительно хотите удалить каталог?');\">Удалить</a><br>
-            </td>
-         </tr>";
+                        "'Вы действительно хотите удалить каталог?');\">Удалить</a><br>
+                    </td>
+                 </tr>";
         }
         echo "</table><br/>";
         // Выводим ссылки на другие страницы

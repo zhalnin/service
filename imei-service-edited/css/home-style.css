@@ -1493,6 +1493,7 @@ span #uah.currency{
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -webkit-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -moz-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    -ms-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -o-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
 }
 .addNav-body:hover {
@@ -1505,8 +1506,11 @@ span #uah.currency{
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -webkit-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -moz-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    -ms-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -o-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     opacity: 0.8;
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0.8)";
+    filter: alpha(Opacity=0.8);
 }
 .addNav-body > h3 {
     text-align: center;
