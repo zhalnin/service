@@ -154,8 +154,7 @@ class Form
    * Reload of __toString().
    * return form
    */
-  public function __toString()
-  {
+  public function __toString(){
     $this->print_form();
   }
 

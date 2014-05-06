@@ -84,8 +84,14 @@ try {
 <!--                    <a href="http://imei-service.ru">Наши контакты</a>-->
 <!--                </h1>-->
             </div>
-            <div class='contact-image' >
-                <img alt="Фото контрагента" src="<?php echo $contact['photo_small']; ?>" >
+            <div class='view contact-image' >
+                <img alt="Фото контрагента"  src="<?php echo $contact['photo_small']; ?>" >
+                <div class="mask">
+                    <h2>Спасибо за обращение</h2>
+                    <p>Мы постараемся как можно скорее ответить на ваше обращение к нам.
+                        Постарайтесь, чтобы ваш вопрос укладывался в контекст самой цели сайта.
+                    Также вы можете воспользоваться 'Гостевой книгой'</p>
+                </div>
             </div>
             <div class='contact-info'>
 

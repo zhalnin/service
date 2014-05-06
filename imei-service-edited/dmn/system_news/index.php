@@ -49,11 +49,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 
         // Получаем содержимое текущей страницы
         $news = $obj->get_page();
-        // Выводим ссылки на другие страницы
-        echo $obj;
         // Если имеется хотя бы одна запись - выводим ее
         if(!empty($news))
         {
+            // Выводим ссылки на другие страницы
+            echo $obj;
+            echo "<br /><br />";
             ?>
                 <table width="100%"
                        class="table"

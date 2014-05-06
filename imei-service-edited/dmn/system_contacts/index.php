@@ -98,8 +98,8 @@ try
           if(!empty($var)){
               $big = "files/contacts/".$var;
               $small = "files/contacts/s_".$var;
-              $width = 150;
-              $height = 150;
+              $width = 180;
+              $height = 180;
               resizeimg( $big, $small, $width, $height);
           } else {
             $photo = "";

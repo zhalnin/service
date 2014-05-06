@@ -76,10 +76,10 @@
                 $page = 1;
             }
 
-            $name = htmlspecialchars( stripslashes( $_POST['name'] ), ENT_QUOTES );
-            $city = htmlspecialchars( stripslashes( $_POST['city'] ), ENT_QUOTES );
-            $email = htmlspecialchars( stripslashes( $_POST['email'] ), ENT_QUOTES );
-            $url = htmlspecialchars( stripslashes( $_POST['url'] ), ENT_QUOTES );
+            $name =  $_POST['name'];
+            $city =  $_POST['city'];
+            $email =  $_POST['email'];
+            $url = $_POST['url'];
 //            $message = htmlspecialchars( stripslashes( $_POST['message'] ), ENT_QUOTES );
             $message = $_POST['message'];
             $time = new DateTime;

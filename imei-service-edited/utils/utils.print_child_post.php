@@ -57,7 +57,13 @@ function selectRecursion($id2, $page ) {
                 <div class='guestbook-all-info'>
                     <p class='ptext'><?php echo html_entity_decode( $result2['message'] ); ?></p>
                     <?php if( ! empty( $result2['answer'] ) && $result2['answer'] != '-' ) {
-                        print "<p class='panswer'><b><i>Администратор:</i></b>&nbsp;".nl2br($result2['answer'])."</p>";
+                        echo "<div class='panswer-wrap main-content-blue'>
+                                        <p class='panswer ptdg'><b><i>Администратор</i></b></p>
+                                        <div class='panswer-image'>
+                                            <img src=\"images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$result2['name']." >
+                                        </div>
+                                        <p class=\"panswer\">".nl2br($result2['answer'])."</p>
+                                      </div>";
                     }
                     ?>
                 </div>

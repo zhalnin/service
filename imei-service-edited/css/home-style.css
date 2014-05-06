@@ -338,6 +338,21 @@ background-position: 36px -159px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
     -moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
+    /*filter: progid:DXImageTransform.Microsoft.dropshadow(offX=5, offY=5, color=#000000);*/
+}
+.main-content-blue {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: rgba(142, 171, 235, 0.12) rgba(142, 171, 235, 0.44) rgba(142, 171, 235, 0.84);
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(142, 171, 235, 0.95);
+    -webkit-box-shadow:0 1px 3px rgba(142, 171, 235, 0.95);
+    -moz-box-shadow:0 1px 3px rgba(142, 171, 235, 0.95);
 }
 
 .pb-dynamic .pb-slider {
@@ -1295,6 +1310,7 @@ span #uah.currency{
 .guestbook-all-reply {
     display: inline-block;
     width: 100%;
+    margin: 10px 0 0;
 }
 .guestbook-all-reply>span {
     margin: 2px;
@@ -1323,10 +1339,25 @@ span #uah.currency{
     text-indent: 20px;
     word-wrap: break-word;
 }
+.panswer-wrap {
+    margin: 20px 0;
+    padding: 9px;
+}
 .panswer {
     color: #4795f3;
     text-align: justify;
     word-wrap: break-word;
+    text-indent: 20px;
+}
+.panswer-image {
+    line-height: 100%;
+    margin-bottom: 12px;
+    text-align: left;
+    padding: 2px;
+}
+.panswer-image img {
+    background: none;
+    box-shadow: none;
 }
 .ptdg {
     text-indent: 0;
@@ -1552,7 +1583,8 @@ span #uah.currency{
 .contact-title {
     line-height: 1.3em;
     text-align: center;
-    height: 85px;
+    /*height: 85px;*/
+    height: 15px;
 }
 .contact-title > h1 {
     display: inline-block;
@@ -1560,12 +1592,13 @@ span #uah.currency{
     color: #333333;
 }
 .contact-image {
-    border-bottom: 1px solid #E4E4E4;
-    line-height: 100%;
-    margin: 0 70px 12px;
-    padding-bottom: 23px;
-    text-align: left;
-    width: 150px;
+    /*border-bottom: 1px solid #E4E4E4;*/
+    /*line-height: 100%;*/
+    /*margin: 0 70px 12px;*/
+    /*padding-bottom: 23px;*/
+    /*text-align: left;*/
+    /*width: 150px;*/
+    /*height: 150px;*/
 }
 .contact-info {
     clear: both;

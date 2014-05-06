@@ -123,7 +123,7 @@ class FieldTextarea extends Field {
     $tag = "<textarea $style $class
               name=\"".$this->_name."\"
               $rows $cols $disabled $readonly $wrap>".
-            htmlspecialchars($output, ENT_QUOTES)."</textarea>";
+        htmlspecialchars(stripslashes( $output), ENT_QUOTES  )."</textarea>";
     // Check if field is required
     if($this->_is_required) $this->_caption .= " *";
     // Form prompt

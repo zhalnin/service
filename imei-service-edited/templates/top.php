@@ -22,6 +22,7 @@ require_once("count.php");
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link href="css/home-style.css" type="text/css" rel="stylesheet">
+    <link href="css/animatedCSS.css" type="text/css" rel="stylesheet">
     <link href="css/form.css" type="text/css" rel="stylesheet">
     <link href="css/style.css" type="text/css" rel="stylesheet">
 <!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
