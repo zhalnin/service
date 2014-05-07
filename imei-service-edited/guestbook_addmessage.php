@@ -84,7 +84,7 @@
             $message = $_POST['message'];
             $time = new DateTime;
             $putdate = $time->format('Y-m-d H:i:s');
-            $sendmail = false;
+            $sendmail = true;
 ?>
 
 

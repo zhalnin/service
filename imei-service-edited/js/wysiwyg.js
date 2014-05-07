@@ -115,7 +115,7 @@ function WysiwygObject() {
             '<fieldset>'+
             '<legend>Прикрепить изображение</legend>'+
             '<div class="two"><label for="image"><span>Введите адрес изображения</span></label><input type="text" name="image" id="image" value="http://" /></div>'+
-            '<div class="two"><label for="submit"></label><div type="submit" onclick="submitForm(insertImageForm);" class="button" value="Вставить" id="submit">' +
+            '<div class="two"><label for="submit"></label><div type="submit" onclick="submitForm(insertImageForm)" class="button" value="Вставить" id="submit">' +
             '<span style=""><span class="effect"></span><span class="label"> Отправить </span></span></div>'+
             '</fieldset>'+
             '</form>';

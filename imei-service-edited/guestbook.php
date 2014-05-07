@@ -1,4 +1,5 @@
 <?php
+try {
 /**
  * Created by JetBrains PhpStorm.
  * User: zhalnin
@@ -49,7 +50,7 @@ require_once( "templates/top.php" );
             <div class='news-container'>
 
                 <?php
-                try {
+
 
                 $ipAddress = getIP();
                 $browser = getVerBrowser();
@@ -65,51 +66,65 @@ require_once( "templates/top.php" );
 
                 // Находим все посты, которые не имеют id_parent (значит они родительские)
                 $pagerMysql = new \guestbook\add\PagerMysql('system_guestbook', " WHERE id_parent = 0 AND hide='show' ", " ORDER BY putdate DESC ", 10, 3, "");
-                // Выводим постраничную навигацию
-                echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
-                // В цикле получаем результат запроса и выводим его на страницу
-                foreach ($pagerMysql->getPage() as $key=>$pm ) {
-                ?>
-                <div class='guestbook-all-body'>
-                    <div class='guestbook-all-wrap main-content'>
-                        <div class='guestbook-all-title'>
-                            <!--                            <h1 class="h2">-->
-                            <!--                                <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
-                            <!--                            </h1>-->
-                            <p class="ptdg"><b><?php echo $pm['name']; ?></b>&nbsp;
-                                <?php if( ! empty( $pm['city'] ) ) print "($pm[city])"; ?>&nbsp;
-                                <?php echo $pm['putdate']; ?></p>
-                        </div>
 
-                        <div class='guestbook-all-image'>
-                            <img src="images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $pm['name']; ?>" >
-                        </div>
-
-                        <div class='guestbook-all-info'>
-                            <p class='ptext'><?php echo html_entity_decode( $pm['message'] ); ?></p>
-                            <?php if( ! empty( $pm['answer'] ) && $pm['answer'] != '-' ) {
-                                echo "<div class='panswer-wrap main-content-blue'>
-                                        <p class='panswer ptdg'><b><i>Администратор</i></b></p>
-                                        <div class='panswer-image'>
-                                            <img src=\"images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$pm['name']." >
-                                        </div>
-                                        <p class=\"panswer\">".nl2br($pm['answer'])."</p>
-                                      </div>";
-                            }
-                            ?>
-                        </div>
-                        <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $pm['id']; ?>" >Ответить</a></span></div>
-                        <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
-                        <!--                    если находим их, то выводим чуть ниже родительского поста,
-                                                , в функции проходим рекурсивно по всем постам, если они имеют id_parent
-                                                находится в utils/utils.print_child_post.php -->
-                        <?php  selectRecursion($pm['id'], $page ); ?>
-
-                    </div><!-- End of guestboor-all-wrap -->
-                    <?php
-                    echo "</div>"; //  End of guestbook-all-body
-                    }
+//                if( ! empty( $pagerMysql ) ) {
+                if( 0 < count($pagerMysql->getPage() ) ) {
+                    // Выводим постраничную навигацию
                     echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
+                    // В цикле получаем результат запроса и выводим его на страницу
+                    foreach ($pagerMysql->getPage() as $key=>$pm ) {
+                    ?>
+                    <div class='guestbook-all-body'>
+                        <div class='guestbook-all-wrap main-content'>
+                            <div class='guestbook-all-title'>
+                                <!--                            <h1 class="h2">-->
+                                <!--                                <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
+                                <!--                            </h1>-->
+                                <p class="ptdg"><b><?php echo $pm['name']; ?></b>&nbsp;
+                                    <?php if( ! empty( $pm['city'] ) ) print "($pm[city])"; ?>&nbsp;
+                                    <?php echo $pm['putdate']; ?></p>
+                            </div>
+
+                            <div class='guestbook-all-image'>
+                                <img src="images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $pm['name']; ?>" >
+                            </div>
+
+                            <div class='guestbook-all-info'>
+                                <p class='ptext'><?php echo html_entity_decode( $pm['message'] ); ?></p>
+                                <?php if( ! empty( $pm['answer'] ) && $pm['answer'] != '-' ) {
+                                    echo "<div class='panswer-wrap main-content-blue'>
+                                            <p class='panswer ptdg'><b><i>Администратор</i></b></p>
+                                            <div class='panswer-image'>
+                                                <img src=\"images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$pm['name']." >
+                                            </div>
+                                            <p class=\"panswer\">".nl2br($pm['answer'])."</p>
+                                          </div>";
+                                }
+                                ?>
+                            </div>
+                            <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $pm['id']; ?>" >Ответить</a></span></div>
+                            <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
+                            <!--                    если находим их, то выводим чуть ниже родительского поста,
+                                                    , в функции проходим рекурсивно по всем постам, если они имеют id_parent
+                                                    находится в utils/utils.print_child_post.php -->
+                            <?php  selectRecursion($pm['id'], $page ); ?>
+
+                        </div><!-- End of guestboor-all-wrap -->
+                        <?php
+                        echo "</div>"; //  End of guestbook-all-body
+                        }
+                        echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
+                    } else {
+?>
+                            <div class='guestbook-all-body'>
+                                    <div class='guestbook-all-wrap main-content'>
+                                     <b><p class='guestbook-empty'>
+                                            В настоящий момент в 'Гостевой книге' нет ни одного сообщения
+                                         </p></b>
+                        </div><!-- End of guestboor-all-wrap -->
+                        <?php
+                        echo "</div>"; //  End of guestbook-all-body
+                        }
                     ?>
 
                 </div><!-- End of news-container -->

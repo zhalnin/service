@@ -36,14 +36,16 @@ if( isset ( $_POST['url'] ) ) {
 }
 
 if( isset( $_POST['image'] ) ) {
-    $image = htmlspecialchars( stripslashes( $_POST['image'] ) );
+    $image =  $_POST['image'];
     $path = resizeimg2( $image, 450, 600 );
+    $arrExt = array('jpg','gif','png','jpeg');
+//    ['jpg','gif','png','jpeg'];
     if( preg_match('|^https?://|i', $image ) == 1 ) {
         $info = pathinfo($image);
-        if( in_array( strtolower( $info['extension'] ), ['jpg','gif','png','jpeg'] ) ) {
+        if( in_array( strtolower( $info['extension'] ),$arrExt ) ) {
             $height = $path['height'];
             $width = $path['width'];
-            echo '<script type="text/javascript"> var wysiwyg = new parent.WysiwygObject(); wysiwyg.uploadInsertImageSuccess("'.$image.'","'.$width.'","'.$height.'"); </script>';
+            echo "<script type='text/javascript'> var wysiwyg = new parent.WysiwygObject(); wysiwyg.uploadInsertImageSuccess('".$image."','".$width."','".$height."'); </script>";
         } else {
             $error = 'error';
             echo '<script type="text/javascript"> var wysiwyg = new parent.WysiwygObject(); wysiwyg.uploadInsertImageSuccess("'.$error.'"); </script>';
@@ -152,16 +154,16 @@ function resizeimg( $big, $small, $width, $height, $dir ){
     $dest_img = imagecreatetruecolor( $width, $height );
     $white = imagecolorallocate( $dest_img, 255,255,255 );
 //    imagefilledrectangle ($dest_img, 0, 0, 150, 30, $white);
-    if( $size_img[2] == 2 ) $src_img = imagecreatefromjpeg( $big );
-    else if( $size_img[2] == 1 ) $src_img = imagecreatefromgif( $big );
-    else if( $size_img[2] == 3 ){
-//        $src_img = imagecreatefrompng($big);
-        $src_img = LoadPNG( $big );
-    }
+    if( $size_img[2] == 2 ) $res_img = imagecreatefromjpeg( $big );
+    else if( $size_img[2] == 1 ) $res_img = imagecreatefromgif( $big );
+//    else if( $size_img[2] == 3 ){
+//        $res_img = imagecreatefrompng($big);
+        LoadPNG( $big, $width, $height, $small );
+//    }
 
     // Масштабируем изображение функцией imagecopyresampled()
     imagecopyresampled( $dest_img, // уменьшенная копия
-                        $src_img,  // исходное изображение
+                        $res_img,  // исходное изображение
                         0,
                         0,
                         0,
@@ -182,11 +184,12 @@ function resizeimg( $big, $small, $width, $height, $dir ){
     }
     elseif( $size_img[2]==3 ) {
       $path = renameImg( $small, $dir );
-      imagepng( $dest_img, $path );
+//      imagepng( $dest_img, $path );
+        LoadPNG( $big, $width, $height, $path );
     }
     // Очишаем память от созданных изображений
     imagedestroy( $dest_img );
-    imagedestroy( $src_img );
+    imagedestroy( $res_img );
     return $path;
 }
 
@@ -213,17 +216,56 @@ function renameImg( $name, $dir ) {
  * @param $imgname
  * @return resource
  */
-function LoadPNG( $imgname ) {
-    $im = imagecreatefrompng ( $imgname ); // попытка открыть
-    if ( !$im ) { // проверить, удачно ли
-        $im= imagecreate ( 150, 30 ); // создать пустое изображение
-        $bgc = imagecolorallocate ( $im, 255, 255, 255 );
-        $tc= imagecolorallocate ( $im, 0, 0, 0 );
-        imagefilledrectangle ( $im, 0, 0, 150, 30, $bgc );
-        imagestring ( $im, 1, 5, 5, "Error loading $imgname", $tc ); // вывести errmsg
+//function LoadPNG( $imgname ) {
+//    $im = imagecreatefrompng ( $imgname ); // попытка открыть
+//    if ( !$im ) { // проверить, удачно ли
+//        $im= imagecreate ( 150, 30 ); // создать пустое изображение
+//        $bgc = imagecolorallocate ( $im, 255, 255, 255 );
+//        $tc= imagecolorallocate ( $im, 0, 0, 0 );
+//        imagefilledrectangle ( $im, 0, 0, 150, 30, $bgc );
+//        imagestring ( $im, 1, 5, 5, "Error loading $imgname", $tc ); // вывести errmsg
+//    }
+//    return $im;
+//}
+
+
+/**
+ * Для создания файла с расширением png
+ * @param $imgname
+ * @param $width
+ * @param $height
+ * @param $small
+ * @return bool
+ */
+function LoadPNG( $imgname, $width, $height, $path ) {
+    // Создаем ресурс из исходного изображения
+    $res_img = imagecreatefrompng( $imgname );
+    // Получаем информацию о изображении
+    $prop = getimagesize( $imgname );
+    // это для деббагинга
+    if( ! $res_img ) {
+        $res_img = imagecreate ( $width, $height ); // создать пустое изображение
+        $bgc = imagecolorallocate ( $res_img, 255, 255, 255 );
+        $tc= imagecolorallocate ( $res_img, 0, 0, 0 );
+        imagefilledrectangle ( $res_img, 0, 0, $width, $height, $bgc );
+        imagestring ( $res_img, 1, 5, 5, "Error loading $imgname", $tc ); // вывести errmsg
     }
-    return $im;
+    // Создаем новый ресурс с нужной шириной и высотой
+    $dst = imagecreatetruecolor( $width, $height );
+    // Режим смешивания по умолчанию для truecolor изображений - true, для изображений
+    // с палитрой - false; true/false - включен/выключен
+    // true - при накладывании одного изображения на другое цвета пикселей нижележащего и накладываемого изображения смешиваются,
+    // параметры смешивания определяются прозрачностью пикселя. false - накладываемый пиксель заменяет исходный
+    imagealphablending($dst, false);
+    // Сохраняем информацию о прозрачности
+    imagesavealpha($dst, true);
+    // Копируем исходное изображение в новый ресурс
+    imagecopyresampled( $dst, $res_img, 0,0,0,0, $width, $height, $prop[0], $prop[1] );
+    // Сохраняем изображение в переменную(это путь к файлу для БД)
+    imagepng( $dst, $path );
+    // Уничтожаем временные файлы
+    imagedestroy( $dst );
+    imagedestroy( $res_img );
+    return true;
 }
-
-
 ?>

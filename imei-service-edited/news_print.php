@@ -60,9 +60,8 @@ if(!empty($news))
     }
     if($news['urlpict'] != '' && $news['hidepict'] != 'hide')
     {
-        $alt = $news['alt'];
-        $photo_print = "src='{$news['urlpict']}' alt='$alt'";
-        $img = "<img  width='276' height='153' $alt $photo_print>";
+        $photo_print = "src='{$news['urlpict_s']}' alt='$alt'";
+        $img = "<img $photo_print>";
 
     } else {
         $img = "";

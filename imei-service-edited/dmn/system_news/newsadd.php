@@ -35,14 +35,14 @@ try
                                     $_POST['preview'],
                                     50,
                                     10,
-                                    200);
+                                    false);
     $body           = new FieldTextarea("body",
                                         "Содержимое",
                                         true,
                                         $_POST['body'],
                                         60,
                                         20,
-                                        1000);
+                                        false);
     $date           = new FieldDatetime("date",
                                         "Дата новости",
                                         $_POST['date']);
@@ -148,9 +148,11 @@ try
                                         "Ошибка при извлечении
                                         параметров галереи");
             }
-            if(mysql_num_rows($set))
-            {
+            if(mysql_num_rows($set)){
                 $settings = mysql_fetch_array($set);
+            } else {
+                $settings['width_news'] = 276;
+                $settings['height_news'] = 153;
             }
 			resizeimg("files/news/$str","files/news/s_$str" , $settings['width_news'], $settings['height_news']);
             // Формируем SQL-запрос на добавление

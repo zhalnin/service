@@ -145,13 +145,18 @@ if(empty($_GET['id_news']))
             }
             if($news[$i]['urlpict'] != '' && $news[$i]['hidepict'] != 'hide')
             {
+//                if( $i % 2 == 1 ) {
+//                    $align = "text-align: right;";
+//                } else if( $i % 2 == 0 ) {
+//                    $align = "text-align: left;";
+//                }
                 if( $i % 2 == 1 ) {
-                    $align = "text-align: right;";
+                    $align = "float: right;";
                 } else if( $i % 2 == 0 ) {
-                    $align = "text-align: left;";
+                    $align = "float: left;";
                 }
                 $alt = $news[$i]['alt'];
-                $photo_print = " src='{$news[$i]['urlpict']}' alt='$alt' width='276' height='153'";
+                $photo_print = " src='{$news[$i]['urlpict_s']}' alt='$alt'";
                 $img = "<img class=''  $photo_print />";
 
             } else {
@@ -201,7 +206,7 @@ if(empty($_GET['id_news']))
 
 
 
-            echo "<div class='news-string-body superlink $borderleft $borderbottom' onclick=\"detail_button('$url')\">
+            echo "<div class='news-string-body superlink main-content $borderleft $borderbottom' onclick=\"detail_button('$url')\">
                             <div class='news-title'>
                                 <h1 class=\"h2\">".nl2br(print_page($news[$i]['name']))."</h1>
                             </div>

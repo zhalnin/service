@@ -65,14 +65,14 @@ try
                                     $_REQUEST['preview'],
                                     50,
                                     10,
-                                    200);
+                                    false);
     $body       = new FieldTextarea("body",
                                     "Содержимое",
                                     true,
                                     $_REQUEST['body'],
                                     60,
                                     20,
-                                    600);
+                                    false);
     $date       = new FieldDatetime("date",
                                     "Дата новости",
                                     $_REQUEST['date']);
@@ -222,10 +222,8 @@ try
                 }
                 else
                 {
-//                    $settings['width'] = 150;
-//                    $settings['height'] = 133;
-                    $settings['width'] = 276;
-                    $settings['height'] = 153;
+                    $settings['width_news'] = 276;
+                    $settings['height_news'] = 153;
                 }
                 // Формируем малое изобажение
                 resizeimg("files/news/$var", "files/news/s_$var", $settings['width_news'], $settings['height_news']);
