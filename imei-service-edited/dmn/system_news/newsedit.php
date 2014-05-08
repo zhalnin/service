@@ -19,6 +19,7 @@ require_once("../utils/utils.resizeimg.php");
 
 // Предотвращаем SQL-инъекцию
 $_GET['id_news'] = intval($_GET['id_news']);
+$_GET['page'] = intval( $_GET['page'] );
 
 try
 {
@@ -108,7 +109,7 @@ try
                                         $_REQUEST['id_news']);
     $page       = new FieldHiddenInt("page",
                                         "",
-                                        $_REQUEST['page']);
+                                        $_GET['page']);
     // Инициируем форму массивом из двух элементов
     // управления - поля ввода name и текстовой области
     // textarea
@@ -205,6 +206,9 @@ try
                 {
                     $url_pict = "urlpict='files/news/$var',";
                     $url_pict_s = "urlpict_s='files/news/s_$var',";
+                } else {
+                    $url_pict = "'',";
+                    $url_pict_s = "'',";
                 }
                 // Извлекаем параметры галереи
                 $query = "SELECT * FROM $tbl_photo_settings LIMIT 1";
@@ -255,7 +259,7 @@ try
             }
             // Осуществляем переадресацию на главную страницу
             // администрирования
-            header("Location: index.php?page={$form->fields[page]->value}");
+            header("Location: index.php?page={$form->fields['page']->value}");
             exit();
         }
     }

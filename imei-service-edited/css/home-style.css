@@ -1056,10 +1056,11 @@ span #uah.currency{
     /*width: 306px;*/
     /*float: left;*/
     text-align: left;
-    padding: 10px 10px 0;
+    padding: 10px 10px 10px;
     transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     -webkit-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
     border-bottom: 3px solid #DADADA;
+    overflow: hidden;
 }
 .news-string-body:hover {
     box-shadow:rgba(63, 63, 63, 0.9) 0 0 12px  inset;
