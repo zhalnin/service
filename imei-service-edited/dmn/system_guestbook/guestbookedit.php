@@ -26,11 +26,20 @@ try {
                                     $query,
                                     "Ошибка при обращении к гостевой книге" );
         }
-        $_REQUEST = mysql_fetch_array( $guestbook );
+        $news = mysql_fetch_array( $guestbook );
+        $_REQUEST = $news;
+
+        $_REQUEST['date']['month']      = substr($news['putdate'],5,2);
+        $_REQUEST['date']['day']        = substr($news['putdate'],8,2);
+        $_REQUEST['date']['year']       = substr($news['putdate'],0,4);
+        $_REQUEST['date']['hour']       = substr($news['putdate'],11,2);
+        $_REQUEST['date']['minute']     = substr($news['putdate'],14,2);
+
         $_REQUEST['page'] = intval( $_GET['page'] );
         if( $_REQUEST['hide'] == 'show' ) $_REQUEST['hide'] = true;
         else $_REQUEST['hide'] = false;
     }
+
 
     $name                   = new FieldText("name",
                                       "Имя пользователя",
@@ -60,9 +69,9 @@ try {
                                                 $_REQUEST['answer'],
                                                 '100',
                                                 '20');
-    $putdate                = new FieldDatetime("putdate",
+    $date                   = new FieldDatetime("date",
                                             "Дата сообщения",
-                                            $_REQUEST['putdate']);
+                                            $_REQUEST['date']);
     $hide                   = new FieldCheckbox("hide",
                                                "Отображать",
                                                $_REQUEST['hide']);
@@ -88,7 +97,7 @@ try {
         "url"       => $url,
         "message"   => $message,
         "answer"    => $answer,
-        "putdate"   => $putdate,
+        "date"      => $date,
         "hide"      => $hide,
         "id_parent" => $id_parent,
         "ip"        => $ip,
@@ -112,7 +121,7 @@ try {
                             url = '{$form->fields['url']->value}',
                             message = '{$form->fields['message']->value}',
                             answer  = '{$form->fields['answer']->value}',
-                            putdate ='{$form->fields['putdate']->get_mysql_format()}',
+                            putdate ='{$form->fields['date']->get_mysql_format()}',
                             hide = '{$showhide}',
                             id_parent = '{$form->fields['id_parent']->value}',
                             ip = '{$form->fields['ip']->value}',

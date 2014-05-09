@@ -83,7 +83,7 @@
 //            $message = htmlspecialchars( stripslashes( $_POST['message'] ), ENT_QUOTES );
             $message = $_POST['message'];
             $time = new DateTime;
-            $putdate = $time->format('Y-m-d H:i:s');
+            $date = $time->format('Y-m-d H:i:s');
             $sendmail = true;
 ?>
 
@@ -91,10 +91,12 @@
 <!--            Возвращаем текст в iFrame-->
             <script type="text/javascript">
                 AM.Event.addEvent( window, 'load', function() {
-                    var textareaIframe = AM.DOM.$('textareaIframe').value;
-//                   textareaIframe = textareaIframe.replace(/&nbsp;/,' ');
-                   wysiwyg.doc().body.innerHTML = textareaIframe;
-                });
+                    if( AM.DOM.$('textareaIframe') != null ) {
+                        var textareaIframe = AM.DOM.$('textareaIframe').value;
+    //                   textareaIframe = textareaIframe.replace(/&nbsp;/,' ');
+                       wysiwyg.doc().body.innerHTML = textareaIframe;
+                    }
+                    });
             </script>
 <?php
 
@@ -122,18 +124,22 @@
                                                     browser)
                                        VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
                 $sth = $PDO->prepare( $insertStmt );
-                $result = $sth->execute( array( $name, $city, $email, $url, $message, '-', $putdate, 'show', $id_parent, $ipAddress, $browser ) );
+                $result = $sth->execute( array( $name, $city, $email, $url, $message, '-', $date, 'show', $id_parent, $ipAddress, $browser ) );
                 if( $result ) {
                     if( $sendmail === true ) {
                         $to = 'zhalninpal@me.com';
                         $subject = 'Новый пост в адресной книге';
-                        $body = "Поступило новое сообщение: $message\n";
+                        $body = "Поступило новое сообщение, которое следует проверить\n";
                         $body .= "От пользователя: $name\n";
                         $body .= "Адрес email: $email\n";
                         $header = "From: zhalnin@mail.com\r\n";
                         $header .= "Reply-to: zhalnin@mail.com \r\n";
                         $header .= "Content-type: text/plane; charset=utf-8\r\n";
                         mail($to,$subject,$body,$header);
+                        print "<html><head>\n";
+                        print "<meta http-equiv='Refresh' content='0; url=guestbook.php?page=$page'>\n";
+                        print "</head></html>\n";
+                        exit();
                     } else {
                         print "<html><head>\n";
                         print "<meta http-equiv='Refresh' content='0; url=guestbook.php?page=$page'>\n";
@@ -155,13 +161,6 @@
         } else {
             $id_parent = "";
         }
-
-//foreach ($_POST as $p => $v ) {
-//    print "$p - $v";
-//    print "<br />";
-//
-//}
-
 
 
 ?>
