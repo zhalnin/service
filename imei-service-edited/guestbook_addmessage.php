@@ -240,6 +240,7 @@
                                                             <td><a href="#" id="url" value="Ссылка" class="editor_link"
                                                                    title="Напечатайте описание ссылки, выделите его, и нажмите на иконку. Введите адрес ссылки, нажмите кнопку 'Вставить'" >
                                                                     <span id="link" class="editorIcon editor_link" ></span></a></td>
+                                                            <td><a href="#" id="emoticon" value="Вставить смайлик" class="editor_emoticon" title="Вставить смайлик"><span id="emoticon" class="editorIcon editor_emoticon"></span></a></td>
                                                             <td><a href="#" class="editorSpacer" ><span class="editorIcon editorSpacer"></span></a></td>
                                                             <td style="padding-right: 2px;" class=""><span></span></td>
                                                         </tr>

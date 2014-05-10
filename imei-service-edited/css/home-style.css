@@ -1101,6 +1101,7 @@ span #uah.currency{
 }
 .news-info {
     margin: 1px 10px 10px 10px;
+    width: 620px;
 }
 .news-footer {
     height: 20px;

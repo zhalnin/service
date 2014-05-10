@@ -79,6 +79,9 @@ AM.Event.addEvent(window, 'load', function() {
                                 case "image":
                                     doImg(getX, getY);
                                     break;
+                                case "emoticon":
+                                    doEmoticon(getX, getY);
+                                    break;
                                 default:
                                     doStyle(targetId);
                                     break;

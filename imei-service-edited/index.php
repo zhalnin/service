@@ -152,8 +152,14 @@ if(empty($_GET['id_news']))
 //                }
                 if( $i % 2 == 1 ) {
                     $align = "float: right;";
+                    $textAlign = "text-align: right";
+                    $reverseAlign = "float: left";
+                    $reverseTextAlign = "text-align: left";
                 } else if( $i % 2 == 0 ) {
                     $align = "float: left;";
+                    $textAlign = "text-align: left";
+                    $reverseAlign = "float: right";
+                    $reverseTextAlign = "text-align: right";
                 }
                 $alt = $news[$i]['alt'];
                 $photo_print = " src='{$news[$i]['urlpict_s']}' alt='$alt'";
@@ -213,7 +219,7 @@ if(empty($_GET['id_news']))
                             <div class='news-image' style=\"$align\">
                               $img
                             </div>
-                            <div class='news-info'>
+                            <div class='news-info' style=\"$reverseAlign\" >
                                 <p>".nl2br(print_page($news[$i]['preview']))."</p>
                             </div>
                         </div>";
