@@ -282,6 +282,11 @@ function WysiwygObject() {
     };
 
     this.uploadSuccess = function( path ) {
+        if( path === 'error' ) {
+            this.hideOverlay();
+            this.theIframe().focus();
+            return;
+        }
         this.doc().execCommand('InsertImage', null, path );
         this.hideOverlay();
         this.theIframe().focus();

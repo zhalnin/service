@@ -25,19 +25,24 @@ class Request {
 
     function init() {
         if( isset( $_SERVER['REQUEST_METHOD'] ) ) {
-            if( $_REQUEST['REQUEST_METHOD'] ) {
+            if( $_SERVER['REQUEST_METHOD'] ) {
                 $this->properties = $_REQUEST;
                 return;
             }
         }
         foreach ( $_SERVER['argv'] as $args ) {
-            if( strpos( $args, '&' ) ) {
-                $tmp = explode( '&', $args );
-                foreach( $tmp as $arg ) {
-                    if( strpos( $arg, '=' ) ) {
-                        list( $key, $val ) = explode( "=", $arg );
-                        $this->setProperty( $key, $val );
+            if( strpos( $args, '=' ) ) {
+                if( strpos( $args, '&' ) ) {
+                    $tmp = explode( '&', $args );
+                    foreach( $tmp as $arg ) {
+                        if( strpos( $arg, '=' ) ) {
+                            list( $key, $val ) = explode( "=", $arg );
+                            $this->setProperty( $key, $val );
+                        }
                     }
+                } elseif( strpos( $args, '=' ) ) {
+                    list( $key, $val ) = explode( "=", $args );
+                    $this->setProperty( $key, $val );
                 }
             }
         }
@@ -56,4 +61,33 @@ class Request {
     function __clone() {
         $this->properties = array();
     }
+
+    function addFeedback( $msg ) {
+        array_push( $this->feedback, $msg );
+    }
+
+    function getFeedback() {
+        return $this->feedback;
+    }
+
+    function getFeedbackString( $separator="\n" ) {
+        return implode( $separator, $this->feedback );
+    }
+
+    function setObject( $name, $object ) {
+        print "setObject";
+    }
+
+    function getObject( $name ) {
+        print "getObject";
+    }
+
+    function setCommand( \imei_service\command\Command $command ) {
+        $this->lastCommand = $command;
+    }
+
+    function getLastCommand() {
+        return $this->lastCommand;
+    }
 }
+?>

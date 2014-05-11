@@ -49,6 +49,20 @@ class ApplicationHelper {
             $map->addView( 'default', $status, (string)$default_view );
         }
 
+        foreach ( $options->control->command as $command_view ) {
+            $command = trim((string)$command_view['name'] );
+            if( $command_view->classalias ) {
+                $classroot = trim((string)$command_view->classalias['name'] );
+                $map->addClassroot( $command, $classroot );
+            }
+            if( $command_view->view ) {
+                $view = trim((string)$command_view->view );
+                $forward = trim((string)$command_view->forward);
+                print $view."<br />";
+            }
+        }
+
+
         \imei_service\base\ApplicationRegistry::setControllerMap( $map );
     }
 

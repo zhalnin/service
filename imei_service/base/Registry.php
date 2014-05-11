@@ -103,7 +103,12 @@ class ApplicationRegistry extends Registry {
         self::instance()->set( 'cmap', $map );
     }
 
-//    static function appController() {
-//
-//    }
+    static function appController() {
+        $obj = self::instance();
+        if( ! isset( $obj->appController ) ) {
+            $cmap = $obj->getControllerMap();
+            $obj->appController = new \imei_service\controller\AppController( $cmap );
+        }
+        return $obj->appController;
+    }
 }

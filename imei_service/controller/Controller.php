@@ -28,5 +28,19 @@ class Controller {
 
     function handleRequest() {
         $request = new Request();
+        $app_c = \imei_service\base\ApplicationRegistry::appController();
+        while( $cmd = $app_c->getCommand( $request ) ) {
+            $cmd->execute( $request );
+//            echo "<tt><pre>".print_r($cmd, true)."</pre></tt>";
+        }
+//        \imei_service\domain\ObjectWatcher::instance()->preformOperations();
+        $this->invokeView( $app_c->getView( $request ) );
+    }
+
+    function invokeView( $target ) {
+        print $target;
+        include( "imei_service/view/$target.php" );
+        exit;
     }
 }
+?>
