@@ -105,15 +105,30 @@ class AppController {
 
 }
 
+/**
+ * Class ControllerMap
+ * @package imei_service\controller
+ * Кэширует данные из файла конфигурации xml
+ */
 class ControllerMap {
     private $viewMap = array();
     private $forwardMap = array();
     private $classrootMap = array();
 
+    /**
+     * Добавялет к массиву псевдонимов команды: [команда, псевдоним]
+     * @param $command
+     * @param $classroot
+     */
     function addClassroot( $command, $classroot ) {
         $this->classrootMap[$command] = $classroot;
     }
 
+    /**
+     * Получаем псевдоним по имени команды
+     * @param $command
+     * @return mixed
+     */
     function getClassroot( $command ) {
         if( isset( $this->classrootMap[$command] ) ) {
             return $this->classrootMap[$command];
@@ -121,10 +136,22 @@ class ControllerMap {
         return $command;
     }
 
+    /**
+     * Добавляет к массиву вьюшек: [команда, цифровой статус, название вьюшки]
+     * @param string $commmand
+     * @param int $status
+     * @param $view
+     */
     function addView( $commmand='default', $status=0, $view ) {
         $this->viewMap[$commmand][$status] = $view;
     }
 
+    /**
+     * Получаем имя вьюшки по имени команды и ее статусу
+     * @param $command
+     * @param $status
+     * @return null
+     */
     function getView( $command, $status ) {
         if( isset( $this->viewMap[$command][$status] ) ) {
             return $this->viewMap[$command][$status];
@@ -132,10 +159,22 @@ class ControllerMap {
         return null;
     }
 
+    /**
+     * Добавляем к массиву переадресации имя переадресации: [команда, цифровой статус, переадресация]
+     * @param $command
+     * @param int $status
+     * @param $newCommand
+     */
     function addForward( $command, $status=0, $newCommand ) {
         $this->forwardMap[$command][$status] = $newCommand;
     }
 
+    /**
+     * Получаем  имя переадресации
+     * @param $command
+     * @param $status
+     * @return null
+     */
     function getForward( $command, $status ) {
         if( isset( $this->forwardMap[$command][$status] ) ) {
             return $this->forwardMap[$command][$status];

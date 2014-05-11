@@ -6,7 +6,7 @@
     <view status="CMD_ERROR">error</view>
 
     <command name="General">
-        <view>index</view>
+        <view>general</view>
     </command>
 
     <command name="ListVenues">
