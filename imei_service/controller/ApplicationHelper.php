@@ -63,9 +63,9 @@ class ApplicationHelper {
         foreach( $options->control->view as $default_view ) {   // находим вьюшки по умолчанию <view>
             $stat_str = trim( $default_view['status'] );        // у каждой получаем значение атрибута status <view status="CMD_OK">
             $status = \imei_service\command\Command::statuses( $stat_str ); // метод statuses командного класса сохраняет их цифровой эквивалент
-//            'CMD_DEFAULT'=>0,
-//            'CMD_OK' => 1,
-//            'CMD_ERROR' => 2,
+//            'CMD_DEFAULT'           => 0,
+//            'CMD_OK'                => 1,
+//            'CMD_ERROR'             => 2,
 //            'CMD_INSUFFICIENT_DATA' => 3
             $map->addView( 'default', $status, (string)$default_view ); // кэшируем: команда, цифровой статус, название вьюшки
         }

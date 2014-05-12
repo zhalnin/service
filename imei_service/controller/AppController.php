@@ -11,6 +11,12 @@ namespace imei_service\controller;
 
 require_once( "imei_service/command/DefaultCommand.php" );
 
+/**
+ * Class AppController
+ * @package imei_service\controller
+ * Принимает карту приложения
+ * Выполняем действия с командами приложения
+ */
 class AppController {
     private static $base_cmd;
     private static $default_cmd;
@@ -18,38 +24,44 @@ class AppController {
     private $invoked = array();
 
     function __construct( ControllerMap $map ) {
-        $this->controllerMap = $map;
+        $this->controllerMap = $map;    // карта приложения
         if( ! self::$base_cmd ) {
-            self::$base_cmd = new \ReflectionClass( "\\imei_service\\command\\Command" );
-            self::$default_cmd = new \imei_service\command\DefaultCommand();
+            self::$base_cmd = new \ReflectionClass( "\\imei_service\\command\\Command" );   // абстрактный класс Command
+            self::$default_cmd = new \imei_service\command\DefaultCommand();    // класс по умолчанию (будет вызываться, если нет параметров)
         }
     }
 
+    /**
+     * Принимает объект Request с параметрами запроса и возвращаем команду для выполнения
+     * @param Request $req
+     * @return \imei_service\command\DefaultCommand|null|object
+     * @throws \imei_service\base\AppException
+     */
     function getCommand( Request $req ) {
-        $previous = $req->getLastCommand();
-        if( ! $previous ) {
-            $cmd = $req->getProperty( 'cmd' );
-            if( ! $cmd ) {
-                $req->setProperty( 'cmd', 'default' );
-                return self::$default_cmd;
+        $previous = $req->getLastCommand(); // проверяем, была ли команда на выполнение
+        if( ! $previous ) { // если не было - т.е. приложение запущено в первый раз
+            $cmd = $req->getProperty( 'cmd' );  // получаем значение параметра 'cmd' - команду
+            if( ! $cmd ) {  // если команды нет
+                $req->setProperty( 'cmd', 'default' );  // то, в класс Request добавляем 'cmd' равную 'default'
+                return self::$default_cmd;  // возвращаем класс по умолчанию - new \imei_service\command\DefaultCommand();
             }
-        } else {
-            $cmd = $this->getForward( $req );
-            if( ! $cmd ) { return null; }
+        } else {    // если приложение было запущено уже не в первый раз
+            $cmd = $this->getForward( $req );   // проверяем запрос на наличие перенаправления, т.е. предыдущая команда выполнена и по статусу выполняется команда по перенаправлению
+            if( ! $cmd ) { return null; }   // если перенаправления нет, то заканчивается выполнение метода
         }
 
-        $cmd_obj = $this->resolveCommand( $cmd );
-        if( ! $cmd_obj ) {
+        $cmd_obj = $this->resolveCommand( $cmd );   // если была команда для перенаправления, то возвращаем экземпляр класса этой команды
+        if( ! $cmd_obj ) {  // если команда не известная
             throw new \imei_service\base\AppException( "could not resolve '$cmd''" );
         }
 
-        $cmd_class = get_class( $cmd_obj );
-        if( isset( $this->invoked[$cmd_class] ) ) {
+        $cmd_class = get_class( $cmd_obj ); // получаем имя класса команды перенаправления
+        if( isset( $this->invoked[$cmd_class] ) ) { // если флаг выставлен, то приложение вызывается по кругу
             throw new \imei_service\base\AppException( "circular forwarding" );
         }
 
-        $this->invoked[$cmd_obj] = 1;
-        return $cmd_obj;
+        $this->invoked[$cmd_obj] = 1; // выставляем флаг
+        return $cmd_obj;    // возвращаем объект команда класса перенаправления
     }
 
 
