@@ -256,6 +256,7 @@ function WysiwygObject() {
                 target = AM.Event.getTarget(event),
                 that = new WysiwygObject();
             if( target.nodeName == 'SPAN' ) {
+                that.theIframe().focus();
                 var targetId = AM.DOM.parent(target,3).id,
                     targetSplit = targetId.split('_'),
                     imageSrc = arrSmiles[parseInt(targetSplit[1])].src;
