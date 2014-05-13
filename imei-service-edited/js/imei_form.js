@@ -65,6 +65,7 @@ var AMForm = {
      * @param form
      */
     watchForm: function(form) {
+
         if( ( AM.DOM.$('mode') != null ) && ( AMForm.validateForm(form) == true ) ) {
             // if button pressed for the first time
             if( this.watchedForm == false ){
@@ -85,9 +86,11 @@ var AMForm = {
 
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
+                if( AM.DOM.$('shipping-box-title') != null ) {
+                    form.action = "sendMail.php";
+                }
 
                 wysiwyg.showOverlay();
-
                 setTimeout( function() {
                         // submit form for Unlock, Carrier check, Blacklist Check
                         form.submit();
@@ -103,6 +106,8 @@ var AMForm = {
 
                 // set flag to true, it means button is pressed already
                 this.watchedForm = true;
+            } else {
+                console.log("no");
             }
         }
     },

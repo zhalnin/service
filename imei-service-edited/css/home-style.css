@@ -1656,3 +1656,45 @@ span #uah.currency{
         progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=270,strength=2),
         progid:DXImageTransform.Microsoft.Shadow(color=#999999,direction=315,strength=1);
 }
+
+
+#count {
+    height: 35px; position: absolute; margin-top:2px;
+}
+
+
+/*Сообщение об успешной заявке*/
+.success-body {
+    text-align: left;
+    padding: 10px 10px 0;
+    transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+    -webkit-transition: opacity 0.2s ease-in 0s, box-shadow 0.4s ease-out 0s;
+}
+.success-title {
+    line-height: 1.3em;
+    text-align: center;
+    height: 30px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #E4E4E4;
+}
+.success-image {
+    /*border-bottom: 1px solid #E4E4E4;*/
+    line-height: 100%;
+    margin: 12px;
+    text-align: left;
+    position: absolute;
+}
+.success-info {
+    margin: 19px 0;
+    width: 70%;
+    float: right;
+    font-size: 14px;
+}
+.success-info p {
+    font-size: 12px;
+    color: #666666;
+}
+.success-footer {
+    height: 20px;
+    clear: both;
+}
