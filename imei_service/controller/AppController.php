@@ -11,6 +11,7 @@ namespace imei_service\controller;
 
 require_once( "imei_service/command/DefaultCommand.php" );
 
+
 /**
  * Class AppController
  * @package imei_service\controller
@@ -25,6 +26,7 @@ class AppController {
 
     function __construct( ControllerMap $map ) {
         $this->controllerMap = $map;    // карта приложения
+//        echo "<tt><pre>".print_r($this->controllerMap, true)."</pre></tt>";
         if( ! self::$base_cmd ) {
             self::$base_cmd = new \ReflectionClass( "\\imei_service\\command\\Command" );   // абстрактный класс Command
             self::$default_cmd = new \imei_service\command\DefaultCommand();    // класс по умолчанию (будет вызываться, если нет параметров)
@@ -50,46 +52,60 @@ class AppController {
             if( ! $cmd ) { return null; }   // если перенаправления нет, то заканчивается выполнение метода
         }
 
-        $cmd_obj = $this->resolveCommand( $cmd );   // если была команда для перенаправления, то возвращаем экземпляр класса этой команды
+        $cmd_obj = $this->resolveCommand( $cmd );   // если была команда для перенаправления или просто корневого класса, то возвращаем экземпляр класса этой команды
         if( ! $cmd_obj ) {  // если команда не известная
             throw new \imei_service\base\AppException( "could not resolve '$cmd''" );
         }
 
-        $cmd_class = get_class( $cmd_obj ); // получаем имя класса команды перенаправления
+        $cmd_class = get_class( $cmd_obj ); // получаем имя класса команды перенаправления или просто корневого класса
         if( isset( $this->invoked[$cmd_class] ) ) { // если флаг выставлен, то приложение вызывается по кругу
             throw new \imei_service\base\AppException( "circular forwarding" );
         }
 
         $this->invoked[$cmd_obj] = 1; // выставляем флаг
-        return $cmd_obj;    // возвращаем объект команда класса перенаправления
+        return $cmd_obj;    // возвращаем объект команда класса перенаправления или просто корневого класса
     }
 
 
+    /**
+     * Если имеется команда перенаправления,
+     * то возвращаем её
+     * @param Request $req
+     * @return mixed
+     */
     function getForward( Request $req ) {
-        $forward = $this->getResource( $req, "Forward" );
+        $forward = $this->getResource( $req, "Forward" ); // получаем команду перенаправления
         if( $forward ) {
-            $req->setProperty( 'cmd', $forward );
+            $req->setProperty( 'cmd', $forward );   // если команда перенаправления найдена, то добавляем ее в классе Request
         }
-        return $forward;
+        return $forward; // возвращаем команду
     }
 
+    /**
+     * Для поиска в карте приложения команды
+     * (getForward - перенаправление, getView - вьюшка, getClassroot - псевдоним)
+     * ищем по команде и статусу
+     * @param Request $req
+     * @param $res
+     * @return mixed
+     */
     function getResource( Request $req, $res ) {
-        $cmd_str = $req->getProperty( 'cmd' );
-        $previous = $req->getLastCommand();
-        $status = $previous->getStatus();
-        if( ! $status ) { $status = 0; }
-        $acquire = "get$res";
-        $resource = $this->controllerMap->$acquire( $cmd_str, $status );
+        $cmd_str = $req->getProperty( 'cmd' );  // из строки запроса получаем команду cmd=General
+        $previous = $req->getLastCommand(); // получаем команду, которая была выполнена до вызова текущей команды
+        $status = $previous->getStatus();   // получаем ее статус выполнения в цифровом виде
+        if( ! $status ) { $status = 0; }    // если нет статуса, то присваиваем ему 0
+        $acquire = "get$res";   // динамически получаем метод для поиска команды
+        $resource = $this->controllerMap->$acquire( $cmd_str, $status );    // получаем по команде и статусу команду
         if( ! $resource ) {
-            $resource = $this->controllerMap->$acquire( $cmd_str, 0 );
+            $resource = $this->controllerMap->$acquire( $cmd_str, 0 );  // тогда ищем по команде и статусу = 0
         }
         if( ! $resource ) {
-            $resource = $this->controllerMap->$acquire( 'default', $status );
+            $resource = $this->controllerMap->$acquire( 'default', $status );   // тогда ищем по дефолтной команде и полученному статусу
         }
         if( ! $resource ) {
-            $resource = $this->controllerMap->$acquire( 'default', 0 );
+            $resource = $this->controllerMap->$acquire( 'default', 0 ); // тогда ищем по дефолтной команде и статусу = 0
         }
-        return $resource;
+        return $resource;   // тогда просто возвращаем команду
     }
 
     function getView( Request $req ) {
@@ -97,16 +113,20 @@ class AppController {
         return $view;
     }
 
+    /**
+     * @param $cmd
+     * @return null|object
+     */
     function resolveCommand( $cmd ) {
-        $classroot = $this->controllerMap->getClassroot( $cmd );
-        $filepath = "imei_service/command/$classroot.php";
-        $classname = "\\imei_service\\command\\$classroot";
-        if( file_exists( $filepath ) ) {
-            require_once( "$filepath" );
-            if( class_exists( $classname ) ) {
-                $cmd_class = new \ReflectionClass( $classname );
-                if( $cmd_class->isSubclassOf( self::$base_cmd ) ) {
-                    return $cmd_class->newInstance();
+        $classroot = $this->controllerMap->getClassroot( $cmd ); // если псевдонима нет, метод возвращает саму команду(т.е. он и есть корневая команда)
+        $filepath = "imei_service/command/$classroot.php";  // путь до скрипта - он же имя команды
+        $classname = "\\imei_service\\command\\$classroot"; // в скрипте должен быть класс такого же названия
+        if( file_exists( $filepath ) ) {    // если есть
+            require_once( "$filepath" );    // включаем скрипт
+            if( class_exists( $classname ) ) {  // если есть класс в нем
+                $cmd_class = new \ReflectionClass( $classname );    // берем информацию о классе
+                if( $cmd_class->isSubclassOf( self::$base_cmd ) ) { // если он подкласс класса Command (он должен быть им)
+                    return $cmd_class->newInstance(); // возвращаем его экземпляр (объект)
                 }
             }
         }

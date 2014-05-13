@@ -46,7 +46,7 @@ class Controller {
         $request = new Request();                                           // получаем параметры запроса и дополнительные методы
         $app_c = \imei_service\base\ApplicationRegistry::appController();   // получаем кэшированные данные ( controllerMap - карту приложения, getCommand(), getView(), getResource(), getForward(), resolveCommand() )
         while( $cmd = $app_c->getCommand( $request ) ) {                    // выполняем поиск команд
-            $cmd->execute( $request );                                      // выполняем команды
+            $cmd->execute( $request );                                      // выполняем метод Execute( doExecute ) полученной команды ( подкласс Command )
 //            echo "<tt><pre>".print_r($cmd, true)."</pre></tt>";
         }
 //        \imei_service\domain\ObjectWatcher::instance()->preformOperations();
