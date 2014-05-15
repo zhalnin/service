@@ -186,3 +186,122 @@ class ApplicationRegistry extends Registry {
         return $obj->appController; // возвращаем объект ( controllerMap - карту приложения, getCommand(), getView(), getResource(), getForward(), resolveCommand() )
     }
 }
+
+
+class SessionRegistry extends Registry {
+    private static $instance;
+    protected function __construct() {
+        session_start();
+    }
+
+    static function instance() {
+        if( ! isset( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    protected function get( $key ) {
+        if( isset( $_SESSION[__CLASS__][$key] ) ) {
+            return $_SESSION[__CLASS__][$key];
+        }
+        return null;
+    }
+
+    protected function set( $key, $val ) {
+        $_SESSION[__CLASS__][$key] = $val;
+    }
+
+    function setComplex( $complex ) {
+        self::instance()->set( 'complex', $complex );
+    }
+
+    function getComplex() {
+        return self::instance()->get( 'complex' );
+    }
+}
+
+
+class MemApplicationRegistry extends Registry {
+    private static $instance;
+    private $values = array();
+    private $id;
+    const DSN=1;
+
+    protected function __construct() {
+        $this->id = @shm_attach( 55, 10000, 0600 );
+        if( ! $this->id ) {
+            throw new AppException( "Could not access shared memory" );
+        }
+    }
+
+    static function instance() {
+        if( ! isset( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    protected function get( $key ) {
+        return shm_get_var( $this->id, $key );
+    }
+
+    protected function set( $key, $val ) {
+        shm_put_var( $this->id, $key, $val );
+    }
+
+    static function getDSN() {
+        return self::instance()->get( self::DSN );
+    }
+
+    static function setDSN( $dsn ) {
+        self::instance()->set( self::DSN, $dsn );
+    }
+}
+
+class DBRegistry extends Registry {
+    private static $instance;
+    private $value = array();
+
+    protected function __construct() {
+
+    }
+
+    static function instance() {
+        if( ! isset( self::$instance ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    protected function get( $key ) {
+        if( isset( $this->value[$key] ) ) {
+            return $this->value[$key];
+        }
+
+        try {
+            $dsn = ApplicationRegistry::getDSN();
+            if( is_null( $dsn ) ) {
+                throw new AppException( "DSN is NULL in DBRegistry" );
+            }
+
+            $this->value[$key] = new \PDO( ApplicationRegistry::getDSN(), 'root', 'zhalnin5334', array(
+                \PDO::ATTR_ERRMODE              => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_DEFAULT_FETCH_MODE   => \PDO::FETCH_ASSOC,
+                \PDO::MYSQL_ATTR_INIT_COMMAND   => 'SET NAMES UTF8'
+            ) );
+        } catch ( \PDOException $ex ) {
+            print $ex->getMessage();
+        }
+        return $this->value[$key];
+    }
+
+    protected function set( $key, $val ) {
+
+    }
+
+    static function getDB() {
+        return self::instance()->get( 'dsn' );
+    }
+
+}
