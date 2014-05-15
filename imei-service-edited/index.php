@@ -120,7 +120,6 @@ if(empty($_GET['id_news']))
     $pnumber = 100;
     // Количество ссылок в постраничной навигации
     $page_link = 3;
-
     // Объявляем объект постраничной навигации
     $obj = new PagerMysql($tbl_news,
         "WHERE hide = 'show' ",
@@ -129,6 +128,8 @@ if(empty($_GET['id_news']))
         $page_link);
     // Получаем содержимое текущей страницы
     $news = $obj->get_page();
+
+
 
     // Если имеется хотя бы одна запись - выводим ее
     if(!empty($news))
