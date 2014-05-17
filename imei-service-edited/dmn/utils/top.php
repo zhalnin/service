@@ -17,6 +17,34 @@ error_reporting(E_ALL & ~E_NOTICE);
 <title><?php echo $title; ?></title>
 <link rel="StyleSheet" type="text/css" href="../utils/cms.css">
 <script type="text/javascript" src="../../js/AlezhalModules.js"></script>
+<script type="text/javascript">
+    AM.Event.addEvent(window, 'load', function(){
+        // Находим все textarea для использования тегов
+        if( AM.DOM.tag('textarea') != null ) {
+            var tags = AM.DOM.tag('textarea'),
+                tagLength = tags.length,
+                t;
+            for( t = 0; t < tagLength; t++ ) {
+                AM.Event.addEvent(tags[t], 'focus', function(e) {
+                    var event = AM.Event.getEvent(e);
+                    tagTextarea.tag = AM.Event.getTarget(event);
+                });
+            }
+        }
+    });
+
+    // Для сохранения textarea на странице для вставки тегов
+    var tagTextarea = { tag: '' };
+    /**
+     * Для вставки тегов в textarea
+     * @param st1
+     * @param st2
+     */
+    function tagIns( st1, st2 ) {
+        AM.DOM.tagInsert(tagTextarea.tag, st1, st2 );
+    }
+
+</script>
 </head>
 <body leftmargin="0"
       marginheight="0"

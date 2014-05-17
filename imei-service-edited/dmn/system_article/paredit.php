@@ -261,14 +261,14 @@ try
     }
     ?>
     <p class=help>
-        ITALIC: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[i]','[/i]'); return false;">[i][/i]</a><br/>
-        BOLD: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[b]','[/b]'); return false;">[b][/b]</a><br/>
-        UNDERLINE: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[ins]','[/ins]'); return false;">[ins][/ins]</a><br/>
-        URL: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[url]','[/url]'); return false;">[url][/url]</a><br/>
-        IMG: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[img]','[/img]'); return false;">[img][/img]</a><br/>
-        COLOR: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[color]','[/color]'); return false;">[color][/color]</a><br/>
-        SIZE: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[size]','[/size]'); return false;">[size][/size]</a><br/>
-        MAIL: <a href=# onclick="javascript:AM.DOM.tagInsert(AM.DOM.tag('textarea')[0],'[mail]','[/mail]'); return false;">[mail][/mail]</a><br/>
+        ITALIC: <a href=# onclick="javascript:tagIns('[i]','[/i]'); return false;">[i][/i]</a><br/>
+        BOLD: <a href=# onclick="javascript:tagIns('[b]','[/b]'); return false;">[b][/b]</a><br/>
+        UNDERLINE: <a href=# onclick="javascript:tagIns('[ins]','[/ins]'); return false;">[ins][/ins]</a><br/>
+        URL: <a href=# onclick="javascript:tagIns('[url]','[/url]'); return false;">[url][/url]</a><br/>
+        IMG: <a href=# onclick="javascript:tagIns('[img]','[/img]'); return false;">[img][/img]</a><br/>
+        COLOR: <a href=# onclick="javascript:tagIns('[color]','[/color]'); return false;">[color][/color]</a><br/>
+        SIZE: <a href=# onclick="javascript:tagIns('[size]','[/size]'); return false;">[size][/size]</a><br/>
+        MAIL: <a href=# onclick="javascript:tagIns('[mail]','[/mail]'); return false;">[mail][/mail]</a><br/>
     </p>
     <?php
 
