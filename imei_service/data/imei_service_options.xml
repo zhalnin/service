@@ -5,8 +5,16 @@
     <view status="CMD_OK">main</view>
     <view status="CMD_ERROR">error</view>
 
-    <command name="General">
-        <view>general</view>
+    <command name="News">
+        <view>news</view>
+    </command>
+
+    <command name="Guestbook">
+        <view>guestbook</view>
+    </command>
+
+    <command name="Contacts">
+        <view>contacts</view>
     </command>
 
     <command name="ListVenues">

@@ -12,9 +12,9 @@ namespace imei_service\command;
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/base/Registry.php" );
 
-class General extends Command {
+class News extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
-        $request->addFeedback( "Welcome to GENERAL IMEI-SERVICE" );
+        $request->addFeedback( "Welcome to NEWS IMEI-SERVICE" );
 
 
         return self::statuses('CMD_OK');

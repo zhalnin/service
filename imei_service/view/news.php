@@ -6,6 +6,8 @@
  * Time: 19:45
  */
 
+namespace imei_service\view;
+
 require_once( "imei_service/add/class.PagerMysql.php" );
 require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
@@ -13,7 +15,8 @@ require_once( "imei_service/view/utils/utils.printPage.php" );
 $request = \imei_service\view\VH::getRequest();
 
 
-    $title = "GENERAL IMEI-SEVICE";
+//echo "<tt><pre>".print_r($_SERVER, true)."</pre></tt>";
+    $title = "NEWS IMEI-SEVICE";
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
     $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
     Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
@@ -54,8 +57,8 @@ $request = \imei_service\view\VH::getRequest();
         <!--        End of main-slogan-->
 
         <div id="addNav" class="">
-            <a href="guestbook.php"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
-            <a href="contacts.php"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
+            <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Guestbook" ?>"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
+            <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Contacts" ?>"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
         </div>
 
 
