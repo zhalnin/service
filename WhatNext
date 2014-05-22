@@ -1,0 +1,3 @@
+В скрипте \imei_service\domain\News.php делаем static function findAll()
+
+вызывается из \imei_service\command\News.php

@@ -7,50 +7,40 @@
  * To change this template use File | Settings | File Templates.
  */
 
-require_once("class/class.Database.php");
-require_once("config/class.config.php");
-Database::getInstance();
+namespace imei_service\view;
+
+
 error_reporting(E_ALL & ~E_NOTICE);
+require_once( "imei_service/view/ViewHelper.php" );
+require_once( "imei_service/view/utils/utils.printPage.php" );
+
+$request = \imei_service\view\VH::getRequest();
+//echo $request->getFeedback()[0];
+echo $request->getFeedbackString('< br/>');
+
+//echo "<tt><pre>".print_r($request->getFeedback(), true)."</pre></tt>";
 
 
-require_once("dmn/utils/utils.printPage.php");
-
-
-//echo "<div id='design'>
-//                <div class='row block grid2col row block border'>";
-
-
-//echo "<div id=\"news-main\" class=\"main-content\">
-//                <div id=\"\" class=\"news-content clear-fix\">
-//                    <div id='' class=\"news-header\">
-//                        <h2  class=\"h2\">Новости</h2>
-//                    </div>
-//                    <div class='news-container'>";
-
-
+$DB = \imei_service\base\DBRegistry::getDB();
 // Проверяем, является ли параметр id_news числом
 $_GET['id_news'] = intval($_GET['id_news']);
 // Выводим выбранное новостное сообщение
-$query = "SELECT * FROM $tbl_news
+$query = "SELECT * FROM system_news
                     WHERE  hide = 'show'
                     AND id_news = $_GET[id_news]";
-$res = mysql_query($query);
+$sth =  $DB->prepare( $query );
+$res = $sth->execute();
+//$res = mysql_query($query);
 if(!$res)
 {
-    throw new ExceptionMySQL(mysql_error(),
-        $query,
+    throw new \Exception(
         "Ошибка при извлечении
         текущей позиции");
 }
-$news = mysql_fetch_array($res);
+$news = $sth->fetch();
 // Если имеется хотя бы одна запись - выводим ее
 if(!empty($news))
 {
-//            $patt = array("[b]","[/b]","[i]","[/i]");
-//            $repl = array("","","","");
-//            $pattern_url = "|\[url[^\]]*\]|";
-//            $pattern_b_url = "|\[/url[^\]]*\]|";
-//            $urlpict = "";
 
     if($news['hidedate'] != 'hide' ) {
         $pdate = date('d.m.Y H:i', strtotime($news['putdate']));
@@ -60,7 +50,7 @@ if(!empty($news))
     }
     if($news['urlpict'] != '' && $news['hidepict'] != 'hide')
     {
-        $photo_print = "src='{$news['urlpict_s']}' alt='$alt'";
+        $photo_print = "src='{$news['urlpict_s']}' alt='alt'";
         $img = "<img $photo_print>";
 
     } else {
@@ -71,22 +61,17 @@ if(!empty($news))
         $href = "href='".$news['url']."'";
         $val_href = $news['urltext'];
     }
-//    echo"$img<div class=\"column last\">
-//                        ".$putdate."
-//                        <h1><a href='http://imei-service.ru'>".nl2br(print_page($news['name']))."</a></h1>
-//                        <p>".nl2br(print_page($news['body']))."</p>
-//                    </div>";
 
     echo "<div class='news-all-body'>
                 <div class='news-all-title'>
-                    <h1 class=\"h2\">".nl2br(print_page($news['name']))."</h1>
+                    <h1 class=\"h2\">".nl2br(\imei_service\view\utils\printPage($news['name']))."</h1>
                 </div>
                 <div class='news-all-image'>
                   $img
                   $putdate
                 </div>
                 <div class='news-all-info'>
-                    <p>".nl2br(print_page($news['body']))."</p>
+                    <p>".nl2br(\imei_service\view\utils\printPage($news['body']))."</p>
                 </div>
                 <div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.back(); >
                     <div id=\"button_back\" class=\"button rect transactional blues\" title=\"Сбросить\" type=\"button\" style=\"\">
@@ -100,18 +85,4 @@ if(!empty($news))
 
 }
 
-
-//    echo "
-//            <div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.back(); >
-//                <div id=\"button_back\" class=\"button rect transactional blues\" title=\"Сбросить\" type=\"button\" style=\"\">
-//                        <span style=\"\">
-//                            <span class=\"effect\"></span>
-//                            <span class=\"label\"> Назад </span>
-//                        </span>
-//                </div><!-- shipping-button -->
-//            </div>
-//          </div>";
-
-//  echo "</div>
-//      </div>";
 ?>

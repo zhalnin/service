@@ -13,6 +13,7 @@ require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
 
 $request = \imei_service\view\VH::getRequest();
+echo $request->getFeedbackString('< br/>');
 
 
 //echo "<tt><pre>".print_r($_SERVER, true)."</pre></tt>";
@@ -133,7 +134,7 @@ if(empty($_GET['id_news']))
             }
             $detail = "";
 
-            $url = "?id_news=".$news[$i]['id_news'];
+            $url = "?cmd=News&id_news=".$news[$i]['id_news'];
 
             echo "<div class='news-string-body superlink main-content $borderleft $borderbottom' onclick=\"detail_button('$url')\">
                             <div class='news-title'>

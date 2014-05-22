@@ -7,6 +7,13 @@
 
     <command name="News">
         <view>news</view>
+        <status value="CMD_OK">
+            <forward>NewsPrint</forward>
+        </status>
+    </command>
+
+    <command name="NewsPrint">
+        <view>newsPrint</view>
     </command>
 
     <command name="Guestbook">
