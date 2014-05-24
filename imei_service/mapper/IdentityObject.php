@@ -64,7 +64,7 @@ class IdentityObject {
         if( isset( $this->fields[$fieldname] ) ) {
             $this->currentfield = $this->fields[$fieldname];
         } else {
-            $this->currentfield = new \imei_service\mapper\Fiel( $fieldname );
+            $this->currentfield = new \imei_service\mapper\Field( $fieldname );
             $this->fields[$fieldname] = $this->currentfield;
         }
         return $this;
@@ -112,6 +112,14 @@ class IdentityObject {
         $ret = array();
         foreach ( $this->fields as $key => $field ) {
             $ret = array_merge( $ret, $field->getComps() );
+        }
+        return $ret;
+    }
+
+    function __toString() {
+        $ret = array();
+        foreach ( $this->getComps() as $compdata ) {
+            $ret[] = "{$compdata['name']} {$compdata['operator']} {$compdata['value']}";
         }
         return implode( " AND ", $ret );
     }

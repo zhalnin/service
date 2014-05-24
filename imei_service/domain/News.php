@@ -25,6 +25,8 @@ class News extends DomainObject {
     }
 
     static function findAll() {
-        return "ooo";
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = self::getIdentityObject( __CLASS__ ); // NewsIdentityObject
+        return $finder->find( $idobj ); // из DomainObjectAssembler
     }
 }

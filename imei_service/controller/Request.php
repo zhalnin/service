@@ -110,11 +110,14 @@ class Request {
     }
 
     function setObject( $name, $object ) {
-        print "setObject";
+        $this->objects[$name] = $object;
     }
 
     function getObject( $name ) {
-        print "getObject";
+        if( isset( $this->objects[$name] ) ) {
+            return $this->objects[$name];
+        }
+        return null;
     }
 
     /**

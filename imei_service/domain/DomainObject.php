@@ -9,6 +9,7 @@
 namespace imei_service\domain;
 
 require_once( "imei_service/domain/ObjectWatcher.php" );
+require_once( "imei_service/domain/HelperFactory.php" );
 
 abstract class DomainObject {
     private $id = -1;
@@ -37,12 +38,30 @@ abstract class DomainObject {
         return self::getCollection( get_class( $this ) );
     }
 
-    function getFinder( $type ) {
+    /**
+     * Из дочернего класса для получения методов работы с БД
+     * @param $type - класс
+     * @return \imei_service\mapper\DomainObjectAssembler
+     */
+    static function getFinder( $type ) {
         return HelperFactory::getFinder( $type );
     }
 
     function finder() {
         return self::getFinder( get_class( $this ) );
+    }
+
+    /**
+     * Принимаем имя класса и возвращаем итератор с условными операторами
+     * @param $type - класс
+     * @return \imei_service\mapper\ContactsIdentityObject|\imei_service\mapper\GuestbookIdentityObject|\imei_service\mapper\NewsIdentityObject
+     */
+    static function getIdentityObject( $type ) {
+        return HelperFactory::getIdentityObject( $type );
+    }
+
+    function identityObject() {
+        return self::getIdentityObject( get_class( $this ) );
     }
 
     function setId( $id ) {

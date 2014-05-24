@@ -8,6 +8,10 @@
 
 namespace imei_service\mapper;
 
+require_once( "imei_service/mapper/Collections.php" );
+require_once( "imei_service/mapper/DomainObjectFactory.php" );
+require_once( "imei_service/mapper/NewsIdentityObject.php" );
+require_once( "imei_service/mapper/NewsSelectionFactory.php" );
 
 abstract class PersistenceFactory {
 
@@ -46,7 +50,7 @@ class NewsPersistenceFactory extends PersistenceFactory {
         return new NewsCollection( $array, $this->getDomainObjectFactory() );
     }
 
-    function getSelectionFactory() {
+    function getSelectionFactory() { // из DomainObjectAssembler
         return new NewsSelectionFactory();
     }
 
@@ -54,7 +58,7 @@ class NewsPersistenceFactory extends PersistenceFactory {
         return new NewsUpdateFactory();
     }
 
-    function getIdentityObject() {
+    function getIdentityObject() { // из \imei_service\domain\News
         return new NewsIdentityObject();
     }
 }

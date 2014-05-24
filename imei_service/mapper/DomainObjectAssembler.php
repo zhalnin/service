@@ -12,6 +12,11 @@ namespace imei_service\mapper;
 class DomainObjectAssembler {
     protected static $PDO;
 
+    /**
+     * Получаем объект PersistenceFactory
+     * Создаем подключение к БД
+     * @param PersistenceFactory $factory
+     */
     function __construct( PersistenceFactory $factory ) {
         $this->factory = $factory;
         if( ! isset( self::$PDO ) ) {
@@ -35,12 +40,20 @@ class DomainObjectAssembler {
         return $collection->next();
     }
 
+    /**
+     * Принимает объект IdentityObject нужного класса,
+     * выполняет Select и возвращает коллекцию найденных полей
+     * @param IdentityObject $idobj
+     * @return mixed
+     */
     function find( IdentityObject $idobj ) {
-        $selfact = $this->factory->getSelectionFactory();
+        $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
         list( $selection, $values ) = $selfact->newSelection( $idobj );
         $stmt = $this->getStatement( $selection );
         $stmt->execute( $values );
         $raw = $stmt->fetchAll();
+//        echo "<tt><pre>".print_r($raw, true)."</pre></tt>";
+
         return $this->factory->getCollection( $raw );
     }
 

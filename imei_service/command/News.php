@@ -19,7 +19,8 @@ class News extends Command {
         if( ! $id_news ) {
 
             $collection = \imei_service\domain\News::findAll();
-            echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
+            $request->setObject( 'news', $collection );
+//            echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
 
 
             $request->addFeedback( "Welcome to NEWS IMEI-SERVICE" );
