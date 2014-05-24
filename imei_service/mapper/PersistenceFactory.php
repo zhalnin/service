@@ -46,8 +46,13 @@ class NewsPersistenceFactory extends PersistenceFactory {
         return new NewsObjectFactory;
     }
 
+    /**
+     * Получаем из DomainObjectAssembler результирующий массив запроса
+     * @param array $array
+     * @return NewsCollection
+     */
     function getCollection( array $array ) {
-        return new NewsCollection( $array, $this->getDomainObjectFactory() );
+        return new NewsCollection( $array, $this->getDomainObjectFactory() ); // возвращаем экземпляр Collection
     }
 
     function getSelectionFactory() { // из DomainObjectAssembler

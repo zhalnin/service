@@ -8,16 +8,27 @@
 
 namespace imei_service\view;
 
+use imei_service\base\AppException;
+use imei_service\base\DBException;
+
 require_once( "imei_service/add/class.PagerMysql.php" );
 require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
 
 $request = \imei_service\view\VH::getRequest();
-echo $request->getFeedbackString('< br/>');
 $news = $request->getObject('news');
-//echo "<tt><pre>".print_r($news, true)."</pre></tt>";
+$count = 0;
 
-
+//foreach( $news as $new ) {
+//    print $new->getName();
+//    print \imei_service\view\utils\printPage( $new->getPreview() );
+//    print \imei_service\view\utils\printPage( $new->getBody() );
+//    print $new->getPutdate();
+//    print $new->getUrlpict_s();
+//    print $new->getAlt();
+//
+//
+//}
 //echo "<tt><pre>".print_r($_SERVER, true)."</pre></tt>";
     $title = "NEWS IMEI-SEVICE";
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
@@ -27,7 +38,7 @@ $news = $request->getObject('news');
     require_once("templates/top.php");
     try
     {
-    //    $url = "?id_news=1";
+    //    $url = "?id=1";
 
     //mail("zhalninpal@me.com","test","test");
     ?>
@@ -73,94 +84,49 @@ $news = $request->getObject('news');
                 <div class='news-container'>
 
 <?php
-// Если GET-параметр id_news не передан - выводим
-// список новостных сообщений
-if(empty($_GET['id_news']))
-{
-    $_GET['page'] = intval($_GET['page']);
 
-    // Количество сообщений на странице
-    $pnumber = 100;
-    // Количество ссылок в постраничной навигации
-    $page_link = 3;
 
-    $tbl_news = 'system_news';
-
-    // Объявляем объект постраничной навигации
-    $obj = new \imei_service\add\PagerMysql($tbl_news,
-        "WHERE hide = 'show' ",
-        "ORDER BY pos",
-        $pnumber,
-        $page_link);
-    // Получаем содержимое текущей страницы
-    $news = $obj->getPage();
-
-    // Если имеется хотя бы одна запись - выводим ее
-    if(!empty($news))
-    {
-
-        $urlpict = "";
-        for($i = 0; $i < count($news); $i++)
-        {
-            if($news[$i]['hidedate'] != 'hide' ) {
-                $editdate = date('d.m.Y H:i', strtotime($news[$i]['putdate']));
-                $putdate =  "<span id=\"datetime\">".$editdate."</span>";
-            } else {
-                $putdate = "";
-            }
-            if($news[$i]['urlpict'] != '' && $news[$i]['hidepict'] != 'hide')
-            {
-
-                if( $i % 2 == 1 ) {
+foreach( $news as $new ) {
+     $new->getName();
+//    print $new->getPutdate();
+    if( $new->getUrlpict_s() != '' && $new->getHidepict() != 'hide' ){
+        $img = "<img src='imei_service/view/{$new->getUrlpict_s()}' alt='{$new->getAlt()}' />";
+        if( $count % 2 == 1 ) {
                     $align = "float: right;";
                     $textAlign = "text-align: right";
                     $reverseAlign = "float: left";
                     $reverseTextAlign = "text-align: left";
-                } else if( $i % 2 == 0 ) {
+                } else if( $count % 2 == 0 ) {
                     $align = "float: left;";
                     $textAlign = "text-align: left";
                     $reverseAlign = "float: right";
                     $reverseTextAlign = "text-align: right";
                 }
-                $alt = $news[$i]['alt'];
-                $photo_print = " src='imei_service/view/{$news[$i]['urlpict_s']}' alt='$alt'";
-                $img = "<img class=''  $photo_print />";
+    } else {
+        $img = '';
+    }
 
-            } else {
-                $img = "";
-            }
-            if($news[$i]['url'] != '' && $news[$i]['url'] != '-')
-            {
-                $href = "href='".$news[$i]['url']."'";
-                $val_href = $news[$i]['urltext'];
-            }
-            $detail = "";
+    if($new->getUrl() != '' && $new->getUrl() != '-')
+    {
+        $href = "href='".$new->getUrl()."'";
+        $val_href = $new->getUrltext();
+    }
+    $detail = "";
+    $url = "?cmd=News&id=".$new->getId();
 
-            $url = "?cmd=News&id_news=".$news[$i]['id_news'];
-
-            echo "<div class='news-string-body superlink main-content $borderleft $borderbottom' onclick=\"detail_button('$url')\">
+            echo "<div class='news-string-body superlink main-content ' onclick=\"detail_button('$url')\">
                             <div class='news-title'>
-                                <h1 class=\"h2\">".nl2br(\imei_service\view\utils\printPage($news[$i]['name']))."</h1>
+                                <h1 class=\"h2\">".nl2br(\imei_service\view\utils\printPage($new->getName()))."</h1>
                             </div>
-                            <div class='news-image' style=\"$align\">
+                            <div class='news-image'  style=\"$align\">
                               $img
                             </div>
-                            <div class='news-info' style=\"$reverseAlign\" >
-                                <p>".nl2br(\imei_service\view\utils\printPage($news[$i]['preview']))."</p>
+                            <div class='news-info'  style=\"$reverseAlign\" >
+                                <p>".nl2br(\imei_service\view\utils\printPage($new->getPreview() ) )."</p>
                             </div>
                         </div>";
-        }
-    }
+$count++;
 }
-// Если GET-параметр id_news передан - выводим полную
-// версию нвостного сообщения
-else
-{
-//    require_once("newsPrint.php");
-
-}
-
-
 
 echo "
                     </div><!-- End of news-container -->
@@ -172,18 +138,15 @@ echo "
 require_once("templates/bottom.php");
 }
 
-catch(ExceptionMySQL $exc)
+catch(AppException $exc)
 {
-    require_once("exception_mysql_debug.php");
+    require_once( "\imei_service\base\Exceptions.php" );
 }
-catch(ExceptionObject $exc)
+catch(DBException $exc)
 {
-    require_once("exception_object_debug.php");
+    require_once( "\imei_service\base\Exceptions.php" );
 }
-catch(ExceptionMember $exc)
-{
-    require_once("exception_member_debug.php");
-}
+
 
 
 ?>

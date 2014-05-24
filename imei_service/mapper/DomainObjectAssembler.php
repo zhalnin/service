@@ -28,6 +28,14 @@ class DomainObjectAssembler {
         }
     }
 
+    /**
+     * Проверяет наличие запроса в кэше,
+     * к примеру: SELECT id FROM system_news
+     * если нет, то возвращаем его уже после prepare,
+     * если есть, то возвращаем из кэша
+     * @param $str
+     * @return mixed
+     */
     function getStatement( $str ) {
         if( ! isset( $this->statements[$str] ) ) {
             $this->statements[$str] = self::$PDO->prepare( $str );
@@ -48,13 +56,13 @@ class DomainObjectAssembler {
      */
     function find( IdentityObject $idobj ) {
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
-        list( $selection, $values ) = $selfact->newSelection( $idobj );
-        $stmt = $this->getStatement( $selection );
-        $stmt->execute( $values );
-        $raw = $stmt->fetchAll();
-//        echo "<tt><pre>".print_r($raw, true)."</pre></tt>";
+        list( $selection, $values ) = $selfact->newsSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+        $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
+        $stmt->execute( $values ); // выполняем запрос
+        $raw = $stmt->fetchAll(); // получаем результирующий массив
+//        echo "<tt><pre>".print_r($stmt, true)."</pre></tt>";
 
-        return $this->factory->getCollection( $raw );
+        return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
     function insert( \imei_service\domain\DomainObject $obj ) {

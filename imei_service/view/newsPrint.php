@@ -22,12 +22,12 @@ echo $request->getFeedbackString('< br/>');
 
 
 $DB = \imei_service\base\DBRegistry::getDB();
-// Проверяем, является ли параметр id_news числом
-$_GET['id_news'] = intval($_GET['id_news']);
+// Проверяем, является ли параметр id числом
+$_GET['id'] = intval($_GET['id']);
 // Выводим выбранное новостное сообщение
 $query = "SELECT * FROM system_news
                     WHERE  hide = 'show'
-                    AND id_news = $_GET[id_news]";
+                    AND id = $_GET[id]";
 $sth =  $DB->prepare( $query );
 $res = $sth->execute();
 //$res = mysql_query($query);

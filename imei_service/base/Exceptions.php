@@ -20,7 +20,7 @@ class AppException extends \Exception {
     }
 }
 
-class DBException extends \Exception {
+class DBException extends \PDOException {
     private $error;
 
     function __construct( DBException $db_error ) {

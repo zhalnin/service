@@ -19,12 +19,20 @@ abstract class Collection {
     private $pointer = 0;
     private $objects = array();
 
+    /**
+     * Из PersistenceFactory->getCollection получаем результирующий массив запроса и
+     * определенного домена ...ObjectFactory (NewsObjectFactory)
+     * @param array $raw
+     * @param DomainObjectFactory $dofact
+     */
     function __construct( array $raw=null, DomainObjectFactory $dofact ) {
-        if( ! is_null( $raw ) && ! is_null( $dofact ) ) {
-            $this->raw = $raw;
-            $this->total = count( $raw );
+//        echo "<tt><pre> Collection raw - ".print_r($dofact,true)."</pre></tt>";
+        if( ! is_null( $raw ) && ! is_null( $dofact ) ) { // если есть результат и есть DomainObjectFactory
+            $this->raw = $raw; // сохраняем результат в переменную raw
+            $this->total = count( $raw ); // а количество результирующих наборов в переменную total
         }
-        $this->dofact = $dofact;
+        $this->dofact = $dofact; // DomainObjectFactory сохраняем в переменную dofact
+//        echo "<tt><pre> Collection raw - ".print_r($this->total,true)."</pre></tt>";
     }
 
     function add( \imei_service\domain\DomainObject $object ) {
@@ -44,11 +52,13 @@ abstract class Collection {
     }
 
     private function getRow( $num ) {
+//        echo "<tt><pre> getRow num - ".print_r($num,true)."</pre></tt>";
         $this->notifyAccess();
         if( $num >= $this->total || $num < 0 ) {
             return null;
         }
         if( isset( $this->objects[$num] ) ) {
+//            echo "<tt><pre> Collection raw - ".print_r($this->objects[$num],true)."</pre></tt>";
             return $this->objects[$num];
         }
         if( isset( $this->raw[$num] ) ) {

@@ -100,6 +100,10 @@ class IdentityObject {
         return $this->operator( ">", $value );
     }
 
+    function order( $value ) {
+        return $this->operator( "ORDER BY", $value );
+    }
+
     private function operator( $symbol, $value ) {
         if( $this->isVoid() ) {
             throw new AppException( "No object field defined" );
