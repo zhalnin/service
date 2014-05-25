@@ -18,16 +18,17 @@ class News extends Command {
         $id = $request->getProperty( 'id' ); // если передан параметр для просмотра новости детально
         if( ! $id ) {
 
-            $collection = \imei_service\domain\News::findAll(); // работает \imei_service\domain\News
-            $request->setObject( 'news', $collection );
-//            echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
+            $collection = \imei_service\domain\News::findAll(); // работает \imei_service\domain\News - получаем коллекцию
 
+            $request->setObject( 'news', $collection ); // кешируем коллекцию в \imei_service\controller\Request
+//            echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
 
             $request->addFeedback( "Welcome to NEWS IMEI-SERVICE" );
             return self::statuses('CMD_INSUFFICIENT_DATA'); // передаем статус, чтобы не запускать переадресацию
         } else {
 
-            $news_obj = new \imei_service\domain\News( $id, null );
+            $collection = \imei_service\domain\News::find( $id );
+//            $news_obj = new \imei_service\domain\News( $id, null );
             return self::statuses('CMD_OK'); // передаем статус выполнения и далее смотрим переадресацию
 
         }

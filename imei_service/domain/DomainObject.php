@@ -39,27 +39,31 @@ abstract class DomainObject {
     }
 
     /**
-     * Из дочернего класса для получения методов работы с БД
+     * Вызываем из дочернего класса
+     * В HelperFactory вызываем метод getFactory
+     * и должны получить PersistenceFactory (imei_service\domain\News - NewsPersistenceFactory и т.д.)
+     * и вернется DomainObjectAssembler с PersistenceFactory в качестве параметра
      * @param $type - класс
      * @return \imei_service\mapper\DomainObjectAssembler
      */
     static function getFinder( $type ) {
         return HelperFactory::getFinder( $type );
     }
-
     function finder() {
         return self::getFinder( get_class( $this ) );
     }
 
     /**
-     * Принимаем имя класса и возвращаем итератор с условными операторами
-     * @param $type - класс
+     * Вызываем из дочернего класса
+     * В HelperFactory вызываем метод getIdentityObject
+     * и должны получить к примеру: new NewsIdentityObject()
+     * - т.е. экземпляр класса, в зависимости от имени класса в $type
+     * @param $type - имя класса
      * @return \imei_service\mapper\ContactsIdentityObject|\imei_service\mapper\GuestbookIdentityObject|\imei_service\mapper\NewsIdentityObject
      */
     static function getIdentityObject( $type ) {
         return HelperFactory::getIdentityObject( $type );
     }
-
     function identityObject() {
         return self::getIdentityObject( get_class( $this ) );
     }

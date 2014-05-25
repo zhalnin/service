@@ -18,7 +18,7 @@ class NewsSelectionFactory extends SelectionFactory {
      * @return array
      */
     function newsSelection( IdentityObject $obj ) {
-        $fields = implode( ',', $obj->getObjectFields() ); // разбиваем искомые поля в Select id,name, и т.д.
+        $fields = implode( ',', $obj->getObjectFields() ); // разбиваем искомые поля в Select id,name, и т.д. в классе IdentityObject
         $core = "SELECT $fields FROM system_news";  // составляем запрос
 //        $order = " ORDER BY putdate";
         list( $where, $values ) = $this->buildWhere( $obj ); // из родительского класса

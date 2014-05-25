@@ -8,9 +8,6 @@
 
 namespace imei_service\view;
 
-use imei_service\base\AppException;
-use imei_service\base\DBException;
-
 require_once( "imei_service/add/class.PagerMysql.php" );
 require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
@@ -19,17 +16,8 @@ $request = \imei_service\view\VH::getRequest();
 $news = $request->getObject('news');
 $count = 0;
 
-//foreach( $news as $new ) {
-//    print $new->getName();
-//    print \imei_service\view\utils\printPage( $new->getPreview() );
-//    print \imei_service\view\utils\printPage( $new->getBody() );
-//    print $new->getPutdate();
-//    print $new->getUrlpict_s();
-//    print $new->getAlt();
-//
-//
-//}
-//echo "<tt><pre>".print_r($_SERVER, true)."</pre></tt>";
+
+//echo "<tt><pre>".print_r($_REQUEST, true)."</pre></tt>";
     $title = "NEWS IMEI-SEVICE";
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
     $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.

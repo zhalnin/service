@@ -18,13 +18,13 @@ class DomainObjectAssembler {
      * @param PersistenceFactory $factory
      */
     function __construct( PersistenceFactory $factory ) {
-        $this->factory = $factory;
-        if( ! isset( self::$PDO ) ) {
-            $dsn = \imei_service\base\DBRegistry::getDB();
-            if( is_null( $dsn ) ) {
-                throw new \imei_service\base\AppException( "No DSN" );
+        $this->factory = $factory; // сохраняем в переменную
+        if( ! isset( self::$PDO ) ) { // если еще нет
+            $dsn = \imei_service\base\DBRegistry::getDB(); // то сохраняем дескриптор БД
+            if( is_null( $dsn ) ) { // если неудача
+                throw new \imei_service\base\AppException( "No DSN" ); // вызываем исключение
             }
-            self::$PDO = $dsn;
+            self::$PDO = $dsn; // собственно дескриптор БД
         }
     }
 
@@ -43,9 +43,15 @@ class DomainObjectAssembler {
         return $this->statements[$str];
     }
 
+    /**
+     * Возвращаем коллекцию SELECT по одному полю
+     * @param IdentityObject $idobj
+     * @return mixed
+     */
     function findOne( IdentityObject $idobj ) {
         $collection = $this->find( $idobj );
-        return $collection->next();
+//        echo "<tt><pre>".print_r($collection->current(), true)."</pre></tt>";
+        return $collection->current();
     }
 
     /**

@@ -21,6 +21,11 @@ abstract class PersistenceFactory {
     abstract function getSelectionFactory();
     abstract function getUpdateFactory();
 
+    /**
+     * Фабрика для получения нужного объекта
+     * @param $target_class - имя класса из DomainObject -- HelperFactory
+     * @return ContactsPersistenceFactory|GuestbookPersistenceFactory|NewsPersistenceFactory
+     */
     static function getFactory( $target_class ) {
         switch( $target_class ) {
             case "imei_service\\domain\\News":
@@ -36,8 +41,13 @@ abstract class PersistenceFactory {
     }
 }
 
-
+/**
+ * Class NewsPersistenceFactory
+ * @package imei_service\mapper
+ * Класс для управления новостями
+ */
 class NewsPersistenceFactory extends PersistenceFactory {
+
     function getMapper() {
         return new NewsMapper();
     }
@@ -48,14 +58,28 @@ class NewsPersistenceFactory extends PersistenceFactory {
 
     /**
      * Получаем из DomainObjectAssembler результирующий массив запроса
-     * @param array $array
-     * @return NewsCollection
+     * @param array $array - результирующий набор БД из DomainObjectAssembler->find() - т.е. $raw
+     * будет иметь методы:
+     * - add()
+     * - targetClass()
+     * - notifyAccess()
+     * - getRow()
+     * - rewind()
+     * - current()
+     * - key()
+     * - next()
+     * - valid()
+     * @return NewsCollection - $this->raw; $this->total; $this->dofact
      */
     function getCollection( array $array ) {
-        return new NewsCollection( $array, $this->getDomainObjectFactory() ); // возвращаем экземпляр Collection
+        return new NewsCollection( $array, $this->getDomainObjectFactory() ); // возвращаем экземпляр Collection, будет содержать метод createObject
     }
 
-    function getSelectionFactory() { // из DomainObjectAssembler
+    /**
+     * Получаем из DomainObjectAssembler
+     * @return NewsSelectionFactory
+     */
+    function getSelectionFactory() {
         return new NewsSelectionFactory();
     }
 

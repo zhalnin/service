@@ -27,13 +27,21 @@ abstract class DomainObjectFactory {
  * Как аргумент в классе PersistenceFactory
  */
 class NewsObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \imei_service\domain\News
+     */
     function createObject( array $array ) {
-        $class = "\\imei_service\\domain\\News";
+        $class = "\\imei_service\\domain\\News"; // название класса
 
-//        $old = $this->getFromMap( $class, $array['id'] );
-//        if( $old ) { return $old; }
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
 
-        $obj = new $class( $array['id'] );
+        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
         $obj->setName( $array['name'] );
         $obj->setPreview( $array['preview'] );
         $obj->setBody( $array['body'] );
@@ -44,8 +52,8 @@ class NewsObjectFactory extends DomainObjectFactory {
         $obj->setUrltext( $array['urltext'] );
         $obj->setHidepict( $array['hidepict'] );
 
-//        $this->addToMap( $obj );
-//        $obj->markClean();
-        return $obj;
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \imei_service\domain\News
     }
 }

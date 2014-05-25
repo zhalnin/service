@@ -1,3 +1,2 @@
-В скрипте \imei_service\domain\News.php делаем static function findAll()
-
-вызывается из \imei_service\command\News.php
+1. В скрипте \imei_service\view\newsPrint.php - модернизируем под наше приложение
+2. Просмотреть все классы на соответствие

@@ -24,37 +24,65 @@ class News extends DomainObject {
     private $hidepict;
 
     /**
-     * Конструктор принимаем id - идентификатор для БД и name - имя
+     * Поля из БД - сохраняем из в переменнвн
      * @param null $id
      * @param null $name
+     * @param null $preview
+     * @param null $body
+     * @param null $putdate
+     * @param null $alt
+     * @param null $urlpict_s
+     * @param null $url
+     * @param null $urltext
+     * @param null $hidepict
      */
-    function __construct( $id=null, $name=null, $preview=null, $body=null,
-                          $putdate=null, $alt=null, $urlpict_s=null, $url=null,
-                          $urltext=null, $hidepict=null ) {
-        $this->name = $name;
-        $this->preview = $preview;
-        $this->body = $body;
-        $this->putdate = $putdate;
-        $this->alt = $alt;
-        $this->urlpict_s = $urlpict_s;
-        $this->url = $url;
-        $this->urltext = $urltext;
+    function __construct( $id=null,
+                          $name=null,
+                          $preview=null,
+                          $body=null,
+                          $putdate=null,
+                          $alt=null,
+                          $urlpict_s=null,
+                          $url=null,
+                          $urltext=null,
+                          $hidepict=null ) {
+
+        $this->name         = $name;
+        $this->preview      = $preview;
+        $this->body         = $body;
+        $this->putdate      = $putdate;
+        $this->alt          = $alt;
+        $this->urlpict_s    = $urlpict_s;
+        $this->url          = $url;
+        $this->urltext      = $urltext;
 
         parent::__construct( $id ); // вызываем конструктор родительского класса
     }
 
+    /**
+     * Здесь в родительском классе DomainObject вызываем метод getFinder,
+     *
+     * @return mixed
+     */
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
         $idobj = self::getIdentityObject( __CLASS__ ); // NewsIdentityObject
-        $news_idobj = new \imei_service\mapper\NewsIdentityObject( 'hide' );
+        $news_idobj = new \imei_service\mapper\NewsIdentityObject( 'hide' ); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
         $news_idobj->eq('show');
-        return $finder->find( $news_idobj ); // из DomainObjectAssembler
+//        echo "<tt><pre>".print_r($news_idobj, true)."</pre></tt>";
+        return $finder->find( $news_idobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
+    }
+
+    static function find( $id ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \imei_service\mapper\NewsIdentityObject( 'id' );
+        return $finder->findOne( $idobj->eq( $id ) );
     }
 
     function setName( $name_s ) {
 //        echo $name_s;
         $this->name = $name_s;
-//        $this->markDirty();
+        $this->markDirty();
     }
     function setPreview( $preview_s ) {
         $this->preview = $preview_s;
@@ -109,3 +137,5 @@ class News extends DomainObject {
         return $this->hidepict;
     }
 }
+
+?>

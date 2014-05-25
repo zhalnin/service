@@ -11,6 +11,11 @@ namespace imei_service\mapper;
 require_once( "imei_service/mapper/IdentityObject.php" );
 
 class NewsIdentityObject extends IdentityObject {
+
+    /**
+     * @param null $field - имя поля для создания условного оператора
+     * В родительский класс передаем само поле и массив ($enforce)
+     */
     function __construct( $field=null ) {
         parent::__construct( $field, array('id',
                                         'name',
