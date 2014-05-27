@@ -20,9 +20,9 @@ class NewsSelectionFactory extends SelectionFactory {
     function newsSelection( IdentityObject $obj ) {
         $fields = implode( ',', $obj->getObjectFields() ); // разбиваем искомые поля в Select id,name, и т.д. в классе IdentityObject
         $core = "SELECT $fields FROM system_news";  // составляем запрос
-//        $order = " ORDER BY putdate";
+        $orderby = " ORDER BY pos";
         list( $where, $values ) = $this->buildWhere( $obj ); // из родительского класса
-        return array( $core." ".$where. " ORDER BY pos", $values ); // возвращаем запрос с условными операторами WHERE ... < ? AND id = ? и массив с значениями
+        return array( $core." ".$where. " " . $orderby, $values ); // возвращаем запрос с условными операторами WHERE ... < ? AND id = ? и массив с значениями
     }
 }
 ?>

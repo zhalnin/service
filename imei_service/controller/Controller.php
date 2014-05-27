@@ -9,6 +9,7 @@ namespace imei_service\controller;
 
 require_once( "imei_service/controller/ApplicationHelper.php" );
 require_once( "imei_service/controller/Request.php" );
+require_once( "imei_service/domain/ObjectWatcher.php" );
 
 /**
  * Class Controller
@@ -49,7 +50,7 @@ class Controller {
             $cmd->execute( $request );                                      // выполняем метод Execute( doExecute ) полученной команды ( подкласс Command )
 //            echo "<tt><pre>".print_r($cmd, true)."</pre></tt>";
         }
-//        \imei_service\domain\ObjectWatcher::instance()->preformOperations();
+        \imei_service\domain\ObjectWatcher::instance()->performOperations(); // метод для UPDATE или INSERT
         $this->invokeView( $app_c->getView( $request ) );                   // выполняем поиск вьюшки и включаем ее
     }
 

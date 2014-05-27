@@ -17,7 +17,7 @@ abstract class DomainObjectFactory {
     }
 
     protected function addToMap( \imei_service\domain\DomainObject $obj ) {
-        return \imei_service\domain\ObjectWatcher::add( $obj );
+        \imei_service\domain\ObjectWatcher::add( $obj );
     }
 }
 

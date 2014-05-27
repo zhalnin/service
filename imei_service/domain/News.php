@@ -30,6 +30,7 @@ class News extends DomainObject {
      * @param null $preview
      * @param null $body
      * @param null $putdate
+     * @param null $hidedate
      * @param null $alt
      * @param null $urlpict_s
      * @param null $url
@@ -41,6 +42,7 @@ class News extends DomainObject {
                           $preview=null,
                           $body=null,
                           $putdate=null,
+                          $hidedate = null,
                           $alt=null,
                           $urlpict_s=null,
                           $url=null,
@@ -51,6 +53,7 @@ class News extends DomainObject {
         $this->preview      = $preview;
         $this->body         = $body;
         $this->putdate      = $putdate;
+        $this->hidedate     = $hidedate;
         $this->alt          = $alt;
         $this->urlpict_s    = $urlpict_s;
         $this->url          = $url;
@@ -76,7 +79,7 @@ class News extends DomainObject {
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\NewsIdentityObject( 'id' );
-        return $finder->findOne( $idobj->eq( $id ) );
+        return $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ) );
     }
 
     function setName( $name_s ) {
@@ -86,27 +89,39 @@ class News extends DomainObject {
     }
     function setPreview( $preview_s ) {
         $this->preview = $preview_s;
+        $this->markDirty();
     }
     function setBody( $body_s ) {
         $this->body = $body_s;
+        $this->markDirty();
     }
     function setPutdate( $putdate_s ) {
         $this->putdate = $putdate_s;
+        $this->markDirty();
+    }
+    function setHidedate( $hidedate ) {
+        $this->hidedate = $hidedate;
+        $this->markDirty();
     }
     function setUrlpict_s( $urlpict_s ) {
         $this->urlpict_s = $urlpict_s;
+        $this->markDirty();
     }
     function setAlt( $alt ) {
         $this->alt = $alt;
+        $this->markDirty();
     }
     function setUrl( $url ) {
         $this->url = $url;
+        $this->markDirty();
     }
     function setUrltext( $urltext ) {
         $this->urltext = $urltext;
+        $this->markDirty();
     }
     function setHidepict( $hidepict ) {
         $this->hidepict = $hidepict;
+        $this->markDirty();
     }
 
     function getName() {
@@ -120,6 +135,9 @@ class News extends DomainObject {
     }
     function getPutdate() {
         return $this->putdate;
+    }
+    function getHidedate() {
+        return $this->hidedate;
     }
     function getUrlpict_s() {
         return $this->urlpict_s;

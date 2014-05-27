@@ -10,7 +10,10 @@ namespace imei_service\mapper;
 
 require_once( "imei_service/mapper/Collection.php" );
 
-class NewsCollection extends Collection  implements \imei_service\domain\NewsCollection {
+class NewsCollection
+    extends Collection
+    implements \imei_service\domain\NewsCollection {
+
     function targetClass() {
         return "\\imei_service\\domain\\News";
     }

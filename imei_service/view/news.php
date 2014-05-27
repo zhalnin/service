@@ -15,8 +15,7 @@ require_once( "imei_service/view/utils/utils.printPage.php" );
 $request = \imei_service\view\VH::getRequest();
 $news = $request->getObject('news');
 $count = 0;
-
-
+//echo "<tt><pre>".print_r($news, true)."</pre></tt>";
 //echo "<tt><pre>".print_r($_REQUEST, true)."</pre></tt>";
     $title = "NEWS IMEI-SEVICE";
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";

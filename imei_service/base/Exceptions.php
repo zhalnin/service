@@ -23,7 +23,7 @@ class AppException extends \Exception {
 class DBException extends \PDOException {
     private $error;
 
-    function __construct( DBException $db_error ) {
+    function __construct( \PDOException $db_error ) {
         parent::__construct( $db_error->getMessage(), $db_error->getCode() );
         $this->error = $db_error;
     }

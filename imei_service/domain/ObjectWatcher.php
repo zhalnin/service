@@ -122,16 +122,16 @@ class ObjectWatcher {
     /**
      * Метод исполнитель
      */
-//    function performOperations() {
-//        foreach ( $this->dirty as $key => $obj ) {
-//           $obj->finder()->insert( $obj );
-//        }
-//        // проходим по массиву в поиске объекта для добавления в БД
-//        foreach ( $this->new as $key => $obj ) {
-//            $obj->finder()->insert( $obj );
-//        }
-//        $this->dirty = array();
-//        $this->new = array();
-//    }
+    function performOperations() {
+        foreach ( $this->dirty as $key => $obj ) {
+           $obj->finder()->insert( $obj );
+        }
+        // проходим по массиву в поиске объекта для добавления в БД
+        foreach ( $this->new as $key => $obj ) {
+            $obj->finder()->insert( $obj );
+        }
+        $this->dirty = array();
+        $this->new = array();
+    }
 
 }

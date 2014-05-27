@@ -28,6 +28,7 @@ class News extends Command {
         } else {
 
             $collection = \imei_service\domain\News::find( $id );
+            $request->setObject( 'newsPrint', $collection );
 //            $news_obj = new \imei_service\domain\News( $id, null );
             return self::statuses('CMD_OK'); // передаем статус выполнения и далее смотрим переадресацию
 

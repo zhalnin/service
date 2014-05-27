@@ -37,6 +37,7 @@ class Field {
                                 'value'     => $value);
     }
 
+
     function getComps() {
         return $this->comps;
     }
@@ -79,7 +80,7 @@ class IdentityObject {
      * Вызываем из конструктора
      * @param $fieldname - имя поля для условного оператора
      * @return $this
-     * @throws AppException
+     * @throws \imei_service\base\AppException
      */
     function field( $fieldname ) {
         if( ! $this->isVoid() && $this->currentfield->isIncomplete() ) { // если $this->fields не пустой и
@@ -150,14 +151,6 @@ class IdentityObject {
         return $this->operator( ">", $value );
     }
 
-    /**
-     * Метод "ORDER BY"
-     * @param $value - поле для сравнения
-     * @return $this
-     */
-    function order( $value ) {
-        return $this->operator( "ORDER BY", $value );
-    }
 
     /**
      * Вызываем из методов операторов сравнения

@@ -29,21 +29,9 @@ abstract class SelectionFactory {
             $values[] = $comp['value']; // здесь само значение для сравнения
         }
         $where = "WHERE " . implode( " AND ", $compstrings ); // если операторов сравнения более одного, то соединяем их оператором AND
+//        echo "<tt><pre>".print_r($where, true)."</pre></tt>";
         return array( $where, $values ); // возвращаем массив, к примеру: array( "hide = ? AND id = ?", "'show', 27" );
     }
 
-//    function buildOrder( IdentityObject $obj ) {
-//        if( $obj->isVoid() ) {
-//            return array( "", array() );
-//        }
-//        $compstrings = array();
-//        $values = array();
-//        foreach ( $obj->getComps() as $comp ) {
-//            $compstrings[] = "{$comp['name']} ?";
-//            $values[] = $comp['value'];
-//        }
-//        $order = "ORDER BY ". implode(" AND ", $compstrings );
-//        return array( $order, $values);
-//    }
 }
 ?>
