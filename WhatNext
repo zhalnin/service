@@ -1,4 +1,4 @@
-2. Просмотреть все классы на соответствие
+В imei_service/command/Guestbook делаем запрос и получаем коллекцию:
+делаем запрос в static function domain/Guestbook/PagerMysql()
+из него в mapper/DomainObjectAssembler/PagerMysql()
 
-Сделать исключение для PDOException в Exceptions при запуске из runner.php
-Разобрать DeferredEventCollection
