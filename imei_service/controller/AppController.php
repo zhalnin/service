@@ -62,7 +62,7 @@ class AppController {
             throw new \imei_service\base\AppException( "circular forwarding" );
         }
 
-        $this->invoked[$cmd_obj] = 1; // выставляем флаг
+        $this->invoked[$cmd_class] = 1; // выставляем флаг
         return $cmd_obj;    // возвращаем объект команда класса перенаправления или просто корневого класса
     }
 

@@ -9,6 +9,7 @@
 namespace imei_service\mapper;
 
 
+
 abstract class DomainObjectFactory {
     abstract function createObject( array $array );
 
@@ -36,10 +37,8 @@ class NewsObjectFactory extends DomainObjectFactory {
      */
     function createObject( array $array ) {
         $class = "\\imei_service\\domain\\News"; // название класса
-
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) { return $old; }
-
         $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
         // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
         $obj->setName( $array['name'] );
@@ -55,5 +54,36 @@ class NewsObjectFactory extends DomainObjectFactory {
         $this->addToMap( $obj );
         $obj->markClean();
         return $obj; // возвращаем объект \imei_service\domain\News
+    }
+}
+
+
+class ContactsObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \imei_service\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\Contacts"; // название класса
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setPhone( $array['phone'] );
+        $obj->setFax( $array['fax'] );
+        $obj->setEmail( $array['email'] );
+        $obj->setSkype( $array['skype'] );
+        $obj->setVk( $array['vk'] );
+        $obj->setAddress( $array['address'] );
+        $obj->setPhoto( $array['photo'] );
+        $obj->setPhotoSmall( $array['photo_small'] );
+        $obj->setAlt( $array['alt'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;  // возвращаем объект \imei_service\domain\Contacts
     }
 }

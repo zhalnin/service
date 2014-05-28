@@ -12,4 +12,8 @@ interface NewsCollection extends \Iterator {
     function add( DomainObject $news );
 }
 
+interface ContactsCollection extends \Iterator {
+    function add( DomainObject $contacts );
+}
+
 ?>

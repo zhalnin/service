@@ -11,7 +11,7 @@
     -moz-box-shadow: 1px 1px 2px #E6E6E6;
     -webkit-box-shadow: 1px 1px 2px #E6E6E6;
     cursor: default;
-    background: #FFFFFF url(imei_service/icons/contacts/bgimg.jpg) no-repeat center center;
+    background: #FFFFFF url(../icons/contacts/bgimg.jpg) no-repeat center center;
 }
 .view .mask {
     width: 300px;

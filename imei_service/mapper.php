@@ -1,15 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by JetBrains PhpStorm.
  * User: zhalnin
- * Date: 26/05/14
- * Time: 22:29
+ * Date: 28/05/14
+ * Time: 18:35
+ * To change this template use File | Settings | File Templates.
  */
-
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-    $dir = "imei_service/domain";
+    $dir = "imei_service/mapper";
     if( $dh = opendir( $dir ) ) {
         while( false !== ($file = readdir( $dh ) ) ) {
             if( substr( $file, -4 ) === '.php' ) {
@@ -24,4 +24,3 @@ try {
     echo "{$ex->getMessage()}";
 }
 
-?>

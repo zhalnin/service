@@ -62,7 +62,7 @@ class DomainObjectAssembler {
      */
     function find( IdentityObject $idobj ) {
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
-        list( $selection, $values ) = $selfact->newsSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+        list( $selection, $values ) = $selfact->newSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив

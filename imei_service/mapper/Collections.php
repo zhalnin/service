@@ -40,4 +40,15 @@ class DefferredNewsCollection extends NewsCollection {
     }
 }
 
+
+class ContactsCollection
+    extends Collection
+    implements \imei_service\domain\ContactsCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Contacts";
+    }
+}
+
+
 ?>

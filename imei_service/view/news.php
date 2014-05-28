@@ -23,8 +23,7 @@ $count = 0;
     Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
     Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
     require_once("templates/top.php");
-    try
-    {
+    try {
     //    $url = "?id=1";
 
     //mail("zhalninpal@me.com","test","test");
@@ -42,7 +41,7 @@ $count = 0;
     </script>
     <div id="header">
         <ul id="navigation" role="navigation">
-            <li id="nav-home"><a  class="selected" href="index.php"><span>Главная</span></a></li>
+            <li id="nav-home"><a  class="selected" href="?cmd=News"><span>Главная</span></a></li>
             <li id="nav-unlock"><a href="unlock.php"><span>Официальный Анлок iPhone</span></a></li>
             <li id="nav-udid"><a href="udid.php"><span>Регистрация UDID</span></a></li>
             <li id="nav-carrier"><a href="carrier_check.php"><span>Проверка оператора по IMEI</span></a></li>
@@ -125,11 +124,11 @@ echo "
 require_once("templates/bottom.php");
 }
 
-catch(AppException $exc)
+catch(\imei_service\base\AppException $exc)
 {
     require_once( "\imei_service\base\Exceptions.php" );
 }
-catch(DBException $exc)
+catch(\imei_service\base\DBException $exc)
 {
     require_once( "\imei_service\base\Exceptions.php" );
 }

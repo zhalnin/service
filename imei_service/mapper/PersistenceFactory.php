@@ -8,10 +8,12 @@
 
 namespace imei_service\mapper;
 
-require_once( "imei_service/mapper/Collections.php" );
-require_once( "imei_service/mapper/DomainObjectFactory.php" );
-require_once( "imei_service/mapper/NewsIdentityObject.php" );
-require_once( "imei_service/mapper/NewsSelectionFactory.php" );
+//require_once( "imei_service/mapper/Collections.php" );
+//require_once( "imei_service/mapper/DomainObjectFactory.php" );
+//require_once( "imei_service/mapper/NewsIdentityObject.php" );
+//require_once( "imei_service/mapper/NewsSelectionFactory.php" );
+
+require_once( "imei_service/mapper.php" );
 
 abstract class PersistenceFactory {
 
@@ -87,7 +89,11 @@ class NewsPersistenceFactory extends PersistenceFactory {
         return new NewsUpdateFactory();
     }
 
-    function getIdentityObject() { // из \imei_service\domain\News
+    /**
+     * Получаем из \imei_service\domain\News
+     * @return NewsIdentityObject
+     */
+    function getIdentityObject() {
         return new NewsIdentityObject();
     }
 }
@@ -133,6 +139,10 @@ class ContactsPersistenceFactory extends PersistenceFactory {
         return new ContactsCollection( $array, $this->getDomainObjectFactory() );
     }
 
+    /**
+     *  Получаем из DomainObjectAssembler
+     * @return ContactsSelectionFactory
+     */
     function getSelectionFactory() {
         return new ContactsSelectionFactory();
     }
@@ -141,6 +151,10 @@ class ContactsPersistenceFactory extends PersistenceFactory {
         return new ContactsUpdateFactory();
     }
 
+    /**
+     * Получаем из \imei_service\domain\Contacts
+     * @return ContactsIdentityObject
+     */
     function getIdentityObject() {
         return new ContactsIdentityObject();
     }

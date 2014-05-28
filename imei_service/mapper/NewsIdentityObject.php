@@ -30,7 +30,8 @@ class NewsIdentityObject extends IdentityObject {
                                         'urlpict_s',
                                         'pos',
                                         'hide',
-                                        'hidepict') );
+                                        'hidepict')
+        );
     }
 }
 ?>

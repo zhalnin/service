@@ -24,7 +24,7 @@ class News extends DomainObject {
     private $hidepict;
 
     /**
-     * Поля из БД - сохраняем из в переменнвн
+     * Поля из БД - сохраняем из в переменные
      * @param null $id
      * @param null $name
      * @param null $preview

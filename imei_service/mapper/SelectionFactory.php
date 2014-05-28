@@ -10,7 +10,7 @@ namespace imei_service\mapper;
 
 
 abstract class SelectionFactory {
-    abstract function newsSelection( IdentityObject $obj );
+    abstract function newSelection( IdentityObject $obj );
 
     /**
      * Строим конструкцию WHERE
