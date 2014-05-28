@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace imei_service\add;
+namespace imei_service\classes;
 
 require_once("imei_service/base/Registry.php" );
 
@@ -44,11 +44,11 @@ abstract class Pager {
         if( $page != 1 ) {
             // Двойная стрелка для перелистывания в начало
             $returnPage .= "<a href='$_SERVER[PHP_SELF]".
-                "?page=1{$this->getParameters()}'>".
+                "?cmd=Guestbook&page=1{$this->getParameters()}'>".
                 "&lt;&lt;</a> ... ";
 
             $returnPage .= " <a href='$_SERVER[PHP_SELF]"
-                ."?page=".($page-1)."{$this->getParameters()}'>"
+                ."?cmd=Guestbook&page=".($page-1)."{$this->getParameters()}'>"
                 ."&lt;</a> ... ";
         }
 
@@ -58,13 +58,13 @@ abstract class Pager {
         // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
         if( $page > $this->getPageLink() + 1 ) {
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>$i</a> ";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
             }
             // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
             // если page меньше 4-х, то и выводим меньше
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>$i</a> ";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
             }
         }
 
@@ -74,25 +74,25 @@ abstract class Pager {
         // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
         if( $page + $this->getPageLink() < $number ) {
             for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>$i</a> ";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
             }
             // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
         } else {
             for( $i = $page + 1; $i <= $number; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>$i</a> ";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
             }
         }
 
         // Если это не последняя страница, то выводим стрелку для
         // единичного перелистывания
         if( $page != $number ) {
-            $returnPage .= " ... <a href='$_SERVER[PHP_SELF]?page="
+            $returnPage .= " ... <a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page="
                 .($page+1)
                 ."{$this->getParameters()}'>"
                 ."&gt;</a>";
             // Двойная стрелка для перелистывания в конец
             $returnPage .= " ... <a href='$_SERVER[PHP_SELF]"
-                ."?page=$number{$this->getParameters()}'>"
+                ."?cmd=Guestbook&page=$number{$this->getParameters()}'>"
                 ."&gt;&gt;</a>";
         }
 
@@ -128,7 +128,7 @@ abstract class Pager {
             // пролистывания
         } else {
             $returnPage .= "<a class='pagination-prev' href='$_SERVER[PHP_SELF]"
-                ."?page=".($page-1)."{$this->getParameters()}'>&nbsp;"
+                ."?cmd=Guestbook&page=".($page-1)."{$this->getParameters()}'>&nbsp;"
                 ."Предыдущая&nbsp;</a>";
         }
         // Если это последняя страница, то выводим <span>
@@ -137,7 +137,7 @@ abstract class Pager {
             // Если это не последняя страница, то выводим стрелку для
             // единичного перелистывания
         } else {
-            $returnPage .= "<a class='pagination-next' href='$_SERVER[PHP_SELF]?page="
+            $returnPage .= "<a class='pagination-next' href='$_SERVER[PHP_SELF]?cmd=Guestbook&page="
                 .($page+1)
                 ."{$this->getParameters()}'>&nbsp;"
                 ."Следующая&nbsp;</a>";
@@ -154,13 +154,13 @@ abstract class Pager {
         // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
         if( $page > $this->getPageLink() + 1 ) {
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
             // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
             // если page меньше 4-х, то и выводим меньше
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
         }
 
@@ -170,12 +170,12 @@ abstract class Pager {
         // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
         if( $page + $this->getPageLink() < $number ) {
             for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
             // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
         } else {
             for( $i = $page + 1; $i <= $number; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
         }
 
@@ -188,7 +188,7 @@ abstract class Pager {
      * @return string
      */
     public function __toString() {
-       $returnPage = "";
+        $returnPage = "";
 
         $page = intval( $_GET['page'] );
         if( empty( $page ) ) { $page = 1; }
@@ -201,13 +201,13 @@ abstract class Pager {
         // [1-10] - всего желаемое отображение 10-ти блоков на странице
         if( $page - $this->getPageLink() > 1 ) {
             $returnPage .= "<a href='$_SERVER[PHP_SELF]"
-                ."?page=1{$this->getParameters()}'>"
+                ."?cmd=Guestbook&page=1{$this->getParameters()}'>"
                 ."[1-{$this->getPageNumber()}]"
                 ."</a>&nbsp;&nbsp; ... &nbsp;&nbsp;";
             // Выводим три ссылки на следующие страницы
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
                 $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
-                    ."?page=$i{$this->getParameters()}'>"
+                    ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                     ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                     ."-".$i * $this->getPageNumber()
                     ."]</a>&nbsp;";
@@ -216,7 +216,7 @@ abstract class Pager {
         } else {
             for( $i = 1; $i < $page; $i++ ) {
                 $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
-                    ."?page=$i{$this->getParameters()}'>"
+                    ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                     ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                     ."-".$i * $this->getPageNumber()
                     ."]</a>&nbsp;";
@@ -236,7 +236,7 @@ abstract class Pager {
                 } else {
                     // Если не текущая, то выводим три блока по 10
                     $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
-                        ."?page=$i{$this->getParameters()}'>"
+                        ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                         ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                         ."-". $i * $this->getPageNumber()
                         ."]</a>&nbsp;";
@@ -245,7 +245,7 @@ abstract class Pager {
             // Выводим ссылку на последнюю страницу
             $returnPage .= "&nbsp; ... &nbsp;&nbsp;"
                 ."<a href='$_SERVER[PHP_SELF]"
-                ."?page=$number{$this->getParameters()}'>"
+                ."?cmd=Guestbook&page=$number{$this->getParameters()}'>"
                 ."[".( ( $number - 1 ) * $this->getPageNumber() + 1 )
                 ."-{$this->getTotal()}]</a>&nbsp;";
         } else {
@@ -262,7 +262,7 @@ abstract class Pager {
                         // Если не последний блок не текущий, то отображаем его,
                         // как ссылки
                         $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
-                            ."?page=$i{$this->getParameters()}'>"
+                            ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                             ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                             ."-{$this->getTotal()}]</a>&nbsp;";
                     }
@@ -277,7 +277,7 @@ abstract class Pager {
                     } else {
                         // Отображаем блоки страниц справа от текущей
                         $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
-                            ."?page=$i{$this->getParameters()}'>"
+                            ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                             ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                             ."-".$i * $this->getPageNumber()
                             ."]</a>&nbsp;";
@@ -308,11 +308,11 @@ class PagerMysql extends Pager {
 
 
     public function __construct( $tableName,
-                                $where = "",
-                                $order = "",
-                                $pageNumber = 10,
-                                $pageLink = 3,
-                                $parameters = "" ) {
+                                 $where = "",
+                                 $order = "",
+                                 $pageNumber = 10,
+                                 $pageLink = 3,
+                                 $parameters = "" ) {
         $this->tableName = $tableName;
         $this->where = $where;
         $this->order = $order;

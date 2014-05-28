@@ -1406,7 +1406,7 @@ span #uah.currency{
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    background: url("../guestbook/data/files/icons/pagination-icon-arrow-left-small_blue.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
+    background: url("../icons/guestbook/pagination-icon-arrow-left-small_blue.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
     border-color: -moz-use-text-color #ECECEC -moz-use-text-color -moz-use-text-color;
     border-image: none;
     border-style: none solid none none;
@@ -1416,7 +1416,7 @@ span #uah.currency{
     padding: 0 4px 0 8px;
 }
 .pagination-next {
-    background: url("../guestbook/data/files/icons/pagination-icon-arrow-right-small_blue.gif") no-repeat scroll 100% center rgba(0, 0, 0, 0);
+    background: url("../icons/guestbook/pagination-icon-arrow-right-small_blue.gif") no-repeat scroll 100% center rgba(0, 0, 0, 0);
     border: 0 none;
     display: inline-block;
     margin: 0;
@@ -1427,7 +1427,7 @@ span #uah.currency{
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
-    background: url("../guestbook/data/files/icons/pagination-icon-arrow-left-small_gray.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
+    background: url("../icons/guestbook/pagination-icon-arrow-left-small_gray.gif") no-repeat scroll left center rgba(0, 0, 0, 0);
     border-color: -moz-use-text-color #ECECEC -moz-use-text-color -moz-use-text-color;
     border-image: none;
     border-style: none solid none none;
@@ -1438,7 +1438,7 @@ span #uah.currency{
     color: #989898;
 }
 .pagination-next-inactive {
-    background: url("../guestbook/data/files/icons/pagination-icon-arrow-right-small_gray.gif") no-repeat scroll 100% center rgba(0, 0, 0, 0);
+    background: url("../icons/guestbook/pagination-icon-arrow-right-small_gray.gif") no-repeat scroll 100% center rgba(0, 0, 0, 0);
     border: 0 none;
     display: inline-block;
     margin: 0;

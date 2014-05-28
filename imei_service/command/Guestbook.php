@@ -14,6 +14,11 @@ class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
         $request->addFeedback( "Welcome to Guestbook IMEI-SERVICE");
 
+        // Здесь получаем коллекцию:
+        // делаем запрос в static function domain/Guestbook/PagerMysql()
+        // из него в mapper/DomainObjectAssembler/PagerMysql()
+        //
+
         return self::statuses( 'CMD_OK' );
     }
 }

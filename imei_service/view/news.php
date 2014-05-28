@@ -8,7 +8,7 @@
 
 namespace imei_service\view;
 
-require_once( "imei_service/add/class.PagerMysql.php" );
+//require_once( "imei_service/add/class.PagerMysql.php" );
 require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
 
@@ -17,7 +17,7 @@ $news = $request->getObject('news');
 $count = 0;
 //echo "<tt><pre>".print_r($news, true)."</pre></tt>";
 //echo "<tt><pre>".print_r($_REQUEST, true)."</pre></tt>";
-    $title = "NEWS IMEI-SEVICE";
+    $title = "Главная";
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
     $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
     Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.

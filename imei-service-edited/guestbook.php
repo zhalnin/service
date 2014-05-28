@@ -156,7 +156,7 @@ require_once( "templates/top.php" );
         }
 
 
-        ?>
+?>
 
 
 
