@@ -13,15 +13,15 @@ ob_start();
 require_once("../utils/security_mod.php");
 // Подключаем FrameWork
 require_once("../../config/class.config.dmn.php");
-// Проверяем параметр id_news, предотвращая SQL-инъекцию
+// Проверяем параметр id, предотвращая SQL-инъекцию
 
-$_GET['id_news'] = intval($_GET['id_news']);
+$_GET['id'] = intval($_GET['id']);
 
 // Скрываем новость
 try
 {
     $query = "UPDATE $tbl_news SET hide='show'
-                WHERE id_news=".$_GET['id_news'];
+                WHERE id=".$_GET['id'];
     if(mysql_query($query))
     {
         header("Location: index.php?page=$_GET[page]");

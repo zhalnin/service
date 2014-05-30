@@ -14,15 +14,15 @@ require_once("../utils/security_mod.php");
 // Подключаем FrameWork
 require_once("../../config/class.config.dmn.php");
 
-// Проверяем параметр id_news, предотвращая SQL-инъекцию
-$_GET['id_news'] = intval($_GET['id_news']);
+// Проверяем параметр id, предотвращая SQL-инъекцию
+$_GET['id'] = intval($_GET['id']);
 
 try
 {
     // Если новостное сообщение содержит
     // изображение - удаляем его
     $query = "SELECT * FROM $tbl_news
-            WHERE id_news=$_GET[id_news]";
+            WHERE id=$_GET[id]";
     $new = mysql_query($query);
     if(!$new)
     {
@@ -42,7 +42,7 @@ try
     // Формируем и выполняем SQL-запрос
     // на удаление новостного блока из базы данных
     $query = "DELETE FROM $tbl_news
-                WHERE id_news=$_GET[id_news]
+                WHERE id=$_GET[id]
                 LIMIT 1";
     if(mysql_query($query))
     {

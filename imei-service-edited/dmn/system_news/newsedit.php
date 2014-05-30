@@ -18,7 +18,7 @@ require_once("../utils/utils.resizeimg.php");
 
 
 // Предотвращаем SQL-инъекцию
-$_GET['id_news'] = intval($_GET['id_news']);
+$_GET['id'] = intval($_GET['id']);
 $_GET['page'] = intval( $_GET['page'] );
 
 try
@@ -26,7 +26,7 @@ try
     // Извлекаем из таблицы news запись, соответствующую
     // исправляемому новостному сообщению
     $query = "SELECT * FROM $tbl_news
-                WHERE id_news=$_GET[id_news]";
+                WHERE id=$_GET[id]";
     $new = mysql_query($query);
 
     if(!$new)
@@ -104,9 +104,9 @@ try
     $hidepict   = new FieldCheckbox("hidepict",
                                     "Отображать фото",
                                     $_REQUEST['hidepict']);
-    $id_news    = new FieldHiddenInt("id_news",
+    $id_news    = new FieldHiddenInt("id",
                                         "",
-                                        $_REQUEST['id_news']);
+                                        $_REQUEST['id']);
     $page       = new FieldHiddenInt("page",
                                         "",
                                         $_GET['page']);
@@ -131,7 +131,7 @@ try
                                     "delimg"    => $delimg,
                                     "hide"      => $hide,
                                     "hidepict"  => $hidepict,
-                                    "id_news"   => $id_news,
+                                    "id"   => $id_news,
                                     "page"      => $page),
                             "Редактировать",
                             "field");
@@ -140,6 +140,7 @@ try
     // Обработчик HTML-формы
     if(!empty($_POST))
     {
+
         // Проверяем корректность заполнения HTML-формы
         // и обрабатываем текстовые поля
         $error = $form->check();
@@ -181,7 +182,7 @@ try
             {
                 // Удаляем старые изображения
                 $query = "SELECT * FROM $tbl_news
-                			WHERE id_news=$_GET[id_news]";
+                			WHERE id=$_GET[id]";
                 $pos = mysql_query($query);
                 if(!$pos)
                 {
@@ -233,7 +234,7 @@ try
                 resizeimg("files/news/$var", "files/news/s_$var", $settings['width_news'], $settings['height_news']);
             }
 
-			
+
 			
             // Формируем SQL-запрос на добавление новости
             $query = "UPDATE $tbl_news
@@ -249,7 +250,7 @@ try
                             $url_pict_s
                             hide = '{$showhide}',
                             hidepict = '{$showhidepict}'
-                        WHERE id_news =".$form->fields['id_news']->value;
+                        WHERE id =".$form->fields['id']->value;
             if(!mysql_query($query))
             {
                 throw new ExceptionMySQL(mysql_error(),

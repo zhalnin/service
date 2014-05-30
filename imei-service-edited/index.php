@@ -23,7 +23,7 @@ $description = "Официальный анлок iPhone позволит вам
 require_once("templates/top.php");
 try
 {
-//    $url = "?id_news=1";
+//    $url = "?id=1";
 
 //mail("zhalninpal@me.com","test","test");
 ?>
@@ -68,7 +68,7 @@ try
 </div>
 <div class='news-container'>
 
-<!--                        <div class='news-body superlink' onclick="detail_button('?id_news=1')">-->
+<!--                        <div class='news-body superlink' onclick="detail_button('?id=1')">-->
 <!--                            <div class='news-title'>-->
 <!--                                <h1>-->
 <!--                                    <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
@@ -110,9 +110,9 @@ try
 
 
 <?php
-// Если GET-параметр id_news не передан - выводим
+// Если GET-параметр id не передан - выводим
 // список новостных сообщений
-if(empty($_GET['id_news']))
+if(empty($_GET['id']))
 {
     $_GET['page'] = intval($_GET['page']);
 
@@ -176,7 +176,7 @@ if(empty($_GET['id_news']))
             }
             $detail = "";
 
-            $url = "?id_news=".$news[$i]['id_news'];
+            $url = "?id=".$news[$i]['id'];
 
             // Если индекс при модульном делении равен 1, т.е.
             // 0 или 1 или  2 % 3 == 1
@@ -232,7 +232,7 @@ if(empty($_GET['id_news']))
         }
     }
 }
-// Если GET-параметр id_news передан - выводим полную
+// Если GET-параметр id передан - выводим полную
 // версию нвостного сообщения
 else
 {

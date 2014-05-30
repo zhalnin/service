@@ -72,7 +72,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             {
                 // Если новость отмечена как невидимая (hide='hide'), выводим
                 // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
-                $url = "id_news={$news[$i][id_news]}&page=$_GET[page]";
+                $url = "id={$news[$i][id]}&page=$_GET[page]";
                 if($news[$i]['hide'] == 'show')
                 {
                     $showhide = "<a href=newshide.php?$url

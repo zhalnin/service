@@ -28,12 +28,12 @@ require_once("dmn/utils/utils.print_page.php");
 //                    <div class='news-container'>";
 
 
-// Проверяем, является ли параметр id_news числом
-$_GET['id_news'] = intval($_GET['id_news']);
+// Проверяем, является ли параметр id числом
+$_GET['id'] = intval($_GET['id']);
 // Выводим выбранное новостное сообщение
 $query = "SELECT * FROM $tbl_news
                     WHERE  hide = 'show'
-                    AND id_news = $_GET[id_news]";
+                    AND id = $_GET[id]";
 $res = mysql_query($query);
 if(!$res)
 {
