@@ -83,7 +83,6 @@ class News extends DomainObject {
     }
 
     function setName( $name_s ) {
-//        echo $name_s;
         $this->name = $name_s;
         $this->markDirty();
     }

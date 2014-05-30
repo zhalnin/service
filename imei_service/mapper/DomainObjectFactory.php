@@ -87,3 +87,33 @@ class ContactsObjectFactory extends DomainObjectFactory {
         return $obj;  // возвращаем объект \imei_service\domain\Contacts
     }
 }
+
+
+class GuestbookObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\Guestbook";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) {
+            return $old;
+        }
+        $obj = new $class( $array['id'] );
+
+        $obj->setName( $array['name'] );
+        $obj->setCity( $array['city'] );
+        $obj->setEmail( $array['email'] );
+        $obj->setUrl( $array['url'] );
+        $obj->setMessage( $array['message'] );
+        $obj->setAnswer( $array['answer'] );
+        $obj->setPutdate( $array['putdate'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdparent( $array['id_parent'] );
+        $obj->setIp( $array['ip'] );
+        $obj->setBrowser( $array['browser'] );
+//        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}

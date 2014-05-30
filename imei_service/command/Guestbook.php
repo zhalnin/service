@@ -8,10 +8,20 @@
 
 namespace imei_service\command;
 
-use imei_service\command\Command;
+require_once( "imei_service/command/Command.php" );
+require_once( "imei_service/domain/Guestbook.php" );
+
 
 class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
+
+        $page = $request->getProperty( 'page' );
+        if( ! $page ) {
+            $page = 1;
+        }
+
+
+        $collection = \imei_service\domain\Guestbook::paginationMysql( $page );
         $request->addFeedback( "Welcome to Guestbook IMEI-SERVICE");
 
         // Здесь получаем коллекцию:
@@ -19,6 +29,17 @@ class Guestbook extends Command {
         // из него в mapper/DomainObjectAssembler/PagerMysql()
         //
 
+
+//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
+
         return self::statuses( 'CMD_OK' );
     }
 }
+
+//$tableName = system_guestbook,
+//$where = "",
+//$order = "",
+//$pageNumber = 10,
+//$pageLink = 3,
+//$parameters = ""
+//$page = ""

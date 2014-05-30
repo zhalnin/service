@@ -16,4 +16,8 @@ interface ContactsCollection extends \Iterator {
     function add( DomainObject $contacts );
 }
 
+interface GuestbookCollection extends \Iterator {
+    function add( DomainObject $guestbook );
+}
+
 ?>

@@ -55,7 +55,7 @@ class NewsPersistenceFactory extends PersistenceFactory {
     }
 
     function getDomainObjectFactory() {
-        return new NewsObjectFactory;
+        return new NewsObjectFactory();
     }
 
     /**
@@ -105,7 +105,7 @@ class GuestbookPersistenceFactory extends PersistenceFactory {
     }
 
     function getDomainObjectFactory() {
-        return new GuestbookObjectFactory;
+        return new GuestbookObjectFactory();
     }
 
     function getCollection( array $array ) {
@@ -123,6 +123,10 @@ class GuestbookPersistenceFactory extends PersistenceFactory {
     function getIdentityObject() {
         return new GuestbookIdentityObject();
     }
+
+    function getPaginationFactory( array $array ) {
+        return new GuestbookPaginationFactory( $array );
+    }
 }
 
 
@@ -132,7 +136,7 @@ class ContactsPersistenceFactory extends PersistenceFactory {
     }
 
     function getDomainObjectFactory() {
-        return new ContactsObjectFactory;
+        return new ContactsObjectFactory();
     }
 
     function getCollection( array $array ) {

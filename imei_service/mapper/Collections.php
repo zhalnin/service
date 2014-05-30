@@ -50,5 +50,14 @@ class ContactsCollection
     }
 }
 
+class GuestbookCollection
+    extends Collection
+    implements \imei_service\domain\GuestbookCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Guestbook";
+    }
+}
+
 
 ?>

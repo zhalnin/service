@@ -81,5 +81,12 @@ class DomainObjectAssembler {
         }
         $obj->markClean();
     }
+
+    function findPagination( IdentityObject $idobj, $page ) {
+        $selfact = $this->factory->getPaginationFactory();
+//        list( $selection, $values ) = $selfact->paginationSelection( $idobj, $page );
+//        echo "<tt><pre>".print_r("kdjfkdj", true)."</pre></tt>";
+
+    }
 }
 ?>
