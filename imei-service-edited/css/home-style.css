@@ -1659,7 +1659,10 @@ span #uah.currency{
 
 
 #count {
-    height: 35px; position: absolute; margin-top:2px;
+    height: 35px;
+    position: absolute;
+    margin-top:2px;
+    width: 980px;
 }
 
 
