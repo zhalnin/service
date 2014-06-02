@@ -32,6 +32,5 @@ abstract class SelectionFactory {
 //        echo "<tt><pre>".print_r($where, true)."</pre></tt>";
         return array( $where, $values ); // возвращаем массив, к примеру: array( "hide = ? AND id = ?", "'show', 27" );
     }
-
 }
 ?>

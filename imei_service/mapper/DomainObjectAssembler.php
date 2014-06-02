@@ -82,10 +82,23 @@ class DomainObjectAssembler {
         $obj->markClean();
     }
 
-    function findPagination( IdentityObject $idobj, $page ) {
-        $selfact = $this->factory->getPaginationFactory();
-//        list( $selection, $values ) = $selfact->paginationSelection( $idobj, $page );
-//        echo "<tt><pre>".print_r("kdjfkdj", true)."</pre></tt>";
+    function findPagination( $tableName,
+                             IdentityObject $where,
+                            $order,
+                            $pageNumber,
+                            $pageLink,
+                            $parameters,
+                            $page ) {
+
+        $pagfact = $this->factory->getPaginationFactory( $tableName,
+                                                        $where,
+                                                        $order,
+                                                        $pageNumber,
+                                                        $pageLink,
+                                                        $parameters,
+                                                        $page);
+
+        return $pagfact;
 
     }
 }

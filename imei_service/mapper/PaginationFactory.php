@@ -8,6 +8,7 @@
 
 namespace imei_service\mapper;
 
+require_once( "imei_service/base/Exceptions.php" );
 
 abstract class PaginationFactory {
 
@@ -294,8 +295,8 @@ abstract class PaginationFactory {
 
 
 
-class GuestbookPaginationFactory extends PaginationFactory {
-    protected static $db;
+class GuestbookPaginationFactory extends PaginationFactory  {
+    protected static $PDO;
     // Имя таблицы в БД
     protected $tableName;
     // Условие WHERE
@@ -317,23 +318,40 @@ class GuestbookPaginationFactory extends PaginationFactory {
                                  $pageNumber = 10,
                                  $pageLink = 3,
                                  $parameters = "" ) {
+
         $this->tableName = $tableName;
         $this->where = $where;
         $this->order = $order;
         $this->pageNumber = $pageNumber;
         $this->pageLink = $pageLink;
         $this->parameters = $parameters;
-        if( ! isset( self::$db ) ) {
-            self::$db = \imei_service\base\DBRegistry::getDB();
+
+        if( ! isset( self::$PDO ) ) {
+            $dsn = \imei_service\base\DBRegistry::getDB();
+            if( is_null( $dsn ) ) {
+                throw new \imei_service\base\AppException( "No DSN" );
+            }
+            self::$PDO = $dsn;
         }
     }
 
-    public function getTotal() {
-        $selectCount = "SELECT COUNT(*) FROM {$this->tableName}
-                        {$this->where}
-                        {$this->order}";
 
-        $sth = self::$db->prepare( $selectCount );
+    function getStatement( $str ) {
+        if( ! isset( $this->statements[$str] ) ) {
+            $this->statements[$str] = self::$PDO->prepare( $str );
+        }
+        return $this->statements[$str];
+    }
+
+
+    public function getTotal() {
+        list( $where, $values ) = $this->buildWhere( $this->where );
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        $sth = $this->getStatement( "SELECT COUNT(*) FROM {$this->tableName}
+                                        {$where} {$this->order}" );
+
+        $this->bindWhereValue( $sth, $this->where );
+
         $result = $sth->execute();
         if( ! $result ) {
             throw new \PDOException("Ошибка при подсчете позиций в getTotal()" );
@@ -357,23 +375,58 @@ class GuestbookPaginationFactory extends PaginationFactory {
         if( (float)( $total / $this->getPageNumber() - $number ) != 0 ) { $number++; }
         $arr = array();
         $first = ( $page - 1 ) * $this->getPageNumber();
-        $selectStmt = "SELECT * FROM {$this->tableName}
-                        {$this->where}
-                        {$this->order}
-                        LIMIT :start, :end";
-//        echo "<tt><pre>".print_r( $selectStmt, true )."</pre></tt>";
-        $sth = self::$db->prepare( $selectStmt );
+
+        list( $where, $values ) = $this->buildWhere( $this->where );
+        $fields = implode( ",", $this->where->getObjectFields() );
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        $sth = $this->getStatement( "SELECT $fields FROM $this->tableName "."$where "."{$this->order} "." LIMIT :start, :end ");
+
+        $this->bindWhereValue( $sth, $this->where );
         $sth->bindValue(':start', intval($first), \PDO::PARAM_INT );
         $sth->bindValue(':end', intval($this->getPageNumber()), \PDO::PARAM_INT );
-        $result = $sth->execute();
+
+        $result = $sth->execute( );
         if( ! $result ) {
             throw new \PDOException( "Ошибка при выборке в getPage()" );
         }
-        while( $arr[] = $sth->fetch() );
+        while( $arr[] = $sth->fetchAll() );
         unset( $arr[count($arr) - 1]);
         $sth->closeCursor();
-//        echo "<tt><pre>".print_r( $arr, true )."</pre></tt>";
         return $arr;
+    }
+
+
+    /**
+     * Строим конструкцию Where
+     * WHERE name = :name AND id = :id
+     * @param IdentityObject $obj
+     * @return array
+     */
+    function buildWhere( IdentityObject $obj ) {
+        if( $obj->isVoid() ) {
+            return array( "", array() );
+        }
+        $compstrings = array();
+        $values = array();
+        foreach ($obj->getComps() as $comp) {
+            $compstrings[] = "{$comp['name']} {$comp['operator']} :{$comp['name']} ";
+            $values[] = ":{$comp['name']} , {$comp['value']}";
+        }
+        $where = "WHERE " . implode( " AND ", $compstrings );
+        return array( $where, $values );
+    }
+
+    /**
+     * Связывает имя переменной с ее значением
+     * sth->bindValue(:name,'Alex')
+     * @param $sth
+     * @param $obj
+     */
+    function bindWhereValue( $sth, $obj) {
+//        echo "<tt><pre>".print_r($sth, true)."</pre></tt>";
+        foreach( $obj->getComps() as $val ) {
+            $sth->bindValue(":".$val['name'],$val['value']);
+        }
     }
 }
 

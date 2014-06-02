@@ -70,6 +70,12 @@ class Guestbook extends DomainObject {
     /**
      * Здесь в родительском классе DomainObject вызываем метод getFinder,
      * @return mixed
+     * - tableName
+     * - where
+     * - order
+     * - pageNumber
+     * - pageLink
+     * - parameters
      */
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
@@ -82,7 +88,16 @@ class Guestbook extends DomainObject {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\GuestbookIdentityObject( 'hide' );
         $idobj->eq( 'show' )->field( 'id_parent' )->eq( 0 );
-        return $finder->findPagination( $idobj, $page );
+
+
+
+        return $finder->findPagination( "system_guestbook",
+                                        $idobj,
+                                        " ORDER BY putdate DESC ",
+                                        10,
+                                        3,
+                                        "",
+                                        $page);
     }
 
     function setName( $name_s ) {

@@ -21,7 +21,7 @@ class Guestbook extends Command {
         }
 
 
-        $collection = \imei_service\domain\Guestbook::paginationMysql( $page );
+        $pagination = \imei_service\domain\Guestbook::paginationMysql( $page );
         $request->addFeedback( "Welcome to Guestbook IMEI-SERVICE");
 
         // Здесь получаем коллекцию:
@@ -30,7 +30,9 @@ class Guestbook extends Command {
         //
 
 
-//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
+        echo "<tt><pre>".print_r($pagination->getPage(), true)."</pre></tt>";
+
+        echo "<tt><pre>".print_r($pagination->printPageNav(), true)."</pre></tt>";
 
         return self::statuses( 'CMD_OK' );
     }
