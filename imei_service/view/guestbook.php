@@ -10,16 +10,32 @@
 namespace imei_service\view;
 
 
-require_once( "imei_service/classes/class.PagerMysql.php" );
 
 try {
 
-include( "utils/utils.getVerBrowser.php" );
-include( "utils/utils.getIP.php" );
-$title = "Гостевая книга";
-$keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
-$description = "Гостевая книга";
-require_once( "templates/top.php" );
+    require_once( "imei_service/classes/class.PagerMysql.php" );
+    require_once( "imei_service/view/ViewHelper.php" );
+    include( "utils/utils.getVerBrowser.php" );
+    include( "utils/utils.getIP.php" );
+    $title = "Гостевая книга";
+    $keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
+    $description = "Гостевая книга";
+    require_once( "templates/top.php" );
+
+
+
+
+    $request = \imei_service\view\VH::getRequest();
+    $guestbook = $request->getObject('guestbook');
+//    echo "<tt><pre>".print_r($guestbook, true)."</pre></tt>";
+    foreach ($guestbook as $record) {
+
+
+    }
+
+
+
+
 
 ?>
 
@@ -76,7 +92,10 @@ require_once( "templates/top.php" );
                 // Выводим постраничную навигацию
                 echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
                 // В цикле получаем результат запроса и выводим его на страницу
-                foreach ($pagerMysql->getPage() as $key=>$pm ) {
+//                foreach ($pagerMysql->getPage() as $key=>$pm ) {
+                foreach ($guestbook as $record) {
+
+
                 ?>
                 <div class='guestbook-all-body'>
                     <div class='guestbook-all-wrap main-content'>
@@ -84,39 +103,46 @@ require_once( "templates/top.php" );
                             <!--                            <h1 class="h2">-->
                             <!--                                <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
                             <!--                            </h1>-->
-                            <p class="ptdg"><b><?php echo $pm['name']; ?></b>&nbsp;
-                                <?php if( ! empty( $pm['city'] ) ) print "($pm[city])"; ?>&nbsp;
-                                <?php echo $pm['putdate']; ?></p>
+                            <p class="ptdg"><b><?php echo $record->getName(); ?></b>&nbsp;
+                                <?php  $city = $record->getCity(); if( ! empty( $city ) ) print "($city)"; ?>&nbsp;
+                                <?php echo $record->getPutdate(); ?></p>
                         </div>
 
                         <div class='guestbook-all-image'>
-                            <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $pm['name']; ?>" >
+                            <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $record->getName(); ?>" >
                         </div>
 
                         <div class='guestbook-all-info'>
-                            <p class='ptext'><?php echo html_entity_decode( $pm['message'] ); ?></p>
-                            <?php if( ! empty( $pm['answer'] ) && $pm['answer'] != '-' ) {
+                            <p class='ptext'><?php echo html_entity_decode( $record->getMessage() ); ?></p>
+                            <?php $answer = $record->getAnswer(); if( ! empty( $answer ) && $answer != '-' ) {
                                 echo "<div class='panswer-wrap main-content-blue'>
                                             <p class='panswer ptdg'><b><i>Администратор</i></b></p>
                                             <div class='panswer-image'>
-                                                <img src=\"imei_service/view/images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$pm['name']." >
+                                                <img src=\"imei_service/view/images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$record->getName()." >
                                             </div>
-                                            <p class=\"panswer\">".nl2br($pm['answer'])."</p>
+                                            <p class=\"panswer\">".nl2br($answer)."</p>
                                           </div>";
                             }
                             ?>
                         </div>
-                        <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $pm['id']; ?>" >Ответить</a></span></div>
+                        <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $record->getId(); ?>" >Ответить</a></span></div>
                         <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
                         <!--                    если находим их, то выводим чуть ниже родительского поста,
                                                 , в функции проходим рекурсивно по всем постам, если они имеют id_parent
                                                 находится в utils/utils.print_child_post.php -->
-                        <?php  selectRecursion($pm['id'], $page ); ?>
+                        <?php  selectRecursion($record->getId(), $page ); ?>
 
                     </div><!-- End of guestboor-all-wrap -->
                     <?php
                     echo "</div>"; //  End of guestbook-all-body
+
+
+
                     }
+
+
+
+
                     echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
                     } else {
                     ?>

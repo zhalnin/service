@@ -100,6 +100,33 @@ class Guestbook extends DomainObject {
                                         $page);
     }
 
+
+
+
+
+
+//    static function paginationChildMysql( $id_parent ) {
+//        $finder = self::getFinder( __CLASS__ );
+//        $idobj = new \imei_service\mapper\GuestbookIdentityObject( 'hide' );
+//        $idobj->eq( 'show' )->field( 'id_parent' )->eq( $id_parent );
+//
+//
+//
+//        return $finder->findPagination( "system_guestbook",
+//            $idobj,
+//            " ORDER BY putdate DESC ",
+//            "",
+//            "",
+//            "",
+//            "");
+//    }
+
+
+
+
+
+
+
     function setName( $name_s ) {
         $this->name = $name_s;
         $this->markDirty();

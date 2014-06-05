@@ -389,9 +389,11 @@ class GuestbookPaginationFactory extends PaginationFactory  {
         if( ! $result ) {
             throw new \PDOException( "Ошибка при выборке в getPage()" );
         }
-        while( $arr[] = $sth->fetchAll() );
-        unset( $arr[count($arr) - 1]);
-        $sth->closeCursor();
+//        while( $arr[] = $sth->fetchAll() );
+//        unset( $arr[count($arr) - 1]);
+//        $sth->closeCursor();
+
+        $arr = $sth->fetchAll();
         return $arr;
     }
 

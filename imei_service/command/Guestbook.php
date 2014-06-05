@@ -24,15 +24,16 @@ class Guestbook extends Command {
         $pagination = \imei_service\domain\Guestbook::paginationMysql( $page );
         $request->addFeedback( "Welcome to Guestbook IMEI-SERVICE");
 
+        $guestbook = $request->setObject('guestbook', $pagination );
         // Здесь получаем коллекцию:
         // делаем запрос в static function domain/Guestbook/PagerMysql()
         // из него в mapper/DomainObjectAssembler/PagerMysql()
         //
 
 
-        echo "<tt><pre>".print_r($pagination->getPage(), true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($pagination, true)."</pre></tt>";
 
-        echo "<tt><pre>".print_r($pagination->printPageNav(), true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($pagination->printPageNav(), true)."</pre></tt>";
 
         return self::statuses( 'CMD_OK' );
     }

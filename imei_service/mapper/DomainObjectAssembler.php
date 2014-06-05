@@ -18,6 +18,8 @@ class DomainObjectAssembler {
      * @param PersistenceFactory $factory
      */
     function __construct( PersistenceFactory $factory ) {
+//        echo "<tt><pre>".print_r($factory, true)."</pre></tt>";
+
         $this->factory = $factory; // сохраняем в переменную
         if( ! isset( self::$PDO ) ) { // если еще нет
             $dsn = \imei_service\base\DBRegistry::getDB(); // то сохраняем дескриптор БД
@@ -98,7 +100,8 @@ class DomainObjectAssembler {
                                                         $parameters,
                                                         $page);
 
-        return $pagfact;
+//        return $pagfact->getPage();
+        return $this->factory->getCollection( $pagfact->getPage() );
 
     }
 }

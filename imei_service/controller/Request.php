@@ -110,7 +110,7 @@ class Request {
     }
 
     function setObject( $name, $object ) {
-        $this->objects[$name] = $object;
+        return $this->objects[$name] = $object;
     }
 
     function getObject( $name ) {
