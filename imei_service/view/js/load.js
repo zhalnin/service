@@ -49,7 +49,7 @@ AM.Event.addEvent(window, 'load', function() {
         if( AM.DOM.$('refreshCode') != null ) {
             var refreshCode = AM.DOM.$('refreshCode');
             AM.Event.addEvent( refreshCode, 'click', function( event ) {
-                AM.DOM.$('capchaImg').src = "guestbook/capcha/capcha.php?"+Math.random();
+                AM.DOM.$('capchaImg').src = "imei_service/view/utils/capcha/capcha.php?"+Math.random();
             });
         }
 

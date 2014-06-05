@@ -15,27 +15,21 @@ try {
 
     require_once( "imei_service/classes/class.PagerMysql.php" );
     require_once( "imei_service/view/ViewHelper.php" );
-    include( "utils/utils.getVerBrowser.php" );
-    include( "utils/utils.getIP.php" );
+    require_once( "imei_service/view/utils/utils.printChildPost.php" );
+    require_once( "imei_service/view/utils/utils.getVerBrowser.php" );
+    require_once( "imei_service/view/utils/utils.getIP.php" );
     $title = "Гостевая книга";
     $keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
     $description = "Гостевая книга";
-    require_once( "templates/top.php" );
+    require_once( "imei_service/view/templates/top.php" );
 
 
 
 
     $request = \imei_service\view\VH::getRequest();
-    $guestbook = $request->getObject('guestbook');
-//    echo "<tt><pre>".print_r($guestbook, true)."</pre></tt>";
-    foreach ($guestbook as $record) {
-
-
-    }
-
-
-
-
+    $guestbookMain = $request->getObject('guestbook');
+    $guestbook = $guestbookMain['select'];
+    $guestbookNavigation = $guestbookMain['navigation'];
 
 ?>
 
@@ -81,16 +75,10 @@ try {
                     $page = 1;
                 }
 
-                // Подключаем рекурсивную функцию selectRecursion( id_parent );
-                include( "utils/utils.print_child_post.php" );
 
-                // Находим все посты, которые не имеют id_parent (значит они родительские)
-                $pagerMysql = new \imei_service\classes\PagerMysql('system_guestbook', " WHERE id_parent = 0 AND hide='show' ", " ORDER BY putdate DESC ", 10, 3, "");
-
-                //                if( ! empty( $pagerMysql ) ) {
-                if( 0 < count($pagerMysql->getPage() ) ) {
+                if( ! empty( $guestbook ) ) {
                 // Выводим постраничную навигацию
-                echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
+                echo "<div class='page-navigator'>" . $guestbookNavigation . "</div>";
                 // В цикле получаем результат запроса и выводим его на страницу
 //                foreach ($pagerMysql->getPage() as $key=>$pm ) {
                 foreach ($guestbook as $record) {
@@ -130,22 +118,26 @@ try {
                         <!--                    если находим их, то выводим чуть ниже родительского поста,
                                                 , в функции проходим рекурсивно по всем постам, если они имеют id_parent
                                                 находится в utils/utils.print_child_post.php -->
-                        <?php  selectRecursion($record->getId(), $page ); ?>
+
+
+                        <?php  \imei_service\view\utils\selectRecursion($record->getId(), $page ); ?>
+
+
 
                     </div><!-- End of guestboor-all-wrap -->
                     <?php
                     echo "</div>"; //  End of guestbook-all-body
 
 
-
                     }
 
-
-
-
-                    echo "<div class='page-navigator'>" .  $pagerMysql->printPageNav() ."</div>";
+                    echo "<div class='page-navigator'>" . $guestbookNavigation . "</div>";
                     } else {
                     ?>
+
+
+
+
                     <div class='guestbook-all-body'>
                         <div class='guestbook-all-wrap main-content'>
                             <b><p class='guestbook-empty'>
@@ -242,8 +234,6 @@ if( ! empty( $valid ) ) {
         });
     </script>
     <?php
-
-
 
 
     if( empty( $error ) ) {
@@ -481,8 +471,6 @@ if( ! empty( $valid ) ) {
             </div>
 
 
-
-
             <?php
             if( ! empty( $error ) ) {
                 print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
@@ -495,21 +483,11 @@ if( ! empty( $valid ) ) {
         }
 ?>
 
-
-
-
-
-
-
-
-
-
-
             <div id="main-guestbook"></div>
 
             <?php
 
-            require_once("templates/bottom.php");
+            require_once("imei_service/view/templates/bottom.php");
 
             } catch( \Exception $ex ) {
                 file_put_contents( dirname(__FILE__).'/error.txt', $ex->getMessage(), -1, FILE_APPEND );

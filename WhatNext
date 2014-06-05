@@ -1,4 +1,2 @@
-В imei_service/command/Guestbook делаем запрос и получаем коллекцию:
-делаем запрос в static function domain/Guestbook/PagerMysql()
-из него в mapper/DomainObjectAssembler/PagerMysql()
+view/guestbook.php - добавляем сообщение
 

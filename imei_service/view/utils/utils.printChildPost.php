@@ -18,25 +18,28 @@
  * @return mixed
  */
 
+namespace imei_service\view\utils;
+
+//require_once( "imei_service/" );
 
 function selectRecursion($id2, $page ) {
     $value = array();
+    
     if( ! isset( $value['db'] ) ) {
-        $value['db'] = new PDO( 'mysql:host=localhost;dbname=imei-service','root','zhalnin5334',
-            array(
-                PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
-                PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES UTF8'
-            )
-        );
-    } else {
-        return $value['dsn'];
+        $dsn = \imei_service\base\DBRegistry::getDB();
+        if( is_null( $dsn ) ) {
+            throw new \imei_service\base\AppException( "No DSN" );
+        }
+        $value['db'] = $dsn;
     }
+    
+    
+    
     $dsn = $value['db'];
-    $sth2 = $dsn->prepare("SELECT * FROM system_guestbook WHERE id_parent=:id_parent AND hide='show'");
-    $sth2->bindValue(':id_parent', intval( $id2 ), PDO::PARAM_INT );
-    $sth2->execute();
-    while( $result2 = $sth2->fetch() ) {
+    $sth = $dsn->prepare("SELECT * FROM system_guestbook WHERE id_parent=:id_parent AND hide='show' ORDER BY putdate asc");
+    $sth->bindValue(':id_parent', intval( $id2 ), \PDO::PARAM_INT );
+    $sth->execute();
+    while( $result = $sth->fetch() ) {
         ?>
 
         <div class='guestbook-all-body nested-reply'>
@@ -45,35 +48,35 @@ function selectRecursion($id2, $page ) {
                     <!--                            <h1 class="h2">-->
                     <!--                                <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
                     <!--                            </h1>-->
-                    <p class="ptdg"><b><?php echo $result2['name']; ?></b>&nbsp;
-                        <?php if( ! empty( $result2['city'] ) ) print "($result2[city])"; ?>&nbsp;
-                        <?php echo $result2['putdate']; ?></p>
+                    <p class="ptdg"><b><?php echo $result['name']; ?></b>&nbsp;
+                        <?php if( ! empty( $result['city'] ) ) print "($result[city])"; ?>&nbsp;
+                        <?php echo $result['putdate']; ?></p>
                 </div>
 
                 <div class='guestbook-all-image'>
-                    <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $result2['name']; ?>" >
+                    <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $result['name']; ?>" >
                 </div>
 
                 <div class='guestbook-all-info'>
-                    <p class='ptext'><?php echo html_entity_decode( $result2['message'] ); ?></p>
-                    <?php if( ! empty( $result2['answer'] ) && $result2['answer'] != '-' ) {
+                    <p class='ptext'><?php echo html_entity_decode( $result['message'] ); ?></p>
+                    <?php if( ! empty( $result['answer'] ) && $result['answer'] != '-' ) {
                         echo "<div class='panswer-wrap main-content-blue'>
                                         <p class='panswer ptdg'><b><i>Администратор</i></b></p>
                                         <div class='panswer-image'>
-                                            <img src=\"images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$result2['name']." >
+                                            <img src=\"images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$result['name']." >
                                         </div>
-                                        <p class=\"panswer\">".nl2br($result2['answer'])."</p>
+                                        <p class=\"panswer\">".nl2br($result['answer'])."</p>
                                       </div>";
                     }
                     ?>
                 </div>
-                <div class="guestbook-all-reply" id="<?php print $result2['id']; ?>"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $result2['id']; ?>">Ответить</a></span></div>
-                <?php selectRecursion($result2['id'], $page ); ?>
+                <div class="guestbook-all-reply" id="<?php print $result['id']; ?>"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $result['id']; ?>">Ответить</a></span></div>
+                <?php selectRecursion($result['id'], $page ); ?>
 
             </div><!-- End of guestboor-all-wrap -->
         </div><!-- End of guestbook-all-body -->
     <?php
     }
-    return $result2['id'];
+    return $result['id'];
 }
 ?>

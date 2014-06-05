@@ -65,10 +65,10 @@ class DomainObjectAssembler {
     function find( IdentityObject $idobj ) {
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
         list( $selection, $values ) = $selfact->newSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив
-//        echo "<tt><pre>".print_r($stmt, true)."</pre></tt>";
 
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
@@ -101,7 +101,7 @@ class DomainObjectAssembler {
                                                         $page);
 
 //        return $pagfact->getPage();
-        return $this->factory->getCollection( $pagfact->getPage() );
+        return array ( "navigation"=>$pagfact->printPageNav(), "select"=>$this->factory->getCollection( $pagfact->getPage() ) );
 
     }
 }

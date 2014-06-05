@@ -23,6 +23,7 @@ class Guestbook extends DomainObject {
     private $id_parent;
     private $ip;
     private $browser;
+    private $child_posts;
 
     /**
      * Поля из БД - сохраняем из в переменные
@@ -79,10 +80,12 @@ class Guestbook extends DomainObject {
      */
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
-        $guest_book = new \imei_service\mapper\GuestbookIdentityObject( 'hide' ); // GuestbookIdentityObject
-        $guest_book->eq( 'show' )->field('id_parent')->eq( 0 ); // условный оператор
+//        $guest_book = new \imei_service\mapper\GuestbookIdentityObject( 'hide' ); // GuestbookIdentityObject
+//        $guest_book->eq( 'show' )->field('id_parent')->eq( 0 ); // условный оператор
+        $guest_book = $finder->factory->getIdentityObject();
         return $finder->find( $guest_book ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
     }
+
 
     static function paginationMysql( $page ) {
         $finder = self::getFinder( __CLASS__ );
@@ -99,32 +102,6 @@ class Guestbook extends DomainObject {
                                         "",
                                         $page);
     }
-
-
-
-
-
-
-//    static function paginationChildMysql( $id_parent ) {
-//        $finder = self::getFinder( __CLASS__ );
-//        $idobj = new \imei_service\mapper\GuestbookIdentityObject( 'hide' );
-//        $idobj->eq( 'show' )->field( 'id_parent' )->eq( $id_parent );
-//
-//
-//
-//        return $finder->findPagination( "system_guestbook",
-//            $idobj,
-//            " ORDER BY putdate DESC ",
-//            "",
-//            "",
-//            "",
-//            "");
-//    }
-
-
-
-
-
 
 
     function setName( $name_s ) {

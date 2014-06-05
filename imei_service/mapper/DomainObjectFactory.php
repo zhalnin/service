@@ -93,7 +93,7 @@ class ContactsObjectFactory extends DomainObjectFactory {
 class GuestbookObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r($array, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($array['id'], true)."</pre></tt>";
         $class = "\\imei_service\\domain\\Guestbook";
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) {
@@ -112,23 +112,6 @@ class GuestbookObjectFactory extends DomainObjectFactory {
         $obj->setIdparent( $array['id_parent'] );
         $obj->setIp( $array['ip'] );
         $obj->setBrowser( $array['browser'] );
-
-
-
-
-
-
-        $child_factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\domain\Guestbook' );
-        $child_assembler = new \imei_service\mapper\DomainObjectAssembler( $child_factory );
-        $child_idobj = new GuestbookIdentityObject( 'hide' );
-        $child_idobj->eq( 'show' )->field( 'id_parent' )->eq( $array['id_parent'] );
-        $child_collection = $child_assembler->paginationChildMysql( $child_idobj );
-        echo "<tt><pre>".print_r($child_collection, true)."</pre></tt>";
-
-
-
-
-
 
         $this->addToMap( $obj );
         $obj->markClean();
