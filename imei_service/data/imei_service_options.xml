@@ -18,6 +18,9 @@
 
     <command name="Guestbook">
         <view>guestbook</view>
+        <status value="CMD_OK">
+            <forward>Guestbook</forward>
+        </status>
     </command>
 
     <command name="Contacts">

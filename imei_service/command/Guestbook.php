@@ -134,6 +134,10 @@ class Guestbook extends Command {
 //                    mail($to,$subject,$body,$header);
 //                }
 
+
+
+                return self::statuses( 'CMD_OK' );
+
             } else {
                 echo "<tt><pre>".print_r($error, true)."</pre></tt>";
                 print "errors";
