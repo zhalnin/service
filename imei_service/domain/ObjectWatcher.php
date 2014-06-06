@@ -97,6 +97,7 @@ class ObjectWatcher {
      * @param DomainObject $obj
      */
     static function addDirty( DomainObject $obj ) {
+//        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
         $inst = self::instance();
         if( ! in_array( $obj, $inst->new, true ) ) {
             $inst->dirty[ $inst->globalKey( $obj )] = $obj;
@@ -123,11 +124,13 @@ class ObjectWatcher {
      * Метод исполнитель
      */
     function performOperations() {
+//        echo "<tt><pre>".print_r($this->new, true)."</pre></tt>";
         foreach ( $this->dirty as $key => $obj ) {
            $obj->finder()->insert( $obj );
         }
-        // проходим по массиву в поиске объекта для добавления в БД
+        // проходим по массиву в поиске объекта для добавления в БД - это индекс 0 и он имеет вложенный массив с вставляемыми данными: [id]=>2 и т.д.
         foreach ( $this->new as $key => $obj ) {
+//            echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
             $obj->finder()->insert( $obj );
         }
         $this->dirty = array();

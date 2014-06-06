@@ -23,7 +23,6 @@ class Guestbook extends DomainObject {
     private $id_parent;
     private $ip;
     private $browser;
-    private $child_posts;
 
     /**
      * Поля из БД - сохраняем из в переменные
@@ -41,17 +40,22 @@ class Guestbook extends DomainObject {
      * @param null $browser
      */
     function __construct(   $id=null,
-                            $name=null,
-                            $city=null,
-                            $email=null,
-                            $url=null,
-                            $message=null,
-                            $answer=null,
-                            $putdate=null,
+                            $name,
+                            $city,
+                            $email,
+                            $url,
+                            $message,
+                            $answer,
+                            $putdate,
                             $hide='show',
-                            $id_parent=null,
-                            $ip=null,
-                            $browser=null ) {
+                            $id_parent,
+                            $ip,
+                            $browser ) {
+//        if( is_null( $id_parent ) ) {
+//            $id_parent = 0;
+//        }
+
+
 
         $this->name         = $name;
         $this->city         = $city;
@@ -174,13 +178,13 @@ class Guestbook extends DomainObject {
         return $this->hide;
     }
     function getIdparent() {
-        $this->id_parent;
+        return $this->id_parent;
     }
     function getIp() {
-        $this->ip;
+        return $this->ip;
     }
     function getBrowser() {
-        $this->browser;
+        return $this->browser;
     }
 }
 ?>

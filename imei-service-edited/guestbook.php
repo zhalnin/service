@@ -1,4 +1,4 @@
-<?php
+ <?php
 try {
 /**
  * Created by JetBrains PhpStorm.

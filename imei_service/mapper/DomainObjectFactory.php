@@ -113,6 +113,7 @@ class GuestbookObjectFactory extends DomainObjectFactory {
         $obj->setIp( $array['ip'] );
         $obj->setBrowser( $array['browser'] );
 
+
         $this->addToMap( $obj );
         $obj->markClean();
         return $obj;
