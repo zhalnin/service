@@ -19,7 +19,7 @@
     <command name="Guestbook">
         <view>guestbook</view>
         <status value="CMD_OK">
-            <forward>Guestbook</forward>
+            <view>addMessageSuccess</view>
         </status>
     </command>
 

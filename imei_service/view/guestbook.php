@@ -10,26 +10,25 @@
 namespace imei_service\view;
 
 
-
 try {
 
     require_once( "imei_service/classes/class.PagerMysql.php" );
     require_once( "imei_service/view/ViewHelper.php" );
     require_once( "imei_service/view/utils/utils.printChildPost.php" );
-    require_once( "imei_service/view/utils/utils.getVerBrowser.php" );
-    require_once( "imei_service/view/utils/utils.getIP.php" );
+
     $title = "Гостевая книга";
     $keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
     $description = "Гостевая книга";
     require_once( "imei_service/view/templates/top.php" );
 
-
-
-
     $request = \imei_service\view\VH::getRequest();
     $guestbookMain = $request->getObject('guestbook_pagination');
     $guestbook = $guestbookMain['select'];
     $guestbookNavigation = $guestbookMain['navigation'];
+    $page = $request->getProperty('page');
+    if( empty( $page ) ) {
+        $page = 1;
+    }
 
 ?>
 
@@ -66,15 +65,8 @@ try {
 
                 <?php
 
-
-                $ipAddress = getIP();
-                $browser = getVerBrowser();
-
-
-
-
-
-
+              //  $ipAddress = getIP();
+              //  $browser = getVerBrowser();
 
 //                if( isset( $_GET['page'] ) ) {
 //                    $page = htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
@@ -97,7 +89,7 @@ try {
                                 <!--                                <a href="http://imei-service.ru">Отвязка iPhone, проверка по IMEI, S/N и регистрация UDID</a>-->
                                 <!--                            </h1>-->
                                 <p class="ptdg"><b><?php echo $record->getName(); ?></b>&nbsp;
-                                    <?php  $city = $record->getCity(); if( ! empty( $city ) ) print "($city)"; ?>&nbsp;
+                                    <?php  $citySelect = $record->getCity(); if( ! empty( $citySelect ) ) print "($citySelect)"; ?>&nbsp;
                                     <?php echo $record->getPutdate(); ?></p>
                             </div>
 
@@ -107,13 +99,13 @@ try {
 
                             <div class='guestbook-all-info'>
                                 <p class='ptext'><?php echo html_entity_decode( $record->getMessage() ); ?></p>
-                                <?php $answer = $record->getAnswer(); if( ! empty( $answer ) && $answer != '-' ) {
+                                <?php $answerSelect = $record->getAnswer(); if( ! empty( $answerSelect ) && $answerSelect != '-' ) {
                                     echo "<div class='panswer-wrap main-content-blue'>
                                                 <p class='panswer ptdg'><b><i>Администратор</i></b></p>
                                                 <div class='panswer-image'>
                                                     <img src=\"imei_service/view/images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$record->getName()." >
                                                 </div>
-                                                <p class=\"panswer\">".nl2br($answer)."</p>
+                                                <p class=\"panswer\">".nl2br($answerSelect)."</p>
                                               </div>";
                                 }
                                 ?>
@@ -123,8 +115,6 @@ try {
                             <!--                    если находим их, то выводим чуть ниже родительского поста,
                                                     , в функции проходим рекурсивно по всем постам, если они имеют id_parent
                                                     находится в utils/utils.print_child_post.php -->
-
-
                             <?php  \imei_service\view\utils\selectRecursion($record->getId(), $page ); ?>
 
 
@@ -157,146 +147,34 @@ try {
                 </div><!-- End of news-content -->
             </div><!-- End of news-main -->
 
-
-
-
-
-
-
-
-
 <?php
-//$valid = "";
-//$error = "";
-//
+
+$valid = $request->getProperty('valid');
 //$valid = $_POST['valid'];
 if( ! empty( $valid ) ) {
-//    if( $sid_add_message != $_POST['sid_add_message'] ) {
-//        $valid = "";
-//        $error .= "<li style='color: rgb(255, 0, 0);'>Попробуйте отправить форму заново</li>";
-//    }
-//    if( empty( $_POST['name'] ) ) {
-//          $valid = "";
-//          $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Имя</li>";
-//    }
-//    if( empty( $_POST['email'] ) ) {
-//        $valid = "";
-//        $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: E-mail</li>";
-//    } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $_POST['email'] ) ) {
-//        $valid = "";
-//        $error .= "<li style='color: rgb(255, 0, 0);'>Введите ваш действительный E-mail</li>";
-//    }
-//    if( $_SESSION['code'] != $_POST['code'] ) {
-//        $valid = "";
-//        $error .= "<li style='color: rgb(255, 0, 0);'>Указанный код с картинки неверный</li>";
-//    }
-//    if( isset( $_POST['id_parent_post'] ) ) {
-//         $id_parent = htmlspecialchars( stripslashes( $_POST['id_parent_post'] ), ENT_QUOTES );
-//    }
-//    if( isset( $_GET['id_parent'] ) ) {
-//        $id_parent = htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES );
-//    }
-//    if( ! isset( $id_parent ) ) {
-//        $id_parent = 0;
-//    }
-//    if( isset( $_GET['page'] ) ) {
-//        $page = htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
-//    }
-//    if( isset( $_POST['page'] ) ) {
-//        $page = htmlspecialchars( stripslashes( $_POST['page'] ), ENT_QUOTES );
-//    }
-//    if( !isset( $page ) ) {
-//        $page = 1;
-//    }
-//
-//    $name =  $_POST['name'];
-//    $city =  $_POST['city'];
-//    $email =  $_POST['email'];
-//    $url = $_POST['url'];
-//    //            $message = htmlspecialchars( stripslashes( $_POST['message'] ), ENT_QUOTES );
-//    $message = $_POST['message'];
-//    $time = new \DateTime;
-//    $date = $time->format('Y-m-d H:i:s');
-    $sendmail = true;
+    $sid_add_message = $request->getProperty('sid_add_message');
+    $message = $request->getProperty('message');
+    $page = $request->getProperty('page');
+    $feedback = $request->getFeedback();
+
+
+
+}
 ?>
 
 
 <!--            Возвращаем текст в iFrame-->
     <script type="text/javascript">
         AM.Event.addEvent( window, 'load', function() {
-            alert('load');
+//            alert('load');
             if( AM.DOM.$('textareaIframe') != null ) {
                 var textareaIframe = AM.DOM.$('textareaIframe').value;
                 //                   textareaIframe = textareaIframe.replace(/&nbsp;/,' ');
-//                wysiwyg.doc().body.innerHTML = textareaIframe;
-                wysiwyg.doc().body.innerHTML = "ksdjfksdjflksdjfkljsdf";
+                wysiwyg.doc().body.innerHTML = textareaIframe;
             }
         });
     </script>
-    <?php
 
-
-//    if( empty( $error ) ) {
-
-//        $PDO = new \PDO("mysql:host=localhost;dbname=imei-service", 'root', 'zhalnin5334', array(
-//            \PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION,
-//            \PDO::ATTR_DEFAULT_FETCH_MODE=>\PDO::FETCH_ASSOC,
-//            \PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES UTF8'
-//        ) );
-//
-//        $insertStmt = "INSERT INTO system_guestbook (name,
-//                                                    city,
-//                                                    email,
-//                                                    url,
-//                                                    message,
-//                                                    answer,
-//                                                    putdate,
-//                                                    hide,
-//                                                    id_parent,
-//                                                    ip,
-//                                                    browser)
-//                                       VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-//        $sth = $PDO->prepare( $insertStmt );
-//        $result = $sth->execute( array( $name, $city, $email, $url, $message, '-', $date, 'show', $id_parent, $ipAddress, $browser ) );
-//        if( $result ) {
-//            if( $sendmail === true ) {
-//                $to = 'zhalninpal@me.com';
-//                $subject = 'Новый пост в адресной книге';
-//                $body = "Поступило новое сообщение, которое следует проверить\n";
-//                $body .= "От пользователя: $name\n";
-//                $body .= "Адрес email: $email\n";
-//                $header = "From: zhalnin@mail.com\r\n";
-//                $header .= "Reply-to: zhalnin@mail.com \r\n";
-//                $header .= "Content-type: text/plane; charset=utf-8\r\n";
-//                mail($to,$subject,$body,$header);
-//                print "<html><head>\n";
-//                print "<meta http-equiv='Refresh' content='0; url=?cmd=Guestbook&page=$page'>\n";
-//                print "</head></html>\n";
-//                exit();
-//            } else {
-//                print "<html><head>\n";
-//                print "<meta http-equiv='Refresh' content='0; url=?cmd=Guestbook&page=$page'>\n";
-//                print "</head></html>\n";
-//                exit();
-//            }
-//        }
-//    }
-}
-
-//        if( empty( $valid ) || ! empty( $error ) ) {
-//            if( isset( $_GET['id_parent'] ) ) {
-//                if( isset( $_GET['page'] ) ) {
-//                    $page = "&page=".htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
-//                } else {
-//                    $page = "&page=1";
-//                }
-//                $id_parent = "?id_parent=".htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES ).$page;
-//            } else {
-//                $id_parent = "";
-//            }
-
-
-            ?>
             <div id="guestbook-form" class="guestbook-all-addmessage main-content">
             <div id="shipping-box" class="guest-form-box">
                 <h2 class="h2 primary">Добавить сообщение</h2>
@@ -431,13 +309,11 @@ if( ! empty( $valid ) ) {
 
                                 <input type="hidden" name="valid" value="valid" />
                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message ?>" />
-                                <input type="hidden" name="ip" value="<?php echo $ipAddress; ?>" />
-                                <input type="hidden" name="browser" value="<?php echo $browser; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
                                 <input type="hidden" name="id_parent" value="" id="guestbookReply" />
                                 <input type="hidden" name="codeConfirm" value="" id="codeConfirm" />
                                 <input type="hidden" name="page" value="<?php echo $page; ?>" />
-                                <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $_POST['message']; ?></textarea>
+                                <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $message; ?></textarea>
 
 
                                 <div id="submit-button" class="" style="">
@@ -472,10 +348,12 @@ if( ! empty( $valid ) ) {
 
 
             <?php
-            if( ! empty( $error ) ) {
+            if( ! empty( $feedback ) ) {
                 print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
                 print "<ul>\n";
-                print $error;
+                print "<li>\n";
+                print $request->getFeedbackString('</li><li>');
+                print "</li>\n";
                 print "</ul>\n";
                 print "</div>";
             }

@@ -74,11 +74,11 @@ class DomainObjectAssembler {
     }
 
     function insert( \imei_service\domain\DomainObject $obj ) {
-        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
         $upfact = $this->factory->getUpdateFactory();
         list( $update, $values ) = $upfact->newUpdate( $obj );
-        echo "<tt><pre>".print_r($update, true)."</pre></tt>";
-        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($update, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $update );
         $stmt->execute( $values );
         if( $obj->getId() < 0 ) {

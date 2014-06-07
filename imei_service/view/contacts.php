@@ -35,7 +35,7 @@ $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
 $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
 Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
 Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
-require_once("templates/top.php");
+require_once("imei_service/view/templates/top.php");
 try {
 ?>
     <div id="header">
@@ -114,7 +114,7 @@ echo "
         </div><!-- End of contact-main -->";
 
 
-require_once("templates/bottom.php");
+require_once("imei_service/view/templates/bottom.php");
 
 } catch(\imei_service\base\AppException $exc) {
     require_once( "\imei_service\base\Exceptions.php" );

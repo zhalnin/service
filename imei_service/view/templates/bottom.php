@@ -6,7 +6,7 @@
  * Time: 15:08
  * To change this template use File | Settings | File Templates.
  */
-namespace imei_service\view;
+namespace imei_service\view\templates;
 
  error_reporting(E_ALL & ~E_NOTICE);
 ?>

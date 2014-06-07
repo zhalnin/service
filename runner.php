@@ -5,11 +5,14 @@
  * Date: 08/05/14
  * Time: 19:28
  */
+
 try {
     require_once( "imei_service/controller/Controller.php" );
     require_once( "imei_service/base/Exceptions.php" );
 
+
     imei_service\Controller\controller::run();
+
 
 } catch ( \imei_service\base\AppException $ex ) {
    echo $ex->getErrorObject();

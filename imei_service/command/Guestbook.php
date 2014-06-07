@@ -10,84 +10,64 @@ namespace imei_service\command;
 
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/domain/Guestbook.php" );
+require_once( "imei_service/view/utils/getIp.php" );
+require_once( "imei_service/view/utils/getVerBrowser.php" );
 
 session_start();
 
 class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
 
-
-//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         $valid = $request->getProperty( 'valid' );
-
-
-
-
-            $page = $request->getProperty( 'page' );
-            if( ! $page ) {
-                $page = 1;
-            }
-            $pagination = \imei_service\domain\Guestbook::paginationMysql( $page );
-    //        $pagination = \imei_service\domain\Guestbook::findAll();
-            $request->addFeedback( "Welcome to Guestbook IMEI-SERVICE");
-
-            $guestbook = $request->setObject('guestbook_pagination', $pagination);
-
-//            return self::statuses( 'CMD_OK' );
+        $page = $request->getProperty( 'page' );
+        $sendmail = false;
+        if( ! $page ) {
+            $page = 1;
+        }
+        $pagination = \imei_service\domain\Guestbook::paginationMysql( $page );
+//        $pagination = \imei_service\domain\Guestbook::findAll();
+        $request->setObject('guestbook_pagination', $pagination);
 
         if( ! empty( $valid ) ) {
 
-            $sid_add_message = $request->getProperty('sid_add_message');
-            $name = $request->getProperty('name');
-            $city = $request->getProperty('city');
-            $email = $request->getProperty('email');
-            $url = $request->getProperty('url');
-            $message = $request->getProperty('message');
-            $answer = $request->getProperty('answer');
-            $putdate = $request->getProperty('putdate');
-            $hide = $request->getProperty('hide');
-            $id_parent = $request->getProperty('id_parent');
-            $ip = $request->getProperty('ip');
-            $browser = $request->getProperty('browser');
-            $code = $request->getProperty('code');
-            $codeConfirm = $request->getProperty('codeConfirm');
-            $page = $request->getProperty('page');
 
+            $ip                 = getIp();
+            $browser            = getVerBrowser();
+            $sid_add_message    = $request->getProperty('sid_add_message');
+            $name               = $request->getProperty('name');
+            $city               = $request->getProperty('city');
+            $email              = $request->getProperty('email');
+            $url                = $request->getProperty('url');
+            $message            = $request->getProperty('message');
+            $answer             = $request->getProperty('answer');
+            $putdate            = $request->getProperty('putdate');
+            $hide               = $request->getProperty('hide');
+            $id_parent          = $request->getProperty('id_parent');
+            $code               = $request->getProperty('code');
+            $codeConfirm        = $request->getProperty('codeConfirm');
+            $page               = $request->getProperty('page');
 
 
             if( empty( $sid_add_message ) ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Попробуйте отправить форму заново</li>";
+                $error = 'error';
+                $request->addFeedback( "Попробуйте отправить форму заново" );
             }
             if( empty( $name ) ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: Имя</li>";
+                $error = 'error';
+                $request->addFeedback( "Необходимо заполнить поле: Имя" );
             }
             if( empty( $email ) ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Необходимо заполнить поле: E-mail</li>";
+                $error = 'error';
+                $request->addFeedback( "Необходимо заполнить поле: E-mail" );
             } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $email ) ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Введите ваш действительный E-mail</li>";
+                $error = 'error';
+                $request->addFeedback( "Введите ваш действительный E-mail" );
             }
             if( $_SESSION['code'] != $code ) {
-                $valid = "";
-                $error .= "<li style='color: rgb(255, 0, 0);'>Указанный код с картинки неверный</li>";
+                $error = 'error';
+                $request->addFeedback( "Указанный код с картинки неверный" );
             }
-//            if( isset( $id_parent_post ) ) {
-//                $id_parent = htmlspecialchars( stripslashes( $id_parent_post ), ENT_QUOTES );
-//            }
-//            if( isset( $_GET['id_parent'] ) ) {
-//                $id_parent = htmlspecialchars( stripslashes( $_GET['id_parent'] ), ENT_QUOTES );
-//            }
-
-
-//            echo "<tt><pre>".print_r($request, true)."</pre></tt>";
-
-
-
             if( empty( $id_parent )  ) {
-
                 $id_parent = 0;
             }
             if( empty( $answer ) ) {
@@ -105,9 +85,7 @@ class Guestbook extends Command {
             }
 
 
-
             if( empty( $error ) ) {
-                print "no errors";
                 $guestbook_obj = new \imei_service\domain\Guestbook( null,
                                                                     $name,
                                                                     $city,
@@ -122,27 +100,24 @@ class Guestbook extends Command {
                                                                     $browser );
     //                        echo "<tt><pre>".print_r($guestbook_obj, true)."</pre></tt>";
                 $request->setObject('guestbook', $guestbook_obj );
-//                if( $sendmail === true ) {
+                if( $sendmail === true ) {
                     $to = 'zhalninpal@me.com';
                     $subject = 'Новый пост в адресной книге';
-                    $body = "Поступило новое сообщение, которое следует проверить\n";
-                    $body .= "От пользователя: $name\n";
-                    $body .= "Адрес email: $email\n";
+                    $body = "Поступило новое сообщение, которое следует проверить\r\n";
+                    $body .= "От пользователя: $name\r\n";
+                    $body .= "Адрес email: $email\r\n";
                     $header = "From: zhalnin@mail.com\r\n";
                     $header .= "Reply-to: zhalnin@mail.com \r\n";
                     $header .= "Content-type: text/plane; charset=utf-8\r\n";
-//                    mail($to,$subject,$body,$header);
-//                }
-
-
+                    mail($to,$subject,$body,$header);
+                }
 
                 return self::statuses( 'CMD_OK' );
 
             } else {
-                echo "<tt><pre>".print_r($error, true)."</pre></tt>";
-                print "errors";
-
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
+
         }
     }
 }

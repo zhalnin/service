@@ -6,7 +6,7 @@
  * Time: 15:03
  * To change this template use File | Settings | File Templates.
  */
-namespace imei_service\view;
+namespace imei_service\view\templates;
 session_start();
 $sid_add_message = session_id();
  error_reporting(E_ALL & ~E_NOTICE);
@@ -15,8 +15,8 @@ $sid_add_message = session_id();
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <title><?php echo htmlspecialchars($title, ENT_QUOTES); ?></title>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
     <meta content="width=1024" name="viewport">
     <meta content="<? echo htmlspecialchars($description, ENT_QUOTES); ?>" name="Description">
     <link rel="shortcut icon" href="/favicon.ico"/>

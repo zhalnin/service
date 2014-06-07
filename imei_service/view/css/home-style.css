@@ -1688,6 +1688,7 @@ span #uah.currency{
     margin: 19px 0;
     width: 70%;
     float: right;
+    min-height: 160px;
     font-size: 14px;
 }
 .success-info p {
