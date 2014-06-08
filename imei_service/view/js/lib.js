@@ -76,7 +76,6 @@ function parseResult(responseText){
 //    hideOverlay();
     AM.DOM.$('progressbar').innerHTML = responseText;
     // фокусируем на "div", который будет содержать весь ответ по проверке IMEI
-
     AM.DOM.$("navigation").scrollIntoView(true);
 }
 

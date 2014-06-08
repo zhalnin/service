@@ -35,12 +35,12 @@ try {
 <div id="header">
     <ul id="navigation" role="navigation">
         <li id="nav-home"><a  class="selected" href="?cmd=News"><span>Главная</span></a></li>
-        <li id="nav-unlock"><a href="unlock.php"><span>Официальный Анлок iPhone</span></a></li>
-        <li id="nav-udid"><a href="udid.php"><span>Регистрация UDID</span></a></li>
-        <li id="nav-carrier"><a href="carrier_check.php"><span>Проверка оператора по IMEI</span></a></li>
-        <li id="nav-fast_check"><a href="fast_check.php"><span>Быстрая проверка</span></a></li>
-        <li id="nav-blacklist"><a href="blacklist_check.php"><span>Blacklist</span></a></li>
-        <li id="nav-faq"><a href="faq.php"><span>Вопросы</span></a></li>
+        <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+        <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+        <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+        <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+        <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+        <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
     </ul>
 </div>
 <div id="main" class="">
@@ -110,7 +110,7 @@ try {
                                 }
                                 ?>
                             </div>
-                            <div class="guestbook-all-reply"><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $record->getId(); ?>" >Ответить</a></span></div>
+                            <div class="guestbook-all-reply" id="<?php print $record->getId(); ?>" ><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $record->getId(); ?>" >Ответить</a></span></div>
                             <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
                             <!--                    если находим их, то выводим чуть ниже родительского поста,
                                                     , в функции проходим рекурсивно по всем постам, если они имеют id_parent
@@ -155,11 +155,13 @@ if( ! empty( $valid ) ) {
     $sid_add_message = $request->getProperty('sid_add_message');
     $message = $request->getProperty('message');
     $page = $request->getProperty('page');
+    $id_parent = $request->getProperty('id_parent');
     $feedback = $request->getFeedback();
 
 
-
+//echo "<tt><pre> VALID ".print_r($request, true)."</pre></tt>";
 }
+//    echo "<tt><pre> NO VALID ".print_r($request, true)."</pre></tt>";
 ?>
 
 
@@ -167,10 +169,15 @@ if( ! empty( $valid ) ) {
     <script type="text/javascript">
         AM.Event.addEvent( window, 'load', function() {
 //            alert('load');
+
             if( AM.DOM.$('textareaIframe') != null ) {
                 var textareaIframe = AM.DOM.$('textareaIframe').value;
+//                console.log(textareaIframe);
                 //                   textareaIframe = textareaIframe.replace(/&nbsp;/,' ');
-                wysiwyg.doc().body.innerHTML = textareaIframe;
+               setTimeout( function() {
+                    wysiwyg.doc().body.innerHTML = textareaIframe;
+
+               }, 500 );
             }
         });
     </script>
@@ -308,9 +315,9 @@ if( ! empty( $valid ) ) {
                                 </div>
 
                                 <input type="hidden" name="valid" value="valid" />
-                                <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message ?>" />
+                                <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
-                                <input type="hidden" name="id_parent" value="" id="guestbookReply" />
+                                <input type="hidden" name="id_parent" value="<?php echo $id_parent; ?>" id="guestbookReply" />
                                 <input type="hidden" name="codeConfirm" value="" id="codeConfirm" />
                                 <input type="hidden" name="page" value="<?php echo $page; ?>" />
                                 <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $message; ?></textarea>

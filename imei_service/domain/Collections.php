@@ -20,4 +20,8 @@ interface GuestbookCollection extends \Iterator {
     function add( DomainObject $guestbook );
 }
 
+interface UnlockCollection extends \Iterator {
+    function add( DomainObject $unlock );
+}
+
 ?>

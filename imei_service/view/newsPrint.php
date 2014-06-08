@@ -33,13 +33,13 @@ require_once("templates/top.php");
 
     <div id="header">
         <ul id="navigation" role="navigation">
-            <li id="nav-home"><a  class="selected" href="index.php"><span>Главная</span></a></li>
-            <li id="nav-unlock"><a href="unlock.php"><span>Официальный Анлок iPhone</span></a></li>
-            <li id="nav-udid"><a href="udid.php"><span>Регистрация UDID</span></a></li>
-            <li id="nav-carrier"><a href="carrier_check.php"><span>Проверка оператора по IMEI</span></a></li>
-            <li id="nav-fast_check"><a href="fast_check.php"><span>Быстрая проверка</span></a></li>
-            <li id="nav-blacklist"><a href="blacklist_check.php"><span>Blacklist</span></a></li>
-            <li id="nav-faq"><a href="faq.php"><span>Вопросы</span></a></li>
+            <li id="nav-home"><a  class="selected" href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
         </ul>
     </div>
     <div id="main" class="">

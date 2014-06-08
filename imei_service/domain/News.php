@@ -70,10 +70,10 @@ class News extends DomainObject {
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
         $idobj = self::getIdentityObject( __CLASS__ ); // NewsIdentityObject
-        $news_idobj = new \imei_service\mapper\NewsIdentityObject( 'hide' ); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
-        $news_idobj->eq('show');
-//        echo "<tt><pre>".print_r($news_idobj, true)."</pre></tt>";
-        return $finder->find( $news_idobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
+        $newsIdobj = new \imei_service\mapper\NewsIdentityObject( 'hide' ); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
+        $newsIdobj->eq('show');
+//        echo "<tt><pre>".print_r($newsIdobj, true)."</pre></tt>";
+        return $finder->find( $newsIdobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
     }
 
     static function find( $id ) {

@@ -22,6 +22,36 @@ abstract class DomainObjectFactory {
     }
 }
 
+
+class UnlockObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\Unlock";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatura'] );
+        $obj->setModerewrite( $array['moderewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlPict( $array['url_pict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
 /**
  * Class NewsObjectFactory
  * @package imei_service\mapper

@@ -7,7 +7,7 @@
  */
 
 namespace imei_service\mapper;
-
+error_reporting( E_ALL & ~E_NOTICE );
 
 abstract class SelectionFactory {
     abstract function newSelection( IdentityObject $obj );

@@ -236,6 +236,8 @@ var AMForm = {
                 AMForm.validateField(elem[i]);
                 // если отсутствует значение элемента
                 if( elem[i].value == '' ) {
+//                    elem[i].style.borderColor = 'pink';
+                    AM.DOM.addClass('error', elem[i] );
                     // и нет элемента 'span', где размещена ошибка
                     if( ! AM.DOM.next( elem[i] ) ) {
                         // добавляем блок с ошибкой
@@ -277,6 +279,8 @@ var AMForm = {
             } else {
                 if(  AM.DOM.next( editorSpan ) == null ) {
                     // добавляем блок с ошибкой
+                    console.log(editorSpan);
+                    AM.DOM.addClass('error', AM.DOM.first( editorSpan ) );
                     AMForm.showErrors( editorSpan,"Поле не заполнено" );
                 }
                 error[i + 1] = "error";
@@ -294,7 +298,8 @@ var AMForm = {
 //                guestbookForm.scrollIntoView(true);
 
             }
-            AM.DOM.$('shipping-box').scrollIntoView(true);
+//            AM.DOM.$('shipping-box').scrollIntoView(true);
+            AM.DOM.$('guestbook-form').scrollIntoView(true);
             // возвращаем результат False
             return false;
             // если ошибок нет
@@ -335,16 +340,20 @@ var AMForm = {
             } else {
                 errors[this.check[name].msg] = '';
                 AMForm.hideErrors(elem);
+                AM.DOM.removeClass( 'error', elem );
             }
         }
         if(errors.length){
             if( AM.DOM.next(elem) ) {
                 AMForm.hideErrors( AM.DOM.next(elem) );
+                AM.DOM.removeClass( 'error', elem );
             }
             AMForm.showErrors(elem, errors);
+            AM.DOM.addClass( 'error', elem );
             res = false
         } else if(  AM.DOM.next(elem) ) {
             AMForm.hideErrors( AM.DOM.next(elem) );
+            AM.DOM.removeClass( 'error', elem );
         }
         return res;
     },

@@ -42,6 +42,7 @@ try
                 WHERE id_parent = $_GET[id_parent]
                 AND modrewrite = 'unlock'
                 AND hide = 'show'";
+
     }
     $res = mysql_query($query);
     if(!$res){
@@ -52,7 +53,7 @@ try
     $parent_catalog = mysql_fetch_array($res);
     // Название каталога
     $title = $parent_catalog['name'];
-    $parent = $parent_catalog[id_catalog];
+    $parent = $parent_catalog['id'];
     $keywords = "unlock iPhone,официальный анлок,AT&T,все операторы,official unlock";
     $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
 
@@ -106,7 +107,7 @@ try
                             <?php
 
                             while($subcatalog = mysql_fetch_array($res)){
-                                echo "    <li><a href='unlock-service.php?ctr=$subcatalog[abbreviatura]&id_parent=$parent' class='started'>
+                                echo "    <li><a href='unlock-service.php?ctr=$subcatalog[abbreviatura]&id=$parent' class='started'>
                                 <div>
                                     <div>
                                         <img alt='$subcatalog[alt_flag]'   src='$subcatalog[rounded_flag]'>
@@ -127,6 +128,9 @@ try
                     </div><!-- pb-slide -->
                 </div><!-- pb-slider -->
             </div><!-- pb-ipad -->
+
+
+
             <div id="showcase" class="content">
                 <div class="hero selfclear">
                     <div id="shipping-box" class="box box-nomargin shipping-box ptn">
@@ -216,7 +220,11 @@ try
         </div><!-- main -->
 
 
+
+
+
     <?php
+
 
     }
 require_once("templates/bottom.php");

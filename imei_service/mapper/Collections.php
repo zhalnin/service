@@ -41,6 +41,15 @@ class DefferredNewsCollection extends NewsCollection {
 }
 
 
+class UnlockCollection
+    extends Collection
+    implements \imei_service\domain\UnlockCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Unlock";
+    }
+}
+
 class ContactsCollection
     extends Collection
     implements \imei_service\domain\ContactsCollection {

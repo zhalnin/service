@@ -677,3 +677,9 @@ textarea {
 #guestbook-form {
     position: relative;
 }
+#main .field-with-placeholder input.error {
+    border-color: #ffc0cb;
+}
+#editorSpan .error {
+    border-color: #ffc0cb;
+}

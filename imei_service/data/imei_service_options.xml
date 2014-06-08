@@ -27,6 +27,17 @@
         <view>contacts</view>
     </command>
 
+    <command name="Unlock">
+        <view>unlock</view>
+        <status value="CMD_OK">
+            <forward>UnlockDetails</forward>
+        </status>
+    </command>
+
+    <command name="UnlockDetails">
+        <view>unlockDetails</view>
+    </command>
+
     <command name="ListVenues">
         <view>listvenues</view>
     </command>

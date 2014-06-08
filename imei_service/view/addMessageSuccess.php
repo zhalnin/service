@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace imei_service\view;
-
+error_reporting( E_ALL & ~E_NOTICE );
 require_once( "imei_service/view/ViewHelper.php" );
 
 $request    = \imei_service\view\VH::getRequest();
@@ -16,7 +16,7 @@ $page       = $request->getProperty('page');
 
 
 print "<html><head>\n";
-print "<meta http-equiv='Refresh' content='5; url=http://localhost:8888/service/runner.php?cmd=Guestbook&page=1'>\n";
+print "<meta http-equiv='Refresh' content='5; url=?cmd=Guestbook&page=1'>\n";
 print "</head></html>\n";
 
 

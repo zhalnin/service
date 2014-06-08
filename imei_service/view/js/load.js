@@ -126,13 +126,27 @@ AM.Event.addEvent(window, 'load', function() {
 
                         }, 1000 );
 
-                        AM.DOM.parent( divGuestbookAllReply[num] ).scrollIntoView(true);
+//                        AM.DOM.parent( divGuestbookAllReply[num] ).scrollIntoView(true);
+                        guestbookForm.scrollIntoView( true );
                     } );
                 })( i );
             }
          })();
 
 
+
+        // Если после отправки формы была ошибка, возвращаем блок с ответом к нужному блоку
+        if( AM.DOM.$('guestbookReply') != null ) {
+            if( AM.DOM.$('guestbookReply').value != "" ) {
+                var guestbookForm = AM.DOM.$('guestbook-form'), // форма для ответа
+                    guestbookReply = AM.DOM.$('guestbookReply'),// скрытое поле в форме, хранит id_parent
+                    id = AM.DOM.$('guestbookReply').value, // получаем value
+                    appendDiv = AM.DOM.$(id); // находим div с нужным id ( ему отвечаем )
+                appendDiv.appendChild(guestbookForm); // добавляем форму для ответа к нужному div
+                guestbookForm.scrollIntoView( true ); // фокусируемся на родительском посте
+            }
+
+        }
 
 
         if( form != null ) {
@@ -165,7 +179,7 @@ AM.Event.addEvent(window, 'load', function() {
             // add event 'click' to button_send
             AM.Event.addEvent(button_send, 'click', function(event){
                 // scroll window to x=0 and y=0
-                window.scrollTo(0,0);
+//                window.scrollTo(0,0);
                 AM.Event.stopDefault(event);
                 AMForm.watchForm(form);
                 //            showOverlay();

@@ -84,8 +84,9 @@ class Guestbook extends Command {
                 $page = 1;
             }
 
-
+echo "lllllllllll";
             if( empty( $error ) ) {
+                echo "kdsjfksdjfkdjf";
                 $guestbook_obj = new \imei_service\domain\Guestbook( null,
                                                                     $name,
                                                                     $city,

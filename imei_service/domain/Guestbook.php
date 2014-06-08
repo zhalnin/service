@@ -40,21 +40,17 @@ class Guestbook extends DomainObject {
      * @param null $browser
      */
     function __construct(   $id=null,
-                            $name,
-                            $city,
-                            $email,
-                            $url,
-                            $message,
-                            $answer,
-                            $putdate,
+                            $name=null,
+                            $city=null,
+                            $email=null,
+                            $url=null,
+                            $message=null,
+                            $answer=null,
+                            $putdate=null,
                             $hide='show',
-                            $id_parent,
-                            $ip,
-                            $browser ) {
-//        if( is_null( $id_parent ) ) {
-//            $id_parent = 0;
-//        }
-
+                            $id_parent=null,
+                            $ip=null,
+                            $browser=null ) {
 
 
         $this->name         = $name;

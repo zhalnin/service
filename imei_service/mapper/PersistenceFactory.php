@@ -7,7 +7,7 @@
  */
 
 namespace imei_service\mapper;
-
+error_reporting( E_ALL & ~E_NOTICE );
 //require_once( "imei_service/mapper/Collections.php" );
 //require_once( "imei_service/mapper/DomainObjectFactory.php" );
 //require_once( "imei_service/mapper/NewsIdentityObject.php" );
@@ -39,7 +39,38 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Contacts":
                 return new ContactsPersistenceFactory();
                 break;
+            case "imei_service\\domain\\Unlock":
+                return new UnlockPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class UnlockPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new UnlockMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new UnlockObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new UnlockCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new UnlockSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new UnlockUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new UnlockIdentityObject();
     }
 }
 
