@@ -12,12 +12,17 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 //require_once( "imei_service/command/Command.php" );
 //require_once( "imei_service/base/Registry.php" );
+require_once( "imei_service/domain/UnlockDetails.php" );
 
 
 class UnlockDetails extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
         $request->addFeedback( "Welcome to unlockDetails" );
+
+        $collection = \imei_service\domain\UnlockDetails::findAll( $request->getProperty( 'id_catalog' ) );
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+        $request->setObject( 'unlockDetailsAll', $collection );
         return self::statuses( 'CMD_OK' );
     }
 }

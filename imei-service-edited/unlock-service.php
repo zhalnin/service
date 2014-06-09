@@ -53,6 +53,7 @@ try
             "Ошибка выбора каталога");
     }
     $catalog = mysql_fetch_array($res);
+    echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
     // Название каталога
     $ctr = $_GET['ctr'];
     $id_parent = $_GET['id_parent'];
@@ -63,7 +64,7 @@ try
 
 
     $query = "SELECT * FROM $tbl_cat_position
-                WHERE id_catalog = $id_catalog
+                WHERE id = $id_catalog
                 AND hide = 'show'
                 ORDER BY operator";
     $res = mysql_query($query);

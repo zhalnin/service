@@ -24,4 +24,8 @@ interface UnlockCollection extends \Iterator {
     function add( DomainObject $unlock );
 }
 
+interface UnlockDetailsCollection extends \Iterator {
+    function add( DomainObject $unlock );
+}
+
 ?>

@@ -23,6 +23,40 @@ abstract class DomainObjectFactory {
 }
 
 
+
+class UnlockDetailsObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\UnlockDetails";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setOperator( $array['operator'] );
+        $obj->setCost( $array['cost'] );
+        $obj->setTimeconsume( $array['timeconsume'] );
+        $obj->setCompatible( $array['compatible'] );
+        $obj->setStatus( $array['status'] );
+        $obj->setCurrency( $array['currency'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setPutdate( $array['putdate'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+
+//        Здесь надо узнать из system_catalog ребенка,
+//        у которого id_parent = 6,
+//        где 6 - это id корневого элемента Официальный анлок
+//        $collection1 = \imei_service\domain\UnlockDetails::find( $request->getProperty( 'id_catalog' ) );
+//        $request->setObject( 'unlockDetails', $collection1 );
+
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
 class UnlockObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
@@ -35,7 +69,7 @@ class UnlockObjectFactory extends DomainObjectFactory {
         $obj->setDescription( $array['description'] );
         $obj->setKeywords( $array['keywords'] );
         $obj->setAbbreviatura( $array['abbreviatura'] );
-        $obj->setModerewrite( $array['moderewrite'] );
+        $obj->setModrewrite( $array['modrewrite'] );
         $obj->setPos( $array['pos'] );
         $obj->setHide( $array['hide'] );
         $obj->setUrlPict( $array['url_pict'] );

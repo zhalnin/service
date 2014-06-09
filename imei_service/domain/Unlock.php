@@ -70,15 +70,15 @@ class Unlock extends DomainObject {
     static function findAll() {
         $finder = self::getFinder( __CLASS__ );
         $idobj = self::getIdentityObject( __CLASS__ );
-        $unlockIdobj = new UnlockIdentityObject( 'hide' );
+        $unlockIdobj = new \imei_service\mapper\UnlockIdentityObject( 'hide' );
         $unlockIdobj->eq( 'show' )->field( 'id_parent' )->gt( 0 );
         return $finder->find( $unlockIdobj );
     }
 
-    static function find() {
+    static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
-        return $finder->findOne( $idobj->eq( 0 )->field( 'modrewrite' )->eq( 'unlock' )->field( 'hide' )->eq( 'show' ) );
+        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'unlock' )->field( 'hide' )->eq( 'show' ) );
     }
 
 
@@ -102,8 +102,8 @@ class Unlock extends DomainObject {
         $this->abbreviatura = $abbreviatura_s;
         $this->markDirty();
     }
-    function setModerewrite( $moderwrite_s ) {
-        $this->moderewrite = $moderwrite_s;
+    function setModrewrite( $modrewrite_s ) {
+        $this->modrewrite = $modrewrite_s;
         $this->markDirty();
     }
     function setPos( $pos_s ) {
@@ -155,8 +155,8 @@ class Unlock extends DomainObject {
     function getAbbreviatura() {
         return $this->abbreviatura;
     }
-    function getModerewrite() {
-        return $this->moderewrite;
+    function getModrewrite() {
+        return $this->modrewrite;
     }
     function getPos() {
         return $this->pos;

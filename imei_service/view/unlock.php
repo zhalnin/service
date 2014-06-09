@@ -54,7 +54,7 @@ try {
                             <?php
                             foreach ( $unlocks as $unlock ) {
 //                                echo "<tt><pre>".print_r( $unlock, true )."</pre></tt>";
-                                echo "    <li><a href=?cmd=Unlock&ctr={$unlock->getAbbreviatura()}&id_parent={$unlock->getIdParent()} class='started'>
+                                echo "    <li><a href=?cmd=Unlock&ctr={$unlock->getAbbreviatura()}&id_catalog={$unlock->getId()}&id_parent={$unlock->getIdParent()} class='started'>
                                 <div>
                                     <div>
                                         <img alt=\"{$unlock->getAltFlag()}\"  src=\"imei_service/view/{$unlock->getRoundedFlag()}\" />

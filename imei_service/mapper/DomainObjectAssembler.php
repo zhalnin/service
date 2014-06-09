@@ -69,6 +69,7 @@ class DomainObjectAssembler {
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
 
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }

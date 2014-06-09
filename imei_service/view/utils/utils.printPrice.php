@@ -1,6 +1,6 @@
 <?php
 
-function print_price($price){
+function printPrice($price){
 
     $type = $_COOKIE['currency_type'];
    if(empty($type)){

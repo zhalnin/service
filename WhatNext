@@ -1,6 +1,4 @@
-view/guestbook.php - добавляем сообщение
-проверить переменную page
-проверить переменную valid
+DomainObjectFactory - UnlockDetailsObjectFactory
 попробовать добавить скрытые поля в форму, хотя бы для page
 использовать SessionRegistry
 

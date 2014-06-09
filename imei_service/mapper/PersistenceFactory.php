@@ -42,6 +42,9 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Unlock":
                 return new UnlockPersistenceFactory();
                 break;
+            case "imei_service\\domain\\UnlockDetails":
+                return new UnlockDetailsPersistenceFactory();
+                break;
         }
     }
 }
@@ -73,6 +76,35 @@ class UnlockPersistenceFactory extends PersistenceFactory {
         return new UnlockIdentityObject();
     }
 }
+
+
+class UnlockDetailsPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new UnlockDetailsMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new UnlockDetailsObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new UnlockDetailsCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new UnlockDetailsSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new UnlockDetailsUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new UnlockDetailsIdentityObject();
+    }
+}
+
 
 /**
  * Class NewsPersistenceFactory
