@@ -48,7 +48,128 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Udid":
                 return new UdidPersistenceFactory();
                 break;
+            case "imei_service\\domain\\CarrierCheck":
+                return new CarrierCheckPersistenceFactory();
+                break;
+            case "imei_service\\domain\\FastCheck":
+                return new FastCheckPersistenceFactory();
+                break;
+            case "imei_service\\domain\\BlacklistCheck":
+                return new BlacklistCheckPersistenceFactory();
+                break;
+            case "imei_service\\domain\\Fag":
+                return new FaqPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class FaqPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new FaqMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new FaqObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new FaqCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new FaqSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new FaqUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new FaqIdentityObject();
+    }
+}
+
+class BlacklistCheckPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new BlacklistCheckMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new BlacklistCheckObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new BlacklistCheckCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new BlacklistCheckSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new BlacklistCheckUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new BlacklistCheckIdentityObject();
+    }
+}
+
+class FastCheckPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new FastCheckMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new FastCheckObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new FastCheckCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new FastCheckSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new FastCheckUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new FastCheckIdentityObject();
+    }
+}
+
+class CarrierCheckPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new CarrierCheckMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new CarrierCheckObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new CarrierCheckCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new CarrierCheckSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new CarrierCheckUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new CarrierCheckIdentityObject();
     }
 }
 

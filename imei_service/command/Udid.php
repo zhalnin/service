@@ -21,4 +21,5 @@ class Udid extends Command {
         $request->addFeedback( "Welcome to UDID" );
         return self::statuses( 'CMD_OK' );
     }
-} 
+}
+?>

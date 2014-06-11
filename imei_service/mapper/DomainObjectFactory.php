@@ -223,3 +223,92 @@ class UdidObjectFactory extends DomainObjectFactory {
         return $obj;
     }
 }
+
+
+class CarrierCheckObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\CarrierCheck";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatura'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlPict( $array['urlpict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class FastCheckObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\FastCheck";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatura'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlPict( $array['urlpict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class BlacklistCheckObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\BlacklistCheck";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatura'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlPict( $array['urlpict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+

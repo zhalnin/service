@@ -29,7 +29,23 @@ interface UnlockDetailsCollection extends \Iterator {
 }
 
 interface UdidCollection extends \Iterator {
-    function add( DomainObject $unlock );
+    function add( DomainObject $udid );
+}
+
+interface CarrierCheckCollection extends \Iterator {
+    function add( DomainObject $carrierCheck );
+}
+
+interface FastCheckCollection extends \Iterator {
+    function add( DomainObject $fastCheck );
+}
+
+interface BlacklistCheckCollection extends \Iterator {
+    function add( DomainObject $blacklistCheck );
+}
+
+interface FaqCollection extends \Iterator {
+    function add( DomainObject $faq );
 }
 
 ?>

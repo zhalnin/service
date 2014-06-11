@@ -87,4 +87,48 @@ class UdidCollection
     }
 }
 
+
+class CarrierCheckCollection
+    extends Collection
+    implements \imei_service\domain\CarrierCheckCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\CarrierCheck";
+    }
+}
+
+
+
+class FastCheckCollection
+    extends Collection
+    implements \imei_service\domain\FastCheckCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\FastCheck";
+    }
+}
+
+
+
+class BlacklistCheckCollection
+    extends Collection
+    implements \imei_service\domain\BlacklistCheckCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\BlacklistCheck";
+    }
+}
+
+
+
+class FaqCollection
+    extends Collection
+    implements \imei_service\domain\FaqCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Faq";
+    }
+}
+
+
 ?>

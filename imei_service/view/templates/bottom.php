@@ -23,7 +23,7 @@ namespace imei_service\view\templates;
                 |
             </li>
             <li>
-                <p>Copyright © 2013 All rights reserved.</p>
+                <p>Copyright © 2014 All rights reserved.</p>
             </li>
         </ol>
     </div>
