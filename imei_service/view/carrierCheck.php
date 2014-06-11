@@ -15,7 +15,6 @@ try {
     require_once( "imei_service/view/ViewHelper.php" );
 
     $request = \imei_service\view\VH::getRequest();
-    $request = \imei_service\view\VH::getRequest();
     $carrierCheckCollection = $request->getObject( 'carrierCheckCollection' );
 
     $title = $carrierCheckCollection->getName();

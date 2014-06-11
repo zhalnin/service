@@ -14,7 +14,6 @@ try {
     require_once( "imei_service/view/ViewHelper.php" );
 
     $request = \imei_service\view\VH::getRequest();
-    $request = \imei_service\view\VH::getRequest();
     $udidCollection = $request->getObject( 'udidCollection' );
 
     $title = $udidCollection->getName();

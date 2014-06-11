@@ -1,5 +1,15 @@
-DomainObjectFactory - UnlockDetailsObjectFactory
-попробовать добавить скрытые поля в форму, хотя бы для page
-использовать SessionRegistry
 
+system_menu_catalog - раздел FAQ - id_catalog(primary key)
 
+system_menu_position - подразделы - id_position(primary key),
+    id_catalog(secondary key),
+    url( тип: статья или ссылка )
+
+system_menu_paragraph - параграфы подраздела - id_paragraph(primary key),
+    id_catalog и
+    id_position(secondary key)
+
+system_menu_paragraph_image - фото из параграфов - id_image(primary key),
+    id_paragraph,
+    id_catalog и
+    id_position(secondary key)
