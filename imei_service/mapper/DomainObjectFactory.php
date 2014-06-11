@@ -312,3 +312,24 @@ class BlacklistCheckObjectFactory extends DomainObjectFactory {
 }
 
 
+
+class FaqObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\Faq";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}

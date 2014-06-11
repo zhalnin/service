@@ -52,7 +52,7 @@ class DomainObjectAssembler {
      */
     function findOne( IdentityObject $idobj ) {
         $collection = $this->find( $idobj );
-//        echo "<tt><pre>".print_r($collection->current(), true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
         return $collection->current();
     }
 

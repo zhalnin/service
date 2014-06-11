@@ -15,24 +15,25 @@ require_once( "imei_service/view/ViewHelper.php" );
 try {
 
     $request = \imei_service\view\VH::getRequest();
-    print $request->getFeedbackString('/n');
+    $catalog = $request->getObject( 'catalogCollection' );
+//    print $request->getFeedbackString('/n');
 //    echo "<tt><pre>".print_r( $request->getFeedbackString('/n'), true) ."</pre></tt>";
 
-    $title = "Вопросы по анлоку iPhone, проверке по IMEI, s/n, blacklist или регистрации UDID + сертификаты и провижен профиль";
-    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
-    $description = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
+    $title = $catalog->getName();
+    $keywords = $catalog->getKeywords();
+    $description = $catalog->getDescription();
     require_once("templates/top.php");
 ?>
 
     <div id="header">
         <ul id="navigation" role="navigation">
-            <li id="nav-home"><a href="index.php"><span>Главная</span></a></li>
-            <li id="nav-unlock"><a href="unlock.php"><span>Официальный Анлок iPhone</span></a></li>
-            <li id="nav-udid"><a href="udid.php"><span>Регистрация UDID</span></a></li>
-            <li id="nav-carrier"><a href="carrier_check.php"><span>Проверка оператора по IMEI</span></a></li>
-            <li id="nav-fast_check"><a href="fast_check.php"><span>Быстрая проверка</span></a></li>
-            <li id="nav-blacklist"><a href="blacklist_check.php"><span>Blacklist</span></a></li>
-            <li id="nav-faq"><a  class="selected" href="faq.php"><span>Вопросы</span></a></li>
+            <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-faq"><a  class="selected" href="?cmd=Faq"><span>Вопросы</span></a></li>
         </ul>
     </div>
     <div id="main" class="">
@@ -58,10 +59,10 @@ try {
 
 
                         echo "<div class='faq-title'>
-                            <h1 class=h2>$subcatalog[name]</h1>
+                            <h1 class=h2>{$catalog->getName()}</h1>
                         </div>
                         <div class='faq-image'>
-                            <img alt='IMEI-service - Вопросы' src='images/Apple_logo_black_shadow.png'/>
+                            <img alt='IMEI-service - Вопросы' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
                         </div>";
 
 
@@ -79,7 +80,7 @@ try {
 
                                 </div>";
                         echo "<div class='faq-all-info'>";
-                        require_once("article_print.php");
+//                        require_once("article_print.php");
                         echo "</div> ";
 
 
@@ -130,7 +131,7 @@ try {
 
                                                     </div>";
                         echo "<div class='faq-all-info'>";
-                        require_once("article_print.php");
+//                        require_once("article_print.php");
                         echo "</div> ";
 
 

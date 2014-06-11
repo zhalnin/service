@@ -120,11 +120,11 @@ require_once("templates/top.php");
 
 
                     echo "<div class='faq-title'>
-                                <h1 class=h2>$subcatalog[name]</h1>
-                          </div>
-                          <div class='faq-image'>
-                            <img alt='IMEI-service - Вопросы' src='images/Apple_logo_black_shadow.png'/>
-                          </div>";
+                                            <h1 class=h2>$subcatalog[name]</h1>
+                                      </div>
+                                      <div class='faq-image'>
+                                        <img alt='IMEI-service - Вопросы' src='images/Apple_logo_black_shadow.png'/>
+                                      </div>";
 
 
 
@@ -153,8 +153,8 @@ require_once("templates/top.php");
                         // ссылкой - осуществляем редирект
                         if($position['url'] != 'article') {
                             echo "<HTML><HEAD>
-                                        <META HTTP-EQUIV='Refresh' CONTENT='0; URL=$position[url]'>
-                                    </HEAD></HTML>";
+                                                    <META HTTP-EQUIV='Refresh' CONTENT='0; URL=$position[url]'>
+                                                </HEAD></HTML>";
                             exit();
                         }
                         // Статья одна и нет подразделов - выводим содержимое статьи

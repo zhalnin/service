@@ -26,8 +26,8 @@ class Unlock extends Command {
 
             $collection = \imei_service\domain\Unlock::findAll();
             $request->setObject( 'unlock', $collection );
+            echo "<tt><pre>".print_r( $collection, true )."</pre></tt>";
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
-//            echo "<tt><pre>".print_r( $collection, true )."</pre></tt>";
         } else {
             $id = 0;
             $decorateCollection = \imei_service\domain\Unlock::find( $id );

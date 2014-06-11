@@ -57,7 +57,7 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\BlacklistCheck":
                 return new BlacklistCheckPersistenceFactory();
                 break;
-            case "imei_service\\domain\\Fag":
+            case "imei_service\\domain\\Faq":
                 return new FaqPersistenceFactory();
                 break;
         }
