@@ -1,19 +1,17 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
+ * Created by PhpStorm.
  * User: zhalnin
- * Date: 08/06/14
- * Time: 19:49
- * To change this template use File | Settings | File Templates.
+ * Date: 10/06/14
+ * Time: 17:34
  */
 
 namespace imei_service\domain;
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/DomainObject.php" );
-//require_once( "imei_service/mapper/UnlockIdentityObject.php" );
 
-class Unlock extends DomainObject {
+class Udid extends DomainObject {
 
     private $name;
     private $orderTitle;
@@ -68,7 +66,7 @@ class Unlock extends DomainObject {
     static function findAll() {
         $finder = self::getFinder( __CLASS__ );
         $idobj = self::getIdentityObject( __CLASS__ );
-        $unlockIdobj = new \imei_service\mapper\UnlockIdentityObject( 'hide' );
+        $unlockIdobj = new \imei_service\mapper\UdidIdentityObject( 'hide' );
         $unlockIdobj->eq( 'show' )->field( 'id_parent' )->gt( 0 );
         return $finder->find( $unlockIdobj );
     }
@@ -76,7 +74,7 @@ class Unlock extends DomainObject {
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
-        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'unlock' )->field( 'hide' )->eq( 'show' ) );
+        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'udid' )->field( 'hide' )->eq( 'show' ) );
     }
 
 

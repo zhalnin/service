@@ -45,7 +45,38 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\UnlockDetails":
                 return new UnlockDetailsPersistenceFactory();
                 break;
+            case "imei_service\\domain\\Udid":
+                return new UdidPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class UdidPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new UdidMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new UdidObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new UdidCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new UdidSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new UdidUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new UdidIdentityObject();
     }
 }
 

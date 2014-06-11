@@ -18,14 +18,12 @@ try {
     $decorateUnlock = $request->getObject( 'decorateUnlock' );
 
 //    echo "<tt><pre>".print_r( $decorateUnlock, true )."</pre></tt>";
-
-
     // Название каталога
     $title = $decorateUnlock->getName();
-//    $parent = $decorateUnlock->getIdParent();
     $keywords = "unlock iPhone,официальный анлок,AT&T,все операторы,official unlock";
     $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
     require_once( "imei_service/view/templates/top.php" );
+
     ?>
 
 
@@ -76,7 +74,7 @@ try {
                             <div class="hero selfclear">
                                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-            <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;" ><a href="<?php echo $_SERVER['PHP_SELF'] ?>"><?php echo $decorateUnlock->getName()?></a></h2>
+            <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;" ><a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Unlock" ?>"><?php echo $decorateUnlock->getName()?></a></h2>
             <div id="shipping" class="step edit" style="opacity: 1;">
                 <div class="step-content top-divided" style="">
                     <div id="shipping-contact-form" class="step-mode edit clearfix" style="">
@@ -120,6 +118,7 @@ try {
                                         <strong id="coherent_id_103">Условия</strong>
                                         <a href="?cmd=CarrierCheck" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
                                     </p>
+                                    <br />
                                     <p>
                                         <?php
                                         echo nl2br(\imei_service\view\utils\printPage( $decorateUnlock->getDescription() ));

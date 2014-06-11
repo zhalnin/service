@@ -1,10 +1,9 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
+ * Created by PhpStorm.
  * User: zhalnin
- * Date: 08/06/14
- * Time: 21:16
- * To change this template use File | Settings | File Templates.
+ * Date: 10/06/14
+ * Time: 17:40
  */
 
 namespace imei_service\mapper;
@@ -12,7 +11,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/mapper/SelectionFactory.php" );
 
-class UnlockSelectionFactory extends SelectionFactory {
+class UdidSelectionFactory extends SelectionFactory {
 
     function newSelection( IdentityObject $obj ) {
         $fields = implode(',', $obj->getObjectFields() );

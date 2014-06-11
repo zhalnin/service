@@ -12,29 +12,35 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-
     require_once( "imei_service/view/utils/utils.printPage.php" );
     require_once( "imei_service/view/utils/utils.printPrice.php" );
-    require_once( "imei_service/view/templates/top.php");
     require_once( "imei_service/view/ViewHelper.php" );
     $request = \imei_service\view\VH::getRequest();
-    $decorateUnlock = $request->getObject('decorateUnlock');
+    $unlockParent = $request->getObject('unlockParent');
     $unlockDetails = $request->getObject('unlockDetails');
-    $unlockDetailsAll = $request->getObject( 'unlockDetailsAll' );
-    echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+    $decorateUnlock = $request->getObject('decorateUnlock');
+
+    $title = $unlockParent->getName();
+    $keywords = "unlock iPhone,официальный анлок,AT&T,Orange,UK,USA,Bouygues,Telia,SFR,Vodafone,T-mobile,Verizon";
+    $description = "Официальный анлок iPhone. Стоимость разлочки iPhone зависит от оператора, к которому он привязан.";
+//    echo "<tt><pre>".print_r($unlockParent, true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($unlockDetails, true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($decorateUnlock, true)."</pre></tt>";
+    require_once( "imei_service/view/templates/top.php");
+
 
     ?>
 
 
     <div id="header">
         <ul id="navigation" role="navigation">
-            <li id="nav-home"><a href="index.php"><span>Главная</span></a></li>
-            <li id="nav-unlock"><a  class="selected" href="unlock.php"><span>Официальный Анлок iPhone</span></a></li>
-            <li id="nav-udid"><a href="udid.php"><span>Регистрация UDID</span></a></li>
-            <li id="nav-carrier"><a href="carrier_check.php"><span>Проверка оператора по IMEI</span></a></li>
-            <li id="nav-fast_check"><a href="fast_check.php"><span>Быстрая проверка</span></a></li>
-            <li id="nav-blacklist"><a href="blacklist_check.php"><span>Blacklist</span></a></li>
-            <li id="nav-faq"><a href="faq.php"><span>Вопросы</span></a></li>
+            <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-unlock"><a  class="selected" href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
         </ul>
     </div>
 
@@ -52,24 +58,11 @@ try {
             <div id="slogan"><span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
             <div id="showcase" class="content">
 
-
-
-
-
-
-
-
-    <?php
-
-
-
-
-    ?>
         <div id="design">
         <div class="row block grid2col row block border">
-        <img class="hero-image flushleft" alt="<?php echo $catalog[alt]; ?>" src="<?php echo $catalog[urlpict];?>">
+        <img class="hero-image flushleft" alt="<?php echo $unlockParent->getAlt(); ?>" src="imei_service/view/<?php echo $unlockParent->getUrlPict();?>">
         <div class="column last">
-        <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?ctr='.$ctr.'&id_parent='.$id_parent ?>"><?php echo $catalog[name];?></a></h1>
+        <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$unlockParent->getAbbreviatura().'&id_parent='.$unlockParent->getIdParent() ?>"><?php echo $unlockParent->getName();?></a></h1>
         <div class='column last dividerdownmidi'>
         <div>
             <div style='width: 130px; float: left; margin: 10px 0 20px 50px;'><b>Оператор</b></div>
@@ -78,8 +71,7 @@ try {
             <div style='width: 120px; float: left; margin: 10px 0 20px 60px;'><b>Сроки</b></div>
         </div>
         <?php
-    foreach ( $unlockDetailsAll as $uda ) {
-
+    foreach ( $unlockDetails as $uda ) {
             echo "<div>
                     <div style='width: 150px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>".$uda->getOperator()."</b></ins></div>
                     <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone ".$uda->getCompatible()."</div>
@@ -103,7 +95,7 @@ try {
         <div class="hero selfclear">
             <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                 <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;" ><a href="<?php echo $_SERVER[PHP_SELF] .'?ctr='.$ctr.'&id_parent='.$id_parent ?>"><?php echo $catalog[name];?></a></h2>
+                <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;" ><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&?ctr='.$unlockParent->getAbbreviatura().'&id_parent='.$unlockParent->getIdParent() ?>"><?php echo $unlockParent->getName();?></a></h2>
                 <div id="shipping" class="step edit" style="opacity: 1;">
                     <div class="step-content top-divided" style="">
                         <div id="shipping-contact-form" class="step-mode edit clearfix" style="">
@@ -112,7 +104,7 @@ try {
                                     <form method="post">
                                         <fieldset style="">
                                             <legend style="">
-                                                <strong class="label"><b><?php echo $parent_catalog[order_title];?></b></strong>
+                                                <strong class="label"><b><?php echo $decorateUnlock->getOrderTitle(); ?></b></strong>
                                             </legend>
                                             <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
 
@@ -147,9 +139,10 @@ try {
                                             <strong id="coherent_id_103">Условия</strong>
                                             <a href="carrier_check.php" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
                                         </p>
+                                        <br />
                                         <p>
                                             <?php
-                                            echo nl2br(\imei_service\view\utils\printPage($parent_catalog['description']));
+                                            echo nl2br(\imei_service\view\utils\printPage( $decorateUnlock->getDescription() ) );
                                             ?>
                                         </p>
                                     </div>

@@ -32,7 +32,7 @@ class Unlock extends Command {
             $id = 0;
             $decorateCollection = \imei_service\domain\Unlock::find( $id );
             $request->setObject( 'decorateUnlock', $decorateCollection );
-            echo "<tt><pre>".print_r( $id_catalog, true )."</pre></tt>";
+//            echo "<tt><pre>".print_r( $id_catalog, true )."</pre></tt>";
             return self::statuses( 'CMD_OK' );
         }
     }

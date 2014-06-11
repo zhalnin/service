@@ -70,7 +70,7 @@ class DomainObjectAssembler {
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив
 //        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
-
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 

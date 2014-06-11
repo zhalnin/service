@@ -27,6 +27,9 @@ abstract class DomainObjectFactory {
 class UnlockDetailsObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
+
+//        echo "<tt><pre>".print_r( $array, true)."</pre></tt>";
+
         $class = "\\imei_service\\domain\\UnlockDetails";
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) { return $old; }
@@ -49,6 +52,14 @@ class UnlockDetailsObjectFactory extends DomainObjectFactory {
 //        $collection1 = \imei_service\domain\UnlockDetails::find( $request->getProperty( 'id_catalog' ) );
 //        $request->setObject( 'unlockDetails', $collection1 );
 
+//        $factory = PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
+//        $unlock_assembler = new DomainObjectAssembler( $factory );
+//        $unlock_idobj = new UnlockIdentityObject( 'id' );
+//        $unlock_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
+//        $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
+//        $obj->setUnlock( $unlock_collection );
+//
+//        echo "<tt><pre>".print_r( $unlock_collection, true)."</pre></tt>";
 
         $this->addToMap( $obj );
         $obj->markClean();
@@ -72,7 +83,7 @@ class UnlockObjectFactory extends DomainObjectFactory {
         $obj->setModrewrite( $array['modrewrite'] );
         $obj->setPos( $array['pos'] );
         $obj->setHide( $array['hide'] );
-        $obj->setUrlPict( $array['url_pict'] );
+        $obj->setUrlPict( $array['urlpict'] );
         $obj->setAlt( $array['alt'] );
         $obj->setRoundedFlag( $array['rounded_flag'] );
         $obj->setTitleFlag( $array['title_flag'] );
@@ -177,6 +188,35 @@ class GuestbookObjectFactory extends DomainObjectFactory {
         $obj->setIp( $array['ip'] );
         $obj->setBrowser( $array['browser'] );
 
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class UdidObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = "\\imei_service\\domain\\Udid";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatura'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlPict( $array['urlpict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

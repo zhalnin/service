@@ -78,4 +78,13 @@ class GuestbookCollection
 }
 
 
+class UdidCollection
+    extends Collection
+    implements \imei_service\domain\UdidCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Udid";
+    }
+}
+
 ?>

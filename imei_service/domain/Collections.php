@@ -28,4 +28,8 @@ interface UnlockDetailsCollection extends \Iterator {
     function add( DomainObject $unlock );
 }
 
+interface UdidCollection extends \Iterator {
+    function add( DomainObject $unlock );
+}
+
 ?>

@@ -26,6 +26,7 @@ class UnlockDetails extends DomainObject {
     private $pos;
     private $putdate;
     private $idCatalog;
+    private $unlock;
 
 
     function __construct(   $id             =null,
@@ -68,6 +69,17 @@ class UnlockDetails extends DomainObject {
         return $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ) );
     }
 
+//    function setUnlock( UnlockCollection $unlock ) {
+//        $this->unlock = $unlock;
+//    }
+//
+//    function getUnlock() {
+//        if( is_null( $this->unlock ) ) {
+//            $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_catalog' );
+//            $this->unlock = self::getFinder( 'imei_service\\domain\\Unlock' )->find( $idobj->eq( 0 )->field( 'hide' )->eq( 'show' ) );
+//        }
+//        return $this->unlock;
+//    }
 
     function setOperator( $operator_s ) {
         $this->operator = $operator_s;

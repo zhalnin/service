@@ -53,7 +53,7 @@ try
             "Ошибка выбора каталога");
     }
     $catalog = mysql_fetch_array($res);
-    echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
     // Название каталога
     $ctr = $_GET['ctr'];
     $id_parent = $_GET['id_parent'];

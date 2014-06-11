@@ -38,6 +38,10 @@
         <view>unlockDetails</view>
     </command>
 
+    <command name="Udid">
+        <view>udid</view>
+    </command>
+
     <command name="ListVenues">
         <view>listvenues</view>
     </command>
