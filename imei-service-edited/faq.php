@@ -200,6 +200,9 @@ require_once("templates/top.php");
                     }
                 }
             } else {
+
+                // Если id_position передан - т.е. переходим к детальному просмотру статьи
+
 //        echo "ID_POSITION";
                 // Проверяем GET-параметры, предотвращая SQL-инъекцию
                 $_GET['id_position'] = intval($_GET['id_position']);

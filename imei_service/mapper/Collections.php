@@ -131,4 +131,24 @@ class FaqCollection
 }
 
 
+class FaqPositionCollection
+    extends Collection
+    implements \imei_service\domain\FaqPositionCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\FaqPosition";
+    }
+}
+
+
+class FaqParagraphCollection
+    extends Collection
+    implements \imei_service\domain\FaqParagraphCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\FaqParagraph";
+    }
+}
+
+
 ?>

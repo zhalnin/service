@@ -57,6 +57,8 @@ try
                                     к позиции");
         }
         $paragraph_img = mysql_fetch_array($parimg);
+//        echo "<tt><pre>".print_r($query, true)."</pre></tt>";
+
 //      $_REQUEST = mysql_fetch_array($parimg);
         $_REQUEST['namepict'] = $paragraph_img[name];
         $_REQUEST['alt'] = $paragraph_img[alt];
@@ -83,7 +85,8 @@ try
                                     "Изображение",
                                     false,
                                     $_FILES,
-                                    "../../files/article/");
+                                    "../../files/article/",
+                                    "article_");
     $type           = new FieldSelect("type",
                                     "Тип параграфа",
                                     array("text"      => "Параграф",
@@ -237,11 +240,11 @@ try
                                         параграфа");
             }
             // Осуществляем редирект на главную страницу администрирования
-            header("Location: paragraph.php?".
-                "id_position={$form->fields[id_position]->value}&".
-                "id_catalog={$form->fields[id_catalog]->value}&".
-                "page={$form->fields[page]->value}");
-            exit();
+//            header("Location: paragraph.php?".
+//                "id_position={$form->fields[id_position]->value}&".
+//                "id_catalog={$form->fields[id_catalog]->value}&".
+//                "page={$form->fields[page]->value}");
+//            exit();
         }
     }
     // Начало страницы

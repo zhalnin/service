@@ -56,6 +56,20 @@
 
     <command name="Faq">
         <view>faq</view>
+        <status value="CMD_OK">
+            <forward>FaqPosition</forward>
+        </status>
+    </command>
+
+    <command name="FaqPosition">
+        <view>faqPosition</view>
+        <status value="CMD_OK">
+            <forward>FaqParagraph</forward>
+        </status>
+    </command>
+
+    <command name="FaqParagraph">
+        <view>faqParagraph</view>
     </command>
 
 </control>

@@ -16,14 +16,19 @@ class Faq extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 
-        $id_position = $request->getProperty('id_position');
-        $id = 0;
-        $catalogCollection = \imei_service\domain\Faq::find( $id );
-        $request->setObject( 'catalogCollection', $catalogCollection );
-
-        echo "<tt><pre>".print_r( $catalogCollection, true)."</pre></tt>";
-
         $request->addFeedback( 'Welcome to FAQ' );
+
+        $id_position = $request->getProperty('id_position');
+        if( ! $id_position ) {
+            $id = 0;
+            $catalogCollection = \imei_service\domain\Faq::find( $id );
+            $request->setObject( 'catalogCollection', $catalogCollection );
+
+        } else {
+            // Переадресуем для выборки всех позиций - faqPosition
+//                    echo "<tt><pre><--- start --->\r\n".print_r( $catalogCollection, true)."\r\n<--- end ---></pre></tt>";
+            return self::statuses( 'CMD_OK' );
+        }
 
     }
 }

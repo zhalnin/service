@@ -48,4 +48,12 @@ interface FaqCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface FaqPositionCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
+interface FaqParagraphCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
 ?>

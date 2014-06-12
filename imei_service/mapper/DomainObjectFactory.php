@@ -7,7 +7,7 @@
  */
 
 namespace imei_service\mapper;
-
+require_once( 'imei_service/domain/FaqPosition.php' );
 
 
 abstract class DomainObjectFactory {
@@ -44,22 +44,6 @@ class UnlockDetailsObjectFactory extends DomainObjectFactory {
         $obj->setPos( $array['pos'] );
         $obj->setPutdate( $array['putdate'] );
         $obj->setIdCatalog( $array['id_catalog'] );
-
-
-//        Здесь надо узнать из system_catalog ребенка,
-//        у которого id_parent = 6,
-//        где 6 - это id корневого элемента Официальный анлок
-//        $collection1 = \imei_service\domain\UnlockDetails::find( $request->getProperty( 'id_catalog' ) );
-//        $request->setObject( 'unlockDetails', $collection1 );
-
-//        $factory = PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
-//        $unlock_assembler = new DomainObjectAssembler( $factory );
-//        $unlock_idobj = new UnlockIdentityObject( 'id' );
-//        $unlock_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
-//        $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
-//        $obj->setUnlock( $unlock_collection );
-//
-//        echo "<tt><pre>".print_r( $unlock_collection, true)."</pre></tt>";
 
         $this->addToMap( $obj );
         $obj->markClean();
@@ -316,10 +300,12 @@ class BlacklistCheckObjectFactory extends DomainObjectFactory {
 class FaqObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
+//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
+
         $class = "\\imei_service\\domain\\Faq";
-        $old = $this->getFromMap( $class, $array['id'] );
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
-        $obj = new $class( $array['id'] );
+        $obj = new $class( $array['id_catalog'] );
         $obj->setName( $array['name'] );
         $obj->setDescription( $array['description'] );
         $obj->setKeywords( $array['keywords'] );
@@ -327,6 +313,82 @@ class FaqObjectFactory extends DomainObjectFactory {
         $obj->setPos( $array['pos'] );
         $obj->setHide( $array['hide'] );
         $obj->setIdParent( $array['id_parent'] );
+
+
+
+
+//        $collection = \imei_service\domain\FaqPosition::find( $request->getProperty( 'id_position' ) );
+
+        $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\FaqPosition' );
+        $faqPosition_assembler = new DomainObjectAssembler( $factory );
+        $faqPosition_idobj = new FaqPositionIdentityObject( 'id_catalog' );
+        $faqPosition_idobj->eq( $array['id_catalog'])->field( 'hide' )->eq( 'show' );
+        $faqPosition_collection = $faqPosition_assembler->find( $faqPosition_idobj );
+        $obj->setFaqPosition( $faqPosition_collection );
+
+
+//        echo "<tt><pre><--- start --->\r\n".print_r( $obj, true)."\r\n<--- end ---></pre></tt>";
+
+//        $factory = PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
+//        $unlock_assembler = new DomainObjectAssembler( $factory );
+//        $unlock_idobj = new UnlockIdentityObject( 'id' );
+//        $unlock_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
+//        $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
+//        $obj->setUnlock( $unlock_collection );
+//
+//        echo "<tt><pre>".print_r( $unlock_collection, true)."</pre></tt>";
+
+
+
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+
+class FaqPositionObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
+        $class = '\imei_service\domain\FaqPosition';
+//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
+        $old = $this->getFromMap( $class, $array['id_position'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_position'] );
+        $obj->setName( $array['name'] );
+        $obj->setUrl( $array['url'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class FaqParagraphObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
+        $class = '\imei_service\domain\FaqParagraph';
+//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
+        $old = $this->getFromMap( $class, $array['id_position'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_position'] );
+        $obj->setName( $array['name'] );
+        $obj->setType( $array['type'] );
+        $obj->setAlign( $array['align'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setIdPosition( $array['id_position'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

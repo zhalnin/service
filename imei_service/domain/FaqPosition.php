@@ -2,8 +2,8 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: zhalnin
- * Date: 11/06/14
- * Time: 19:12
+ * Date: 12/06/14
+ * Time: 12:19
  * To change this template use File | Settings | File Templates.
  */
 
@@ -12,75 +12,52 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/DomainObject.php" );
 
-class Faq extends DomainObject {
+class FaqPosition extends DomainObject {
 
     private $id;
     private $name;
-    private $description;
+    private $url;
     private $keywords;
     private $modrewrite;
     private $pos;
     private $hide;
-    private $idParent;
-    private $faqPositions;
+    private $idCatalog;
 
 
     function __construct(   $id             =null,
                             $name           =null,
-                            $description    =null,
+                            $url            =null,
                             $keywords       =null,
                             $modrewrite     =null,
                             $pos            =null,
                             $hide           ='show',
-                            $idParent       =0 ) {
+                            $idCatalog      =0 ) {
 
         $this->name = $name;
-        $this->description = $description;
+        $this->url = $url;
         $this->keywords = $keywords;
         $this->modrewrite = $modrewrite;
         $this->pos = $pos;
         $this->hide = $hide;
-        $this->idParent = $idParent;
+        $this->idCatalog = $idCatalog;
 
         parent::__construct( $id );
     }
 
 
 
-
-
-    function setFaqPosition( FaqPositionCollection $faqPosition ) {
-//        echo "<tt><pre> setVenue - ".print_r($venue,true)."</pre></tt>";
-        $this->faqPositions = $faqPosition;
-        $this->markDirty();
-    }
-
-    function getFaqPosition() {
-        if( is_null( $this->faqPositions ) ) {
-            return "getFaqPosition() returned null";
-        }
-        return $this->faqPositions;
-    }
-
-
-
-
-
-
-
-
     static function findAll() {
         $finder = self::getFinder( __CLASS__ );
         $idobj = self::getIdentityObject( __CLASS__ );
-        $faqIdobj = new \imei_service\mapper\FaqIdentityObject( 'hide' );
+        $faqIdobj = new \imei_service\mapper\FaqPositionIdentityObject( 'hide' );
         $faqIdobj->eq( 'show' );
         return $finder->find( $faqIdobj );
     }
 
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \imei_service\mapper\FaqIdentityObject( 'id_parent' );
-        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'faq' )->field( 'hide' )->eq( 'show' ) );
+        $idobj = new \imei_service\mapper\FaqPositionIdentityObject( 'id_position' );
+        return $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ) );
     }
 
 
@@ -88,8 +65,8 @@ class Faq extends DomainObject {
         $this->name = $name_s;
         $this->markDirty();
     }
-    function setDescription( $description_s ) {
-        $this->description = $description_s;
+    function setUrl( $url_s ) {
+        $this->url = $url_s;
         $this->markDirty();
     }
     function setKeywords( $keywords_s ) {
@@ -108,8 +85,8 @@ class Faq extends DomainObject {
         $this->hide = $hide_s;
         $this->markDirty();
     }
-    function setIdParent( $idParent_s ) {
-        $this->idParent = $idParent_s;
+    function setIdCatalog( $idCatalog_s ) {
+        $this->idCatalog = $idCatalog_s;
         $this->markDirty();
     }
 
@@ -117,8 +94,8 @@ class Faq extends DomainObject {
     function getName() {
         return $this->name;
     }
-    function getDescription() {
-        return $this->description;
+    function getUrl() {
+        return $this->url;
     }
     function getKeywords() {
         return $this->keywords;
@@ -132,8 +109,8 @@ class Faq extends DomainObject {
     function getHide() {
         return $this->hide;
     }
-    function getIdParent() {
-        return $this->idParent;
+    function getIdCatalog() {
+        return $this->idCatalog;
     }
 }
 ?>

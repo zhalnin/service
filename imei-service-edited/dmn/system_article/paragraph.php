@@ -200,6 +200,7 @@ try
                               id_position = $_GET[id_position] AND
                               id_catalog = $_GET[id_catalog]";
             $tot = mysql_query($query);
+
             if(!$tot)
             {
                 throw new ExceptionMySQL(mysql_error(),
@@ -217,11 +218,20 @@ try
                     </td>
                     <td><p $align>".
                 nl2br(print_page($paragraph[$i]['name'])).
-                "</p></td>
-                    <td align=center>
+                "</p></td>";
+            if( $total_image > 0 ) {
+              echo "<td align=center>
                         <a href=show.php?$url>Изображения$print_image</a>
-                    </td>
-                    <td align=center>".print_page($type)."</td>
+                    </td>";
+            } else {
+                echo "<td align=center>
+                        <p>Изображений нет</p>
+                    </td>";
+            }
+
+
+
+            echo "<td align=center>".print_page($type)."</td>
                     <td align=center>".$paragraph[$i]['pos']."</td>
                     <td>
                         <a href=parup.php?$url>Вверх</a><br>

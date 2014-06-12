@@ -60,7 +60,69 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Faq":
                 return new FaqPersistenceFactory();
                 break;
+            case "imei_service\\domain\\FaqPosition":
+                return new FaqPositionPersistenceFactory();
+                break;
+            case "imei_service\\domain\\FaqParagraph":
+                return new FaqParagraphPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class FaqParagraphPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new FaqParagraphMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new FaqParagraphObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new FaqParagraphCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new FaqParagraphSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new FaqParagraphUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new FaqParagraphIdentityObject();
+    }
+}
+
+
+class FaqPositionPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new FaqPositionMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new FaqPositionObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new FaqPositionCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new FaqPositionSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new FaqPositionUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new FaqPositionIdentityObject();
     }
 }
 

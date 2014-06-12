@@ -16,6 +16,14 @@ try {
 
     $request = \imei_service\view\VH::getRequest();
     $catalog = $request->getObject( 'catalogCollection' );
+
+//    echo "<tt><pre>".print_r( $catalog->getFaqPosition(), true) ."</pre></tt>";
+//        echo "<tt><pre>".print_r( $cat, true) ."</pre></tt>";
+//        foreach ($catalog->getFaqPosition() as $pos ) {
+//            echo "<tt><pre>".print_r( $pos, true) ."</pre></tt>";
+//        }
+
+
 //    print $request->getFeedbackString('/n');
 //    echo "<tt><pre>".print_r( $request->getFeedbackString('/n'), true) ."</pre></tt>";
 
@@ -59,52 +67,28 @@ try {
 
 
                         echo "<div class='faq-title'>
-                            <h1 class=h2>{$catalog->getName()}</h1>
-                        </div>
-                        <div class='faq-image'>
-                            <img alt='IMEI-service - Вопросы' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
-                        </div>";
-
-
-
-
-
-
-
-
-
-                        echo "<div class='faq-title'>
-                                    <h1 class=h2>".$position['name']."</h1>
+                                    <h1 class=h2>{$catalog->getName()}</h1>
                                 </div>
                                 <div class='faq-image'>
+                                    <img alt='IMEI-service - Вопросы' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
+                                </div>
 
-                                </div>";
-                        echo "<div class='faq-all-info'>";
-//                        require_once("article_print.php");
-                        echo "</div> ";
+                                <div class='faq-info'>";
 
+                                foreach ($catalog->getFaqPosition() as $pos ) {
 
+                                    if($pos->getUrl() != 'article') {
+                                        echo "<p><a href=\"".$pos->getUrl()."\"
+                                                            class=\"main_txt_lnk\">
+                                                            ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a></p>";
+                                    } else {
+                                        echo "<p><a href=\"$_SERVER[PHP_SELF]?cmd=Faq&id_catalog={$pos->getIdCatalog()}&".
+                                            "id_position={$pos->getId()}\"
+                                                            class=\"main_txt_lnk\">".
+                                            htmlspecialchars($pos->getName())."</a></p>";
+                                    }
+                                }
 
-
-
-
-
-
-
-                        echo "<div class='faq-info'>";
-
-                        while($position = mysql_fetch_array($pos))  {
-                            if($position['url'] != 'article') {
-                                echo "<p><a href=\"".htmlspecialchars($position['url'])."\"
-                                                    class=\"main_txt_lnk\">
-                                                    ".htmlspecialchars( stripslashes( $position['name'] ) )."</a></p>";
-                            } else {
-                                echo "<p><a href=\"$_SERVER[PHP_SELF]?id_catalog=$_GET[id_catalog]&".
-                                    "id_position=$position[id_position]\"
-                                                    class=\"main_txt_lnk\">".
-                                    htmlspecialchars($position['name'])."</a></p>";
-                            }
-                        }
                         echo "</div> "; // faq-info
 
 
@@ -124,15 +108,15 @@ try {
 
 
 
-                        echo "<div class='faq-title'>
-                                                        <h1 class=h2>".$position['name']."</h1>
-                                                    </div>
-                                                    <div class='faq-image'>
-
-                                                    </div>";
-                        echo "<div class='faq-all-info'>";
-//                        require_once("article_print.php");
-                        echo "</div> ";
+//                        echo "<div class='faq-title'>
+//                                                        <h1 class=h2>".$position['name']."</h1>
+//                                                    </div>
+//                                                    <div class='faq-image'>
+//
+//                                                    </div>";
+//                        echo "<div class='faq-all-info'>";
+////                        require_once("article_print.php");
+//                        echo "</div> ";
 
 
 
