@@ -56,4 +56,8 @@ interface FaqParagraphCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface FaqParagraphImageCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
 ?>

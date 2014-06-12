@@ -13,3 +13,6 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     id_paragraph,
     id_catalog и
     id_position(secondary key)
+
+
+onclick=show_image() в faqParagraph.php

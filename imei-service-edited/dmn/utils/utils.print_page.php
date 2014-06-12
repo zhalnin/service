@@ -46,17 +46,22 @@ function print_page($postbody)
     $postbody = preg_replace($pattern,
                             '<ins>\\1</ins>',
                                 $postbody);
+    // Подчеркивание - альтернатива
+    $pattern = '#\[u\](.+)\[\/u\]#isU';
+    $postbody = preg_replace($pattern,
+        '<ins>\\1</ins>',
+        $postbody);
     // Ссылка без названия
-//    $pattern = "#\[url\](.+?)\[\/url\]#isU";
+    $pattern = "#\[url\](.+?)\[\/url\]#isU";
 //    $pattern = "#\[url\][\s]*([\S]*)[\s]*\[\/url\]#isU";
-    $pattern = "#\[url\][\s]*(.*)[\s]*\[\/url\]#isU";
+//    $pattern = "#\[url\][\s]*(.*)[\s]*\[\/url\]#isU";
     $postbody = preg_replace_callback($pattern,
                             "url_replace",
                             $postbody);
     // Ссылка с названием
-//    $pattern = "#\[url=(.*)\]([^\[]+?)\[\/url\]#isU";
+    $pattern = "#\[url=(.*)\]([^\[]+?)\[\/url\]#isU";
 //    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*([^\[]*)\[\/url\]#isU";
-    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)[\s]*\[\/url\]#is";
+//    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)[\s]*\[\/url\]#is";
     $postbody = preg_replace_callback($pattern,
                                         "url_replace_name",
                                         $postbody);
@@ -87,7 +92,7 @@ function print_page($postbody)
 
 function url_replace($matches)
 {
-    if(substr($matches[1], 0, 7) != "http://" && substr($matches[1],0,8) != "https://")
+    if(substr($matches[1], 0, 7) != "http://")
     {
         $matches[1] = "http://".$matches[1];
     }
@@ -96,10 +101,12 @@ function url_replace($matches)
 
 function url_replace_name($matches)
 {
-    if(substr($matches[1],0,7) != "http://" && substr($matches[1],0,8) != "https://")
+
+    if(substr($matches[1],0,7) != "http://")
     {
         $matches[1] = "http://".$matches[1];
     }
+//    echo "<tt><pre>".print_r($matches[1], true)."</pre></tt>";
     return "<a href=\"$matches[1]\" class=\"news_txt_lnk\">$matches[2]</a>";
 }
 
@@ -113,7 +120,7 @@ function img_replace($matches){
         $matches[1] = "http://".$matches[1];
     }
     //return "<img src=\"$matches[1]\" class=\"news_txt_lnk\"/>";
-    return "<p  class=\"news_txt_lnk\"><img src=\"$matches[1]\"/></p>";
+    return "<p class=\"news_txt_lnk\"><img src=\"$matches[1]\"/></p>";
 }
 function font_replace($matches){
     return "<span style=\"color: $matches[1]\">$matches[2]</span>";

@@ -50,7 +50,7 @@ class Faq extends DomainObject {
 
 
     function setFaqPosition( FaqPositionCollection $faqPosition ) {
-//        echo "<tt><pre> setVenue - ".print_r($venue,true)."</pre></tt>";
+//        echo "<tt><pre> setVenue - ".print_r($faqPosition,true)."</pre></tt>";
         $this->faqPositions = $faqPosition;
         $this->markDirty();
     }

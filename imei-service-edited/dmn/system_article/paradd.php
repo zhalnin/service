@@ -95,6 +95,8 @@ try
                                 "Добавить",
                                 "field");
 
+
+//    echo "<tt><pre>".print_r($form->fields['pos']->value, true)."</pre></tt>";
     // Обработчик HTML-формы
     if(!empty($_POST))
     {
@@ -183,27 +185,29 @@ try
                         фотографии");
                 }
             }
-
-            if(empty($form->fields['pos']->value))
-            {
-                // Вставляем параграф в конец статьи
-                // Извлекаем текущую максимальную позицию
-                $query = "SELECT MAX(pos) FROM $tbl_paragraph
-                        WHERE id_catalog = {$form->fields[id_catalog]->value} AND
-                            id_position={$form->fields[id_position]->value}";
-                $pos =  mysql_query($query);
-                if(!$pos)
-                {
-                    throw new ExceptionMySQL(mysql_errno(),
-                        $query,
-                        "Ошибка при извлечении
-                        текущей позиции");
-                }
-                $pos = mysql_result($pos, 0) + 1;
-            }
+//            echo "<tt><pre>".print_r($form->fields['pos']->value, true)."</pre></tt>";
+//
+//            if( empty($form->fields['pos']->value) )
+//            {
+//                echo "ememe";
+//                // Вставляем параграф в конец статьи
+//                // Извлекаем текущую максимальную позицию
+//                $query = "SELECT MAX(pos) FROM $tbl_paragraph
+//                        WHERE id_catalog = {$form->fields[id_catalog]->value} AND
+//                            id_position={$form->fields[id_position]->value}";
+//                $pos =  mysql_query($query);
+//                if(!$pos)
+//                {
+//                    throw new ExceptionMySQL(mysql_errno(),
+//                        $query,
+//                        "Ошибка при извлечении
+//                        текущей позиции");
+//                }
+//                $pos = mysql_result($pos, 0) + 1;
+//            }
 
 //            elseif($position_form->fields['pos']->value < 0)
-            elseif($form->fields['pos']->value < 0)
+            if($form->fields['pos']->value < 0)
             {
                 // Вставляем параграф в начало статьи
                 $query = "UPDATE $tbl_paragraph
@@ -234,8 +238,9 @@ try
                         "Ошибка при редактировании
                         позиции параграфа");
                 }
-                $pos = $form->fields['pos']->value + 1;
+                $pos = $form->fields['pos']->value+1;
             }
+
             // Формируем SQL-запрос на добавление позиции
             $query = "INSERT INTO $tbl_paragraph
                        VALUES(NULL,

@@ -12,15 +12,30 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/view/ViewHelper.php" );
 require_once( "imei_service/view/utils/utils.printPage.php" );
+require_once( 'imei_service/domain/FaqParagraph.php' );
 
 try {
 
     $request = \imei_service\view\VH::getRequest();
     $position = $request->getObject( 'faqPosition' );
-    $paragraphs = $request->getObject( 'faqParagraph' );
-//    $title = $catalog->getName();
+    $paragraphs = $request->getObject( 'faqParagraphCollection' );
+
+//    foreach ($paragraphs as $paragraph ) {
+//        foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
+//            echo "<tt><pre>".print_r( $paragraphImage, true) ."</pre></tt>";
+//
+//        }
+//
+//    }
+
+
+    $paragraphImages =
+//    echo "<tt><pre>".print_r( $paragraphs , true) ."</pre></tt>";
+    $title = $position->getName();
 //    $keywords = $catalog->getKeywords();
 //    $description = $catalog->getDescription();
+    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
+    $description = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
     require_once("templates/top.php");
     ?>
 
@@ -90,82 +105,83 @@ try {
 
 
 
+                            foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
+
+    //                            $query = "SELECT * FROM $tbl_paragraph_image
+    //                    WHERE id_paragraph = $paragraph[id_paragraph] AND
+    //                            id_position = $_GET[id_position] AND
+    //                            id_catalog = $_GET[id_catalog] AND
+    //                            hide = 'show'";
+    //                            $img = mysql_query($query);
+    //                            if(!$img) exit("Ошибка при извлечении изображений");
+
+                                // Изобажение элемента
+                                $image_print = "";
+                                $image_big = 'imei_service/view/'.$paragraphImage->getBig();
+                                $image_small = 'imei_service/view/'.$paragraphImage->getSmall();
+                                $image_alt = $paragraphImage->getAlt();
+                                $image_name = $paragraphImage->getName();
 
 
-
-
-
-
-
-//                            $query = "SELECT * FROM $tbl_paragraph_image
-//                    WHERE id_paragraph = $paragraph[id_paragraph] AND
-//                            id_position = $_GET[id_position] AND
-//                            id_catalog = $_GET[id_catalog] AND
-//                            hide = 'show'";
-//                            $img = mysql_query($query);
-//                            if(!$img) exit("Ошибка при извлечении изображений");
-
-                            // Изобажение элемента
-                            $image_print = "";
-
-                            if( ! empty( $image_print ) )
-                            {
-
-
-                                // Извлекаем изображения
-                                unset($img_arr);
-                                while($image = mysql_fetch_array($img))
+                                if( ! empty( $image_big ) )
                                 {
 
-                                    // ALT-тэг
-                                    if(!empty($image['alt'])) $alt = "alt='$image[alt]'";
-                                    else $alt = "";
+                                    // Извлекаем изображения
+                                    unset($img_arr);
+//                                    while($image = mysql_fetch_array($img))
+//                                    {
 
-                                    // Размер малого изображения
-                                    $size_small = @getimagesize($image['small']);
+                                        // ALT-тэг
+                                        if( ! empty( $image_alt ) ) $alt = "alt='$image_alt'";
+                                        else $alt = "";
+                                        // Размер малого изображения
+                                        $size_small = @getimagesize( $image_small );
 
-                                    // Название изображения
-                                    if(!empty($image['name']))
-                                    {
-                                        $name = "<br/><br/><br/>".$image['name']."</b>";
-                                    }
-                                    else $name = "";
-                                    // Большое изображение
-                                    if(empty($image['big']))
-                                    {
-                                        $img_arr[] = "<img $alt src='$image[small]'
-                                        width=$size_small[0]
-                                        height=$size_small[1]>$name";
-                                    }
-                                    else
-                                    {
-                                        $size = @getimagesize($image['big']);
-                                        $img_arr[] = "<a href=#
-                                        onclick=\"show_img('$image[id_image]',".
-                                            $size[0].",".$size[1]."); return false \">
-                                        <img $alt src='$image[small]'
-                                                border=0
-                                                width=$size_small[0]
-                                                height=$size_small[1]></a>$name";
-                                    }
+                                        // Название изображения
+                                        if( ! empty( $image_name ) ) {
+                                            $name = "<br/><br/><br/>".$paragraphImage->getName()."</b>";
+                                        }
+                                        else $name = "";
 
-                                }
-                                for($i = 0; $i < count($img_arr)%3; $i++) $img_arr[] = "";
-                                // Выводим изображение
-                                for($i = 0, $k = 0; $i < count($img_arr); $i++,$k++)
-                                {
-                                    if($k == 0)
-                                    {
-//                    $image_print .= "</td><table cellpadding=5>";
-//                      $image_print .= "<tr valign=top>";
-                                        $image_print .= "<td class=\"main_txt \">".$img_arr[$i]."</td>";
-                                        if($k == 2)
+                                        // Большое изображение
+                                        if(empty(  $image_big ) )
                                         {
-                                            $k = -1;
-                                            $image_print .=  "</tr></table>";
+                                            $img_arr[] = "<img $alt src='$image_small'
+                                            width=$size_small[0]
+                                            height=$size_small[1]>$name";
+                                        }
+                                        else
+                                        {
+                                            $size = @getimagesize( $image_big );
+                                            $img_arr[] = "<a href=#
+                                            onclick=\"show_img({$paragraphImage->getId()},".
+                                                $size[0].",".$size[1]."); return false \">
+                                            <img $alt src='$image_small''
+                                                    border=0
+                                                    width=$size_small[0]
+                                                    height=$size_small[1]></a>$name";
+                                        }
+//                                    echo "<tt><pre>".print_r( $paragraphImage->getId(), true) ."</pre></tt>";
+
+//                                    }
+                                    for($i = 0; $i < count($img_arr)%3; $i++) $img_arr[] = "";
+                                    // Выводим изображение
+                                    for($i = 0, $k = 0; $i < count($img_arr); $i++,$k++)
+                                    {
+                                        if($k == 0)
+                                        {
+    //                    $image_print .= "</td><table cellpadding=5>";
+    //                      $image_print .= "<tr valign=top>";
+                                            $image_print .= "<td class=\"main_txt \">".$img_arr[$i]."</td>";
+                                            if($k == 2)
+                                            {
+                                                $k = -1;
+                                                $image_print .=  "</tr></table>";
+                                            }
                                         }
                                     }
                                 }
+
                             }
 
 

@@ -19,9 +19,9 @@ class FaqPosition extends Command {
 
         $collection = \imei_service\domain\FaqPosition::find( $request->getProperty( 'id_position' ) );
         $request->setObject( 'faqPosition', $collection );
+//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
         return self::statuses( 'CMD_OK' );
 
-//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
     }
 }
 ?>

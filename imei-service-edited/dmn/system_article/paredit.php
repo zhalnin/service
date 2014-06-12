@@ -18,9 +18,11 @@ require_once("../../config/class.config.dmn.php");
 require_once("../utils/utils.resizeimg.php");
 
 // Защита от SQL-инъекции
+$_GET['pos'] = intval($_GET['pos']);
 $_GET['id_catalog'] = intval($_GET['id_catalog']);
 $_GET['id_position'] = intval($_GET['id_position']);
 $_GET['id_paragraph'] = intval($_GET['id_paragraph']);
+
 try
 {
     if(empty($_POST))
@@ -110,6 +112,9 @@ try
     $hide           = new FieldCheckbox("hide",
                                         "Отображать",
                                         $_REQUEST['hide']);
+    $pos            = new FieldHiddenInt("pos",
+                                        true,
+                                        $_REQUEST['pos']);
     $id_catalog     = new FieldHiddenInt("id_catalog",
                                         true,
                                         $_REQUEST['id_catalog']);
@@ -130,6 +135,7 @@ try
                                     "align"             => $align,
                                     "hidepict"          => $hidepict,
                                     "hide"              => $hide,
+                                    "pos"               => $pos,
                                     "id_catalog"        => $id_catalog,
                                     "id_position"       => $id_position,
                                     "id_paragraph"      => $id_paragraph,
@@ -150,31 +156,10 @@ try
 
             // Формируем SQL-запрос на редактирование фото
             $big = $small = "";
+
             if(!empty($_FILES['big']['name']))
             {
-                // Удаляем старые изображения
-                $query = "SELECT * FROM $tbl_paragraph_image
-                      WHERE id_position = $_GET[id_position] AND
-                            id_catalog = $_GET[id_catalog] AND
-                            id_paragraph = $_GET[id_paragraph]";
-                $pos = mysql_query($query);
-                if(!$pos)
-                {
-                    throw new ExceptionMySQL(mysql_error(),
-                        $query,
-                        "Ошибка при извлечении
-                                      текущей позиции");
-                }
-                $position = mysql_fetch_array($pos);
-                $pospict = mysql_result($pos, 0);
-                if(file_exists("../../".$position['big']))
-                {
-                    @unlink("../../".$position['big']);
-                }
-                if(file_exists("../../".$position['small']))
-                {
-                    @unlink("../../".$position['small']);
-                }
+
                 // Новые изображения
                 $var = $form->fields['big']->get_filename();
                 if(!empty($var))
@@ -185,6 +170,7 @@ try
                 // Извлекаем параметры галереи
                 $query = "SELECT * FROM $tbl_photo_settings LIMIT 1";
                 $set = mysql_query($query);
+
                 if(!$set)
                 {
                     throw new ExceptionMySQL(mysql_error(),
@@ -201,24 +187,82 @@ try
                     $settings['width'] = 150;
                     $settings['height'] = 133;
                 }
-                // Формируем малое изобажение
-                resizeimg("files/article/$var", "files/article/s_$var", $settings['width'], $settings['height']);
-            }
-            $query = "UPDATE $tbl_paragraph_image
-                    SET name = '{$form->fields[namepict]->value}',
-                        alt = '{$form->fields[alt]->value}',
-                        $small
-                        $big
-                        hide = '$showhidepict'
-                    WHERE id_position = {$form->fields[id_position]->value} AND
-                          id_catalog = {$form->fields[id_catalog]->value} AND
-                          id_paragraph = {$form->fields[id_paragraph]->value}";
-            if(!mysql_query($query))
-            {
-                throw new ExceptionMySQL(mysql_error(),
-                    $query,
-                    "Ошибка при обновлении
-                    фотографии");
+
+
+                // Удаляем старые изображения
+                $query = "SELECT * FROM $tbl_paragraph_image
+                      WHERE id_position = $_GET[id_position] AND
+                            id_catalog = $_GET[id_catalog] AND
+                            id_paragraph = $_GET[id_paragraph]";
+
+                $pos = mysql_query($query);
+
+                if(!$pos)
+                {
+                    throw new ExceptionMySQL(mysql_error(),
+                        $query,
+                        "Ошибка при извлечении
+                                      текущей позиции");
+                }
+                $position = mysql_fetch_array($pos);
+
+                if( empty( $position ) ) {
+                    $big = "'files/article/$var',";
+                    $small = "'files/article/s_$var',";
+                    // Формируем малое изобажение
+                    resizeimg("files/article/$var", "files/article/s_$var", $settings['width'], $settings['height']);
+
+                    $query = "INSERT INTO $tbl_paragraph_image (name, alt, small, big, hide, pos, id_position, id_catalog, id_paragraph )
+                               VALUES( '{$form->fields[namepict]->value}',
+                                '{$form->fields[alt]->value}',
+                                $small
+                                $big
+                                '$showhidepict',
+                                '{$form->fields[pos]->value}',
+                                '{$form->fields[id_position]->value}',
+                                '{$form->fields[id_catalog]->value}',
+                                '{$form->fields[id_paragraph]->value}' )";
+                    if( ! mysql_query( $query ) ) {
+                        throw new ExceptionMySQL(mysql_error(),
+                            $query,
+                            "Ошибка при вставке
+                            фотографии");
+                    }
+
+//                    echo "<tt><pre>".print_r($query, true)."</pre></tt>";
+
+
+                } else {
+                    $pospict = mysql_result($pos, 0);
+                    if(file_exists("../../".$position['big']))
+                    {
+                        @unlink("../../".$position['big']);
+                    }
+                    if(file_exists("../../".$position['small']))
+                    {
+                        @unlink("../../".$position['small']);
+                    }
+                    // Формируем малое изобажение
+                    resizeimg("files/article/$var", "files/article/s_$var", $settings['width'], $settings['height']);
+                    $query = "UPDATE $tbl_paragraph_image
+                            SET name = '{$form->fields[namepict]->value}',
+                                alt = '{$form->fields[alt]->value}',
+                                $small
+                                $big
+                                hide = '$showhidepict',
+                                pos  = {$form->fields[pos]->value}
+                            WHERE id_position = {$form->fields[id_position]->value} AND
+                                  id_catalog = {$form->fields[id_catalog]->value} AND
+                                  id_paragraph = {$form->fields[id_paragraph]->value}";
+                    if(!mysql_query($query))
+                    {
+                        throw new ExceptionMySQL(mysql_error(),
+                            $query,
+                            "Ошибка при обновлении
+                            фотографии");
+                    }
+                }
+
             }
 
             // Скрытая или открытая позиция
@@ -229,7 +273,8 @@ try
                         SET name = '{$form->fields[name]->value}',
                             type = '{$form->fields[type]->value}',
                             align = '{$form->fields[align]->value}',
-                            hide = '{$form->fields[hide]->value}'
+                            hide = '{$form->fields[hide]->value}',
+                            pos = {$form->fields[pos]->value}
                         WHERE id_position = {$form->fields[id_position]->value} AND
                               id_paragraph = {$form->fields[id_paragraph]->value}";
             if(!mysql_query($query))
@@ -240,11 +285,11 @@ try
                                         параграфа");
             }
             // Осуществляем редирект на главную страницу администрирования
-//            header("Location: paragraph.php?".
-//                "id_position={$form->fields[id_position]->value}&".
-//                "id_catalog={$form->fields[id_catalog]->value}&".
-//                "page={$form->fields[page]->value}");
-//            exit();
+            header("Location: paragraph.php?".
+                "id_position={$form->fields[id_position]->value}&".
+                "id_catalog={$form->fields[id_catalog]->value}&".
+                "page={$form->fields[page]->value}");
+            exit();
         }
     }
     // Начало страницы

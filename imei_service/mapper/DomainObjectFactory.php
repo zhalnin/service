@@ -7,7 +7,10 @@
  */
 
 namespace imei_service\mapper;
+use imei_service\command\FaqParagraph;
+
 require_once( 'imei_service/domain/FaqPosition.php' );
+require_once( 'imei_service/domain/FaqParagraphImage.php' );
 
 
 abstract class DomainObjectFactory {
@@ -387,6 +390,51 @@ class FaqParagraphObjectFactory extends DomainObjectFactory {
         $obj->setAlign( $array['align'] );
         $obj->setHide( $array['hide'] );
         $obj->setPos( $array['pos'] );
+        $obj->setIdPosition( $array['id_position'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+        $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\FaqParagraphImage' );
+        $faqParagraphImage_assembler = new DomainObjectAssembler( $factory );
+        $faqParagraphImage_idobj = new FaqParagraphImageIdentityObject('id_catalog' );
+        $faqParagraphImage_idobj->eq( $array['id_catalog'] )->field( 'id_position' )->eq( $array['id_position'] )->field( 'id_paragraph' )->eq( $array['id_paragraph'] )->field( 'hide' )->eq( 'show' );
+        $faqParagraphImage_collection = $faqParagraphImage_assembler->find( $faqParagraphImage_idobj );
+
+//        echo "<tt><pre>".print_r( $faqParagraphImage_collection , true) ."</pre></tt>";
+        $obj->setFaqParagraphImage( $faqParagraphImage_collection );
+
+
+
+//        $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\FaqPosition' );
+//        $faqPosition_assembler = new DomainObjectAssembler( $factory );
+//        $faqPosition_idobj = new FaqPositionIdentityObject( 'id_catalog' );
+//        $faqPosition_idobj->eq( $array['id_catalog'])->field( 'hide' )->eq( 'show' );
+//        $faqPosition_collection = $faqPosition_assembler->find( $faqPosition_idobj );
+//        $obj->setFaqPosition( $faqPosition_collection );
+
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class FaqParagraphImageObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
+        $class = '\imei_service\domain\FaqParagraphImage';
+//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
+        $old = $this->getFromMap( $class, $array['id_image'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_image'] );
+        $obj->setName( $array['name'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setSmall( $array['small'] );
+        $obj->setBig( $array['big'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setIdParagraph( $array['id_paragraph'] );
         $obj->setIdPosition( $array['id_position'] );
         $obj->setIdCatalog( $array['id_catalog'] );
 

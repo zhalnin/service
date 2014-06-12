@@ -17,13 +17,13 @@ class FaqParagraph extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
         $request->addFeedback( "Welcome to faqParagraph" );
         $collection = \imei_service\domain\FaqParagraph::find( $request->getProperty('id_position'), $request->getProperty('id_catalog'));
-        $request->setObject( 'faqParagraph', $collection );
+        $request->setObject( 'faqParagraphCollection', $collection );
 
 //        $collection = \imei_service\domain\FaqParagraph::find( 'id_position','id_catalog' );
 //        $request->setObject( 'faqPosition', $collection );
 //        return self::statuses( 'CMD_OK' );
 
-//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
     }
 }
 ?>

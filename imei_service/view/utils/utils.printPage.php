@@ -48,24 +48,28 @@ function printPage($postbody)
     $postbody = preg_replace($pattern,
                             '<ins>\\1</ins>',
                                 $postbody);
+    // Подчеркивание - альтернатива
+    $pattern = '#\[u\](.+)\[\/u\]#isU';
+    $postbody = preg_replace($pattern,
+                            '<ins>\\1</ins>',
+                            $postbody);
     // Ссылка без названия
-//    $pattern = '#\[url\](.+?)\[\/url\]#isU';
+    $pattern = '#\[url\](.+?)\[\/url\]#isU';
 //    $pattern = '#\[url\][\s]*([\S]*)[\s]*\[\/url\]#isU';
-    $pattern = '#\[url\][\s]*(.*)[\s]*\[\/url\]#isU';
+//    $pattern = '#\[url\][\s]*(.*)[\s]*\[\/url\]#isU';
     $postbody = preg_replace_callback($pattern,
                             '\imei_service\view\utils\url_replace',
                             $postbody);
     // Ссылка с названием
-//    $pattern = '#\[url=(.*)\]([^\[]+?)\[\/url\]#isU';
+    $pattern = '#\[url=(.*)\]([^\[]+?)\[\/url\]#isU';
 //    $pattern = '#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*([^\[]*)\[\/url\]#isU';
-
 //    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)\[\/url\]#isU";
 //    $postbody = preg_replace_callback($pattern,
 //                                        "url_replace_name",
 //                                        $postbody);
 
 
-    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)\[\/url\]#isU";
+//    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)\[\/url\]#isU";
     $postbody = preg_replace_callback($pattern,
                                     '\imei_service\view\utils\url_replace_name',
                                     $postbody);

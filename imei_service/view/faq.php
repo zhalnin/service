@@ -18,7 +18,7 @@ try {
     $catalog = $request->getObject( 'catalogCollection' );
 
 //    echo "<tt><pre>".print_r( $catalog->getFaqPosition(), true) ."</pre></tt>";
-//        echo "<tt><pre>".print_r( $cat, true) ."</pre></tt>";
+        echo "<tt><pre>".print_r( $catalog, true) ."</pre></tt>";
 //        foreach ($catalog->getFaqPosition() as $pos ) {
 //            echo "<tt><pre>".print_r( $pos, true) ."</pre></tt>";
 //        }

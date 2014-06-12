@@ -22,6 +22,7 @@ class Faq extends Command {
         if( ! $id_position ) {
             $id = 0;
             $catalogCollection = \imei_service\domain\Faq::find( $id );
+//            echo "<tt><pre>".print_r($catalogCollection, true)."</pre></tt>";
             $request->setObject( 'catalogCollection', $catalogCollection );
 
         } else {

@@ -151,4 +151,14 @@ class FaqParagraphCollection
 }
 
 
+class FaqParagraphImageCollection
+    extends Collection
+    implements \imei_service\domain\FaqParagraphImageCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\FaqParagraphImage";
+    }
+}
+
+
 ?>

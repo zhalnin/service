@@ -66,7 +66,38 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\FaqParagraph":
                 return new FaqParagraphPersistenceFactory();
                 break;
+            case "imei_service\\domain\\FaqParagraphImage":
+                return new FaqParagraphImagePersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class FaqParagraphImagePersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new FaqParagraphImageMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new FaqParagraphImageObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new FaqParagraphImageCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new FaqParagraphImageSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new FaqParagraphImageUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new FaqParagraphImageIdentityObject();
     }
 }
 

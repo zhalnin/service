@@ -21,7 +21,7 @@ require_once("../utils/utils.print_page.php");
 // Защита от SQL-инъекции
 $_GET['id_position'] = intval($_GET['id_position']);
 $_GET['id_catalog'] = intval($_GET['id_catalog']);
-
+//echo "<tt><pre>".print_r($_REQUEST, true)."</pre></tt>";
 try
 {
     // Извлекаем информацию о разделе
@@ -211,17 +211,17 @@ try
             $total_image = mysql_result($tot, 0);
             if($total_image) $print_image = " ($total_image)";
             else $print_image = "";
-
+//            echo "<tt><pre>".print_r($paragraph[$i]['name'], true)."</pre></tt>";
             echo "<tr $style $class>
                     <td align=center>
-                        <input type=radio name=pos value=".$paragraph[$i]['pos'].">
+                        <input type=radio name=pos value=".$paragraph[$i]['pos']." />
                     </td>
                     <td><p $align>".
                 nl2br(print_page($paragraph[$i]['name'])).
                 "</p></td>";
             if( $total_image > 0 ) {
               echo "<td align=center>
-                        <a href=show.php?$url>Изображения$print_image</a>
+                        <a href=\"show.php?$url\">Изображения$print_image</a>
                     </td>";
             } else {
                 echo "<td align=center>
