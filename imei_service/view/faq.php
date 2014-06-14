@@ -17,20 +17,10 @@ try {
     $request = \imei_service\view\VH::getRequest();
     $catalog = $request->getObject( 'catalogCollection' );
 
-//    echo "<tt><pre>".print_r( $catalog->getFaqPosition(), true) ."</pre></tt>";
-        echo "<tt><pre>".print_r( $catalog, true) ."</pre></tt>";
-//        foreach ($catalog->getFaqPosition() as $pos ) {
-//            echo "<tt><pre>".print_r( $pos, true) ."</pre></tt>";
-//        }
-
-
-//    print $request->getFeedbackString('/n');
-//    echo "<tt><pre>".print_r( $request->getFeedbackString('/n'), true) ."</pre></tt>";
-
     $title = $catalog->getName();
     $keywords = $catalog->getKeywords();
     $description = $catalog->getDescription();
-    require_once("templates/top.php");
+    require_once( "templates/top.php" );
 ?>
 
     <div id="header">
@@ -61,7 +51,7 @@ try {
 <?php
 
 
-//                        Если id_catalog не передан
+//                        Если idc - id_catalog не передан
 //                        значит просматриваем список доступных статей
 
 
@@ -82,8 +72,8 @@ try {
                                                             class=\"main_txt_lnk\">
                                                             ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a></p>";
                                     } else {
-                                        echo "<p><a href=\"$_SERVER[PHP_SELF]?cmd=Faq&id_catalog={$pos->getIdCatalog()}&".
-                                            "id_position={$pos->getId()}\"
+                                        echo "<p><a href=\"$_SERVER[PHP_SELF]?cmd=Faq&idc={$pos->getIdCatalog()}&".
+                                            "idp={$pos->getId()}\"
                                                             class=\"main_txt_lnk\">".
                                             htmlspecialchars($pos->getName())."</a></p>";
                                     }
@@ -103,7 +93,7 @@ try {
 
 
 
-//                        Если передан id_position
+//                        Если передан idp - id_position
 //                        значит переходим для детального просмотра статьи или ссылки
 
 
@@ -137,7 +127,7 @@ try {
 
     <!--    <div id="main-guestbook"></div>-->
 <?php
-    require_once("templates/bottom.php");
+    require_once( "templates/bottom.php" );
 
 } catch( \imei_service\base\AppException $exc ) {
     require_once( "imei_service/base/Exceptions.php" );

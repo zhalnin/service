@@ -17,11 +17,12 @@ try {
     $udidCollection = $request->getObject( 'udidCollection' );
 
     $title = $udidCollection->getName();
-    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
+    $keywords = $udidCollection->getKeywords();
+//    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
     $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
 
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
-    require_once("templates/top.php");
+    require_once( "templates/top.php" );
 
     ?>
     <div id="header">
@@ -134,7 +135,7 @@ try {
 
 
 
-require_once("imei_service/view/templates/bottom.php");
+require_once( "imei_service/view/templates/bottom.php" );
 
 } catch(\imei_service\base\AppException $exc){
     require_once( "imei_service/base/Exceptions.php" );

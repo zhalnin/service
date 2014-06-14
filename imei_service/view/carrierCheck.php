@@ -18,10 +18,11 @@ try {
     $carrierCheckCollection = $request->getObject( 'carrierCheckCollection' );
 
     $title = $carrierCheckCollection->getName();
-    $keywords = "imei,check,iPhone,instant check,check status, проверка по IMEI, узнать оператора";
+    $keywords = $carrierCheckCollection->getKeywords();
+//    $keywords = "imei,check,iPhone,instant check,check status, проверка по IMEI, узнать оператора";
     $description = "Проверка iPhone по IMEI iPhone поможет определить дату первой активации, к какому оператору привязан iPhone, статус Find My iPhone всего за 30 рублей, что займет несколько минут.";
 
-    require_once("templates/top.php");
+    require_once( "templates/top.php" );
     ?>
     <div id="header">
         <ul id="navigation" role="navigation">
@@ -128,7 +129,7 @@ try {
     <?php
 
 
-    require_once("templates/bottom.php");
+    require_once( "templates/bottom.php" );
 
 } catch(\imei_service\base\AppException $exc){
     require_once( "imei_service/base/Exceptions.php" );

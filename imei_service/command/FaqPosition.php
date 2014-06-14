@@ -15,13 +15,11 @@ require_once( "imei_service/domain/FaqPosition.php" );
 class FaqPosition extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-        $request->addFeedback( "Welcome to faqPosition" );
+//        $request->addFeedback( "Welcome to faqPosition" );
 
-        $collection = \imei_service\domain\FaqPosition::find( $request->getProperty( 'id_position' ) );
+        $collection = \imei_service\domain\FaqPosition::find( $request->getProperty( 'idp' ) );
         $request->setObject( 'faqPosition', $collection );
-//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
         return self::statuses( 'CMD_OK' );
-
     }
 }
 ?>

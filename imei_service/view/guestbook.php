@@ -19,13 +19,14 @@ try {
     $title = "Гостевая книга";
     $keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
     $description = "Гостевая книга";
-    require_once( "imei_service/view/templates/top.php" );
 
     $request = \imei_service\view\VH::getRequest();
     $guestbookMain = $request->getObject('guestbook_pagination');
     $guestbook = $guestbookMain['select'];
     $guestbookNavigation = $guestbookMain['navigation'];
     $page = $request->getProperty('page');
+    require_once( "imei_service/view/templates/top.php" );
+
     if( empty( $page ) ) {
         $page = 1;
     }
@@ -110,10 +111,10 @@ try {
                                 }
                                 ?>
                             </div>
-                            <div class="guestbook-all-reply" id="<?php print $record->getId(); ?>" ><span><a href="?page=<?php echo $page; ?>&id_parent=<?php print $record->getId(); ?>" >Ответить</a></span></div>
-                            <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (id_parent),-->
+                            <div class="guestbook-all-reply" id="<?php print $record->getId(); ?>" ><span><a href="?page=<?php echo $page; ?>&idp=<?php print $record->getId(); ?>" >Ответить</a></span></div>
+                            <!--                    Запускаем рекурсивную функцию, чтобы проверить у родителя дочерних постов (idp - id_parent),-->
                             <!--                    если находим их, то выводим чуть ниже родительского поста,
-                                                    , в функции проходим рекурсивно по всем постам, если они имеют id_parent
+                                                    , в функции проходим рекурсивно по всем постам, если они имеют idp - id_parent
                                                     находится в utils/utils.print_child_post.php -->
                             <?php  \imei_service\view\utils\selectRecursion($record->getId(), $page ); ?>
 
@@ -155,7 +156,7 @@ if( ! empty( $valid ) ) {
     $sid_add_message = $request->getProperty('sid_add_message');
     $message = $request->getProperty('message');
     $page = $request->getProperty('page');
-    $id_parent = $request->getProperty('id_parent');
+    $id_parent = $request->getProperty('idp');
     $feedback = $request->getFeedback();
 
 
@@ -187,7 +188,7 @@ if( ! empty( $valid ) ) {
                 <h2 class="h2 primary">Добавить сообщение</h2>
                 <div class="guest-all-form top-divided">
                     <!--                    <form method="POST" action="guestbook.php">-->
-                    <!--                    <form method="POST" name="guestbook-form" action="faq2.php?id_parent=70">-->
+                    <!--                    <form method="POST" name="guestbook-form" action="faq2.php?idp=70">-->
 
                     <form method="POST" >
                         <fieldset>
@@ -317,7 +318,7 @@ if( ! empty( $valid ) ) {
                                 <input type="hidden" name="valid" value="valid" />
                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
-                                <input type="hidden" name="id_parent" value="<?php echo $id_parent; ?>" id="guestbookReply" />
+                                <input type="hidden" name="idp" value="<?php echo $id_parent; ?>" id="guestbookReply" />
                                 <input type="hidden" name="codeConfirm" value="" id="codeConfirm" />
                                 <input type="hidden" name="page" value="<?php echo $page; ?>" />
                                 <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $message; ?></textarea>
@@ -372,14 +373,14 @@ if( ! empty( $valid ) ) {
 
             <?php
 
-            require_once("imei_service/view/templates/bottom.php");
+            require_once( "imei_service/view/templates/bottom.php" );
 
-            } catch( \Exception $ex ) {
-                file_put_contents( dirname(__FILE__).'/error.txt', $ex->getMessage(), -1, FILE_APPEND );
-                print $ex->getMessage();
-            } catch( \PDOException $ex ) {
-                file_put_contents( dirname(__FILE__).'/error_pdo.txt', $ex->getMessage(), -1, FILE_APPEND );
-                print $ex->getMessage();
+} catch( \Exception $ex ) {
+    file_put_contents( dirname(__FILE__).'/error.txt', $ex->getMessage(), -1, FILE_APPEND );
+    print $ex->getMessage();
+} catch( \PDOException $ex ) {
+    file_put_contents( dirname(__FILE__).'/error_pdo.txt', $ex->getMessage(), -1, FILE_APPEND );
+    print $ex->getMessage();
 }
 
 ?>

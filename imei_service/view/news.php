@@ -8,22 +8,28 @@
 
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
-//require_once( "imei_service/add/class.PagerMysql.php" );
-require_once( "imei_service/view/ViewHelper.php" );
-require_once( "imei_service/view/utils/utils.printPage.php" );
 
-$request = \imei_service\view\VH::getRequest();
-$news = $request->getObject('news');
-$count = 0;
-//echo "<tt><pre>".print_r($news, true)."</pre></tt>";
-//echo "<tt><pre>".print_r($_REQUEST, true)."</pre></tt>";
-    $title = "Главная";
-    $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
+try {
+    //require_once( "imei_service/add/class.PagerMysql.php" );
+    require_once( "imei_service/view/ViewHelper.php" );
+    require_once( "imei_service/view/utils/utils.printPage.php" );
+
+    $request = \imei_service\view\VH::getRequest();
+    $news = $request->getObject('news');
+    $count = 0;
+    $k = 0;
+    foreach( $news as $new ) {
+        if( $k == 0 ) {
+            $title = $new->getName();
+        }
+        break;
+    }
+//    $title = "Регистрация UDID iOS 8, официальный анлок iPhone, проверка по IMEI, Blacklist";
+    $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes,iOS";
     $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
     Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
     Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
-    require_once("imei_service/view/templates/top.php");
-    try {
+    require_once( "imei_service/view/templates/top.php" );
     //    $url = "?id=1";
 
     //mail("zhalninpal@me.com","test","test");
@@ -72,47 +78,46 @@ $count = 0;
 <?php
 
 
-foreach( $news as $new ) {
-     $new->getName();
-//    print $new->getPutdate();
-    if( $new->getUrlpict_s() != '' && $new->getHidepict() != 'hide' ){
-        $img = "<img src='imei_service/view/{$new->getUrlpict_s()}' alt='{$new->getAlt()}' />";
-        if( $count % 2 == 1 ) {
-                    $align = "float: right;";
-                    $textAlign = "text-align: right";
-                    $reverseAlign = "float: left";
-                    $reverseTextAlign = "text-align: left";
-                } else if( $count % 2 == 0 ) {
-                    $align = "float: left;";
-                    $textAlign = "text-align: left";
-                    $reverseAlign = "float: right";
-                    $reverseTextAlign = "text-align: right";
-                }
-    } else {
-        $img = '';
-    }
+    foreach( $news as $new ) {
+         $new->getName();
+    //    print $new->getPutdate();
+        if( $new->getUrlpict_s() != '' && $new->getHidepict() != 'hide' ){
+            $img = "<img src='imei_service/view/{$new->getUrlpict_s()}' alt='{$new->getAlt()}' />";
+            if( $count % 2 == 1 ) {
+                        $align = "float: right;";
+                        $textAlign = "text-align: right";
+                        $reverseAlign = "float: left";
+                        $reverseTextAlign = "text-align: left";
+                    } else if( $count % 2 == 0 ) {
+                        $align = "float: left;";
+                        $textAlign = "text-align: left";
+                        $reverseAlign = "float: right";
+                        $reverseTextAlign = "text-align: right";
+                    }
+        } else {
+            $img = '';
+        }
 
-    if($new->getUrl() != '' && $new->getUrl() != '-')
-    {
-        $href = "href='".$new->getUrl()."'";
-        $val_href = $new->getUrltext();
-    }
-    $detail = "";
-    $url = "?cmd=News&id=".$new->getId();
+        if( $new->getUrl() != '' && $new->getUrl() != '-') {
+            $href = "href='".$new->getUrl()."'";
+            $val_href = $new->getUrltext();
+        }
+        $detail = "";
+        $url = "?cmd=News&idn=".$new->getId();
 
-            echo "<div class='news-string-body superlink main-content ' onclick=\"detail_button('$url')\">
-                            <div class='news-title'>
-                                <h1 class=\"h2\">".nl2br(\imei_service\view\utils\printPage($new->getName()))."</h1>
-                            </div>
-                            <div class='news-image'  style=\"$align\">
-                              $img
-                            </div>
-                            <div class='news-info'  style=\"$reverseAlign\" >
-                                <p>".nl2br(\imei_service\view\utils\printPage($new->getPreview() ) )."</p>
-                            </div>
-                        </div>";
-$count++;
-}
+                echo "<div class='news-string-body superlink main-content ' onclick=\"detail_button('$url')\">
+                                <div class='news-title'>
+                                    <h1 class=\"h2\">".nl2br(\imei_service\view\utils\printPage($new->getName()))."</h1>
+                                </div>
+                                <div class='news-image'  style=\"$align\">
+                                  $img
+                                </div>
+                                <div class='news-info'  style=\"$reverseAlign\" >
+                                    <p>".nl2br(\imei_service\view\utils\printPage($new->getPreview() ) )."</p>
+                                </div>
+                            </div>";
+        $count++;
+    }
 
 echo "
                     </div><!-- End of news-container -->
@@ -121,7 +126,7 @@ echo "
         </div><!-- End of news-main -->
         <div id=\"main-guestbook\"></div>";
 
-require_once("imei_service/view/templates/bottom.php");
+require_once( "imei_service/view/templates/bottom.php" );
 
 
 } catch(\imei_service\base\AppException $exc){
@@ -129,7 +134,4 @@ require_once("imei_service/view/templates/bottom.php");
 } catch(\imei_service\base\DBException $exc) {
     require_once( "imei_service/base/Exceptions.php" );
 }
-
-
-
 ?>

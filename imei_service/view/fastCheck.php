@@ -14,7 +14,7 @@ $title = "Быстрая и бесплатная проверка по IMEI iPho
 $keywords = "imei,check,iPhone,instant check,check status,проверка по IMEI,бесплатно узнать оператора,быстрая проверка imei";
 $description = "Бесплатная проверка по IMEI. Быстрая проверка по IMEI iPhone поможет определить, к какому оператору привязан iPhone, дату активации, статус Find My iPhone.";
 
-require_once("templates/top.php");
+require_once( "templates/top.php" );
 
 ?>
 
@@ -117,7 +117,7 @@ require_once("templates/top.php");
                 |
             </li>
             <li>
-                <p>Copyright © 2013 All rights reserved.</p>
+                <p>Copyright © 2014 All rights reserved.</p>
             </li>
         </ol>
     </div>

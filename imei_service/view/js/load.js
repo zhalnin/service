@@ -114,7 +114,7 @@ AM.Event.addEvent(window, 'load', function() {
                             guestbookReply = AM.DOM.$('guestbookReply'),
                             am = AM.Query.getQueryStringArgs( diva[0].href );
 
-                        guestbookReply.value = am['id_parent'];
+                        guestbookReply.value = am['idp'];
                         divGuestbookAllReply[num].appendChild(guestbookForm);
 
                         setTimeout( function() {
@@ -139,7 +139,7 @@ AM.Event.addEvent(window, 'load', function() {
         if( AM.DOM.$('guestbookReply') != null ) {
             if( AM.DOM.$('guestbookReply').value != "" ) {
                 var guestbookForm = AM.DOM.$('guestbook-form'), // форма для ответа
-                    guestbookReply = AM.DOM.$('guestbookReply'),// скрытое поле в форме, хранит id_parent
+                    guestbookReply = AM.DOM.$('guestbookReply'),// скрытое поле в форме, хранит idp - id_parent
                     id = AM.DOM.$('guestbookReply').value, // получаем value
                     appendDiv = AM.DOM.$(id); // находим div с нужным id ( ему отвечаем )
                 appendDiv.appendChild(guestbookForm); // добавляем форму для ответа к нужному div

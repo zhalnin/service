@@ -15,4 +15,6 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     id_position(secondary key)
 
 
-onclick=show_image() в faqParagraph.php
+1. onclick=show_image() в faqParagraph.php
+2. добавить в imei_form.js обработку form action=?cmd=SendMail, чтобы отправлять
+ письма в commmand\SendMail

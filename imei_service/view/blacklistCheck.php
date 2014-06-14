@@ -19,11 +19,12 @@ try {
     $blacklistCollection = $request->getObject( 'blacklistCheckCollection' );
 
     $title = $blacklistCollection->getName();
-    $keywords = "проверка на blacklist,blacklist,iPhone,imei,checkmend";
+    $keywords = $blacklistCollection->getKeywords();
+//    $keywords = "проверка на blacklist,blacklist,iPhone,imei,checkmend";
     $description = "Проверка iPhone на blacklist позволит определить: был ли ваш аппарат занесен в черный список как потерянный, украденный или имеется задолженность по контракту. Стоимость проверки iPhone на blacklist всего 60 рублей, займет от нескольких минут до нескольких часов, в зависимости от оператора.";
 
-    require_once("templates/top.php");
-    ?>
+    require_once( "templates/top.php" );
+?>
 
 
     <div id="header">
@@ -128,7 +129,7 @@ try {
     </div><!-- main -->
 
     <?php
-    require_once("templates/bottom.php");
+    require_once( "templates/bottom.php" );
 
 } catch(\imei_service\base\AppException $exc){
     require_once( "imei_service/base/Exceptions.php" );

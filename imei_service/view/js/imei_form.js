@@ -87,7 +87,8 @@ var AMForm = {
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
                 if( AM.DOM.$('shipping-box-title') != null ) {
-                    form.action = "sendMail.php";
+//                    form.action = "sendMail.php";
+                    form.action = "?cmd=SendMail";
                 }
 
                 wysiwyg.showOverlay();
@@ -297,9 +298,9 @@ var AMForm = {
 //                var guestbookForm = AM.DOM.$('guestbook-form');
 //                guestbookForm.scrollIntoView(true);
 
+                    AM.DOM.$('guestbook-form').scrollIntoView(true);
             }
-//            AM.DOM.$('shipping-box').scrollIntoView(true);
-            AM.DOM.$('guestbook-form').scrollIntoView(true);
+            AM.DOM.$('shipping-box').scrollIntoView(true);
             // возвращаем результат False
             return false;
             // если ошибок нет

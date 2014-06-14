@@ -17,15 +17,12 @@ try {
     $unlocks = $request->getObject( 'unlock' );
     $decorateUnlock = $request->getObject( 'decorateUnlock' );
 
-//    echo "<tt><pre>".print_r( $decorateUnlock, true )."</pre></tt>";
     // Название каталога
     $title = $decorateUnlock->getName();
-    $keywords = "unlock iPhone,официальный анлок,AT&T,все операторы,official unlock";
+    $keywords = $decorateUnlock->getKeywords();
     $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
     require_once( "imei_service/view/templates/top.php" );
-
-    ?>
-
+?>
 
         <div id="header">
             <ul id="navigation" role="navigation">
@@ -47,12 +44,10 @@ try {
                         <ul class="ul-slider" page="1" style="width: 960px; margin: 30px 5px;">
 
 
-
                             <!--    Будут представлены аппарататы, которые доступны анлоку-->
                             <?php
                             foreach ( $unlocks as $unlock ) {
-//                                echo "<tt><pre>".print_r( $unlock, true )."</pre></tt>";
-                                echo "    <li><a href=?cmd=Unlock&ctr={$unlock->getAbbreviatura()}&id_catalog={$unlock->getId()}&id_parent={$unlock->getIdParent()} class='started'>
+                                echo "    <li><a href=?cmd=Unlock&ctr={$unlock->getAbbreviatura()}&idc={$unlock->getId()}&idp={$unlock->getIdParent()} class='started'>
                                 <div>
                                     <div>
                                         <img alt=\"{$unlock->getAltFlag()}\"  src=\"imei_service/view/{$unlock->getRoundedFlag()}\" />
@@ -107,6 +102,7 @@ try {
                                         </div>
                                         <input id="item" type="hidden" name="item" value="официальный анлок iPhone">
                                         <input id="type" type="hidden" name="type" value="unlock">
+                                        <input id="operator" type="hidden" name="operator" value="<?php print $decorateUnlock->getName();?>">
                                     </fieldset>
                                 </form>
                             </div><!-- shipping user -->

@@ -15,7 +15,7 @@ require_once( "imei_service/domain/News.php" );
 class News extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
 
-        $id = $request->getProperty( 'id' ); // если передан параметр для просмотра новости детально
+        $id = $request->getProperty( 'idn' ); // если передан параметр для просмотра новости детально
         if( ! $id ) {
 
             $collection = \imei_service\domain\News::findAll(); // работает \imei_service\domain\News - получаем коллекцию

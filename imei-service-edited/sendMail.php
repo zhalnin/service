@@ -36,6 +36,7 @@ try
 //    $email_client =     'zhalninpal@me.com';
 //    $imei =             '012345834583234';
 //    $udid =             'j3f930rke03kfj0g0443j9s8fh3ndk3k5567k4l3';
+//    $operator =         'Официальный анлок от американского оператора';
 
     require_once("class/class.SendMail.php");
 

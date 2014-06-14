@@ -20,23 +20,12 @@ try {
     $position = $request->getObject( 'faqPosition' );
     $paragraphs = $request->getObject( 'faqParagraphCollection' );
 
-//    foreach ($paragraphs as $paragraph ) {
-//        foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
-//            echo "<tt><pre>".print_r( $paragraphImage, true) ."</pre></tt>";
-//
-//        }
-//
-//    }
-
-
-    $paragraphImages =
-//    echo "<tt><pre>".print_r( $paragraphs , true) ."</pre></tt>";
     $title = $position->getName();
 //    $keywords = $catalog->getKeywords();
 //    $description = $catalog->getDescription();
     $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
     $description = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
-    require_once("templates/top.php");
+    require_once( "templates/top.php" );
     ?>
 
     <div id="header">
@@ -77,18 +66,11 @@ try {
                         echo "<div class='faq-all-info'>";
 
 
-
-
-
-
-
-
-
+                        // Получаем выравнивание параграфа
                         foreach($paragraphs as $paragraph ) {
                             // Выясняем тип выравнивания параграфа
                             $align = "";
-                            switch($paragraph->getAlign() )
-                            {
+                            switch( $paragraph->getAlign() ) {
                                 case 'left':
                                     // $type .=" (влево)";
                                     $align = "left";
@@ -104,17 +86,8 @@ try {
                             }
 
 
-
+                            // Получаем изображения параграфа
                             foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
-
-    //                            $query = "SELECT * FROM $tbl_paragraph_image
-    //                    WHERE id_paragraph = $paragraph[id_paragraph] AND
-    //                            id_position = $_GET[id_position] AND
-    //                            id_catalog = $_GET[id_catalog] AND
-    //                            hide = 'show'";
-    //                            $img = mysql_query($query);
-    //                            if(!$img) exit("Ошибка при извлечении изображений");
-
                                 // Изобажение элемента
                                 $image_print = "";
                                 $image_big = 'imei_service/view/'.$paragraphImage->getBig();
@@ -122,36 +95,25 @@ try {
                                 $image_alt = $paragraphImage->getAlt();
                                 $image_name = $paragraphImage->getName();
 
-
-                                if( ! empty( $image_big ) )
-                                {
-
+                                if( ! empty( $image_big ) ) {
                                     // Извлекаем изображения
-                                    unset($img_arr);
-//                                    while($image = mysql_fetch_array($img))
-//                                    {
-
+                                    unset( $img_arr );
                                         // ALT-тэг
                                         if( ! empty( $image_alt ) ) $alt = "alt='$image_alt'";
                                         else $alt = "";
                                         // Размер малого изображения
                                         $size_small = @getimagesize( $image_small );
-
                                         // Название изображения
                                         if( ! empty( $image_name ) ) {
                                             $name = "<br/><br/><br/>".$paragraphImage->getName()."</b>";
                                         }
                                         else $name = "";
-
                                         // Большое изображение
-                                        if(empty(  $image_big ) )
-                                        {
+                                        if( empty (  $image_big ) )  {
                                             $img_arr[] = "<img $alt src='$image_small'
                                             width=$size_small[0]
                                             height=$size_small[1]>$name";
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             $size = @getimagesize( $image_big );
                                             $img_arr[] = "<a href=#
                                             onclick=\"show_img({$paragraphImage->getId()},".
@@ -161,20 +123,14 @@ try {
                                                     width=$size_small[0]
                                                     height=$size_small[1]></a>$name";
                                         }
-//                                    echo "<tt><pre>".print_r( $paragraphImage->getId(), true) ."</pre></tt>";
-
-//                                    }
-                                    for($i = 0; $i < count($img_arr)%3; $i++) $img_arr[] = "";
+                                    for( $i = 0; $i < count($img_arr)%3; $i++ ) $img_arr[] = "";
                                     // Выводим изображение
-                                    for($i = 0, $k = 0; $i < count($img_arr); $i++,$k++)
-                                    {
-                                        if($k == 0)
-                                        {
+                                    for($i = 0, $k = 0; $i < count($img_arr); $i++,$k++) {
+                                        if($k == 0)  {
     //                    $image_print .= "</td><table cellpadding=5>";
     //                      $image_print .= "<tr valign=top>";
                                             $image_print .= "<td class=\"main_txt \">".$img_arr[$i]."</td>";
-                                            if($k == 2)
-                                            {
+                                            if($k == 2) {
                                                 $k = -1;
                                                 $image_print .=  "</tr></table>";
                                             }
@@ -184,22 +140,9 @@ try {
 
                             }
 
-
-
-
-
-
-
-
-
-
-
-
-
                             // Выясняем тип параграфа
                             $class = "rightpanel_txt ";
-                            switch($paragraph->getType())
-                            {
+                            switch( $paragraph->getType() ) {
                                 case 'text':
                                     $class = "main_txt ";
                                     echo "<div align=$align class=\"$class\">".
@@ -245,21 +188,16 @@ try {
                                 case 'list':
                                     $arr = explode("\r\n", $paragraph->getName());
                                     $class = "main_txt ";
-                                    if(!empty($arr))
-                                    {
+                                    if( ! empty( $arr ) )  {
                                         echo "<div align=$align class=\"$class\"><ul>";
-                                        for($i = 0; $i < count($arr); $i++)
-                                        {
+                                        for( $i = 0; $i < count($arr); $i++ ) {
                                             echo "<li>".\imei_service\view\utils\printPage($arr[$i])."<br/>$image_print</li>";
                                         }
                                         echo "</ul></div><br/>";
                                     }
                                     break;
                             }
-
                         }
-
-
 
                         echo "<div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.back(); >
                                 <div id=\"button_back\" class=\"button rect transactional blues\" title=\"Сбросить\" type=\"button\" style=\"\">
@@ -269,14 +207,11 @@ try {
                                         </span>
                                 </div><!-- shipping-button -->
                             </div>";
-
-                        echo "</div> ";
-
                         ?>
-
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->
+            </div> <!-- End of main-content -->
             <div class="news-footer"></div>
         </div><!--     End of news-content -->
     </div><!--        End of news-main-->
@@ -284,7 +219,7 @@ try {
 
     <!--    <div id="main-guestbook"></div>-->
     <?php
-    require_once("templates/bottom.php");
+    require_once( "templates/bottom.php" );
 
 } catch( \imei_service\base\AppException $exc ) {
     require_once( "imei_service/base/Exceptions.php" );

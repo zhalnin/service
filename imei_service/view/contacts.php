@@ -13,7 +13,6 @@ require_once( "imei_service/view/ViewHelper.php" );
 
 $request = \imei_service\view\VH::getRequest();
 $contacts = $request->getObject( 'contacts' );
-//echo "<tt><pre>".print_r($contacts->getName(), true)."</pre></tt>";
 
 foreach ( $contacts as $contact ) {
     $name       = $contact->getName();
@@ -39,72 +38,72 @@ require_once("imei_service/view/templates/top.php");
 try {
 ?>
     <div id="header">
-    <ul id="navigation" role="navigation">
-        <li id="nav-home"><a  class="selected" href="?cmd=News"><span>Главная</span></a></li>
-        <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
-        <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
-        <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
-        <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
-        <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
-        <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
-    </ul>
-</div>
-<div id="main" class="">
-<div id="main-slogan" class="main-content">
-    <div id="slogan">Быстро - Качественно - Надежно</div>
-</div>
-<!--        End of main-slogan-->
+        <ul id="navigation" role="navigation">
+            <li id="nav-home"><a  class="selected" href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
+        </ul>
+    </div>
+    <div id="main" class="">
+    <div id="main-slogan" class="main-content">
+        <div id="slogan">Быстро - Качественно - Надежно</div>
+    </div>
+    <!--        End of main-slogan-->
 
-<div id="addNav" class="">
-    <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Guestbook" ?>"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
-    <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Contacts" ?>"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
-</div>
+    <div id="addNav" class="">
+        <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Guestbook" ?>"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
+        <a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Contacts" ?>"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
+    </div>
 
 
-<div id="news-main" class="main-content">
-<div id="" class="contact-content">
-<div id='' class="contact-header">
-    <h2  class="h2">Контакты</h2>
-</div>
-<div class='contact-container'>
-    <div class='contact-string-body' >
-        <div class='contact-title'>
-            <!--                <h1>-->
-            <!--                    <a href="http://imei-service.ru">Наши контакты</a>-->
-            <!--                </h1>-->
-        </div>
-        <div class='view contact-image' >
-            <img alt="Фото контрагента"  src="<?php echo 'imei_service/view/'.$photoSmall; ?>" >
-            <div class="mask">
-                <h2>Спасибо за обращение</h2>
-                <p>Мы постараемся как можно скорее ответить на ваше обращение к нам.
-                    Постарайтесь, чтобы ваш вопрос укладывался в контекст самой цели сайта.
-                    Также вы можете воспользоваться 'Гостевой книгой'</p>
+    <div id="news-main" class="main-content">
+    <div id="" class="contact-content">
+    <div id='' class="contact-header">
+        <h2  class="h2">Контакты</h2>
+    </div>
+    <div class='contact-container'>
+        <div class='contact-string-body' >
+            <div class='contact-title'>
+                <!--                <h1>-->
+                <!--                    <a href="http://imei-service.ru">Наши контакты</a>-->
+                <!--                </h1>-->
+            </div>
+            <div class='view contact-image' >
+                <img alt="Фото контрагента"  src="<?php echo 'imei_service/view/'.$photoSmall; ?>" >
+                <div class="mask">
+                    <h2>Спасибо за обращение</h2>
+                    <p>Мы постараемся как можно скорее ответить на ваше обращение к нам.
+                        Постарайтесь, чтобы ваш вопрос укладывался в контекст самой цели сайта.
+                        Также вы можете воспользоваться 'Гостевой книгой'</p>
+                </div>
+            </div>
+            <div class='contact-info'>
+
+                <h3 class="h3"><b>Мы рады вас приветствовать на нашем сайте!</b></h3>
+                <p><b><?php echo $name; ?></b></p>
+                <ul class="contact-address">
+                    <li>
+                        <a class="" href="mailto:<?php echo $email; ?>"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/email_50x49.png" />
+                                <div id="contactIconsDescr"> - <?php echo $email; ?></div>
+                            </div></a>
+                    </li>
+                    <li>
+                        <a class="" href="skype:<?php echo $skype; ?>?add"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/skype_50x50.png" />
+                                <div id="contactIconsDescr"> - <?php echo $skype; ?></div>
+                            </div></a>
+                    </li>
+                    <li>
+                        <a class="" href="http://vk.com/<?php echo $vk; ?>"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/vkGroup_50x50.png" />
+                                <div id="contactIconsDescr"> - группа VKontakte</div>
+                            </div></a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class='contact-info'>
-
-            <h3 class="h3"><b>Мы рады вас приветствовать на нашем сайте!</b></h3>
-            <p><b><?php echo $name; ?></b></p>
-            <ul class="contact-address">
-                <li>
-                    <a class="" href="mailto:<?php echo $email; ?>"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/email_50x49.png" />
-                            <div id="contactIconsDescr"> - <?php echo $email; ?></div>
-                        </div></a>
-                </li>
-                <li>
-                    <a class="" href="skype:<?php echo $skype; ?>?add"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/skype_50x50.png" />
-                            <div id="contactIconsDescr"> - <?php echo $skype; ?></div>
-                        </div></a>
-                </li>
-                <li>
-                    <a class="" href="http://vk.com/<?php echo $vk; ?>"><div id="contactIcons"><img class="image-shadow" src="imei_service/view/icons/50x50/vkGroup_50x50.png" />
-                            <div id="contactIconsDescr"> - группа VKontakte</div>
-                        </div></a>
-                </li>
-            </ul>
-        </div>
-    </div>
 
     <?php
 echo "
@@ -114,12 +113,12 @@ echo "
         </div><!-- End of contact-main -->";
 
 
-require_once("imei_service/view/templates/bottom.php");
+require_once( "imei_service/view/templates/bottom.php" );
 
 } catch(\imei_service\base\AppException $exc) {
-    require_once( "\imei_service\base\Exceptions.php" );
+    require_once( "imei_service/base/Exceptions.php" );
 } catch(\imei_service\base\DBException $exc) {
-    require_once( "\imei_service\base\Exceptions.php" );
+    require_once( "imei_service/base/Exceptions.php" );
 }
 
 ?>

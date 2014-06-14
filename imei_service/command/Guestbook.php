@@ -30,7 +30,6 @@ class Guestbook extends Command {
 
         if( ! empty( $valid ) ) {
 
-
             $ip                 = getIp();
             $browser            = getVerBrowser();
             $sid_add_message    = $request->getProperty('sid_add_message');
@@ -42,7 +41,7 @@ class Guestbook extends Command {
             $answer             = $request->getProperty('answer');
             $putdate            = $request->getProperty('putdate');
             $hide               = $request->getProperty('hide');
-            $id_parent          = $request->getProperty('id_parent');
+            $id_parent          = $request->getProperty('idp');
             $code               = $request->getProperty('code');
             $codeConfirm        = $request->getProperty('codeConfirm');
             $page               = $request->getProperty('page');
@@ -84,9 +83,7 @@ class Guestbook extends Command {
                 $page = 1;
             }
 
-echo "lllllllllll";
             if( empty( $error ) ) {
-                echo "kdsjfksdjfkdjf";
                 $guestbook_obj = new \imei_service\domain\Guestbook( null,
                                                                     $name,
                                                                     $city,
@@ -101,17 +98,17 @@ echo "lllllllllll";
                                                                     $browser );
     //                        echo "<tt><pre>".print_r($guestbook_obj, true)."</pre></tt>";
                 $request->setObject('guestbook', $guestbook_obj );
-                if( $sendmail === true ) {
-                    $to = 'zhalninpal@me.com';
-                    $subject = 'Новый пост в адресной книге';
-                    $body = "Поступило новое сообщение, которое следует проверить\r\n";
-                    $body .= "От пользователя: $name\r\n";
-                    $body .= "Адрес email: $email\r\n";
-                    $header = "From: zhalnin@mail.com\r\n";
-                    $header .= "Reply-to: zhalnin@mail.com \r\n";
-                    $header .= "Content-type: text/plane; charset=utf-8\r\n";
-                    mail($to,$subject,$body,$header);
-                }
+//                if( $sendmail === true ) {
+//                    $to = 'zhalninpal@me.com';
+//                    $subject = 'Новый пост в адресной книге';
+//                    $body = "Поступило новое сообщение, которое следует проверить\r\n";
+//                    $body .= "От пользователя: $name\r\n";
+//                    $body .= "Адрес email: $email\r\n";
+//                    $header = "From: zhalnin@mail.com\r\n";
+//                    $header .= "Reply-to: zhalnin@mail.com \r\n";
+//                    $header .= "Content-type: text/plane; charset=utf-8\r\n";
+//                    mail($to,$subject,$body,$header);
+//                }
 
                 return self::statuses( 'CMD_OK' );
 
