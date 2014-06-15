@@ -6,6 +6,7 @@
  * Time: 13:50
  * To change this template use File | Settings | File Templates.
  */
+namespace imei_service\view\utils;
 
 /**
  * Функция вызывается после PagerMysql, где предварительно делается
@@ -18,7 +19,6 @@
  * @return mixed
  */
 
-namespace imei_service\view\utils;
 
 //require_once( "imei_service/" );
 try {

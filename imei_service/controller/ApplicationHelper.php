@@ -97,6 +97,7 @@ class ApplicationHelper {
                 }
             }
         }
+//        echo "<tt><pre>".print_r($map, true)."</pre></tt>";
         \imei_service\base\ApplicationRegistry::setControllerMap( $map );   // кэшируем полученный класс в файл в Registry
     }
 

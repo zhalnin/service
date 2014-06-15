@@ -13,7 +13,12 @@ abstract class Command {
         'CMD_DEFAULT'           => 0,
         'CMD_OK'                => 1,
         'CMD_ERROR'             => 2,
-        'CMD_INSUFFICIENT_DATA' => 3
+        'CMD_INSUFFICIENT_DATA' => 3,
+        'CMD_UNLOCK_OK'         => 4,
+        'CMD_UDID_OK'           => 5,
+        'CMD_CARRIER_OK'        => 6,
+        'CMD_BLACKLIST_OK'      => 7,
+        'CMD_GUESTBOOK_OK'      => 8,
     );
     private $status = 0;
 

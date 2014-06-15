@@ -18,7 +18,7 @@ class SendMail extends Command {
 
         $request->addFeedback( 'Welcome to SendMail' );
         $type           = $request->getProperty( 'type' );
-        $email          = "support@imei-service.ru";
+        $email_admin    = "imei_service@icloud.com";
         $email_client   = $request->getProperty( 'email' );
         $imei           = $request->getProperty( 'imei' );
         $udid           = $request->getProperty( 'udid' );
@@ -26,12 +26,37 @@ class SendMail extends Command {
 
         $manager = \imei_service\classes\MailConfig::get( $type );
 
-        $manager->make( 1 )->email($email, $email_client, $imei, $udid, $operator, $type );
-        $manager->make( 2 )->email($email, $email_client, $imei, $udid, $operator, $type );
-
-//                    echo "<tt><pre><--- start --->\r\n".print_r( $manager, true)."\r\n<--- end ---></pre></tt>";
-//        echo "<tt><pre><--- start --->\r\n".print_r( $type, true)."\r\n<--- end ---></pre></tt>";
-
+        switch( $type ) {
+            case 'unlock':
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                sleep( 3 );
+                return self::statuses( 'CMD_UNLOCK_OK' );
+                break;
+            case 'udid':
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                sleep( 3 );
+                return self::statuses( 'CMD_UDID_OK' );
+                break;
+            case 'guestbook':
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                sleep( 3 );
+                return self::statuses( 'CMD_GUESTBOOK_OK' );
+                break;
+            case 'carrier':
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                sleep( 3 );
+                return self::statuses( 'CMD_CARRIER_OK' );
+                break;
+            case 'blacklist':
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                sleep( 3 );
+                return self::statuses( 'CMD_BLACKLIST_OK' );
+                break;
+        }
             return self::statuses( 'CMD_OK' );
     }
 }

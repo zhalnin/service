@@ -19,7 +19,7 @@ try {
 //    $title = $catalog->getName();
 //    $keywords = $catalog->getKeywords();
 //    $description = $catalog->getDescription();
-    require_once("templates/top.php");
+    require_once("imei_service/view/templates/top.php");
 ?>
 
     <div id="header">
@@ -96,7 +96,7 @@ try {
 
     <!--    <div id="main-guestbook"></div>-->
 <?php
-    require_once("templates/bottom.php");
+    require_once("imei_service/view/templates/bottom.php");
 
 } catch( \imei_service\base\AppException $exc ) {
     require_once( "imei_service/base/Exceptions.php" );

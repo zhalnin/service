@@ -14,7 +14,7 @@ $title = "Быстрая и бесплатная проверка по IMEI iPho
 $keywords = "imei,check,iPhone,instant check,check status,проверка по IMEI,бесплатно узнать оператора,быстрая проверка imei";
 $description = "Бесплатная проверка по IMEI. Быстрая проверка по IMEI iPhone поможет определить, к какому оператору привязан iPhone, дату активации, статус Find My iPhone.";
 
-require_once( "templates/top.php" );
+require_once( "imei_service/view/templates/top.php" );
 
 ?>
 
@@ -58,9 +58,9 @@ require_once( "templates/top.php" );
                                                     </span>
                                                 </div>
                                             </div>
-                                            <input id="item" type="hidden" name="item" value="официальный анлок iPhone">
-                                            <input id="type" type="hidden" name="type" value="unlock">
-                                            <input id="mode" type="hidden" name="type" value="fast_check">
+                                            <input id="item" type="hidden" name="item" value="Быстрая проверка iPhone по IMEI">
+                                            <input id="type" type="hidden" name="type" value="fast">
+                                            <input id="mode" type="hidden" name="type" value="fast">
                                         </fieldset>
                                     </form>
                                 </div>

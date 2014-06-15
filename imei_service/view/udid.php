@@ -22,7 +22,7 @@ try {
     $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
 
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
-    require_once( "templates/top.php" );
+    require_once( "imei_service/view/templates/top.php" );
 
     ?>
     <div id="header">

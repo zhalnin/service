@@ -76,6 +76,11 @@ function WysiwygObject() {
 
         return false;
     };
+
+    /**
+     * Показывает превью будущего поста
+     * в гостевой книге
+     */
     this.showPreview = function() {
         var img = AM.DOM.$("modalPreviewContent");
         if(img.firstChild){
@@ -85,6 +90,12 @@ function WysiwygObject() {
         AM.DOM.fadeIn(img, 100, 10);
 //        AM.DOM.$('showmsg').innerHTML = response;
     };
+
+    /**
+     * Загрузка изображения на сервер
+     * @param x
+     * @param y
+     */
     this.showFormUploadImage = function(x, y){
         var modalUploadImage = AM.DOM.$('modal');
         AM.Position.setX(modalUploadImage, x);
@@ -95,7 +106,7 @@ function WysiwygObject() {
             img.removeChild(img.firstChild);
         }
         var form = '<iframe style="display: none;" id="uploadFrame" name="uploadFrame"></iframe>' +
-            '<form class="main-modal shadowed rounded" enctype="multipart/form-data" action="upload.php" target="uploadFrame" method="post" id="uploadForm">'+
+            '<form class="main-modal shadowed rounded" enctype="multipart/form-data" action="?cmd=Upload&item=img" target="uploadFrame" method="post" id="uploadForm">'+
             '<fieldset>'+
             '<legend>Загрузить изображение</legend>'+
             '<div class="two"><label for="filename"><span>Выберите файл</span></label><input type="file" name="filename" id="filename" /></div>'+
@@ -109,6 +120,12 @@ function WysiwygObject() {
         img.innerHTML=form;
         AM.DOM.fadeIn(modalUploadImage, 100, 10);
     };
+
+    /**
+     * Вставка ссылки
+     * @param x
+     * @param y
+     */
     this.showFormUrl = function(x, y){
 
         var modalUrl = AM.DOM.$('modal');
@@ -120,7 +137,7 @@ function WysiwygObject() {
             img.removeChild(img.firstChild);
         }
         var form = '<iframe style="display: none;" id="uploadUrlFrame" name="uploadUrlFrame"></iframe>' +
-            '<form class="main-modal shadowed rounded" action="upload.php" target="uploadUrlFrame" method="post" id="uploadUrlForm">'+
+            '<form class="main-modal shadowed rounded" action="?cmd=Upload&item=link" target="uploadUrlFrame" method="post" id="uploadUrlForm">'+
             '<fieldset>'+
             '<legend>Вставить ссылку</legend>'+
             '<div class="two"><label for="url"><span>Введите адрес ссылки</span></label><input type="text" name="url" id="url" value="http://" /></div>'+
@@ -133,6 +150,11 @@ function WysiwygObject() {
         AM.DOM.fadeIn(modalUrl, 100, 10);
     };
 
+    /**
+     * Вставка ссылки на изображение
+     * @param x
+     * @param y
+     */
     this.showFormImage = function(x, y){
 
         var modalImage = AM.DOM.$('modal');
@@ -143,7 +165,7 @@ function WysiwygObject() {
             img.removeChild(img.firstChild);
         }
         var form = '<iframe style="display: none;" id="insertImage" name="insertImage"></iframe>' +
-            '<form class="main-modal shadowed rounded" action="upload.php" target="insertImage" method="post" id="insertImageForm">'+
+            '<form class="main-modal shadowed rounded" action="?cmd=Upload&item=imgLink" target="insertImage" method="post" id="insertImageForm">'+
             '<fieldset>'+
             '<legend>Прикрепить изображение</legend>'+
             '<div class="two"><label for="image"><span>Введите адрес изображения</span></label><input type="text" name="image" id="image" value="http://" /></div>'+
@@ -156,6 +178,11 @@ function WysiwygObject() {
         AM.DOM.fadeIn(modalImage, 100, 10);
     };
 
+    /**
+     * Вставка смайлика
+     * @param x
+     * @param y
+     */
     this.showEmoticon = function(x, y) {
 
         var emoticon = AM.DOM.$('modal');

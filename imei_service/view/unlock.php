@@ -100,7 +100,7 @@ try {
                                                             </span>
                                             </div>
                                         </div>
-                                        <input id="item" type="hidden" name="item" value="официальный анлок iPhone">
+                                        <input id="item" type="hidden" name="item" value="Официальный анлок iPhone">
                                         <input id="type" type="hidden" name="type" value="unlock">
                                         <input id="operator" type="hidden" name="operator" value="<?php print $decorateUnlock->getName();?>">
                                     </fieldset>

@@ -16,5 +16,5 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 
 
 1. onclick=show_image() в faqParagraph.php
-2. добавить в imei_form.js обработку form action=?cmd=SendMail, чтобы отправлять
- письма в commmand\SendMail
+2. parser.php
+3. upload.php

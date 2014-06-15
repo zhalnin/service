@@ -17,7 +17,7 @@
 //    urlParser = "check_imei.php",
 
 var urlIMEI = "http://iphoneimei.info",
-    urlHandler = "parser.php",
+    urlHandler = "?cmd=Parser",
 
     main = AM.DOM.$('main'),
     xmlHttp = false;

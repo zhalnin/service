@@ -25,7 +25,7 @@ try {
 //    $description = $catalog->getDescription();
     $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
     $description = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
-    require_once( "templates/top.php" );
+    require_once( "imei_service/view/templates/top.php" );
     ?>
 
     <div id="header">
@@ -219,7 +219,7 @@ try {
 
     <!--    <div id="main-guestbook"></div>-->
     <?php
-    require_once( "templates/bottom.php" );
+    require_once( "imei_service/view/templates/bottom.php" );
 
 } catch( \imei_service\base\AppException $exc ) {
     require_once( "imei_service/base/Exceptions.php" );

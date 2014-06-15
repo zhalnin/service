@@ -1,41 +1,39 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
+ * Created by PhpStorm.
  * User: zhalnin
- * Date: 4/11/13
- * Time: 10:31 PM
- * To change this template use File | Settings | File Templates.
+ * Date: 15/06/14
+ * Time: 14:27
  */
+
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 require_once( "imei_service/view/ViewHelper.php" );
 
-$request    = \imei_service\view\VH::getRequest();
-$page       = $request->getProperty('page');
-
+$request = \imei_service\view\VH::getRequest();
 
 
 print "<html><head>\n";
-print "<meta http-equiv='Refresh' content='5; url=?cmd=Guestbook&page=1'>\n";
+print "<meta http-equiv='Refresh' content='7; url=?cmd=BlacklistCheck'>\n";
 print "</head></html>\n";
 
 
 
 $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
 $title = "Заявка отправлена";
-$description = "Оповещение о успешной отправки заявки на проверку iPhone по IMEI";
+$description = "Оповещение о успешной отправки заявки для проверки iPhone на blacklist";
 require_once("imei_service/view/templates/top.php");
 
 ?>
 
     <div id="header">
         <ul id="navigation" role="navigation">
-            <li id="nav-home"><a class="selected" href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
             <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
             <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
             <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
             <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
-            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-blacklist"><a class="selected" href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
             <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
         </ul>
     </div>
@@ -48,7 +46,7 @@ require_once("imei_service/view/templates/top.php");
         <div id="news-main" class="main-content">
             <div id="" class="news-content clear-fix">
                 <div id='' class="news-header">
-                    <h2  class="h2">Успешная отправка сообщения в гостевой книге</h2>
+                    <h2  class="h2">Успешная заявка для проверки iPhone на blacklist</h2>
                 </div>
                 <div class='news-container'>
                     <div class='success-body'>
@@ -64,9 +62,13 @@ require_once("imei_service/view/templates/top.php");
 
                         <div class='success-info'>
                             <p>
-                                Ваше сообщение успешно размещено в гостевой книге!<br/><br/>
-                                В гостевой книге вы можете оставить отзыв о предоставленной вам услуге, <br/><br/>
-                                либо задать интересующий вас вопрос, в контексте нашего сайта.<br/><br/>
+                                Ваша заявка будет обработана в кратчайшие сроки!<br/><br/>
+                                Через некоторое время вы получите письмо на тот почтовый адрес, что вы указали в заявке<br/><br/>
+                                Мы вам сообщим:<br/>
+                                ‣ О возможности отвязки <br/>
+                                ‣ Сроки выполнения отвязки<br/>
+                                ‣ Реквизиты для оплаты<br/>
+                                ‣ Услуги 100% легальные<br/><br/>
                                 <span class="nowrap">Гарантируем </span>
 
                                 <span class="more">качество услуг и максимально короткие сроки</span>
@@ -83,6 +85,5 @@ require_once("imei_service/view/templates/top.php");
     <!--    <div id="main-guestbook"></div>-->
 
 <?php
-require_once("imei_service/view/templates/bottom.php");
-
+require_once("templates/bottom.php");
 ?>

@@ -87,6 +87,7 @@ var AMForm = {
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
                 if( AM.DOM.$('shipping-box-title') != null ) {
+//                    form.action = "sendMail.php";
                     form.action = "sendMail.php";
                 }
 

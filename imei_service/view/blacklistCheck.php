@@ -23,7 +23,7 @@ try {
 //    $keywords = "проверка на blacklist,blacklist,iPhone,imei,checkmend";
     $description = "Проверка iPhone на blacklist позволит определить: был ли ваш аппарат занесен в черный список как потерянный, украденный или имеется задолженность по контракту. Стоимость проверки iPhone на blacklist всего 60 рублей, займет от нескольких минут до нескольких часов, в зависимости от оператора.";
 
-    require_once( "templates/top.php" );
+    require_once( "imei_service/view/templates/top.php" );
 ?>
 
 
@@ -75,7 +75,7 @@ try {
                                                 </span>
                                                     </div>
                                                 </div>
-                                                <input id="item" type="hidden" name="item" value="проверку iPhone на blacklist">
+                                                <input id="item" type="hidden" name="item" value="Проверка iPhone на blacklist">
                                                 <input id="type" type="hidden" name="type" value="blacklist">
                                             </fieldset>
                                         </form>
@@ -129,7 +129,7 @@ try {
     </div><!-- main -->
 
     <?php
-    require_once( "templates/bottom.php" );
+    require_once( "imei_service/view/templates/bottom.php" );
 
 } catch(\imei_service\base\AppException $exc){
     require_once( "imei_service/base/Exceptions.php" );

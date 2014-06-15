@@ -149,6 +149,10 @@ abstract class AdminMail extends Mail{
         // Заявка на проверку iPhone по IMEI
         // Заявка на проверку iPhone на blacklist
 
+        if( ! is_null( $operator ) ) {
+            $operatorDetails = "<p>Заявка отправлена из раздела '{$operator}'</p>";
+        }
+
         // Формируем письмо
         $body = "
             <html>
@@ -166,6 +170,7 @@ abstract class AdminMail extends Mail{
                              <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
+                                $operatorDetails
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>
                             <div id=\"slice\"></div>
@@ -304,7 +309,7 @@ abstract class ClientMail extends Mail {
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на проверку iPhone по IMEI </p>
                              <h3>Если вы не оставляли заявку на сайте , то просто проигнорируйте это сообщение!</h3>
                              <p>Вам следует оплатить услугу проверки iPhone для IMEI - $imei </p>
-                             <p>Которая вам обойдется в 60 рублей. Оплатить вы можете любым из следующих способов:</p>";
+                             <p>Которая вам обойдется в 30 рублей. Оплатить вы можете любым из следующих способов:</p>";
                 $body = $top . $middle . $bottom . $footer;
                 break;
             case 'blacklist':
@@ -313,7 +318,7 @@ abstract class ClientMail extends Mail {
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на проверку iPhone на blacklist </p>
                              <h3> Если вы не оставляли заявку на сайте , то просто проигнорируйте это сообщение!</h3>
                              <p> Вам следует оплатить услугу проверки iPhone для IMEI - $imei </p>
-                             <p> Которая вам обойдется в 90 рублей. Оплатить вы можете любым из следующих способов:</p>";
+                             <p> Которая вам обойдется в 70 рублей. Оплатить вы можете любым из следующих способов:</p>";
                 $body = $top . $middle . $bottom . $footer;
                 break;
             case 'guestbook':

@@ -72,5 +72,28 @@
         <view>faqParagraph</view>
     </command>
 
+    <command name="SendMail">
+        <view>sendMail</view>
+        <status value="CMD_UNLOCK_OK">
+            <view>unlockSuccess</view>
+        </status>
+        <status value="CMD_UDID_OK">
+            <view>udidSuccess</view>
+        </status>
+        <status value="CMD_CARRIER_OK">
+            <view>carrierSuccess</view>
+        </status>
+        <status value="CMD_BLACKLIST_OK">
+            <view>blacklistSuccess</view>
+        </status>
+        <status value="CMD_GUESTBOOK_OK">
+            <view>addMessageSuccess</view>
+        </status>
+    </command>
+
+    <command name="Parser">
+        <view>parserImei</view>
+    </command>
+
 </control>
 </woo-options>
