@@ -58,13 +58,13 @@ $ref        =   strval($matchRef[1]);
                                      <p class=\"check_imei\" style=\"float: left;\">$name[$i] </p>";
                     switch(strtolower($value[$i])){
                         case('<a id="special_info"> check carrier </a>'):
-                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"carrier_check.php\" class=\"special_info\">Уточнить оператора</a></p>";
+                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"?cmd=CarrierCheck\" class=\"special_info\">Уточнить оператора</a></p>";
                             break;
                         case('<a class="show_email_info"> check carrier </a>'):
-                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"carrier_check.php\" class=\"special_info\">Уточнить оператора</a></p>";
+                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"?cmd=CarrierCheck\" class=\"special_info\">Уточнить оператора</a></p>";
                             break;
                         case('<a class="show_email_info"> check sim lock </a>'):
-                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"carrier_check.php\" class=\"special_info\">Уточнить статус</a></p>";
+                            echo "<p class=\"check_imei\" style=\"display: block; float: right;\"><a href=\"?cmd=CarrierCheck\" class=\"special_info\">Уточнить статус</a></p>";
                             break;
                         case('unlocked'):
                             echo "<p class=\"check_imei\" style=\"display: block; float: right; color: #039103;\">$value[$i]</p>";
@@ -98,7 +98,7 @@ $ref        =   strval($matchRef[1]);
                     echo "<li style=\"width: 325px; margin: 0; height: 30px\" class=\"check_imei\">
                         <div style=\"left: 330px; display: inline-block; margin: 100px auto; position: absolute\">
                                 <p class=\"check_imei\" ></p><p class=\"check_imei\" >Сервер перегружен, попробуйте позже...</p>
-                                <p class=\"check_imei\"><a href=\"carrier_check.php\" class=\"special_info\" >Вы можете воспользоваться платной услугой</a></p>
+                                <p class=\"check_imei\"><a href=\"?cmd=CarrierCheck\" class=\"special_info\" >Вы можете воспользоваться платной услугой</a></p>
                         </div>
                       </li>";
                 }

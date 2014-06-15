@@ -19,7 +19,9 @@ try {
     $request = \imei_service\view\VH::getRequest();
     $position = $request->getObject( 'faqPosition' );
     $paragraphs = $request->getObject( 'faqParagraphCollection' );
-
+    $idc = $request->getProperty( 'idc' );
+    $idp = $request->getProperty( 'idp' );
+//echo "<tt><pre>".print_r($request, true)."</pre></tt>";
     $title = $position->getName();
 //    $keywords = $catalog->getKeywords();
 //    $description = $catalog->getDescription();
@@ -58,7 +60,7 @@ try {
 //                    Если передан id_position
 //                    значит переходим для детального просмотра статьи или ссылки
                         echo "<div class='faq-title'>
-                                    <h1 class=h2>".$position->getName()."</h1>
+                                    <h1 class=h2><a href=?cmd=Faq&idc={$idc}&idp={$idp}>".$position->getName()."</a></h1>
                                 </div>
                                 <div class='faq-image'>
 

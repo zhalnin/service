@@ -124,7 +124,7 @@ try {
                                                 <div id="payment-form-astro" class="form-astro with-seperator">
                                                     <p class="legend" style="">
                                                         <strong id="coherent_id_103">Условия</strong>
-                                                        <a href="carrier_check.php" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
+                                                        <a href="?cmd=CarrierCheck" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
                                                     </p>
                                                     <br />
                                                     <p>

@@ -48,18 +48,8 @@ try {
                     <div class='faq-body'>
 
 <?php
-
-
-
-
-
-
-
 //                    Если передан id_position
 //                    значит переходим для детального просмотра статьи или ссылки
-
-
-
                             echo "<div class='faq-title'>
                                     <h1 class=h2>".$position->getName()."</h1>
                                 </div>
@@ -69,30 +59,13 @@ try {
                             echo "<div class='faq-all-info'>";
     //                        require_once("article_print.php");
                             echo "</div> ";
-
-
-
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->
             <div class="news-footer"></div>
         </div><!--     End of news-content -->
     </div><!--        End of news-main-->
-
 
     <!--    <div id="main-guestbook"></div>-->
 <?php

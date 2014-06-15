@@ -1,0 +1,1 @@
+RedirectMatch /patterns/GITservice/index\.php$ /patterns/GITservice/runner.php?cmd=News

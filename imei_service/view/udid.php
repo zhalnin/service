@@ -84,7 +84,7 @@ try {
                                         <div id="payment-form-astro" class="form-astro with-seperator">
                                             <p class="legend" style="">
                                                 <strong id="coherent_id_103">Условия</strong>
-                                                <a href="faq.php?id_catalog=0&id_position=41" class="separated-link metrics-link">Как узнать UDID?</a>
+                                                <a href="?cmd=Faq" class="separated-link metrics-link">Как узнать UDID?</a>
                                             </p>
                                             <br />
                                             <p>
