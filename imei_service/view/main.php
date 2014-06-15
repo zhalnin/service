@@ -8,7 +8,9 @@
 
 require_once( "imei_service/view/ViewHelper.php" );
 $request = \imei_service\view\VH::getRequest();
-
+print "<html><head>\n";
+print "<meta http-equiv='Refresh' content='0; url=?cmd=News'>\n";
+print "</head></html>\n";
 ?>
 
 <!DOCTYPE html>

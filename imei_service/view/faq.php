@@ -72,7 +72,7 @@ try {
                                                             class=\"main_txt_lnk\">
                                                             ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a></p>";
                                     } else {
-                                        echo "<p><a href=\"$_SERVER[PHP_SELF]?cmd=Faq&idc={$pos->getIdCatalog()}&".
+                                        echo "<p><a href=\"?cmd=Faq&idc={$pos->getIdCatalog()}&".
                                             "idp={$pos->getId()}\"
                                                             class=\"main_txt_lnk\">".
                                             htmlspecialchars($pos->getName())."</a></p>";

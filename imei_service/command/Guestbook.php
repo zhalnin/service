@@ -10,7 +10,7 @@ namespace imei_service\command;
 
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/domain/Guestbook.php" );
-require_once( "imei_service/view/utils/getIp.php" );
+require_once( "imei_service/view/utils/getIP.php" );
 require_once( "imei_service/view/utils/getVerBrowser.php" );
 
 session_start();
@@ -30,7 +30,7 @@ class Guestbook extends Command {
 
         if( ! empty( $valid ) ) {
 
-            $ip                 = getIp();
+            $ip                 = getIP();
             $browser            = getVerBrowser();
             $sid_add_message    = $request->getProperty('sid_add_message');
             $name               = $request->getProperty('name');

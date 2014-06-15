@@ -9,7 +9,7 @@
 function getIP() {
     if( $ip = getenv('http_client_ip') ) return $ip;
     if( $ip = getenv('http_x_forwarded_for') ) {
-        if( $ip == "" || $ip = 'unknown' ) {
+        if( $ip == "" || $ip == 'unknown' ) {
             $ip = getenv('remote_addr');
         }
         return $ip;
