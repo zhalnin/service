@@ -12,7 +12,7 @@ function menu_navigation($id_catalog, $link, $catalog)
 {
     $id_catalog = intval($id_catalog);
     $query = "SELECT * FROM $catalog
-                WHERE id = $id_catalog";
+                WHERE id_catalog = $id_catalog";
     $cat = mysql_query($query);
     if(!$cat)
     {

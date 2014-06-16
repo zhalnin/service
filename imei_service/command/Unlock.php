@@ -32,7 +32,7 @@ class Unlock extends Command {
             $request->setObject( 'decorateUnlock', $decorateCollection );
             $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
             $unlock_assembler = new \imei_service\mapper\DomainObjectAssembler( $factory );
-            $unlock_idobj = new \imei_service\mapper\UnlockIdentityObject( 'id' );
+            $unlock_idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_catalog' );
             $unlock_idobj->eq( $request->getProperty( 'idc' ) )->field( 'hide' )->eq( 'show' );
             $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
 //        $obj->setUnlock( $unlock_collection );

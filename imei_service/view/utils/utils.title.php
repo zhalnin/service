@@ -9,8 +9,7 @@
  
 error_reporting(E_ALL & ~E_NOTICE);
 
-function title($pagename)
-{
+function title($pagename) {
   return '<table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td height="20" bgcolor="#82A6DE" class="rightpanel_ttl">

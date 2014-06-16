@@ -7,6 +7,7 @@
  */
 
 namespace imei_service\mapper;
+error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/Collections.php" );
 

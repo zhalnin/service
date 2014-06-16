@@ -40,7 +40,7 @@ try
 
     $operator   = new FieldSelect("operator",
                                 "Оператор",
-                                array("AT&T"                => "AT&T",
+                                array("AT&T"              => "AT&T",
                                     "Avea"                => "Avea",
                                     "Bell"                => "Bell",
                                     "Bouygues"            => "Bouygues",

@@ -18,8 +18,7 @@ require_once("../../config/class.config.dmn.php");
 // Подключаем функцию изменения размера изображения
 require_once("../utils/utils.resizeimg.php");
 
-if(empty($_POST))
-{
+if( empty( $_POST ) ) {
     // Отмечаем флажок hide
     $_REQUEST['hide'] = true;
 }

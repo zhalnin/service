@@ -1,0 +1,11 @@
+<woo-options>
+    <dsn>mysql:host=localhost;dbname=imei-service</dsn>
+    <control>
+        <view>main</view>
+        <view status="CMD_OK">main</view>
+        <view status="CMD_ERROR">error</view>
+        <command name="News">
+            <view>news</view>
+        </command>
+    </control>
+</woo-options>

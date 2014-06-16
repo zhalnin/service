@@ -374,13 +374,9 @@ if( ! empty( $valid ) ) {
             <?php
 
             require_once( "imei_service/view/templates/bottom.php" );
-
-} catch( \Exception $ex ) {
-    file_put_contents( dirname(__FILE__).'/error.txt', $ex->getMessage(), -1, FILE_APPEND );
-    print $ex->getMessage();
-} catch( \PDOException $ex ) {
-    file_put_contents( dirname(__FILE__).'/error_pdo.txt', $ex->getMessage(), -1, FILE_APPEND );
-    print $ex->getMessage();
+} catch( \imei_service\base\AppException $exc ) {
+    print $exc->getErrorObject();
+} catch( \imei_service\base\DBException $exc ) {
+    print $exc->getErrorObject();
 }
-
 ?>

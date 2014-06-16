@@ -8,6 +8,7 @@
 
 namespace imei_service\command;
 error_reporting( E_ALL & ~E_NOTICE );
+
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/base/Registry.php" );
 require_once( "imei_service/domain/News.php" );

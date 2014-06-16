@@ -16,7 +16,7 @@ require_once( "imei_service/mapper/IdentityObject.php" );
 class UnlockDetailsIdentityObject extends IdentityObject {
 
     function __construct( $field=null ) {
-        parent::__construct( $field, array( 'id',
+        parent::__construct( $field, array( 'id_catalog',
                 'operator',
                 'cost',
                 'timeconsume',

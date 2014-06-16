@@ -7,7 +7,6 @@
  */
 
 namespace imei_service\mapper;
-use imei_service\command\FaqParagraph;
 
 require_once( 'imei_service/domain/FaqPosition.php' );
 require_once( 'imei_service/domain/FaqParagraphImage.php' );
@@ -34,9 +33,9 @@ class UnlockDetailsObjectFactory extends DomainObjectFactory {
 //        echo "<tt><pre>".print_r( $array, true)."</pre></tt>";
 
         $class = "\\imei_service\\domain\\UnlockDetails";
-        $old = $this->getFromMap( $class, $array['id'] );
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
-        $obj = new $class( $array['id'] );
+        $obj = new $class( $array['id_catalog'] );
         $obj->setOperator( $array['operator'] );
         $obj->setCost( $array['cost'] );
         $obj->setTimeconsume( $array['timeconsume'] );
@@ -58,10 +57,13 @@ class UnlockDetailsObjectFactory extends DomainObjectFactory {
 class UnlockObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
+
+//        echo "<tt><pre>".print_r( $array, true)."</pre></tt>";
+
         $class = "\\imei_service\\domain\\Unlock";
-        $old = $this->getFromMap( $class, $array['id'] );
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
-        $obj = new $class( $array['id'] );
+        $obj = new $class( $array['id_catalog'] );
         $obj->setName( $array['name'] );
         $obj->setOrderTitle( $array['order_title'] );
         $obj->setDescription( $array['description'] );

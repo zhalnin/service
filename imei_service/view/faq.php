@@ -130,8 +130,8 @@ try {
     require_once( "imei_service/view/templates/bottom.php" );
 
 } catch( \imei_service\base\AppException $exc ) {
-    require_once( "imei_service/base/Exceptions.php" );
+    print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {
-    require_once( "imei_service/base/Exceptions.php" );
+    print $exc->getErrorObject();
 }
 ?>
