@@ -18,7 +18,7 @@ class NewsIdentityObject extends IdentityObject {
      * В родительский класс передаем само поле и массив ($enforce)
      */
     function __construct( $field=null ) {
-        parent::__construct( $field, array('id',
+        parent::__construct( $field, array('id_news',
                                         'name',
                                         'preview',
                                         'body',

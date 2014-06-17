@@ -126,7 +126,8 @@ element.style {
 }
 #showcase #shipping-contact-form {
     font-size: 12px;
-    padding: 14px 0 15px 26px;
+    /*padding: 14px 0 15px 26px;*/
+    padding: 14px 0;
     position: relative;
 }
 #showcase .step .edit {
@@ -139,7 +140,11 @@ element.style {
     min-height: 0;
 }
 .grid-1of2, .grid-2of4, .grid-3of6, .grid-4of8, .grid-5of10, .grid-8of16, .grid-10of20 {
-    width: 50%;
+    /*width: 50%;*/
+    width: 440px;
+}
+.grid-1of3 {
+    width: 470px;
 }
 .gs {
     float: left;
@@ -236,7 +241,7 @@ fieldset > div .mbsIframe {
 #showcase .firstName-field input {
     width: 130px;
 }
-#showcase .firstName-field input, #showcase .lastName-field input, #showcase .companyName-field input, #showcase .daytimePhoneAreaCode-field input, #showcase .daytimePhone-field input,  #showcase .udidPhone-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .postalCode-field input, #showcase .state-field input, #showcase .mobilePhoneAreaCode-field input, #showcase .mobilePhone-field input, #showcase .password-field input, #showcase .metadata-cpf-field input, #showcase .metadata-contact-footer-field input, #showcase .metadata-cnpj-field input, #showcase .metadata-legalName-field input, #showcase .district-field input, #showcase .daytimeAreaAndPhone-field input, #showcase .accountHolderName-field input, #showcase .bankCardNumber-field input, #showcase .mobilePhoneNumber-field input, #showcase .emailAddress-field input, #showcase .customerIdCardNumber-field input, #showcase .invoiceHeader-field input, #showcase .taxPayer-field input, #showcase .bankName-field input, #showcase .bankAccount-field input, #showcase .suburb-field input, #showcase .city-field input, #showcase .businessRegNumber-field input, #showcase .companyDistrict-field input, #showcase .repName-field input, #showcase .companyStreet-field input, #showcase .industryType-field input, #showcase .companyStreet2-field input, #showcase .businessType-field input, #showcase .shipping-user-address-neighborhood-field input, #showcase .eveningPhoneAreaCode-field input, #showcase .eveningPhone-field input, #showcase .suffix-field input, #showcase .lastNamePhonetic-field input, #showcase .firstNamePhonetic-field input, #showcase .cardNumber-field input, #showcase .securityCode-field input, #showcase .loanNumber-field input, #showcase .county-field input, #showcase .companyKey-field input, #showcase .legalName-field input, #showcase .taxRegNumber-field input, #showcase .metadata-ie-field input, #showcase .registrationCode-field input, #showcase .okpoNumber-field input, #showcase .taxIdentificationNumber-field input {
+#showcase .password-field input, #showcase .login-field input, #showcase .firstName-field input, #showcase .lastName-field input, #showcase .companyName-field input, #showcase .daytimePhoneAreaCode-field input, #showcase .daytimePhone-field input,  #showcase .udidPhone-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .postalCode-field input, #showcase .state-field input, #showcase .mobilePhoneAreaCode-field input, #showcase .mobilePhone-field input, #showcase .password-field input, #showcase .metadata-cpf-field input, #showcase .metadata-contact-footer-field input, #showcase .metadata-cnpj-field input, #showcase .metadata-legalName-field input, #showcase .district-field input, #showcase .daytimeAreaAndPhone-field input, #showcase .accountHolderName-field input, #showcase .bankCardNumber-field input, #showcase .mobilePhoneNumber-field input, #showcase .emailAddress-field input, #showcase .customerIdCardNumber-field input, #showcase .invoiceHeader-field input, #showcase .taxPayer-field input, #showcase .bankName-field input, #showcase .bankAccount-field input, #showcase .suburb-field input, #showcase .city-field input, #showcase .businessRegNumber-field input, #showcase .companyDistrict-field input, #showcase .repName-field input, #showcase .companyStreet-field input, #showcase .industryType-field input, #showcase .companyStreet2-field input, #showcase .businessType-field input, #showcase .shipping-user-address-neighborhood-field input, #showcase .eveningPhoneAreaCode-field input, #showcase .eveningPhone-field input, #showcase .suffix-field input, #showcase .lastNamePhonetic-field input, #showcase .firstNamePhonetic-field input, #showcase .cardNumber-field input, #showcase .securityCode-field input, #showcase .loanNumber-field input, #showcase .county-field input, #showcase .companyKey-field input, #showcase .legalName-field input, #showcase .taxRegNumber-field input, #showcase .metadata-ie-field input, #showcase .registrationCode-field input, #showcase .okpoNumber-field input, #showcase .taxIdentificationNumber-field input {
     border: 1px solid #D6D6D6;
     box-shadow: 0 1px 1px #AAAAAA inset;
     font-size: 12px;
@@ -281,17 +286,17 @@ fieldset > div .mbsIframe {
 #showcase .shipping-box .daytimePhone-field input, #showcase .payment-method-box .daytimePhone-field input, #showcase .payment-method-box .eveningPhone-field input {
     width: 267px;
 }
-.udidPhone-field input {
-    width: 376px;
+.udidPhone-field input, .login-field input, .password-field input {
+    width: 267px;
 }
-#showcase .shipping-box .udidPhone-field input, #showcase .payment-method-box .udidPhone-field input {
-    width: 327px;
+#showcase .shipping-box .udidPhone-field input, #showcase .shipping-box .login-field input, #showcase .shipping-box .password-field input, #showcase .payment-method-box .udidPhone-field input {
+    width: 267px;
 }
 #showcase .shipping-box .companyName-field input, #showcase .shipping-box .street-field input, #showcase .shipping-box .street2-field input, #showcase .shipping-box .street3-field input, #showcase .shipping-box .emailAddress-field input, #showcase .shipping-box .suburb-field input, #showcase .shipping-box .metadata-cnpj-field input, #showcase .shipping-box .metadata-legalName-field input, #showcase .payment-method-box .companyName-field input, #showcase .payment-method-box .street-field input, #showcase .payment-method-box .street2-field input, #showcase .payment-method-box .street3-field input, #showcase .payment-method-box .emailAddress-field input, #showcase .payment-method-box .suburb-field input {
-    width: 376px;
+    width: 267px;
 }
 #showcase .companyName-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .emailAddress-field input {
-    width: 327px;
+    width: 267px;
 }
 #showcase .shipping-box .US .postalCode-field input, #showcase .shipping-box .CA .postalCode-field input, #showcase .shipping-box .MX .postalCode-field input, #showcase .shipping-box .JP .postalCode-field input, #showcase .payment-method-box .CA .postalCode-field input, #showcase .payment-method-box .MX .postalCode-field input, #showcase .payment-method-box .JP .postalCode-field input, #showcase .payment-method-box .US .postalCode-field input {
     width: 98px;
@@ -317,7 +322,7 @@ fieldset > div .mbsIframe {
     width: 267px;
 }
 #showcase .shipping-box .mobilePhone-field input {
-    width: 376px;
+    width: 267px;
 }
 
 #showcase .legend {
@@ -576,7 +581,7 @@ fieldset > div .mbs {
     font-size: 13px;
     height: 24px;
     text-indent: 4px;
-    width: 376px;
+    width: 267px;
 }
 .code input {
     width: 155px;
@@ -683,3 +688,63 @@ textarea {
 #editorSpan .error {
     border-color: #ffc0cb;
 }
+/*form-right-border*/
+.fbr {
+   border-right: 1px solid #cccccc;
+}
+.fbl {
+    border-left: 1px solid #cccccc;
+}
+/*описание слева от формы*/
+.fdescr {
+    padding: 0 0 0 20px;
+}
+
+
+
+
+/* START - Голубая кнопка в стиле iOS 7*/
+#bot-nav {
+    margin-left: 50px;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    white-space: nowrap !important;
+    width: auto !important;
+}
+
+#bot-nav .btn.bigblue {
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    white-space: nowrap !important;
+    width: auto !important;
+}
+#bot-nav .btn.bigblue input[type="submit"] {
+    min-width: 94px !important;
+    overflow: visible !important;
+    padding: 0 10px !important;
+    position: relative !important;
+    text-align: -moz-center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    background: url("../images/bluegrad.png") repeat-x scroll -15px 0 transparent !important;
+    border-radius: 3px;
+    border: 0;
+    color: #ffffff;
+}
+.btn .bigblue, #signInHyperLink {
+    background-image: url("../images/buttonsiginMordern.png");
+    background-repeat: no-repeat;
+    border-width: 0;
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    height: 27px;
+    line-height: 15px;
+    width: 117px;
+}
+/* END - Голубая кнопка в стиле iOS 7*/

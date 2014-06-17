@@ -8,7 +8,7 @@
  */
 
 namespace imei_service\view;
-
+error_reporting( E_ALL & ~E_NOTICE );
 
 try {
 
@@ -65,15 +65,6 @@ try {
             <div class='news-container'>
 
                 <?php
-
-              //  $ipAddress = getIP();
-              //  $browser = getVerBrowser();
-
-//                if( isset( $_GET['page'] ) ) {
-//                    $page = htmlspecialchars( stripslashes( $_GET['page'] ), ENT_QUOTES );
-//                } else {
-//                    $page = 1;
-//                }
 
                 if( ! empty( $guestbook ) ) {
                     // Выводим постраничную навигацию

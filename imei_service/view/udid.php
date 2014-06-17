@@ -42,7 +42,7 @@ try {
             <div class="hero selfclear">
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="<?php echo $_SERVER['PHP_SELF']."?cmd=Udid" ?>"><?php echo $udidCollection->getName();?></a></h2>
+                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Udid"><?php echo $udidCollection->getName();?></a></h2>
                     <div id="shipping" class="step edit" style="opacity: 1;">
                         <div class="step-content top-divided" style="">
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">

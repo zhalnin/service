@@ -102,9 +102,9 @@ class NewsObjectFactory extends DomainObjectFactory {
     function createObject( array $array ) {
 //        echo "<tt><pre>".print_r($array, true)."</pre></tt>";
         $class = "\\imei_service\\domain\\News"; // название класса
-        $old = $this->getFromMap( $class, $array['id'] );
+        $old = $this->getFromMap( $class, $array['id_news'] );
         if( $old ) { return $old; }
-        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        $obj = new $class( $array['id_news'] ); // создаем экземпляр класса, в конструктор передаем id
         // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
         $obj->setName( $array['name'] );
         $obj->setPreview( $array['preview'] );

@@ -78,7 +78,7 @@ class News extends DomainObject {
 
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \imei_service\mapper\NewsIdentityObject( 'id' );
+        $idobj = new \imei_service\mapper\NewsIdentityObject( 'id_news' );
         return $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ) );
     }
 

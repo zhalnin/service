@@ -95,5 +95,9 @@
         <view>parserImei</view>
     </command>
 
+    <command name="Login">
+        <view>login</view>
+    </command>
+
 </control>
 </woo-options>

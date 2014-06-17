@@ -44,16 +44,16 @@ try {
             <div class="hero selfclear">
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="<?php echo $_SERVER[PHP_SELF]."?cmd=BlacklistCheck" ?>"><?php echo $blacklistCollection->getName();?></a></h2>
+                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=BlacklistCheck"><?php echo $blacklistCollection->getName();?></a></h2>
                     <div id="shipping" class="step edit" style="opacity: 1;">
                         <div class="step-content top-divided" style="">
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
-                                <div class="gs grid-1of2" style="">
+                                <div class="gs grid-1of2 frb" style="">
                                     <div id="shipping-user" class="user-form-block substep" style="">
                                         <form method="post">
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
-                                                    <strong class="label"><?php echo $blacklistCollection->getOrderTitle;?></strong>
+                                                    <strong class="label"><?php echo $blacklistCollection->getOrderTitle();?></strong>
                                                 </legend>
                                                 <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
 
@@ -81,13 +81,15 @@ try {
                                         </form>
                                     </div><!-- shipping user -->
                                 </div><!-- shipping-box-title -->
-                                <div class="gs grid-1of2 gs-last" style="">
+
+                                <div class="gs grid-1of3 gs-last fdescr fbl" style="">
                                     <div class="substep" style="">
                                         <div id="payment-form-astro" class="form-astro with-seperator">
                                             <p class="legend" style="">
                                                 <strong id="coherent_id_103">Условия</strong>
                                                 <a href="?cmd=CarrierCheck" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
                                             </p>
+                                            <br />
                                             <p>
                                                 <?php
                                                 echo nl2br($blacklistCollection->getDescription());
