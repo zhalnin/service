@@ -20,7 +20,6 @@ class Guestbook extends Command {
 
         $valid = $request->getProperty( 'valid' );
         $page = $request->getProperty( 'page' );
-        $sendmail = false;
         if( ! $page ) {
             $page = 1;
         }
@@ -47,7 +46,7 @@ class Guestbook extends Command {
             $page               = $request->getProperty('page');
 
 
-            if( empty( $sid_add_message ) ) {
+            if( $sid_add_message != session_id() ) {
                 $error = 'error';
                 $request->addFeedback( "Попробуйте отправить форму заново" );
             }
@@ -98,17 +97,6 @@ class Guestbook extends Command {
                                                                     $browser );
     //                        echo "<tt><pre>".print_r($guestbook_obj, true)."</pre></tt>";
                 $request->setObject('guestbook', $guestbook_obj );
-//                if( $sendmail === true ) {
-//                    $to = 'zhalninpal@me.com';
-//                    $subject = 'Новый пост в адресной книге';
-//                    $body = "Поступило новое сообщение, которое следует проверить\r\n";
-//                    $body .= "От пользователя: $name\r\n";
-//                    $body .= "Адрес email: $email\r\n";
-//                    $header = "From: zhalnin@mail.com\r\n";
-//                    $header .= "Reply-to: zhalnin@mail.com \r\n";
-//                    $header .= "Content-type: text/plane; charset=utf-8\r\n";
-//                    mail($to,$subject,$body,$header);
-//                }
 
                 return self::statuses( 'CMD_OK' );
 

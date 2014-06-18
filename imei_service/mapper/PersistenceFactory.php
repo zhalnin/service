@@ -22,6 +22,7 @@ abstract class PersistenceFactory {
     abstract function getCollection( array $array );
     abstract function getSelectionFactory();
     abstract function getUpdateFactory();
+//    abstract function getDeleteFactory();
 
     /**
      * Фабрика для получения нужного объекта
@@ -69,7 +70,42 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\FaqParagraphImage":
                 return new FaqParagraphImagePersistenceFactory();
                 break;
+            case "imei_service\\domain\\LoginOshibka":
+                return new LoginOshibkaPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class LoginOshibkaPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new LoginOshibkaMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new LoginOshibkaObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new LoginOshibkaCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new LoginOshibkaSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new LoginOshibkaUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new LoginOshibkaIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new LoginOshibkaDeleteFactory();
     }
 }
 

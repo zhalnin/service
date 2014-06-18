@@ -10,6 +10,12 @@ namespace imei_service\mapper;
 
 require_once( "imei_service/base/Exceptions.php" );
 
+/**
+ * Class PaginationFactory
+ * Выполняет функцию постраничной навигации
+ * Необходим для таких плагинов, как гостевая книга, комментарии блогов
+ * @package imei_service\mapper
+ */
 abstract class PaginationFactory {
 
     protected function __construct() {}
@@ -33,7 +39,7 @@ abstract class PaginationFactory {
         if( (float)( $this->getTotal() / $this->getPageNumber() ) - $number != 0 ) { $number++; }
 
 //        // Двойная стрелка для перелистывания в начало
-//        $returnPage .= "<a href='$_SERVER[PHP_SELF]".
+//        $returnPage .= "<a href='".
 //                        "?page=1{$this->getParameters()}'>".
 //                        "&lt;&lt;</a> ... ";
 
@@ -41,11 +47,11 @@ abstract class PaginationFactory {
         // пролистывания
         if( $page != 1 ) {
             // Двойная стрелка для перелистывания в начало
-            $returnPage .= "<a href='$_SERVER[PHP_SELF]".
+            $returnPage .= "<a href='".
                 "?cmd=Guestbook&page=1{$this->getParameters()}'>".
                 "&lt;&lt;</a> ... ";
 
-            $returnPage .= " <a href='$_SERVER[PHP_SELF]"
+            $returnPage .= " <a href='"
                 ."?cmd=Guestbook&page=".($page-1)."{$this->getParameters()}'>"
                 ."&lt;</a> ... ";
         }
@@ -56,13 +62,13 @@ abstract class PaginationFactory {
         // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
         if( $page > $this->getPageLink() + 1 ) {
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>$i</a> ";
             }
             // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
             // если page меньше 4-х, то и выводим меньше
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>$i</a> ";
             }
         }
 
@@ -72,30 +78,30 @@ abstract class PaginationFactory {
         // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
         if( $page + $this->getPageLink() < $number ) {
             for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>$i</a> ";
             }
             // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
         } else {
             for( $i = $page + 1; $i <= $number; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>$i</a> ";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>$i</a> ";
             }
         }
 
         // Если это не последняя страница, то выводим стрелку для
         // единичного перелистывания
         if( $page != $number ) {
-            $returnPage .= " ... <a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page="
+            $returnPage .= " ... <a href='?cmd=Guestbook&page="
                 .($page+1)
                 ."{$this->getParameters()}'>"
                 ."&gt;</a>";
             // Двойная стрелка для перелистывания в конец
-            $returnPage .= " ... <a href='$_SERVER[PHP_SELF]"
+            $returnPage .= " ... <a href='"
                 ."?cmd=Guestbook&page=$number{$this->getParameters()}'>"
                 ."&gt;&gt;</a>";
         }
 
 //        // Двойная стрелка для перелистывания в конец
-//        $returnPage .= " ... <a href='$_SERVER[PHP_SELF]"
+//        $returnPage .= " ... <a href='"
 //            ."?page=$number{$this->getParameters()}'>"
 //            ."&gt;&gt;</a>";
 
@@ -125,7 +131,7 @@ abstract class PaginationFactory {
             // Если это не первая страница - то выводим стрелку для одиночного
             // пролистывания
         } else {
-            $returnPage .= "<a class='pagination-prev' href='$_SERVER[PHP_SELF]"
+            $returnPage .= "<a class='pagination-prev' href='"
                 ."?cmd=Guestbook&page=".($page-1)."{$this->getParameters()}'>&nbsp;"
                 ."Предыдущая&nbsp;</a>";
         }
@@ -135,7 +141,7 @@ abstract class PaginationFactory {
             // Если это не последняя страница, то выводим стрелку для
             // единичного перелистывания
         } else {
-            $returnPage .= "<a class='pagination-next' href='$_SERVER[PHP_SELF]?cmd=Guestbook&page="
+            $returnPage .= "<a class='pagination-next' href='?cmd=Guestbook&page="
                 .($page+1)
                 ."{$this->getParameters()}'>&nbsp;"
                 ."Следующая&nbsp;</a>";
@@ -152,13 +158,13 @@ abstract class PaginationFactory {
         // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
         if( $page > $this->getPageLink() + 1 ) {
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
             // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
             // если page меньше 4-х, то и выводим меньше
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
         }
 
@@ -168,12 +174,12 @@ abstract class PaginationFactory {
         // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
         if( $page + $this->getPageLink() < $number ) {
             for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
             // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
         } else {
             for( $i = $page + 1; $i <= $number; $i++ ) {
-                $returnPage .= "<a href='$_SERVER[PHP_SELF]?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Guestbook&page=$i'>&nbsp;$i&nbsp;</a>";
             }
         }
 
@@ -198,13 +204,13 @@ abstract class PaginationFactory {
         // Если страница 5 и более, то выводим ссылку на блок из 10-ти страниц
         // [1-10] - всего желаемое отображение 10-ти блоков на странице
         if( $page - $this->getPageLink() > 1 ) {
-            $returnPage .= "<a href='$_SERVER[PHP_SELF]"
+            $returnPage .= "<a href='"
                 ."?cmd=Guestbook&page=1{$this->getParameters()}'>"
                 ."[1-{$this->getPageNumber()}]"
                 ."</a>&nbsp;&nbsp; ... &nbsp;&nbsp;";
             // Выводим три ссылки на следующие страницы
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
+                $returnPage .= "&nbsp;<a href='"
                     ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                     ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                     ."-".$i * $this->getPageNumber()
@@ -213,7 +219,7 @@ abstract class PaginationFactory {
             // Если страница 4 и до 2-х
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
+                $returnPage .= "&nbsp;<a href='"
                     ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                     ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                     ."-".$i * $this->getPageNumber()
@@ -233,7 +239,7 @@ abstract class PaginationFactory {
                         ."]&nbsp;";
                 } else {
                     // Если не текущая, то выводим три блока по 10
-                    $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
+                    $returnPage .= "&nbsp;<a href='"
                         ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                         ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                         ."-". $i * $this->getPageNumber()
@@ -242,7 +248,7 @@ abstract class PaginationFactory {
             }
             // Выводим ссылку на последнюю страницу
             $returnPage .= "&nbsp; ... &nbsp;&nbsp;"
-                ."<a href='$_SERVER[PHP_SELF]"
+                ."<a href='"
                 ."?cmd=Guestbook&page=$number{$this->getParameters()}'>"
                 ."[".( ( $number - 1 ) * $this->getPageNumber() + 1 )
                 ."-{$this->getTotal()}]</a>&nbsp;";
@@ -259,7 +265,7 @@ abstract class PaginationFactory {
                     } else {
                         // Если не последний блок не текущий, то отображаем его,
                         // как ссылки
-                        $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
+                        $returnPage .= "&nbsp;<a href='"
                             ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                             ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                             ."-{$this->getTotal()}]</a>&nbsp;";
@@ -274,7 +280,7 @@ abstract class PaginationFactory {
                             ."]&nbsp;";
                     } else {
                         // Отображаем блоки страниц справа от текущей
-                        $returnPage .= "&nbsp;<a href='$_SERVER[PHP_SELF]"
+                        $returnPage .= "&nbsp;<a href='"
                             ."?cmd=Guestbook&page=$i{$this->getParameters()}'>"
                             ."[".( ( $i - 1 ) * $this->getPageNumber() + 1 )
                             ."-".$i * $this->getPageNumber()

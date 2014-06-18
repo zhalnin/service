@@ -51,8 +51,8 @@ class DomainObjectAssembler {
      * @return mixed
      */
     function findOne( IdentityObject $idobj ) {
+//        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
         $collection = $this->find( $idobj );
-//        echo "<tt><pre>".print_r($collection, true)."</pre></tt>";
         return $collection->current();
     }
 
@@ -88,6 +88,44 @@ class DomainObjectAssembler {
         $obj->markClean();
     }
 
+    function delete( IdentityObject $idobj ) {
+        $delfact = $this->factory->getDeleteFactory();
+        list( $delete, $values ) = $delfact->newDelete( $idobj );
+//        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r( $delfact, true ) ."</pre></tt>";
+    }
+
+    /**
+     * newDeleteEarly - имеет специфическую конструкцию для поля date:
+     * WHERE UNIX_TIMESTAMP()-UNIX_TIMESTAMP(date)
+     * @param IdentityObject $idobj
+     */
+    function deleteEarly( IdentityObject $idobj ) {
+        $delfact = $this->factory->getDeleteFactory();
+        list( $delete, $values ) = $delfact->newDeleteEarly( $idobj );
+        $stmt = $this->getStatement( $delete );
+        $stmt->execute( $values );
+
+//        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r( $delfact, true ) ."</pre></tt>";
+    }
+
+    /**
+     * Метод для постраничной навигации
+     * возвращает:
+     * "navigation" - сама навигация
+     * "select" - это содержимое выборки
+     * @param $tableName
+     * @param IdentityObject $where
+     * @param $order
+     * @param $pageNumber
+     * @param $pageLink
+     * @param $parameters
+     * @param $page
+     * @return array
+     */
     function findPagination( $tableName,
                              IdentityObject $where,
                             $order,

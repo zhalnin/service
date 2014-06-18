@@ -59,7 +59,8 @@ function print_page($postbody)
                             "url_replace",
                             $postbody);
     // Ссылка с названием
-    $pattern = "#\[url=(.*)\]([^\[]+?)\[\/url\]#isU";
+    $pattern = "#\[url=(.*)\](.*)\[\/url\]#isU";
+//    $pattern = "#\[url=(.*)\]([^\[]+?)\[\/url\]#isU";
 //    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*([^\[]*)\[\/url\]#isU";
 //    $pattern = "#\[url[\s]*=[\s]*([\S]+)[\s]*\][\s]*(.*)[\s]*\[\/url\]#is";
     $postbody = preg_replace_callback($pattern,

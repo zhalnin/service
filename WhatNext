@@ -15,4 +15,7 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     id_position(secondary key)
 
 
-1. onclick=show_image() в faqParagraph.php
+1. Посмотреть и заимплементить:
+    function markDeleted() {
+           ObjectWatcher::addDelete( $this );
+       }

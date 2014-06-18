@@ -23,6 +23,7 @@ try {
 
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
     require_once( "imei_service/view/templates/top.php" );
+    $feedback = $request->getFeedback();
 
     ?>
     <div id="header">
@@ -117,19 +118,25 @@ try {
 
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
+<?php
+                                //    Вывод сообщений об ошибках
+                                if( ! empty( $feedback ) ) {
+                                print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
+                                    print "<ul>\n";
+                                        print "<li>\n";
+                                            print $request->getFeedbackString('</li><li>');
+                                            print "</li>\n";
+                                        print "</ul>\n";
+                                    print "</div>";
+                                }
+                                echo "</div>";
+?>
                     </div><!-- shipping -->
                 </div><!-- shipping-box -->
             </div><!-- hero selfclear -->
         </div><!-- showcase -->
     </div><!-- main -->
-
     <?php
-
-
-
-
-
-
 
     require_once( "imei_service/view/templates/bottom.php" );
 

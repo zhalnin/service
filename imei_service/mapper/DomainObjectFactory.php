@@ -445,3 +445,23 @@ class FaqParagraphImageObjectFactory extends DomainObjectFactory {
         return $obj;
     }
 }
+
+
+class LoginOshibkaObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+//        echo "<tt><pre> start - ".print_r( $array, true) ." - end </pre></tt>";
+        $class = '\imei_service\domain\LoginOshibka';
+//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setIp( $array['ip'] );
+        $obj->setDate( $array['date'] );
+        $obj->setCol( $array['col'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}

@@ -60,4 +60,8 @@ interface FaqParagraphImageCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface LoginOshibkaCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
 ?>
