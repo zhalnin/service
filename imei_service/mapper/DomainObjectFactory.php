@@ -7,7 +7,9 @@
  */
 
 namespace imei_service\mapper;
+error_reporting( E_ALL & ~E_NOTICE );
 
+//require_once( 'imei_service/domain.php' );
 require_once( 'imei_service/domain/FaqPosition.php' );
 require_once( 'imei_service/domain/FaqParagraphImage.php' );
 
@@ -459,6 +461,30 @@ class LoginOshibkaObjectFactory extends DomainObjectFactory {
         $obj->setIp( $array['ip'] );
         $obj->setDate( $array['date'] );
         $obj->setCol( $array['col'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class LoginObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+//        echo "<tt><pre> start - ".print_r( $array, true) ." - end </pre></tt>";
+        $class = '\imei_service\domain\Login';
+//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] );
+        $obj->setFio( $array['fio'] );
+        $obj->setCity( $array['city'] );
+        $obj->setEmail( $array['email'] );
+        $obj->setLogin( $array['login'] );
+        $obj->setPass( $array['pass'] );
+        $obj->setActivation( $array['activation'] );
+        $obj->setStatus( $array['status'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

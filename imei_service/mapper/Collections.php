@@ -41,6 +41,15 @@ class DefferredNewsCollection extends NewsCollection {
     }
 }
 
+class LoginCollection
+    extends Collection
+    implements \imei_service\domain\LoginCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Login";
+    }
+}
+
 
 class LoginOshibkaCollection
     extends Collection

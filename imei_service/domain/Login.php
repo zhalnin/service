@@ -10,7 +10,7 @@ namespace imei_service\domain;
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/DomainObject.php" );
-require_once( "imei_service/mapper/LoginIdentityObject.php" );
+//require_once( "imei_service/mapper/LoginIdentityObject.php" );
 
 
 class Login extends DomainObject {
@@ -43,7 +43,12 @@ class Login extends DomainObject {
 
     }
 
-
+    static function find( $args ) {
+        $finder = self::getFinder( __CLASS__ );
+        list( $login, $pass ) = $args;
+        $logpassobj = self::getIdentityObject( __CLASS__ );
+        return $finder->findOne( $logpassobj->field( 'login' )->eq( $login )->field( 'pass' )->eq( $pass ) );
+    }
 
 
     function setFio( $fio_s ) {
@@ -97,4 +102,5 @@ class Login extends DomainObject {
     function getStatus() {
         return $this->status;
     }
-} 
+}
+?>

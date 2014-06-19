@@ -11,7 +11,7 @@ namespace imei_service\domain;
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/DomainObject.php" );
-//require_once( "imei_service/mapper/LoginOshibkaIdentityObject.php" );
+require_once( "imei_service/mapper/LoginOshibkaIdentityObject.php" );
 
 class LoginOshibka extends DomainObject {
     private $ip;

@@ -2,14 +2,14 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: zhalnin
- * Date: 29/03/14
- * Time: 19:14
+ * Date: 13/12/13
+ * Time: 17:45
  * To change this template use File | Settings | File Templates.
  */
 
-error_reporting( E_ALL & ~E_NOTICE );
+require_once('../base/Registry.php');
 
-//require_once( "../../../base/Registry.php" );
+
 
 /**
  * Create seed
@@ -86,7 +86,7 @@ function gen_img(){
 
     }
 
-    $color = imagecolorallocate($im, rand( 0, 150 ), rand( 0, 100 ), rand( 0 , 150 ) );
+    $color = imagecolorallocate($im, rand( 0, 200 ), rand( 0, 100 ), rand( 0 , 200 ) );
     imagettftext( $im, $font_arr[$rnd_arr]['size'], rand( -4, 4 ), rand( 10, 45 ), rand( 20, 35 ),
         $color, "src/".$font_arr[$rnd_arr]["fname"] , $code);
 
@@ -99,14 +99,11 @@ function gen_img(){
 
     }
 
-//    \account\base\SessionRegistry::setSession('code', $code);
-//    session_start();
-//    \imei_service\base\SessionRegistry::setSession('code', $code);
-    $_SESSION['code'] = $code;
-
+    \account\base\SessionRegistry::setSession('code', $code);
     ImagePNG( $im );
     ImageDestroy( $im );
-
 }
+
 gen_img();
 
+?>

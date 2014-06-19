@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 17/06/14
- * Time: 16:22
+ * Date: 19/06/14
+ * Time: 20:34
  */
 
 namespace imei_service\view;
@@ -14,6 +14,7 @@ try {
     require_once( "imei_service/view/ViewHelper.php" );
 
     $request = \imei_service\view\VH::getRequest();
+
 //    $udidCollection = $request->getObject( 'udidCollection' );
 //
 //    $title = $udidCollection->getName();
@@ -24,16 +25,6 @@ try {
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
     require_once( "imei_service/view/templates/top.php" );
     $feedback = $request->getFeedback();
-    if( isset( $_COOKIE['login'] ) ) {
-        $login = "value='".$_COOKIE['login']."'";
-    } else {
-        $login = "value='".$_POST['login']."'";
-    }
-    if( isset( $_COOKIE['pass'] ) ) {
-        $password = "value='".$_COOKIE['pass']."'";
-    } else {
-        $password = "value='".$_POST['pass']."'";
-    }
 
     ?>
     <div id="header">
@@ -53,7 +44,7 @@ try {
             <div class="hero selfclear">
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Udid">Вход</a></h2>
+                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Udid">Регистрация</a></h2>
                     <div id="shipping" class="step edit" style="opacity: 1;">
                         <div class="step-content top-divided" style="">
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
@@ -62,31 +53,71 @@ try {
                                         <form method="post">
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
-                                                    <strong class="label">Выполнить вход</strong>
+                                                    <strong class="label">Заполните обязательные поля</strong>
                                                 </legend>
                                                 <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
                                                     <div class="mbs" style="">
                                                         <span class="login-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-companyName" style="">
-                                                                <span>Логин</span>
+                                                                <span>Имя (обязательно)</span>
                                                             </label>
-                                                            <input id="login" class="login" type="text" maxlength="35" size="35" name="login" <?php print $login; ?> />
+                                                            <input id="fio" class="fio" type="text" maxlength="35" size="35" name="fio" value="<?php echo $_POST['fio']; ?>" />
+                                                        </span>
+                                                    </div>
+                                                    <div class="mbs" style="">
+                                                        <span class="login-field field-with-placeholder" style="">
+                                                            <label class="placeholder" for="shipping-user-companyName" style="">
+                                                                <span>Город</span>
+                                                            </label>
+                                                            <input id="city" class="login" type="text" maxlength="35" size="35" name="city" value="<?php echo $_POST['city']; ?>" />
+                                                        </span>
+                                                    </div>
+                                                    <div class="mbs" style="">
+                                                        <span class="login-field field-with-placeholder" style="">
+                                                            <label class="placeholder" for="shipping-user-companyName" style="">
+                                                                <span>Email (обязательно)</span>
+                                                            </label>
+                                                            <input id="email" class="login" type="text" maxlength="35" size="35" name="email" value="<?php echo $_POST['email']; ?>" />
+                                                        </span>
+                                                    </div>
+                                                    <div class="mbs" style="">
+                                                        <span class="login-field field-with-placeholder" style="">
+                                                            <label class="placeholder" for="shipping-user-companyName" style="">
+                                                                <span>Логин (обязательно)</span>
+                                                            </label>
+                                                            <input id="login" class="login" type="text" maxlength="35" size="35" name="login" value="<?php echo $_POST['login']; ?>" />
                                                         </span>
                                                     </div>
                                                     <div class="mbs" style="">
                                                         <span class="password-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Пароль</span>
+                                                        <span>Пароль (обязательно)</span>
                                                             </label>
-                                                            <input id="password" class="password" type="password" size="8" name="pass" <?php echo $password; ?> />
+                                                            <input id="password" class="password" type="password" size="8" name="pass"  />
                                                         </span>
                                                     </div>
                                                     <div class="mbs" style="">
-                                                        <span class="udidPhone-field" style="">
+                                                        <span class="password-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Запомнить меня</span>
+                                                                <span>Повтор Пароля (обязательно)</span>
                                                             </label>
-                                                            <input type="checkbox" name="auto" value="1" />
+                                                            <input id="repassword" class="repassword" type="password" size="8" name="repass"  />
+                                                        </span>
+                                                    </div>
+                                                    <div class="mbs">
+                                                        <span  class="capcha">
+                                                            <label for="capcha"><span>&nbsp;</span></label>
+                                                            <img id="capchaImg" src="imei_service/view/utils/capcha/capcha.php" name="capcha" />
+                                                        </span>
+                                                    </div>
+                                                    <div class="refreshDiv">
+                                                        <div id="refreshCode" class="refreshCode" title="Обновить код на картинке"></div>
+                                                    </div>
+
+                                                    <div class="mbs capchaField">
+                                                        <span class="form-field field-with-placeholder code">
+                                                            <label class="placeholder" for="code"><span>Введите код с картинки</span></label>
+                                                            <input type="text" name="code" class="code" id="code" maxlength="6" />
                                                         </span>
                                                     </div>
                                                 </div>
@@ -127,19 +158,19 @@ try {
 
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
-<?php
-                                //    Вывод сообщений об ошибках
-                                if( ! empty( $feedback ) ) {
-                                print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
-                                    print "<ul>\n";
-                                        print "<li>\n";
-                                            print $request->getFeedbackString('</li><li>');
-                                            print "</li>\n";
-                                        print "</ul>\n";
-                                    print "</div>";
-                                }
-                                echo "</div>";
-?>
+                        <?php
+                        //    Вывод сообщений об ошибках
+                        if( ! empty( $feedback ) ) {
+                            print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
+                            print "<ul>\n";
+                            print "<li>\n";
+                            print $request->getFeedbackString('</li><li>');
+                            print "</li>\n";
+                            print "</ul>\n";
+                            print "</div>";
+                        }
+                        echo "</div>";
+                        ?>
                     </div><!-- shipping -->
                 </div><!-- shipping-box -->
             </div><!-- hero selfclear -->

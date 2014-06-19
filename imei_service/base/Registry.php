@@ -219,6 +219,14 @@ class SessionRegistry extends Registry {
     function getComplex() {
         return self::instance()->get( 'complex' );
     }
+
+    static function setSession( $key, $val ) {
+        self::instance()->set( $key, $val );
+    }
+
+    static function getSession( $key ) {
+        return self::instance()->get( $key );
+    }
 }
 
 

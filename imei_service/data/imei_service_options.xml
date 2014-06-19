@@ -97,6 +97,16 @@
 
     <command name="Login">
         <view>login</view>
+        <status value="CMD_LOGIN_OK">
+            <view>loginSuccess</view>
+        </status>
+    </command>
+
+    <command name="Register">
+        <view>register</view>
+        <status value="CMD_REGISTER_OK">
+            <view>registerSuccess</view>
+        </status>
     </command>
 
 </control>

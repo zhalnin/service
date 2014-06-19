@@ -19,3 +19,4 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     function markDeleted() {
            ObjectWatcher::addDelete( $this );
        }
+2. В command/Login.php добавить проверку на то, что учетка активирована

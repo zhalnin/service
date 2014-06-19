@@ -73,7 +73,42 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\LoginOshibka":
                 return new LoginOshibkaPersistenceFactory();
                 break;
+            case "imei_service\\domain\\Login":
+                return new LoginPersistenceFactory();
+                break;
         }
+    }
+}
+
+
+class LoginPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new LoginMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new LoginObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new LoginCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new LoginSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new LoginUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new LoginIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new LoginDeleteFactory();
     }
 }
 

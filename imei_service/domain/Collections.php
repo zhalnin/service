@@ -64,4 +64,8 @@ interface LoginOshibkaCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface LoginCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
 ?>
