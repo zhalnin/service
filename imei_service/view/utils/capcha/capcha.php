@@ -6,10 +6,9 @@
  * Time: 19:14
  * To change this template use File | Settings | File Templates.
  */
-
 error_reporting( E_ALL & ~E_NOTICE );
 
-//require_once( "../../../base/Registry.php" );
+session_start();
 
 /**
  * Create seed
@@ -99,9 +98,7 @@ function gen_img(){
 
     }
 
-//    \account\base\SessionRegistry::setSession('code', $code);
-//    session_start();
-//    \imei_service\base\SessionRegistry::setSession('code', $code);
+
     $_SESSION['code'] = $code;
 
     ImagePNG( $im );

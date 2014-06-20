@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 19/06/14
- * Time: 15:15
+ * Date: 15/06/14
+ * Time: 14:27
  */
+
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
-
 try {
 
     require_once( "imei_service/view/ViewHelper.php" );
@@ -16,13 +16,13 @@ try {
 
 
     print "<html><head>\n";
-    print "<meta http-equiv='Refresh' content='7; url=?cmd=News'>\n";
+    print "<meta http-equiv='Refresh' content='7; url=?cmd=Login'>\n";
     print "</head></html>\n";
 
 
 
     $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
-    $title = "Успешный вход на сайт imei-service.ru";
+    $title = "Регистрация на сайте imei-service.ru завершена успешно";
     $description = "Оповещение о успешной отправки заявки на официальный анлок iPhone";
     require_once("imei_service/view/templates/top.php");
 
@@ -48,12 +48,12 @@ try {
         <div id="news-main" class="main-content">
             <div id="" class="news-content clear-fix">
                 <div id='' class="news-header">
-                    <h2  class="h2">Успешный вход</h2>
+                    <h2  class="h2">Вы успешно зарегистрировались на сайте imei-service.ru</h2>
                 </div>
                 <div class='news-container'>
                     <div class='success-body'>
                         <div class='success-title'>
-                            <h1 class=h2>Спасибо, что в очередной раз вы с нами!</h1>
+                            <h1 class=h2>Спасибо, что присоединились к нам!</h1>
                         </div>
                         <div class='success-image'>
                             <img alt='IMEI-service - Заявка на проверку iPhone по IMEI' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
@@ -65,7 +65,9 @@ try {
                         <div class='success-info'>
                             <p>
                                 Мы рады вас приветствовать!<br/><br/>
-                                Спасибо, что не забываете о нашем существовании<br/><br/>
+                                Спасибо, что нашли время зарегистрироваться на нашем сайте<br/><br/>
+                                Через несколько минут вы должны получить письмо с ссылкой для активации<br/>
+                                Для активации вашей учетной записи вам необходимо перейти по полученной ссылке<br/><br/>
                                 На сайте вы можете:<br/>
                                 ‣ Заказать официальную или программную отвязку iPhone <br/>
                                 ‣ Проверить iPhone по IMEI<br/>

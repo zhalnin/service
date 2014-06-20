@@ -19,7 +19,8 @@ abstract class Command {
         'CMD_CARRIER_OK'        => 6,
         'CMD_BLACKLIST_OK'      => 7,
         'CMD_GUESTBOOK_OK'      => 8,
-        'CMD_LOGIN_OK'          => 9
+        'CMD_LOGIN_OK'          => 9,
+        'CMD_REGISTER_OK'       => 10
     );
     private $status = 0;
 

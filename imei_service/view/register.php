@@ -17,7 +17,7 @@ try {
 
 //    $udidCollection = $request->getObject( 'udidCollection' );
 //
-//    $title = $udidCollection->getName();
+    $title = "Регистрация на сайте imei-service.ru";
 //    $keywords = $udidCollection->getKeywords();
 //    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
 //    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
@@ -99,7 +99,7 @@ try {
                                                     <div class="mbs" style="">
                                                         <span class="password-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Повтор Пароля (обязательно)</span>
+                                                                <span>Подтвердить Пароль (обязательно)</span>
                                                             </label>
                                                             <input id="repassword" class="repassword" type="password" size="8" name="repass"  />
                                                         </span>

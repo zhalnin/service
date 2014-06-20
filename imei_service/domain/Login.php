@@ -43,6 +43,12 @@ class Login extends DomainObject {
 
     }
 
+    /**
+     * Метод, проверяющий на соответствие
+     * логина и пароля
+     * @param $args
+     * @return mixed
+     */
     static function find( $args ) {
         $finder = self::getFinder( __CLASS__ );
         list( $login, $pass ) = $args;
@@ -50,6 +56,30 @@ class Login extends DomainObject {
         return $finder->findOne( $logpassobj->field( 'login' )->eq( $login )->field( 'pass' )->eq( $pass ) );
     }
 
+    /**
+     * Метод для проверки email в БД
+     * на существование
+     * @param $email
+     * @return mixed
+     */
+    static function findEmail( $email ) {
+        $finder = self::getFinder( __CLASS__ );
+        $logpassobj = self::getIdentityObject( __CLASS__ );
+        return $finder->findOne( $logpassobj->field( 'email' )->eq( $email ) );
+    }
+
+
+    /**
+     * Метод для проверки логина в БД
+     * на существование
+     * @param $login
+     * @return mixed
+     */
+    static function findLogin( $login ) {
+        $finder = self::getFinder( __CLASS__ );
+        $logpassobj = self::getIdentityObject( __CLASS__ );
+        return $finder->findOne( $logpassobj->field( 'login' )->eq( $login ) );
+    }
 
     function setFio( $fio_s ) {
         $this->fio = $fio_s;
