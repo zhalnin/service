@@ -12,6 +12,15 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/classes/class.SendMail.php" );
 
+/**
+ * Class SendMail
+ * Позволяет по переданным параметрам скомпоновать письма админу и клиенту.
+ * Этот класс выполняет действия при отправке формы после проверки JS через
+ * добавление атрибуту формы параметра ?cmd=SendMail
+ * Обработку проводит командный класс \command\SendMail
+ * Такие, как Guestbook и Register
+ * @package imei_service\command
+ */
 class SendMail extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
@@ -28,31 +37,31 @@ class SendMail extends Command {
 
         switch( $type ) {
             case 'unlock':
-                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
-                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
                 sleep( 3 );
                 return self::statuses( 'CMD_UNLOCK_OK' );
                 break;
             case 'udid':
-                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
-                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
                 sleep( 3 );
                 return self::statuses( 'CMD_UDID_OK' );
                 break;
             case 'guestbook':
-                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
                 sleep( 3 );
                 return self::statuses( 'CMD_GUESTBOOK_OK' );
                 break;
             case 'carrier':
-                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
-                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
                 sleep( 3 );
                 return self::statuses( 'CMD_CARRIER_OK' );
                 break;
             case 'blacklist':
-                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
-                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type );
+                $manager->make( 1 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
+                $manager->make( 2 )->email($email_admin, $email_client, $imei, $udid, $operator, $type  );
                 sleep( 3 );
                 return self::statuses( 'CMD_BLACKLIST_OK' );
                 break;

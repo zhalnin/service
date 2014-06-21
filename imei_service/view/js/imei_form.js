@@ -50,9 +50,35 @@ var AMForm = {
         }
         ,
         code: {
-            msg: "Не верный код",
+            msg: "Неверный код",
             test: function( obj ) {
                     return !obj.value ||  (  obj.value.match( new RegExp("[a-z0-9]{6}") ) ?  true : false );
+            }
+        },
+        login: {
+            msg: 'Заполните поле "Логин"',
+            test: function(obj) {
+                return !obj.value || obj.value.length > 2;
+            }
+        },
+        pass: {
+            msg: 'Заполните поле "Пароль"',
+            test: function(obj) {
+                return !obj.value || obj.value.length > 2;
+            }
+        },
+        repass: {
+            msg: 'Поле "Пароль" и "Подтверждения Пароля" не совпадают',
+            test: function(obj) {
+                return !obj.value || obj.value.length > 2;
+            }
+        },
+        fio: {
+            msg: 'Заполните поле "Имя"',
+            test: function(obj) {
+                var pass = AM.DOM.$('pass');
+                console.log(pass.value);
+                return !obj.value || obj.value != pass.value;
             }
         }
     },
@@ -86,10 +112,10 @@ var AMForm = {
 
                 // set value in field 'action' in input
 //                form.action = "sendMail.php";
-                if( AM.DOM.$('shipping-box-title') != null ) {
-//                    form.action = "sendMail.php";
-                    form.action = "?cmd=SendMail";
-                }
+//                if( AM.DOM.$('shipping-box-title') != null ) {
+////                    form.action = "sendMail.php";
+//                    form.action = "?cmd=SendMail";
+//                }
 
                 wysiwyg.showOverlay();
                 setTimeout( function() {
@@ -132,7 +158,7 @@ var AMForm = {
         // замыкание для того, чтобы привязать событие к тому элементу,
         // который нужен
         for(i = 0, len = elem.length; i<len; i++){
-            if(elem[i].nodeName != 'FIELDSET' && elem[i].type != 'hidden'){
+            if(elem[i].nodeName != 'FIELDSET' && elem[i].type != 'hidden' && elem[i].type != 'checkbox' &&  elem[i].type != 'radio'  ) {
                 result =  function(num){
 
 //                console.log(elem[num]);
@@ -161,7 +187,7 @@ var AMForm = {
                     AM.Event.addEvent(elem[num],'blur',function(event){
 //                        console.log(2);
                         // если значение пустое
-                        if(elem[num].value == '') {
+                        if(elem[num].value == '' ) {
                             // делаем его родителя label видимым
                             AM.DOM.prev(elem[num]).style.display = "";
                             // делаем его родителя label видимым

@@ -10,7 +10,6 @@
 
 AM.Event.addEvent(window, 'load', function() {
     try{
-
 //        var iframeTD = AM.DOM.$('iframe_td');
 //        var iframe2 = document.createElement('iframe');
 //        iframe2.id = 'iframe_redactor';

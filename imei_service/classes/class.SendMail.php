@@ -11,6 +11,9 @@ namespace imei_service\classes;
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once("imei_service/base/Registry.php" );
+require_once( "imei_service/view/utils/getNameServer.php" );
+
+
 
 abstract class Mail {
 
@@ -119,31 +122,9 @@ abstract class Mail {
 abstract class AdminMail extends Mail{
     protected $style;
 
-    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type){
+    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type, $login=null, $activation=null ){
         $style = parent::getStyle();
 
-        switch($type){
-            case 'udid':
-                $subject = "Поступила заявка на регистрацию UDID";
-                $subject_detail = "Для аппарата с UDID - $udid";
-                break;
-            case 'unlock':
-                $subject = "Поступила заявка на официальный анлок";
-                $subject_detail = "Для аппарата с IMEI - $imei";
-                break;
-            case 'carrier':
-                $subject = "Поступила заявка на проверку iPhone по IMEI";
-                $subject_detail = "Для аппарата с IMEI - $imei";
-                break;
-            case 'blacklist':
-                $subject = "Поступила заявка на blacklist iPhone";
-                $subject_detail = "Для аппарата с IMEI - $imei";
-                break;
-            case 'guestbook':
-                $subject = "Новый пост в гостевой книге";
-                $subject_detail = "Для аппарата с IMEI - $imei";
-                break;
-        }
         // Заявка на регистрацию UDID
         // Заявка на официальный анок
         // Заявка на проверку iPhone по IMEI
@@ -154,7 +135,7 @@ abstract class AdminMail extends Mail{
         }
 
         // Формируем письмо
-        $body = "
+        $top = "
             <html>
                 <head>
                 <title>Обновление на сайте</title>
@@ -166,14 +147,9 @@ abstract class AdminMail extends Mail{
                     <div id=\"container\">
                          <div id=\"tp\"></div>
                          <div id=\"mid\">
-                             <h1>Обновление на сайте</h1>
-                             <div class=\"main_txt\">
-                                <p>$subject</p>
-                                <p>$subject_detail</p>
-                                $operatorDetails
-                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
-                             </div>
-                            <div id=\"slice\"></div>
+                             <h1>Обновление на сайте</h1>";
+
+        $footer = "         <div id=\"slice\"></div>
                         </div>
 
                         <div id=\"btm\"></div>
@@ -194,6 +170,72 @@ abstract class AdminMail extends Mail{
                     </div>
                 </body>
             </html>";
+
+            switch($type){
+                case 'udid':
+                    $subject = "Поступила заявка на регистрацию UDID";
+                    $subject_detail = "Для аппарата с UDID - $udid";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'unlock':
+                    $subject = "Поступила заявка на официальный анлок";
+                    $subject_detail = "Для аппарата с IMEI - $imei";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                $operatorDetails
+                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'carrier':
+                    $subject = "Поступила заявка на проверку iPhone по IMEI";
+                    $subject_detail = "Для аппарата с IMEI - $imei";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'blacklist':
+                    $subject = "Поступила заявка на blacklist iPhone";
+                    $subject_detail = "Для аппарата с IMEI - $imei";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'guestbook':
+                    $subject = "Новый пост в гостевой книге";
+                    $subject_detail = "";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Новое сообщение от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'register':
+                    $subject = "Новая регистрация на сайте imei-service.ru";
+                    $subject_detail = "";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Новая регистрация от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+            }
+
+
         $header = 'From: support@imei-service.ru' . "\r\n";
         $header .= 'Reply-To: support@imei-service.ru' . "\r\n";
         $header .= "Content-Type: text/html; charset=utf-8\r\n";
@@ -208,8 +250,10 @@ abstract class AdminMail extends Mail{
 }
 abstract class ClientMail extends Mail {
     protected $style;
-    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type){
+
+    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type, $login=null, $activation ){
         $style = parent::getStyle();
+        $nameServer = \imei_service\view\utils\getNameServer();
         // Формируем письмо
         $top = "
             <html>
@@ -324,12 +368,23 @@ abstract class ClientMail extends Mail {
             case 'guestbook':
                 $subject = "Пост в гостевой книге";
                 $middle = "<div class=\"main_txt\">
-                             <p> Спасибо за потраченное время, чтобы оставить свое сообщение в Гостевой книге </p>
+                             <p> Уважаемый, $login, спасибо за потраченное время, чтобы оставить свое сообщение в Гостевой книге </p>
                              <p> Ваш адрес электронной почты $email_client был указан при отправке сообщения </p>
                              <h3> Ваш адрес электронной почты останется скрыт, нужен только для подтверждения вашей гуманности </h3>
                              <p> Хотелось бы напомнить, что в гостевой книге вы можете также задать вопрос, </p>
                              <p> который будет укладываться в контекст нашего сайта.</p>
                              <p> Постараемся подсказать вам решение вашей проблемы! </p>";
+                $body = $top . $middle . $footer;
+                break;
+            case 'register':
+                $subject = "Подтверждение регистрации на сайте imei-service.ru";
+                $middle = "<div class=\"main_txt\">
+                             <p> Спасибо, что нашли время зарегистрироваться на нашем сайте </p>
+                             <p> Ваш адрес электронной почты $email_client был указан при регистрации на сайте imei-servcie.ru </p>
+                             <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
+                             <p> Для завершения регистрации и активации учетной записи пройдите, пожалуйста, по ссылке: </p>
+                             <p> $nameServer?cmd=Activation&lgn=$login&cAct=$activation</p>
+                             <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
                 $body = $top . $middle . $footer;
                 break;
 
@@ -355,16 +410,16 @@ abstract class ClientMail extends Mail {
  * Отправляем письма об услуге Blacklist - проверка на черный список
  */
 class BlacklistAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
 
     }
 }
 class BlacklistClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
 
     }
 }
@@ -375,15 +430,15 @@ class BlacklistClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class CarrierAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 class CarrierClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 
@@ -393,16 +448,16 @@ class CarrierClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class UnlockAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
 
     }
 }
 class UnlockClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 
@@ -412,15 +467,15 @@ class UnlockClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class UdidAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 class UdidClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 
@@ -429,15 +484,33 @@ class UdidClient extends ClientMail{
  * Отправляем письма об услуге Guestbook - пост в гостевой книге
  */
 class GuestbookAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 class GuestbookClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type);
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+
+
+/**
+ * Class RegisterAdmin and RegisterClient
+ * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
+ */
+class RegisterAdmin extends AdminMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+class RegisterClient extends ClientMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
     }
 }
 
@@ -491,7 +564,7 @@ class CarrierCommsManager extends CommsManager {
 
 /**
  * Class UnlockCommsManager
- * для выбора, кому отправить письмо по услуге проверки на оператора
+ * для выбора, кому отправить письмо по услуге официального анлока
  */
 class UnlockCommsManager extends CommsManager {
 
@@ -508,7 +581,7 @@ class UnlockCommsManager extends CommsManager {
 
 /**
  * Class UdidCommsManager
- * для выбора, кому отправить письмо по услуге проверки на оператора
+ * для выбора, кому отправить письмо по услуге регистрации UDID
  */
 class UdidCommsManager extends CommsManager {
 
@@ -524,8 +597,8 @@ class UdidCommsManager extends CommsManager {
 
 
 /**
- * Class UdidCommsManager
- * для выбора, кому отправить письмо по услуге проверки на оператора
+ * Class GuestCommsManager
+ * для выбора, кому отправить письмо после публикации сообщения в гостевой книге
  */
 class GuestbookCommsManager extends CommsManager {
 
@@ -540,6 +613,23 @@ class GuestbookCommsManager extends CommsManager {
 }
 
 
+/**
+ * Class RegisterCommsManager
+ * для выбора, кому отправить письмо после регистрации
+ */
+class RegisterCommsManager extends CommsManager {
+
+    function make( $type ){
+        switch( $type ){
+            case self::ADMIN:
+                return new RegisterAdmin();
+            case self::CLIENT:
+                return new RegisterClient();
+        }
+    }
+}
+
+
 
 /**
  * Class MailConfig
@@ -547,6 +637,8 @@ class GuestbookCommsManager extends CommsManager {
  */
 class MailConfig {
     private static $instance;
+
+
 
     private function __construct(){}
 
@@ -558,6 +650,7 @@ class MailConfig {
     }
 
     private function getCommsManager( $type ) {
+
         switch( $type ){
             case 'blacklist':
                 return new BlacklistCommsManager();
@@ -573,6 +666,9 @@ class MailConfig {
                 break;
             case 'guestbook':
                 return new GuestbookCommsManager();
+                break;
+            case 'register':
+                return new RegisterCommsManager();
                 break;
         }
     }

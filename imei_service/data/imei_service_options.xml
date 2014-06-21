@@ -18,7 +18,7 @@
 
     <command name="Guestbook">
         <view>guestbook</view>
-        <status value="CMD_OK">
+        <status value="CMD_GUESTBOOK_OK">
             <view>addMessageSuccess</view>
         </status>
     </command>
@@ -88,6 +88,9 @@
         </status>
         <status value="CMD_GUESTBOOK_OK">
             <view>addMessageSuccess</view>
+        </status>
+        <status value="CMD_REGISTER_OK">
+            <view>registerSuccess</view>
         </status>
     </command>
 

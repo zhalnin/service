@@ -51,7 +51,7 @@ try {
             <div id="news-main" class="main-content">
                 <div id="" class="news-content clear-fix">
                     <div id='' class="news-header">
-                        <h2  class="h2">Успешная отправка сообщения в гостевой книге</h2>
+                        <h2  class="h2">Успешное размещение сообщения в гостевой книге</h2>
                     </div>
                     <div class='news-container'>
                         <div class='success-body'>

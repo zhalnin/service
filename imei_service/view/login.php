@@ -53,7 +53,7 @@ try {
             <div class="hero selfclear">
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Udid">Вход</a></h2>
+                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Login">Вход</a></h2>
                     <div id="shipping" class="step edit" style="opacity: 1;">
                         <div class="step-content top-divided" style="">
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
@@ -78,7 +78,7 @@ try {
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
                                                                 <span>Пароль</span>
                                                             </label>
-                                                            <input id="password" class="password" type="password" size="8" name="pass" <?php echo $password; ?> />
+                                                            <input id="pass" class="pass" type="password" size="8" name="pass" <?php echo $password; ?> />
                                                         </span>
                                                     </div>
                                                     <div class="mbs" style="">
@@ -94,11 +94,11 @@ try {
                                                 <input id="type" type="hidden" name="type" value="login">
                                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                                 <input type="hidden" name="submitted" value="yes" />
-                                                <div id="bot-nav">
-                                                    <a class="btn bigblue">
-                                                        <input id="signInHyperLink" type="submit" class>
-                                                    </a>
-                                                </div>
+<!--                                                <div id="bot-nav">-->
+<!--                                                    <a class="btn bigblue">-->
+<!--                                                        <input id="signInHyperLink" type="submit" class>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
                                             </fieldset>
                                         </form>
                                     </div><!-- shipping user -->
@@ -107,7 +107,7 @@ try {
                                     <div class="substep" style="">
                                         <div id="payment-form-astro" class="form-astro with-seperator">
                                             <p class="legend" style="">
-                                                <a href="?cmd=Registration" class="metrics-link">Зарегистрироваться</a>
+                                                <a href="?cmd=Register" class="metrics-link">Зарегистрироваться</a>
                                                 <a href="?cmd=FLogin" class="separated-link metrics-link">Забыли логин или пароль?</a>
                                             </p>
                                             <br />
@@ -124,7 +124,18 @@ try {
 
                         <div class="step-continue part-edit clear" style="">
                             <div class="continue-content clearfix">
-
+                                <div class="gs grid-3of4" style="">
+                                    <div class="chat chat-now cchat">
+                                        <div id="shipping-step-defaults" style="">
+                                            <div id="shipping-continue-button" class="button rect transactional" title="Отправить" value="click" type="submit" style="visibility: visible">
+                                        <span style="">
+                                            <span class="effect"></span>
+                                            <span class="label"> Отправить </span>
+                                        </span>
+                                            </div><!-- shipping-continue-button -->
+                                        </div><!-- shipping-step-defaults -->
+                                    </div><!-- chat chat-now cchat -->
+                                </div><!-- gs grid-3of4 -->
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
 <?php

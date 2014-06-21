@@ -7,13 +7,16 @@
  */
 
 namespace imei_service\command;
+error_reporting( E_ALL & ~E_NOTICE );
+session_start();
 
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/domain/Guestbook.php" );
 require_once( "imei_service/view/utils/getIP.php" );
 require_once( "imei_service/view/utils/getVerBrowser.php" );
+require_once( "imei_service/classes/class.SendMail.php" );
 
-session_start();
+
 
 class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
@@ -47,23 +50,23 @@ class Guestbook extends Command {
 
 
             if( $sid_add_message != session_id() ) {
-                $error = 'error';
-                $request->addFeedback( "Попробуйте отправить форму заново" );
+                $request->addFeedback( 'Заполните поле "Имя"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
             if( empty( $name ) ) {
-                $error = 'error';
-                $request->addFeedback( "Необходимо заполнить поле: Имя" );
+                $request->addFeedback( 'Необходимо заполнить поле: "Имя"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
             if( empty( $email ) ) {
-                $error = 'error';
-                $request->addFeedback( "Необходимо заполнить поле: E-mail" );
+                $request->addFeedback( 'Заполните поле "Email"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $email ) ) {
-                $error = 'error';
-                $request->addFeedback( "Введите ваш действительный E-mail" );
+                $request->addFeedback( "Введите корректный email" );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
             if( $_SESSION['code'] != $code ) {
-                $error = 'error';
-                $request->addFeedback( "Указанный код с картинки неверный" );
+                $request->addFeedback( "Неверно введен защитный код" );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
             if( empty( $id_parent )  ) {
                 $id_parent = 0;
@@ -82,28 +85,32 @@ class Guestbook extends Command {
                 $page = 1;
             }
 
-            if( empty( $error ) ) {
-                $guestbook_obj = new \imei_service\domain\Guestbook( null,
-                                                                    $name,
-                                                                    $city,
-                                                                    $email,
-                                                                    $url,
-                                                                    $message,
-                                                                    $answer,
-                                                                    $putdate,
-                                                                    $hide,
-                                                                    $id_parent,
-                                                                    $ip,
-                                                                    $browser );
-    //                        echo "<tt><pre>".print_r($guestbook_obj, true)."</pre></tt>";
-                $request->setObject('guestbook', $guestbook_obj );
+            // создается объект в domain, если успешно - в control отрабатывает \domain\ObjectWatcher->performOperations()
+            $guestbook_obj = new \imei_service\domain\Guestbook( null,
+                                                                $name,
+                                                                $city,
+                                                                $email,
+                                                                $url,
+                                                                $message,
+                                                                $answer,
+                                                                $putdate,
+                                                                $hide,
+                                                                $id_parent,
+                                                                $ip,
+                                                                $browser );
+            $request->setObject('guestbook', $guestbook_obj );
 
-                return self::statuses( 'CMD_OK' );
-
-            } else {
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            // Закомментированные строки будут работать, если в xml в блок с Guestbook добавить вызов вьюшки по статусу
+            // на данный момент сабмитится форма по JS и просто открываем скрипт с успешным постингом
+            // Если учетные данные добавлены успешно ( будет создан объект, если не будет добавлена, то объект не будет создан )
+            if( is_object( $guestbook_obj ) ) {
+                $commsManager = \imei_service\classes\MailConfig::get( 'guestbook' );  // параметр - тип commsManager
+                $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, 'guestbook', $name, null ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, 'guestbook', $name, null ); // отправляем письмо клиенту
             }
-
+            // если данные добавлены, то по возвращаемому статусу открываем addMessageSuccess.php
+            return self::statuses( 'CMD_GUESTBOOK_OK' );
         }
     }
 }
+?>
