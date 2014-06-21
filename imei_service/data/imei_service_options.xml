@@ -32,18 +32,30 @@
         <status value="CMD_OK">
             <forward>UnlockDetails</forward>
         </status>
+        <status value="CMD_UNLOCK_OK">
+            <view>unlockSuccess</view>
+        </status>
     </command>
 
     <command name="UnlockDetails">
         <view>unlockDetails</view>
+        <status value="CMD_UNLOCK_OK">
+            <view>unlockSuccess</view>
+        </status>
     </command>
 
     <command name="Udid">
         <view>udid</view>
+        <status value="CMD_UDID_OK">
+            <view>udidSuccess</view>
+        </status>
     </command>
 
     <command name="CarrierCheck">
         <view>carrierCheck</view>
+        <status value="CMD_CARRIER_OK">
+            <view>carrierSuccess</view>
+        </status>
     </command>
 
     <command name="FastCheck">
@@ -52,6 +64,9 @@
 
     <command name="BlacklistCheck">
         <view>blacklistCheck</view>
+        <status value="CMD_BLACKLIST_OK">
+            <view>blacklistSuccess</view>
+        </status>
     </command>
 
     <command name="Faq">
@@ -70,28 +85,6 @@
 
     <command name="FaqParagraph">
         <view>faqParagraph</view>
-    </command>
-
-    <command name="SendMail">
-        <view>sendMail</view>
-        <status value="CMD_UNLOCK_OK">
-            <view>unlockSuccess</view>
-        </status>
-        <status value="CMD_UDID_OK">
-            <view>udidSuccess</view>
-        </status>
-        <status value="CMD_CARRIER_OK">
-            <view>carrierSuccess</view>
-        </status>
-        <status value="CMD_BLACKLIST_OK">
-            <view>blacklistSuccess</view>
-        </status>
-        <status value="CMD_GUESTBOOK_OK">
-            <view>addMessageSuccess</view>
-        </status>
-        <status value="CMD_REGISTER_OK">
-            <view>registerSuccess</view>
-        </status>
     </command>
 
     <command name="Parser">

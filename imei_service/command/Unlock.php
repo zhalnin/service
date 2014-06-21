@@ -11,6 +11,9 @@ namespace imei_service\command;
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/domain/Unlock.php" );
+require_once( "imei_service/classes/class.SendMail.php" );
+require_once( "imei_service/view/utils/utils.checkEmail.php" );
+require_once( "imei_service/view/utils/utils.checkIMEI.php" );
 
 class Unlock extends Command {
 
@@ -25,7 +28,37 @@ class Unlock extends Command {
             $request->setObject( 'decorateUnlock', $decorateCollection );
             $collection = \imei_service\domain\Unlock::findAll();
             $request->setObject( 'unlock', $collection );
-            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+
+            $type = $request->getProperty( 'type' );
+            $email = $request->getProperty( 'email' );
+            $imei = $request->getProperty( 'imei' );
+
+            if( empty( $email ) ) {
+                $request->addFeedback( 'Заполните поле "Email"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
+            if( checkEmail( $email ) == false ) {
+                $request->addFeedback( 'Введите корректный адрес "Email"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
+            if( empty( $imei ) ) {
+                $request->addFeedback( 'Заполните поле "IMEI"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
+            if( checkIMEI( $imei ) == false ) {
+                $request->addFeedback( 'Введите корректный номер "IMEI"' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
+
+//        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
+
+            $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
+            $commsManager->make(1)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null ); // отправляем письмо админу
+            $commsManager->make(2)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null ); // отправляем письмо клиенту
+
+            return self::statuses( 'CMD_UNLOCK_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
+//            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+
         } else {
             $id = 0;
             $decorateCollection = \imei_service\domain\Unlock::find( $id );

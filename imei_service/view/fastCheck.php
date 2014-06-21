@@ -119,7 +119,7 @@ try {
                     |
                 </li>
                 <li>
-                    <p>Copyright © 2014 All rights reserved.</p>
+                    <p>Copyright © 2012 - 2014 All rights reserved.</p>
                 </li>
             </ol>
         </div>
