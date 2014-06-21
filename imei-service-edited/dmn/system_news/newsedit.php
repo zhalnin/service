@@ -18,7 +18,7 @@ require_once("../utils/utils.resizeimg.php");
 
 
 // Предотвращаем SQL-инъекцию
-$_GET['id'] = intval($_GET['id']);
+$_GET['id_news'] = intval($_GET['id_news']);
 $_GET['page'] = intval( $_GET['page'] );
 
 try
@@ -26,7 +26,7 @@ try
     // Извлекаем из таблицы news запись, соответствующую
     // исправляемому новостному сообщению
     $query = "SELECT * FROM $tbl_news
-                WHERE id=$_GET[id]";
+                WHERE id_news=$_GET[id_news]";
     $new = mysql_query($query);
 
     if(!$new)
@@ -104,9 +104,9 @@ try
     $hidepict   = new FieldCheckbox("hidepict",
                                     "Отображать фото",
                                     $_REQUEST['hidepict']);
-    $id_news    = new FieldHiddenInt("id",
+    $id_news    = new FieldHiddenInt("id_news",
                                         "",
-                                        $_REQUEST['id']);
+                                        $_REQUEST['id_news']);
     $page       = new FieldHiddenInt("page",
                                         "",
                                         $_GET['page']);
@@ -131,7 +131,7 @@ try
                                     "delimg"    => $delimg,
                                     "hide"      => $hide,
                                     "hidepict"  => $hidepict,
-                                    "id"   => $id_news,
+                                    "id_news"   => $id_news,
                                     "page"      => $page),
                             "Редактировать",
                             "field");
@@ -182,7 +182,7 @@ try
             {
                 // Удаляем старые изображения
                 $query = "SELECT * FROM $tbl_news
-                			WHERE id=$_GET[id]";
+                			WHERE id_news=$_GET[id_news]";
                 $pos = mysql_query($query);
                 if(!$pos)
                 {
@@ -250,7 +250,7 @@ try
                             $url_pict_s
                             hide = '{$showhide}',
                             hidepict = '{$showhidepict}'
-                        WHERE id =".$form->fields['id']->value;
+                        WHERE id_news =".$form->fields['id_news']->value;
             if(!mysql_query($query))
             {
                 throw new ExceptionMySQL(mysql_error(),

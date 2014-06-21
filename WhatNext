@@ -19,6 +19,7 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     function markDeleted() {
            ObjectWatcher::addDelete( $this );
        }
-2. В command/Login.php добавить проверку на то, что учетка активирована
+2. ?cmd=Activation
+3. ?cmd=FLogin
+4. ?cmd=Logout
 
-3. Убрать из view/register.php в атрибуте action=?cmd=SendMail - перенести, как везде, в imei_form.js

@@ -42,6 +42,7 @@ error_reporting(E_ALL & ~E_NOTICE);
      */
     function tagIns( st1, st2 ) {
         AM.DOM.tagInsert(tagTextarea.tag, st1, st2 );
+        tagTextarea.tag.focus();
     }
 
 </script>
