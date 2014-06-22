@@ -105,5 +105,22 @@
         </status>
     </command>
 
+    <command name="Activation">
+        <view>activationAlready</view>
+        <status value="CMD_ERROR">
+            <view>activationError</view>
+        </status>
+        <status value="CMD_ACTIVATION_OK">
+            <view>activationSuccess</view>
+        </status>
+    </command>
+
+    <command name="FLogin">
+        <view>flogin</view>
+        <status value="CMD_OK">
+            <view>floginSuccess</view>
+        </status>
+    </command>
+
 </control>
 </woo-options>

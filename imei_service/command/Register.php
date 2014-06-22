@@ -20,15 +20,15 @@ require_once( "imei_service/domain/Login.php" );
 class Register extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-        $fio = $request->getProperty( 'fio' );
-        $city = $request->getProperty( 'city' );
-        $email = $request->getProperty( 'email' );
-        $login = $request->getProperty( 'login' );
-        $pass = $request->getProperty( 'pass' );
-        $repass = $request->getProperty( 'repass' );
-        $code = $request->getProperty( 'code' );
-        $recode = $_SESSION['code'];
-        $submitted = $request->getProperty( 'submitted' );
+        $fio        = $_POST['fio'];
+        $city       = $_POST['city'];
+        $email      = $_POST['email'];
+        $login      = $_POST['login'];
+        $pass       = $_POST['pass'];
+        $repass     = $_POST['repass'];
+        $code       = $_POST['code'];
+        $recode     = $_SESSION['code'];
+        $submitted  = $_POST['submitted'];
 
         $findEmail = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
         $findLogin = \imei_service\domain\Login::findLogin( $login ); // проверка Логина на существование в БД

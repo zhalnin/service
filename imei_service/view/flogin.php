@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 17/06/14
- * Time: 16:22
+ * Date: 22/06/14
+ * Time: 19:38
  */
 
 namespace imei_service\view;
@@ -16,7 +16,7 @@ try {
     $request = \imei_service\view\VH::getRequest();
 //    $udidCollection = $request->getObject( 'udidCollection' );
 //
-    $title = "Вход на сайт imei-service.ru";
+    $title = "Восстановление логина и пароля";
 //    $keywords = $udidCollection->getKeywords();
 //    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
 //    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
@@ -24,16 +24,16 @@ try {
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
     require_once( "imei_service/view/templates/top.php" );
     $feedback = $request->getFeedback();
-    if( isset( $_COOKIE['login'] ) ) {
-        $login = "value='".$_COOKIE['login']."'";
-    } else {
-        $login = "value='".$_POST['login']."'";
-    }
-    if( isset( $_COOKIE['pass'] ) ) {
-        $password = "value='".$_COOKIE['pass']."'";
-    } else {
-        $password = "value='".$_POST['pass']."'";
-    }
+//    if( isset( $_COOKIE['login'] ) ) {
+//        $login = "value='".$_COOKIE['login']."'";
+//    } else {
+//        $login = "value='".$_POST['login']."'";
+//    }
+//    if( isset( $_COOKIE['pass'] ) ) {
+//        $password = "value='".$_COOKIE['pass']."'";
+//    } else {
+//        $password = "value='".$_POST['pass']."'";
+//    }
 
     ?>
     <div id="header">
@@ -53,7 +53,7 @@ try {
             <div class="hero selfclear">
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=Login">Вход</a></h2>
+                    <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;"><a href="?cmd=FLogin">Восстановление логина и пароля</a></h2>
                     <div id="shipping" class="step edit" style="opacity: 1;">
                         <div class="step-content top-divided" style="">
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
@@ -62,43 +62,27 @@ try {
                                         <form method="post">
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
-                                                    <strong class="label">Выполнить вход</strong>
+                                                    <strong class="label">Выслать учетные данные на указанный email</strong>
                                                 </legend>
                                                 <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
                                                     <div class="mbs" style="">
                                                         <span class="login-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-companyName" style="">
-                                                                <span>Логин</span>
+                                                                <span>Email</span>
                                                             </label>
-                                                            <input id="login" class="login" type="text" maxlength="35" size="35" name="login" <?php print $login; ?> />
-                                                        </span>
-                                                    </div>
-                                                    <div class="mbs" style="">
-                                                        <span class="password-field field-with-placeholder" style="">
-                                                            <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Пароль</span>
-                                                            </label>
-                                                            <input id="pass" class="pass" type="password" size="8" name="pass" <?php echo $password; ?> />
-                                                        </span>
-                                                    </div>
-                                                    <div class="mbs" style="">
-                                                        <span class="udidPhone-field" style="">
-                                                            <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Запомнить меня</span>
-                                                            </label>
-                                                            <input type="checkbox" name="auto" value="1" />
+                                                            <input id="email" class="email" type="text" name="email" <?php print $email; ?> />
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <input id="item" type="hidden" name="item" value="Форма входа">
-                                                <input id="type" type="hidden" name="type" value="login">
+                                                <input id="item" type="hidden" name="item" value="Восстановление логина и пароля">
+                                                <input id="type" type="hidden" name="type" value="flogin">
                                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                                 <input type="hidden" name="submitted" value="yes" />
-<!--                                                <div id="bot-nav">-->
-<!--                                                    <a class="btn bigblue">-->
-<!--                                                        <input id="signInHyperLink" type="submit" class>-->
-<!--                                                    </a>-->
-<!--                                                </div>-->
+                                                <!--                                                <div id="bot-nav">-->
+                                                <!--                                                    <a class="btn bigblue">-->
+                                                <!--                                                        <input id="signInHyperLink" type="submit" class>-->
+                                                <!--                                                    </a>-->
+                                                <!--                                                </div>-->
                                             </fieldset>
                                         </form>
                                     </div><!-- shipping user -->
@@ -108,7 +92,7 @@ try {
                                         <div id="payment-form-astro" class="form-astro with-seperator">
                                             <p class="legend" style="">
                                                 <a href="?cmd=Register" class="metrics-link">Зарегистрироваться</a>
-                                                <a href="?cmd=FLogin" class="separated-link metrics-link">Восстановить пароль</a>
+                                                <a href="?cmd=Login" class="separated-link metrics-link">Войти на сайт</a>
                                             </p>
                                             <br />
                                             <p>
@@ -138,19 +122,19 @@ try {
                                 </div><!-- gs grid-3of4 -->
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
-<?php
-                                //    Вывод сообщений об ошибках
-                                if( ! empty( $feedback ) ) {
-                                print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
-                                    print "<ul>\n";
-                                        print "<li>\n";
-                                            print $request->getFeedbackString('</li><li>');
-                                            print "</li>\n";
-                                        print "</ul>\n";
-                                    print "</div>";
-                                }
-                                echo "</div>";
-?>
+                        <?php
+                        //    Вывод сообщений об ошибках
+                        if( ! empty( $feedback ) ) {
+                            print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
+                            print "<ul>\n";
+                            print "<li>\n";
+                            print $request->getFeedbackString('</li><li>');
+                            print "</li>\n";
+                            print "</ul>\n";
+                            print "</div>";
+                        }
+                        echo "</div>";
+                        ?>
                     </div><!-- shipping -->
                 </div><!-- shipping-box -->
             </div><!-- hero selfclear -->

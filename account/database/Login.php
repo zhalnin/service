@@ -105,8 +105,7 @@ class LoginManager extends DataBase {
 
     /**
      * Check if count oflogin and password exists
-     * @param $login
-     * @param $pass
+     * @param $args
      * @return bool
      */
     function checkLogPassExists( array $args ) {
@@ -120,8 +119,7 @@ class LoginManager extends DataBase {
 
     /**
      * Check if User have activated his account
-     * @param $login
-     * @param $pass
+     * @param $args
      * @return bool
      */
     function checkLogActivation( array $args ) {

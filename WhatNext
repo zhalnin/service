@@ -19,7 +19,7 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     function markDeleted() {
            ObjectWatcher::addDelete( $this );
        }
-2. ?cmd=Activation
-3. ?cmd=FLogin
-4. ?cmd=Logout
+
+2. ?cmd=FLogin - продолжить
+
 

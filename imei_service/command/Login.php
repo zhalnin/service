@@ -22,16 +22,16 @@ class Login extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 
-        $login = $request->getProperty( 'login' );
-        $pass_u = $request->getProperty( 'pass' );
+        $login = $_POST['login'];
+        $pass_u = $_POST['pass'];
         $pass = md5( $pass_u );
         $auto = $_POST['auto'];
         $ip = getIP();
         // Удаляем из таблицы IP, которые дольше 3 минут, проверяем наличие соответствия и количество ошибок текущего IP
         $loginOshibka = \imei_service\domain\LoginOshibka::find( $ip );
         $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) );
-        $codeActivation = $request->getProperty( 'cAct' );
-        $lgn = $request->getProperty( 'lgn' );
+        $codeActivation = $_POST['cAct'];
+        $lgn = $_POST['lgn'];
 
         if( ! $codeActivation ) {
 
