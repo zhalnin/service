@@ -15,11 +15,33 @@ require_once( "imei_service/domain/Guestbook.php" );
 require_once( "imei_service/view/utils/getIP.php" );
 require_once( "imei_service/view/utils/getVerBrowser.php" );
 require_once( "imei_service/classes/class.SendMail.php" );
+require_once( "imei_service/domain/Login.php" );
 
 
+use imei_service\base\SessionRegistry;
 
 class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
+
+
+
+
+
+
+
+
+        $enter = SessionRegistry::getSession('auto');
+        $login = SessionRegistry::getSession('login');
+        $pass = SessionRegistry::getSession('pass');
+
+
+
+
+
+
+
+
+
 
         $valid = $request->getProperty( 'valid' );
         $page = $request->getProperty( 'page' );
@@ -32,13 +54,23 @@ class Guestbook extends Command {
 
         if( ! empty( $valid ) ) {
 
+            if( ! empty( $login ) && ! empty( $pass ) ) {
+                $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) );
+                if( is_object( $logPassExist ) ) {
+                    $name = $logPassExist->getFio();
+                    $city = $logPassExist->getCity();
+                    $email = $logPassExist->getEmail();
+                }
+            } else {
+                $name               = $request->getProperty('name');
+                $city               = $request->getProperty('city');
+                $email              = $request->getProperty('email');
+                $url                = $request->getProperty('url');
+            }
+
             $ip                 = getIP();
             $browser            = getVerBrowser();
             $sid_add_message    = $request->getProperty('sid_add_message');
-            $name               = $request->getProperty('name');
-            $city               = $request->getProperty('city');
-            $email              = $request->getProperty('email');
-            $url                = $request->getProperty('url');
             $message            = $request->getProperty('message');
             $answer             = $request->getProperty('answer');
             $putdate            = $request->getProperty('putdate');
@@ -50,23 +82,26 @@ class Guestbook extends Command {
 
 
             if( $sid_add_message != session_id() ) {
-                $request->addFeedback( 'Заполните поле "Имя"' );
+                $request->addFeedback( 'Заполните необходимые поля еще раз' );
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
-            if( empty( $name ) ) {
-                $request->addFeedback( 'Необходимо заполнить поле: "Имя"' );
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
-            }
-            if( empty( $email ) ) {
-                $request->addFeedback( 'Заполните поле "Email"' );
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
-            } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $email ) ) {
-                $request->addFeedback( "Введите корректный email" );
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
-            }
-            if( $_SESSION['code'] != $code ) {
-                $request->addFeedback( "Неверно введен защитный код" );
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+
+            if( empty( $login ) && empty( $pass ) ) {
+                if( empty( $name ) ) {
+                    $request->addFeedback( 'Необходимо заполнить поле: "Имя"' );
+                    return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+                }
+                if( empty( $email ) ) {
+                    $request->addFeedback( 'Заполните поле "Email"' );
+                    return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+                } elseif ( ! preg_match('|^[-a-z0-9_+.]+\@(?:[-a-z0-9.]+\.)+[a-z]{2,6}$|i', $email ) ) {
+                    $request->addFeedback( "Введите корректный email" );
+                    return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+                }
+                if( $_SESSION['code'] != $code ) {
+                    $request->addFeedback( "Неверно введен защитный код" );
+                    return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+                }
             }
             if( empty( $id_parent )  ) {
                 $id_parent = 0;

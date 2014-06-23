@@ -20,6 +20,7 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
            ObjectWatcher::addDelete( $this );
        }
 
-2. ?cmd=FLogin - продолжить
+2. В Guestbook добавить проверку на то, что зарегистрированный юзер уже авторизован и
+добавлять сообщения от его имени
 
 

@@ -185,10 +185,12 @@ if( ! empty( $valid ) ) {
                 <div class="guest-all-form top-divided">
                     <!--                    <form method="POST" action="guestbook.php">-->
                     <!--                    <form method="POST" name="guestbook-form" action="faq2.php?idp=70">-->
-
                     <form method="POST" >
                         <fieldset>
 
+<?php
+                    if( intval( $enter !== 1 ) ) {
+?>
                             <legend><strong class="label">Заполните все обязательные поля</strong></legend>
                             <div class="fieldset-content">
                                 <div class="mbs">
@@ -219,7 +221,9 @@ if( ! empty( $valid ) ) {
                                 </div>
 
 
-
+<?php
+}
+?>
 
                                 <div class="mbsIframe">
                                     <span class="editorSpan" id="editorSpan">
@@ -284,7 +288,9 @@ if( ! empty( $valid ) ) {
 
 
 
-
+<?php
+    if( intval( $enter !== 1 ) ) {
+?>
                                 <div class="mbs">
                                     <span  class="capcha">
                                         <label for="capcha"><span>&nbsp;</span></label>
@@ -303,7 +309,9 @@ if( ! empty( $valid ) ) {
                                     </span>
                                 </div>
 
-
+<?php
+    }
+?>
                                 <div id="chipping-continue-button-submit" class="mbs">
                                     <span>
                                         <label for="submit"><span>&nbsp;</span></label>
