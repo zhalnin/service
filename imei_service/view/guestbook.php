@@ -150,12 +150,7 @@ $valid = $request->getProperty('valid');
 //$valid = $_POST['valid'];
 if( ! empty( $valid ) ) {
     $sid_add_message = $request->getProperty('sid_add_message');
-    $message = $request->getProperty('message');
-    $page = $request->getProperty('page');
-    $id_parent = $request->getProperty('idp');
     $feedback = $request->getFeedback();
-
-
 //echo "<tt><pre> VALID ".print_r($request, true)."</pre></tt>";
 }
 //    echo "<tt><pre> NO VALID ".print_r($request, true)."</pre></tt>";
@@ -322,10 +317,10 @@ if( ! empty( $valid ) ) {
                                 <input type="hidden" name="valid" value="valid" />
                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                 <input type="hidden" name="type" value="guestbook" id="type" />
-                                <input type="hidden" name="idp" value="<?php echo $id_parent; ?>" id="guestbookReply" />
+                                <input type="hidden" name="idp" value="<?php echo $_REQUEST['idp']; ?>" id="guestbookReply" />
                                 <input type="hidden" name="codeConfirm" value="" id="codeConfirm" />
-                                <input type="hidden" name="page" value="<?php echo $page; ?>" />
-                                <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $message; ?></textarea>
+                                <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+                                <textarea name="message" id="textareaIframe" style="display:none;"><?php echo $_POST['message']; ?></textarea>
 
 
                                 <div id="submit-button" class="" style="">

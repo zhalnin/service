@@ -23,54 +23,37 @@ use imei_service\base\SessionRegistry;
 class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
 
-
-
-
-
-
-
-
-        $enter = SessionRegistry::getSession('auto');
-        $login = SessionRegistry::getSession('login');
-        $pass = SessionRegistry::getSession('pass');
-
-
-
-
-
-
-
-
-
-
-        $valid = $request->getProperty( 'valid' );
-        $page = $request->getProperty( 'page' );
-        if( ! $page ) {
-            $page = 1;
+        // если установлена сессия - значит пост отправляет зарегистрированный пользователь
+        $enter = SessionRegistry::getSession('auto'); // получаем флаг автоматического входа
+        $login = SessionRegistry::getSession('login'); // получаем логин
+        $pass = SessionRegistry::getSession('pass'); // получаем пароль
+        $valid = $request->getProperty( 'valid' ); // получаем поле VALID из формы
+        $page = $request->getProperty( 'page' ); // получаем поле PAGE из формы
+        if( ! $page ) { // если страница не установлена
+            $page = 1; // присваиваем 1
         }
-        $pagination = \imei_service\domain\Guestbook::paginationMysql( $page );
+        $pagination = \imei_service\domain\Guestbook::paginationMysql( $page ); // запрост на постраничную навигацию
 //        $pagination = \imei_service\domain\Guestbook::findAll();
-        $request->setObject('guestbook_pagination', $pagination);
+        $request->setObject('guestbook_pagination', $pagination); // сохраняем полученный объект
 
-        if( ! empty( $valid ) ) {
-
-            if( ! empty( $login ) && ! empty( $pass ) ) {
-                $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) );
-                if( is_object( $logPassExist ) ) {
-                    $name = $logPassExist->getFio();
-                    $city = $logPassExist->getCity();
-                    $email = $logPassExist->getEmail();
+        if( ! empty( $valid ) ) { // если форма была отправлена
+            if( ! empty( $login ) && ! empty( $pass ) ) { // если в сессии был логин и пароль
+                $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) ); // делаем запрос на их основе
+                if( is_object( $logPassExist ) ) { // если запись в БД существует
+                    $name = $logPassExist->getFio(); // получаем имя
+                    $city = $logPassExist->getCity(); // получаем город
+                    $email = $logPassExist->getEmail(); // получаем email
                 }
-            } else {
-                $name               = $request->getProperty('name');
-                $city               = $request->getProperty('city');
-                $email              = $request->getProperty('email');
-                $url                = $request->getProperty('url');
+            } else { // если сессия не установлена, значит пользователь ГОСТЬ
+                $name               = $request->getProperty('name'); // получаем имя из формы
+                $city               = $request->getProperty('city'); // получаем город из формы
+                $email              = $request->getProperty('email'); // получаем email из формы
+                $url                = $request->getProperty('url'); // получаем сайт из формы
             }
 
-            $ip                 = getIP();
-            $browser            = getVerBrowser();
-            $sid_add_message    = $request->getProperty('sid_add_message');
+            $ip                 = getIP(); // получаем IP адрес посетителя
+            $browser            = getVerBrowser(); // получаем версию браузера посетителя
+            $sid_add_message    = $request->getProperty('sid_add_message'); // получаем id сессии
             $message            = $request->getProperty('message');
             $answer             = $request->getProperty('answer');
             $putdate            = $request->getProperty('putdate');

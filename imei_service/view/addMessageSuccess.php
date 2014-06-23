@@ -19,7 +19,7 @@ try {
 
 
     print "<html><head>\n";
-    print "<meta http-equiv='Refresh' content='5; url=?cmd=Guestbook&page=1'>\n";
+    print "<meta http-equiv='Refresh' content='5; url=?cmd=Guestbook'>\n";
     print "</head></html>\n";
 
 

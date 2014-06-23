@@ -379,7 +379,7 @@ function previewPost() {
 
     AM.Ajax.ajax({
         'method':'POST',
-        'url': 'ajax_handle.php',
+        'url': 'imei_service/view/ajax_handle.php',
         'postParams': 'mode=preview&text='+nbsp,
         'onSuccess': handleResultPreview
     });
