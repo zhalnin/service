@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 22/06/14
- * Time: 19:34
+ * Date: 23/06/14
+ * Time: 12:14
  */
 
 namespace imei_service\command;
@@ -16,11 +16,9 @@ require_once( "imei_service/classes/class.SendMail.php" );
 
 
 
-
-class FLogin extends Command {
+class RActivation extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-
         $email = $_POST['email'];
         $submitted = $_POST['submitted'];
         $findEmail = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
@@ -41,25 +39,20 @@ class FLogin extends Command {
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         } else {
 
-            if( intval( $findEmail->getStatus() ) === 0 ) {
-                $request->addFeedback( 'Ваша учетная запись еще не активирована: <a href="?cmd=RActivation">Повторно выслать письмо для активации учетной записи.</a>' );
+            if( intval( $findEmail->getStatus() ) !== 0 ) {
+                $request->addFeedback( 'Ваша учетная запись уже активирована: <a href="?cmd=Login">Вы можете зайти на сайт используя вашу учетную запись.</a>' );
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
 
+            $activation     = $findEmail->getActivation();
             $login          = $findEmail->getLogin();
-            $pass_u         = $login.substr( time(), -4 );
-            $pass           = md5( $pass_u );
             $type           = $_POST['type'];
-
-            $findEmail->setPass($pass);
-
-            $activateLogin = new \imei_service\domain\Login( $findEmail->getId() );
-
+            $activateLogin  = new \imei_service\domain\Login( $findEmail->getId() );
 
             if( is_object( $activateLogin ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-                $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $pass_u ); // отправляем письмо админу
-                $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $pass_u ); // отправляем письмо клиенту
+                $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $activation ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $activation ); // отправляем письмо клиенту
                 return self::statuses( 'CMD_OK' );
             }
         }

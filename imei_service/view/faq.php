@@ -35,6 +35,11 @@ try {
         </ul>
     </div>
     <div id="main" class="">
+
+        <?php
+        require_once( "utils/security_mod.php" );
+        ?>
+
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
         </div>

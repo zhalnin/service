@@ -1699,3 +1699,88 @@ span #uah.currency{
     height: 20px;
     clear: both;
 }
+
+
+
+
+/*Login - guest/user*/
+#login-wrap {
+    display: block;
+    font-size: 11px;
+    /*padding-top: 10px;*/
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-bottom: 7px;
+}
+#login-nav {
+    display: block;
+    font-size: 11px;
+    height: 30px;
+    overflow: hidden;
+}
+ul#login-nav {
+    margin-right: 10px;
+}
+#login-nav li:first-child {
+    height: 28px;
+}
+#login-nav li {
+    line-height: 28px;
+    display: block;
+    float: left;
+    /*height: 31px;*/
+    height: 28px;
+    /*line-height: 30px;*/
+    padding: 0 10px;
+}
+#login-nav .login-user-name, #login-nav .welcome-guest {
+    color: #000;
+    font-weight: bold;
+}
+#login-nav li.login {
+    font-size: 11px;
+    font-weight: normal;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 0;
+}
+#login-nav li.login a {
+    color: #08c;
+}
+
+
+
+/*Login - user*/
+#login-wrap a.login-globalNavLink {
+    padding: 0;
+}
+#login-wrap a.login-globalNavLink {
+    vertical-align: middle;
+}
+.login-elem {
+    background: url("../icons/login/j-ui-sprite.png") no-repeat scroll -100% -100% transparent;
+}
+#login-wrap a.login-globalNavLink {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    /*height: 30px;*/
+    height: 28px;
+    line-height: 26px;
+    overflow: hidden;
+    /*padding: 6px 20px 0 0;*/
+    padding: 0 20px 0 0;
+}
+
+#login-nav .login-avatar {
+    /*border: 1px solid #ccc;*/
+}
+#login-nav .login-avatar {
+   vertical-align: middle;
+}
+#login-nav .login-username-navLabel {
+    height: 28px;
+    line-height: 24px;
+    padding-left: 10px;
+}

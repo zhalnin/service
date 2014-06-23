@@ -24,6 +24,7 @@ try {
 //    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
     require_once( "imei_service/view/templates/top.php" );
     $feedback = $request->getFeedback();
+
     if( isset( $_COOKIE['login'] ) ) {
         $login = "value='".$_COOKIE['login']."'";
     } else {
@@ -82,8 +83,8 @@ try {
                                                         </span>
                                                     </div>
                                                     <div class="mbs" style="">
-                                                        <span class="udidPhone-field" style="">
-                                                            <label class="placeholder" for="shipping-user-udidPhone" style="">
+                                                        <span class="checkbox-field" style="">
+                                                            <label class="placeholder" for="shipping-user-udidPhone" style="position: relative; float: left; ">
                                                                 <span>Запомнить меня</span>
                                                             </label>
                                                             <input type="checkbox" name="auto" value="1" />

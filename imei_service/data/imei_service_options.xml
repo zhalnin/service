@@ -122,5 +122,12 @@
         </status>
     </command>
 
+    <command name="RActivation">
+        <view>ractivation</view>
+        <status value="CMD_OK">
+            <view>ractivationSuccess</view>
+        </status>
+    </command>
+
 </control>
 </woo-options>

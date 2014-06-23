@@ -248,6 +248,39 @@ fieldset > div .mbsIframe {
     height: 24px;
     text-indent: 4px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#showcase .checkbox-field input {
+    border: 1px solid #D6D6D6;
+    box-shadow: 0 1px 1px #AAAAAA inset;
+    font-size: 12px;
+    height: 24px;
+    width: 24px;
+    text-indent: 4px;
+}
+
 .firstName-field input, .firstNamePhonetic-field input {
     width: 120px;
 }

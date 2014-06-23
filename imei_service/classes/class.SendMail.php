@@ -233,6 +233,26 @@ abstract class AdminMail extends Mail{
                              </div>";
                     $body = $top . $middle . $footer;
                     break;
+                case 'flogin':
+                    $subject = "Новый запрос на восстановление пароля";
+                    $subject_detail = "";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Новый запрос на восстановление пароля от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
+                case 'ractivation':
+                    $subject = "Новый запрос на повторную отправку кода активации";
+                    $subject_detail = "";
+                    $middle = "<div class=\"main_txt\">
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p> Новый запрос от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
+                             </div>";
+                    $body = $top . $middle . $footer;
+                    break;
             }
 
 
@@ -387,6 +407,31 @@ abstract class ClientMail extends Mail {
                              <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
                 $body = $top . $middle . $footer;
                 break;
+            case 'flogin':
+                $subject = "Повторная отправка логина и пароля на сайте imei-service.ru";
+                $middle = "<div class=\"main_txt\">
+                             <p> Ваш запрос на восстановление пароля на сайте imei-server.ru был успешно выполнен!</p>
+                             <p> Ваш адрес электронной почты $email_client был указан при запросе восстановления пароля на сайте imei-servcie.ru </p>
+                             <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
+                             <p><ul>
+                                <li>Ваш логин: $login</li>
+                                <li>Ваш пароль: $activation</li>
+                             </ul></p>
+                             <p> Используя ваш логин: $login и пароль: $activation вы можете зайти на сайт: </p>
+                             <p><a href=\"$nameServer?cmd=Login\">Войти на сайт</a> под своим именем</p>";
+                $body = $top . $middle . $footer;
+                break;
+            case 'ractivation':
+                $subject = "Повторная отправка кода активации регистрации на сайте imei-service.ru";
+                $middle = "<div class=\"main_txt\">
+                             <p> Ваш запрос на повторную отправку кода активации регистрации на сайте imei-server.ru был успешно выполнен! </p>
+                             <p> Ваш адрес электронной почты $email_client был указан при запросе повторной отправки кода активации регистрации на сайте imei-servcie.ru </p>
+                             <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
+                             <p> Для завершения регистрации и активации учетной записи пройдите, пожалуйста, по ссылке: </p>
+                             <p> $nameServer?cmd=Activation&lgn=$login&cAct=$activation</p>
+                             <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
+                $body = $top . $middle . $footer;
+                break;
 
         }
         $header = 'From: support@imei-service.ru' . "\r\n";
@@ -515,6 +560,41 @@ class RegisterClient extends ClientMail{
 }
 
 
+/**
+ * Class RegisterAdmin and RegisterClient
+ * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
+ */
+class FLoginAdmin extends AdminMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+class FLoginClient extends ClientMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+
+
+/**
+ * Class RegisterAdmin and RegisterClient
+ * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
+ */
+class RActivationAdmin extends AdminMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+class RActivationClient extends ClientMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+    }
+}
+
 
 
 
@@ -630,6 +710,41 @@ class RegisterCommsManager extends CommsManager {
 }
 
 
+/**
+ * Class FLoginCommsManager
+ * для повторной отправки логина и пароля
+ */
+class FLoginCommsManager extends CommsManager {
+
+    function make( $type ){
+        switch( $type ){
+            case self::ADMIN:
+                return new FLoginAdmin();
+            case self::CLIENT:
+                return new FLoginClient();
+        }
+    }
+}
+
+
+/**
+ * Class RActivationCommsManager
+ * для повторной отправки кода активации учетной записи
+ */
+class RActivationCommsManager extends CommsManager {
+
+    function make( $type ){
+        switch( $type ){
+            case self::ADMIN:
+                return new RActivationAdmin();
+            case self::CLIENT:
+                return new RActivationClient();
+        }
+    }
+}
+
+
+
 
 /**
  * Class MailConfig
@@ -669,6 +784,12 @@ class MailConfig {
                 break;
             case 'register':
                 return new RegisterCommsManager();
+                break;
+            case 'flogin':
+                return new FLoginCommsManager();
+                break;
+            case 'ractivation':
+                return new RActivationCommsManager();
                 break;
         }
     }

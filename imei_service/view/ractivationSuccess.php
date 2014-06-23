@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 15/06/14
- * Time: 14:27
+ * Date: 23/06/14
+ * Time: 13:02
  */
 
 namespace imei_service\view;
@@ -22,7 +22,7 @@ try {
 
 
     $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
-    $title = "Вы успешно восстановили ваш пароль на сайте imei-service.ru";
+    $title = "Запрос на повторную отправку кода активации учетной записи на сайте imei-service.ru";
     $description = "Оповещение о успешной отправки заявки на официальный анлок iPhone";
     require_once("imei_service/view/templates/top.php");
 
@@ -48,7 +48,7 @@ try {
         <div id="news-main" class="main-content">
             <div id="" class="news-content clear-fix">
                 <div id='' class="news-header">
-                    <h2  class="h2">Вы успешно восстановили ваш пароль на сайте imei-service.ru</h2>
+                    <h2  class="h2">Запрос на повторную отправку кода активации учетной записи выполнен успешно!</h2>
                 </div>
                 <div class='news-container'>
                     <div class='success-body'>
@@ -65,9 +65,8 @@ try {
                         <div class='success-info'>
                             <p>
                                 Мы рады вас приветствовать!<br/><br/>
-                                Ваш пароль был успешно восстановлен<br/><br/>
-                                Через несколько минут вы должны получить письмо с вашим логином и паролем<br/>
-                                Используя ваши учетные данные, вы можете войти на сайт<br/><br/>
+                                На указанный адрес email была выслана ссылка для повторной активации учетной записи<br/><br/>
+                                Для активации вашей учетной записи вам необходимо перейти по полученной ссылке<br/><br/>
                                 На сайте вы можете:<br/>
                                 ‣ Заказать официальную или программную отвязку iPhone <br/>
                                 ‣ Проверить iPhone по IMEI<br/>

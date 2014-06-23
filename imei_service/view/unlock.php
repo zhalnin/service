@@ -36,9 +36,18 @@ try {
             </ul>
         </div><!-- header -->
 
-        <div id="main"  class="main-content">
+    <div id="main"  class="">
+
+        <?php
+        require_once( "utils/security_mod.php" );
+        ?>
+
+        <div id="main-slogan" class="main-content">
+            <div id="slogan">Быстро - Качественно - Надежно</div>
+        </div>
+
             <!--    Будут представлены аппарататы, которые доступны анлоку-->
-            <div id="pb-ipad" class="productbrowser content pb-dynamic">
+            <div id="pb-ipad" class="productbrowser main-content pb-dynamic">
                 <div class="pb-slider">
                     <div class="pb-slide" style="width: 970px;">
                         <ul class="ul-slider" page="1" style="width: 960px; margin: 30px 5px;">
@@ -65,7 +74,7 @@ try {
             </div><!-- pb-ipad -->
 
 
-            <div id="showcase" class="content">
+            <div id="showcase" class="main-content">
                             <div class="hero selfclear">
                                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->

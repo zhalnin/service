@@ -20,7 +20,11 @@ class Logout extends Command {
         setcookie('login',"",time() - 3600 );
         setcookie('pass',"",time() - 3600 );
         setcookie('auto',"",time() - 3600 );
+//        unset($_SESSION["login"]);
+//        unset($_SESSION["pass"]);
         SessionRegistry::setSession('auto',"0");
+        SessionRegistry::setSession('login',"");
+        SessionRegistry::setSession('pass',"");
         return self::statuses( 'CMD_OK' );
     }
 }

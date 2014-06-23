@@ -99,8 +99,8 @@ class Register extends Command {
             $commsManager = \imei_service\classes\MailConfig::get( 'register' );  // параметр - тип commsManager
             $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, 'register', $login, $activation ); // отправляем письмо админу
             $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, 'register', $login, $activation ); // отправляем письмо клиенту
-        }
             return self::statuses( 'CMD_REGISTER_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
+        }
 //        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
     }
 }

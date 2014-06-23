@@ -32,10 +32,18 @@ try {
         </ul>
     </div>
 
-    <div id="main"  class="main-content">
+    <div id="main"  class="">
+
+        <?php
+        require_once( "utils/security_mod.php" );
+        ?>
         <div id="progressbar"></div>
-        <!--    Будут представлены аппарататы, которые доступны анлоку-->
-        <div id="showcase" class="content">
+
+        <div id="main-slogan" class="main-content">
+            <div id="slogan">Быстро - Качественно - Надежно</div>
+        </div>
+
+        <div id="showcase" class="main-content">
             <div class="hero selfclear" >
                 <div id="shipping-box" class="box box-nomargin shipping-box ptn">
                     <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
