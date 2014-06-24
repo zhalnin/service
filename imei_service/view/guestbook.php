@@ -307,12 +307,12 @@ if( ! empty( $valid ) ) {
 <?php
     }
 ?>
-                                <div id="chipping-continue-button-submit" class="mbs">
-                                    <span>
-                                        <label for="submit"><span>&nbsp;</span></label>
-                                        <input type="submit" id="submitButton" value='Отправить' name="Отправить" />
-                                    </span>
-                                </div>
+<!--                                <div id="chipping-continue-button-submit" class="mbs">-->
+<!--                                    <span>-->
+<!--                                        <label for="submit"><span>&nbsp;</span></label>-->
+<!--                                        <input type="submit" id="submitButton" value='Отправить' name="Отправить" />-->
+<!--                                    </span>-->
+<!--                                </div>-->
 
                                 <input type="hidden" name="valid" value="valid" />
                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />

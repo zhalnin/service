@@ -27,6 +27,11 @@
 }
 .box-nomargin {
     border-radius: 0 0 0 0;
+    -khtml-border-radius: 0 0 0 0;
+    -ms-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -webkit-border-radius: 0 0 0 0;
     border-top: 0 none;
     margin-bottom: 0;
     margin-top: 0;
@@ -41,6 +46,11 @@
     background: none repeat scroll 0 0 white;
     border: 1px solid #CCCCCC;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
     margin: 0 4px 8px;
     padding: 10px 10px 0;
@@ -81,6 +91,11 @@ element.style {
 }
 .box .heading {
     border-radius: 4px 4px 0 0;
+    -khtml-border-radius: 4px 4px 0 0;
+    -ms-border-radius: 4px 4px 0 0;
+    -o-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
     font-size: 12px;
     font-weight: bold;
     margin: 0 -11px;
@@ -243,32 +258,11 @@ fieldset > div .mbsIframe {
 }
 #showcase .password-field input, #showcase .login-field input, #showcase .firstName-field input, #showcase .lastName-field input, #showcase .companyName-field input, #showcase .daytimePhoneAreaCode-field input, #showcase .daytimePhone-field input,  #showcase .udidPhone-field input, #showcase .street-field input, #showcase .street2-field input, #showcase .street3-field input, #showcase .postalCode-field input, #showcase .state-field input, #showcase .mobilePhoneAreaCode-field input, #showcase .mobilePhone-field input, #showcase .password-field input, #showcase .metadata-cpf-field input, #showcase .metadata-contact-footer-field input, #showcase .metadata-cnpj-field input, #showcase .metadata-legalName-field input, #showcase .district-field input, #showcase .daytimeAreaAndPhone-field input, #showcase .accountHolderName-field input, #showcase .bankCardNumber-field input, #showcase .mobilePhoneNumber-field input, #showcase .emailAddress-field input, #showcase .customerIdCardNumber-field input, #showcase .invoiceHeader-field input, #showcase .taxPayer-field input, #showcase .bankName-field input, #showcase .bankAccount-field input, #showcase .suburb-field input, #showcase .city-field input, #showcase .businessRegNumber-field input, #showcase .companyDistrict-field input, #showcase .repName-field input, #showcase .companyStreet-field input, #showcase .industryType-field input, #showcase .companyStreet2-field input, #showcase .businessType-field input, #showcase .shipping-user-address-neighborhood-field input, #showcase .eveningPhoneAreaCode-field input, #showcase .eveningPhone-field input, #showcase .suffix-field input, #showcase .lastNamePhonetic-field input, #showcase .firstNamePhonetic-field input, #showcase .cardNumber-field input, #showcase .securityCode-field input, #showcase .loanNumber-field input, #showcase .county-field input, #showcase .companyKey-field input, #showcase .legalName-field input, #showcase .taxRegNumber-field input, #showcase .metadata-ie-field input, #showcase .registrationCode-field input, #showcase .okpoNumber-field input, #showcase .taxIdentificationNumber-field input {
     border: 1px solid #D6D6D6;
-    box-shadow: 0 1px 1px #AAAAAA inset;
+    /*box-shadow: 0 1px 1px #AAAAAA inset;*/
     font-size: 12px;
     height: 24px;
     text-indent: 4px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -288,6 +282,11 @@ fieldset > div .mbsIframe {
     background: none repeat scroll 0 0 white;
     border: 1px solid #CCCCCC;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 #E5E5E5 inset;
     padding: 3px 2px;
 }
@@ -441,12 +440,22 @@ li, em {
     background: linear-gradient(#00C307, #039103) repeat scroll 0 0 transparent;
     border: 1px solid #20A623;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
 }
 .button.rect.blues {
     background: linear-gradient(#37AAEA, #117ED2) repeat scroll 0 0 transparent;
     border: 1px solid #1992D9;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
 }
 .button {
@@ -493,6 +502,11 @@ button {
     background: url("../images/button_colors.png") repeat-x scroll 0 0 / 8px 22px #224272;
     border: 1px solid #224272;
     border-radius: 11px 11px 11px 11px;
+    -khtml-border-radius: 11px 11px 11px 11px;
+    -ms-border-radius: 11px 11px 11px 11px;
+    -o-border-radius: 11px 11px 11px 11px;
+    -moz-border-radius: 11px 11px 11px 11px;
+    -webkit-border-radius: 11px 11px 11px 11px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     color: white;
     display: inline-block;
@@ -597,6 +611,11 @@ fieldset > div .mbs {
     background: none repeat scroll 0 0 white;
     border: 1px solid #CCCCCC;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 #E5E5E5 inset;
     -webkit-box-shadow:0 1px 0 #E5E5E5 inset;
     -moz-box-shadow:0 1px 0 #E5E5E5 inset;
@@ -657,9 +676,19 @@ legend .label {
     text-indent: 4px;
     /*width: 376px;*/
 }
-textarea:focus, input[type="text"]:focus {
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
     box-shadow: 0 0 6px #0088CC;
+    -khtml-box-shadow:  0 0 6px #0088CC;
+    -ms-box-shadow:  0 0 6px #0088CC;
+    -o-box-shadow:  0 0 6px #0088CC;
+    -moz-box-shadow:  0 0 6px #0088CC;
+    -webkit-box-shadow:  0 0 6px #0088CC;
     outline: 0 none;
+    /*transition: color 0s ease 0s, text-shadow 0.3s ease 0s, all 0.3s ease 0s;*/
+    /*-webkit-transition: color 0s ease 0s, text-shadow 0.3s ease 0s, all 0.3s ease 0s;*/
+    /*-moz-transition: color 0s ease 0s, text-shadow 0.3s ease 0s, all 0.3s ease 0s;*/
+    /*-ms-transition: color 0s ease 0s, text-shadow 0.3s ease 0s, all 0.3s ease 0s;*/
+    /*-o-transition: color 0s ease 0s, text-shadow 0.3s ease 0s, all 0.3s ease 0s;*/
 }
 
 textarea {
@@ -669,6 +698,11 @@ textarea {
     width: 450px;
     background: none repeat scroll 0 0 white;
     border-radius: 4px 4px 4px 4px;
+    -khtml-border-radius: 4px 4px 4px 4px;
+    -ms-border-radius: 4px 4px 4px 4px;
+    -o-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
     padding: 3px 2px;
     border: 1px solid #D6D6D6;
     box-shadow: 0 1px 1px #AAAAAA inset;
@@ -681,6 +715,11 @@ textarea {
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #CCCCCC;
     border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
     box-shadow: 0 1px 0 #E5E5E5 inset;
     -webkit-box-shadow:0 1px 0 #E5E5E5 inset;
     -moz-box-shadow:0 1px 0 #E5E5E5 inset;
@@ -765,6 +804,11 @@ textarea {
     width: auto !important;
     background: url("../images/bluegrad.png") repeat-x scroll -15px 0 transparent !important;
     border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     border: 0;
     color: #ffffff;
 }
@@ -781,3 +825,4 @@ textarea {
     width: 117px;
 }
 /* END - Голубая кнопка в стиле iOS 7*/
+

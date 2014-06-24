@@ -62,6 +62,23 @@ try {
     require_once( "utils/security_mod.php" );
     ?>
 
+<!--        <div id="globalsearch">-->
+<!--            <form id="g-search" class="search empty" method="get" action="http://www.apple.com/search/">-->
+<!--                <div class="sp-label">-->
+<!--                    <label for="sp-searchtext">Search</label>-->
+<!--                    <input id="sp-searchtext" type="text" name="q" autocomplete="off" />-->
+<!--                    <div class="reset"></div>-->
+<!--                    <div class="spinner hide"></div>-->
+<!--                </div>-->
+<!--                <input id="search-section" type="hidden" name="sec" value="global">-->
+<!--            </form>-->
+<!--            <div id="sp-magnify">-->
+<!--                <div class="magnify-searchmode"></div>-->
+<!--                <div class="magnify"></div>-->
+<!--            </div>-->
+<!--            <div id="sp-results"></div>-->
+<!--        </div>-->
+
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>

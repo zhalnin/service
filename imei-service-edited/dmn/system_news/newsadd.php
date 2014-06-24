@@ -167,7 +167,7 @@ try
                                 '{$form->fields[url]->value}',
                                 '{$form->fields[alt]->value}',
                                 '$url_pict',
-                                '$ulr_pict_s',
+                                '$url_pict_s',
                                 $position,
                                 '$showhide',
                                 '$showhidepict')";

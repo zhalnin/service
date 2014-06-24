@@ -29,6 +29,24 @@ use imei_service\base\SessionRegistry;
                 <a href="?cmd=Logout">Выйти</a>
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
             </li>
+            <li>
+                <div id="globalsearch">
+                    <form id="g-search" class="search empty" method="get" action="http://www.apple.com/search/">
+                        <div class="sp-label">
+                            <label for="sp-searchtext">Search</label>
+                            <input id="sp-searchtext"  type="text" name="q" autocomplete="off" />
+                            <div class="reset"></div>
+                            <div class="spinner hide"></div>
+                        </div>
+                        <input id="search-section" type="hidden" name="sec" value="global">
+                    </form>
+                    <div id="sp-magnify">
+                        <div class="magnify-searchmode"></div>
+                        <div class="magnify"></div>
+                    </div>
+                    <div id="sp-results"></div>
+                </div>
+            </li>
         </ul>
 
 <?php
@@ -45,6 +63,24 @@ use imei_service\base\SessionRegistry;
                     </li>
                 </ul>
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
+            </li>
+            <li>
+                <div id="globalsearch">
+                    <form id="g-search" class="search empty" method="get" action="http://www.apple.com/search/">
+                        <div class="sp-label">
+                            <label for="sp-searchtext">Search</label>
+                            <input id="sp-searchtext"  type="text" name="q" autocomplete="off" />
+                            <div class="reset"></div>
+                            <div class="spinner hide"></div>
+                        </div>
+                        <input id="search-section" type="hidden" name="sec" value="global">
+                    </form>
+                    <div id="sp-magnify">
+                        <div class="magnify-searchmode"></div>
+                        <div class="magnify"></div>
+                    </div>
+                    <div id="sp-results"></div>
+                </div>
             </li>
         </ul>
 
