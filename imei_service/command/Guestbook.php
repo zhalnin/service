@@ -24,11 +24,12 @@ class Guestbook extends Command {
     function doExecute( \imei_service\controller\Request $request ) {
 
         // если установлена сессия - значит пост отправляет зарегистрированный пользователь
-        $enter = SessionRegistry::getSession('auto'); // получаем флаг автоматического входа
-        $login = SessionRegistry::getSession('login'); // получаем логин
-        $pass = SessionRegistry::getSession('pass'); // получаем пароль
-        $valid = $request->getProperty( 'valid' ); // получаем поле VALID из формы
-        $page = $request->getProperty( 'page' ); // получаем поле PAGE из формы
+        $enter  = SessionRegistry::getSession('auto'); // получаем флаг автоматического входа
+        $login  = SessionRegistry::getSession('login'); // получаем логин
+        $pass   = SessionRegistry::getSession('pass'); // получаем пароль
+        $valid  = $request->getProperty( 'valid' ); // получаем поле VALID из формы
+        $page   = $request->getProperty( 'page' ); // получаем поле PAGE из формы
+
         if( ! $page ) { // если страница не установлена
             $page = 1; // присваиваем 1
         }
@@ -40,9 +41,10 @@ class Guestbook extends Command {
             if( ! empty( $login ) && ! empty( $pass ) ) { // если в сессии был логин и пароль
                 $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) ); // делаем запрос на их основе
                 if( is_object( $logPassExist ) ) { // если запись в БД существует
-                    $name = $logPassExist->getFio(); // получаем имя
-                    $city = $logPassExist->getCity(); // получаем город
-                    $email = $logPassExist->getEmail(); // получаем email
+                    $name   = $logPassExist->getFio(); // получаем имя
+                    $city   = $logPassExist->getCity(); // получаем город
+                    $email  = $logPassExist->getEmail(); // получаем email
+                    $url    = $logPassExist->getUrl(); // получаем сайт
                 }
             } else { // если сессия не установлена, значит пользователь ГОСТЬ
                 $name               = $request->getProperty('name'); // получаем имя из формы

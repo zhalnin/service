@@ -31,9 +31,6 @@ abstract class DomainObjectFactory {
 class UnlockDetailsObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-
-//        echo "<tt><pre>".print_r( $array, true)."</pre></tt>";
-
         $class = "\\imei_service\\domain\\UnlockDetails";
         $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
@@ -59,9 +56,6 @@ class UnlockDetailsObjectFactory extends DomainObjectFactory {
 class UnlockObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-
-//        echo "<tt><pre>".print_r( $array, true)."</pre></tt>";
-
         $class = "\\imei_service\\domain\\Unlock";
         $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
@@ -102,7 +96,6 @@ class NewsObjectFactory extends DomainObjectFactory {
      * @return mixed - возвращаем объект \imei_service\domain\News
      */
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r($array, true)."</pre></tt>";
         $class = "\\imei_service\\domain\\News"; // название класса
         $old = $this->getFromMap( $class, $array['id_news'] );
         if( $old ) { return $old; }
@@ -159,7 +152,6 @@ class ContactsObjectFactory extends DomainObjectFactory {
 class GuestbookObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r($array['id'], true)."</pre></tt>";
         $class = "\\imei_service\\domain\\Guestbook";
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) {
@@ -307,8 +299,6 @@ class BlacklistCheckObjectFactory extends DomainObjectFactory {
 class FaqObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
-
         $class = "\\imei_service\\domain\\Faq";
         $old = $this->getFromMap( $class, $array['id_catalog'] );
         if( $old ) { return $old; }
@@ -321,9 +311,6 @@ class FaqObjectFactory extends DomainObjectFactory {
         $obj->setHide( $array['hide'] );
         $obj->setIdParent( $array['id_parent'] );
 
-
-
-
 //        $collection = \imei_service\domain\FaqPosition::find( $request->getProperty( 'id_position' ) );
 
         $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\FaqPosition' );
@@ -332,21 +319,6 @@ class FaqObjectFactory extends DomainObjectFactory {
         $faqPosition_idobj->eq( $array['id_catalog'])->field( 'hide' )->eq( 'show' );
         $faqPosition_collection = $faqPosition_assembler->find( $faqPosition_idobj );
         $obj->setFaqPosition( $faqPosition_collection );
-
-
-//        echo "<tt><pre><--- start --->\r\n".print_r( $obj, true)."\r\n<--- end ---></pre></tt>";
-
-//        $factory = PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
-//        $unlock_assembler = new DomainObjectAssembler( $factory );
-//        $unlock_idobj = new UnlockIdentityObject( 'id' );
-//        $unlock_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
-//        $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
-//        $obj->setUnlock( $unlock_collection );
-//
-//        echo "<tt><pre>".print_r( $unlock_collection, true)."</pre></tt>";
-
-
-
 
         $this->addToMap( $obj );
         $obj->markClean();
@@ -359,9 +331,7 @@ class FaqObjectFactory extends DomainObjectFactory {
 class FaqPositionObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
         $class = '\imei_service\domain\FaqPosition';
-//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
         $old = $this->getFromMap( $class, $array['id_position'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id_position'] );
@@ -426,9 +396,7 @@ class FaqParagraphObjectFactory extends DomainObjectFactory {
 class FaqParagraphImageObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre>".print_r( $array, true) ."</pre></tt>";
         $class = '\imei_service\domain\FaqParagraphImage';
-//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
         $old = $this->getFromMap( $class, $array['id_image'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id_image'] );
@@ -452,9 +420,7 @@ class FaqParagraphImageObjectFactory extends DomainObjectFactory {
 class LoginOshibkaObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre> start - ".print_r( $array, true) ." - end </pre></tt>";
         $class = '\imei_service\domain\LoginOshibka';
-//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id'] );
@@ -472,15 +438,14 @@ class LoginOshibkaObjectFactory extends DomainObjectFactory {
 class LoginObjectFactory extends DomainObjectFactory {
 
     function createObject( array $array ) {
-//        echo "<tt><pre> start - ".print_r( $array, true) ." - end </pre></tt>";
         $class = '\imei_service\domain\Login';
-//        echo "<tt><pre>".print_r(  $class, true) ."</pre></tt>";
         $old = $this->getFromMap( $class, $array['id'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id'] );
         $obj->setFio( $array['fio'] );
         $obj->setCity( $array['city'] );
         $obj->setEmail( $array['email'] );
+        $obj->setUrl( $array['url'] );
         $obj->setLogin( $array['login'] );
         $obj->setPass( $array['pass'] );
         $obj->setActivation( $array['activation'] );

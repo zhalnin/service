@@ -23,6 +23,7 @@ class Register extends Command {
         $fio        = $_POST['fio'];
         $city       = $_POST['city'];
         $email      = $_POST['email'];
+        $url        = $_POST['url'];
         $login      = $_POST['login'];
         $pass       = $_POST['pass'];
         $repass     = $_POST['repass'];
@@ -40,10 +41,10 @@ class Register extends Command {
             $request->addFeedback( 'Заполните поле "Имя"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
-        if( empty( $city ) ) {
-            $request->addFeedback( 'Заполните поле "Город"' );
-            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
-        }
+//        if( empty( $city ) ) {
+//            $request->addFeedback( 'Заполните поле "Город"' );
+//            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+//        }
         if( empty( $email ) ) {
             $request->addFeedback( 'Заполните поле "Email"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
@@ -56,6 +57,10 @@ class Register extends Command {
             $request->addFeedback( 'Этот "Email" уже использовался при регистрации' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
+//        if( empty( $url ) ) {
+//            $request->addFeedback( 'Заполните поле "Ваш сайт"' );
+//            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+//        }
         if( empty( $login ) ) {
             $request->addFeedback( 'Заполните поле "Логин"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
@@ -89,6 +94,7 @@ class Register extends Command {
                                                     $fio,
                                                     $city,
                                                     $email,
+                                                    $url,
                                                     $login,
                                                     $pass,
                                                     $activation,

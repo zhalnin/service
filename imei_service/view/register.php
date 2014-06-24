@@ -80,6 +80,12 @@ try {
                                                             <input id="email" class="email" type="text" maxlength="35" size="35" name="email" value="<?php echo $_POST['email']; ?>" />
                                                         </span>
                                                     </div>
+                                                    <div class="mbs">
+                                                        <span class="form-field field-with-placeholder">
+                                                            <label class="placeholder" for="url"><span>Ваш сайт</span></label>
+                                                            <input type="text" name="url" id="url"  value="<?php echo $_POST['url']; ?>" />
+                                                        </span>
+                                                    </div>
                                                     <div class="mbs" style="">
                                                         <span class="login-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-companyName" style="">

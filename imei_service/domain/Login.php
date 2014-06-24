@@ -17,6 +17,7 @@ class Login extends DomainObject {
     private $fio;
     private $city;
     private $email;
+    private $url;
     private $login;
     private $pass;
     private $activation;
@@ -26,6 +27,7 @@ class Login extends DomainObject {
                             $fio=null,
                             $city=null,
                             $email=null,
+                            $url=null,
                             $login=null,
                             $pass=null,
                             $activation=null,
@@ -34,6 +36,7 @@ class Login extends DomainObject {
         $this->fio          = $fio;
         $this->city         = $city;
         $this->email        = $email;
+        $this->url          = $url;
         $this->login        = $login;
         $this->pass         = $pass;
         $this->activation   = $activation;
@@ -93,6 +96,10 @@ class Login extends DomainObject {
         $this->email = $email_s;
         $this->markDirty();
     }
+    function setUrl( $url_s ) {
+        $this->url = $url_s;
+        $this->markDirty();
+    }
     function setLogin( $login_s ) {
         $this->login = $login_s;
         $this->markDirty();
@@ -119,6 +126,9 @@ class Login extends DomainObject {
     }
     function getEmail() {
         return $this->email;
+    }
+    function getUrl() {
+        return $this->url;
     }
     function getLogin() {
         return $this->login;

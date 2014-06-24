@@ -19,6 +19,7 @@ class LoginUpdateFactory extends UpdateFactory {
         $values['fio'] = $obj->getFio();
         $values['city'] = $obj->getCity();
         $values['email'] = $obj->getEmail();
+        $values['url'] = $obj->getUrl();
         $values['login'] = $obj->getLogin();
         $values['pass'] = $obj->getPass();
         $values['activation'] = $obj->getActivation();

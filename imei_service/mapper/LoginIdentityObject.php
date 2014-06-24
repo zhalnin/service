@@ -18,6 +18,7 @@ class LoginIdentityObject extends IdentityObject {
                                             'fio',
                                             'city',
                                             'email',
+                                            'url',
                                             'login',
                                             'pass',
                                             'activation',
