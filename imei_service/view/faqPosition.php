@@ -9,19 +9,25 @@
 
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
-
-require_once( "imei_service/view/ViewHelper.php" );
-
 try {
 
-    $request = \imei_service\view\VH::getRequest();
-    $position = $request->getObject( 'faqPosition' );
-//    $title = $catalog->getName();
-//    $keywords = $catalog->getKeywords();
-//    $description = $catalog->getDescription();
+    // подключаем помощник для вьюшки
+    require_once( "imei_service/view/ViewHelper.php" );
+
+    // получаем объект request
+    $request        = \imei_service\view\VH::getRequest();
+    // получаем коллекцию faqPosition
+    $position       = $request->getObject( 'faqPosition' );
+    // содержимое тега title
+    $title          = $position->getName();
+    // содержимое тега meta
+    $keywords       = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
+    // содержимое тега meta
+    $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
+
+    // подключаем верхний шаблон
     require_once("imei_service/view/templates/top.php");
 ?>
-
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
@@ -68,9 +74,10 @@ try {
     </div><!--        End of news-main-->
 
     <!--    <div id="main-guestbook"></div>-->
-<?php
-    require_once("imei_service/view/templates/bottom.php");
-
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

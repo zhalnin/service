@@ -10,19 +10,24 @@
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
-require_once( "imei_service/view/ViewHelper.php" );
-
 try {
+    // подключаем помощник для вьюшки
+    require_once( "imei_service/view/ViewHelper.php" );
 
-    $request = \imei_service\view\VH::getRequest();
-    $catalog = $request->getObject( 'catalogCollection' );
+    // получаем объект request
+    $request        = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию catalogCollection
+    $catalog        = $request->getObject( 'catalogCollection' );
+    // содержимое тега title
+    $title          = $catalog->getName();
+    // содержимое тега meta
+    $keywords       = $catalog->getKeywords();
+    // содержимое тега meta
+    $description    = $catalog->getDescription();
 
-    $title = $catalog->getName();
-    $keywords = $catalog->getKeywords();
-    $description = $catalog->getDescription();
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>
-
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
@@ -36,9 +41,8 @@ try {
     </div>
     <div id="main" class="">
 
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+        <!--        подключаем верхний шаблон-->
+        <?php require_once( "imei_service/view/templates/top.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -54,13 +58,6 @@ try {
                     <div class='faq-body'>
 
 <?php
-
-
-//                        Если idc - id_catalog не передан
-//                        значит просматриваем список доступных статей
-
-
-
                         echo "<div class='faq-title'>
                                     <h1 class=h2>{$catalog->getName()}</h1>
                                 </div>
@@ -69,58 +66,21 @@ try {
                                 </div>
 
                                 <div class='faq-info'>";
-
+//                                проходим в цикле по коллекции
                                 foreach ($catalog->getFaqPosition() as $pos ) {
-
+                                    // если это статья
                                     if($pos->getUrl() != 'article') {
                                         echo "<p><a href=\"".$pos->getUrl()."\"
                                                             class=\"main_txt_lnk\">
                                                             ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a></p>";
-                                    } else {
+                                    } else { // если это ссылка
                                         echo "<p><a href=\"?cmd=Faq&idc={$pos->getIdCatalog()}&".
                                             "idp={$pos->getId()}\"
                                                             class=\"main_txt_lnk\">".
                                             htmlspecialchars($pos->getName())."</a></p>";
                                     }
                                 }
-
                         echo "</div> "; // faq-info
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                        Если передан idp - id_position
-//                        значит переходим для детального просмотра статьи или ссылки
-
-
-
-//                        echo "<div class='faq-title'>
-//                                                        <h1 class=h2>".$position['name']."</h1>
-//                                                    </div>
-//                                                    <div class='faq-image'>
-//
-//                                                    </div>";
-//                        echo "<div class='faq-all-info'>";
-////                        require_once("article_print.php");
-//                        echo "</div> ";
-
-
-
-
-
-
-
-
-
 ?>
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
@@ -131,9 +91,10 @@ try {
 
 
     <!--    <div id="main-guestbook"></div>-->
-<?php
+    <?php
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

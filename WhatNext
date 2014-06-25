@@ -20,7 +20,11 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
            ObjectWatcher::addDelete( $this );
        }
 
-2. Комментарии по всему коду!!!
+2. Комментарии по всему коду:
+view - полностью
+command сделал Activation, BlacklistCheck
+
+
 3. search
 4. dmn
 5. payment

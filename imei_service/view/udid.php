@@ -10,18 +10,23 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
+    // подключаем обработчик bbcode
     require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
-    $request = \imei_service\view\VH::getRequest();
+    // получаем объект request
+    $request        = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию udidCollection
     $udidCollection = $request->getObject( 'udidCollection' );
+    // содержимое тега title
+    $title          = $udidCollection->getName();
+    // содержимое тега meta
+    $keywords       = $udidCollection->getKeywords();
+    // содержимое тега meta
+    $description    = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
 
-    $title = $udidCollection->getName();
-    $keywords = $udidCollection->getKeywords();
-//    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
-    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
-
-//    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 
     ?>
@@ -137,15 +142,9 @@ try {
     </div><!-- main -->
 
     <?php
-
-
-
-
-
-
-
-require_once( "imei_service/view/templates/bottom.php" );
-
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

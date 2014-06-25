@@ -9,12 +9,13 @@
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
-
-require_once( "imei_service/view/ViewHelper.php" );
-
 try {
+    // подключаем помощник для вьюшки
+    require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию pageCurl
     $page = $request->getObject( 'pageCurl' );
 
     //// Модель аппарата
@@ -26,8 +27,6 @@ try {
     preg_match_all('|<span class="value">(.+?)</span>|is', $page,$matchValue);
     preg_match('|<a id="special_info">(.+?)</a>|is', $page, $matchRef);
 
-
-
     //получаем массив всех-всех ссылок с этой старницы
     $error      =   $matchErrors[1];
     $model		=	$matchModel[1];
@@ -36,8 +35,6 @@ try {
     $value      =   $matchValue[1];
     $ref        =   strval($matchRef[1]);
     ?>
-
-
 
     <div id="pb-ipad" class="productbrowser content pb-dynamic" style="height: 400px;">
         <div class="pb-slider" style="height: 400px;">
@@ -109,7 +106,10 @@ try {
     </div>
 
 
-<?php
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

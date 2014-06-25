@@ -10,30 +10,33 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-//    require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
-    $request = \imei_service\view\VH::getRequest();
-//    $udidCollection = $request->getObject( 'udidCollection' );
-//
-    $title = "Вход на сайт imei-service.ru";
-//    $keywords = $udidCollection->getKeywords();
-//    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
-//    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
+    // получаем объект request
+    $request        = \imei_service\view\VH::getRequest();
+    // содержимое тега title
+    $title          = "Вход на сайт imei-service.ru";
+    // содержимое тега meta
+    $keywords       = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
+    // содержимое тега meta
+    $description    = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
 
-//    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
-    $feedback = $request->getFeedback();
 
-    if( isset( $_COOKIE['login'] ) ) {
-        $login = "value='".$_COOKIE['login']."'";
-    } else {
-        $login = "value='".$_POST['login']."'";
+    // получаем сообщения об ошибках
+    $feedback       = $request->getFeedback();
+
+    if( isset( $_COOKIE['login'] ) ) { // если установлен куки - login
+        $login = "value='".$_COOKIE['login']."'"; // формируем атрибут - value
+    } else { // иначе берем из POST
+        $login = "value='".$_POST['login']."'"; // формируем атрибут - value
     }
-    if( isset( $_COOKIE['pass'] ) ) {
-        $password = "value='".$_COOKIE['pass']."'";
-    } else {
-        $password = "value='".$_POST['pass']."'";
+    if( isset( $_COOKIE['pass'] ) ) { // если установлен куки - pass
+        $password = "value='".$_COOKIE['pass']."'"; // формируем атрибут - value
+    } else { // иначе берем из POST
+        $password = "value='".$_POST['pass']."'"; // формируем атрибут - value
     }
 
     ?>
@@ -112,11 +115,8 @@ try {
                                                 <a href="?cmd=FLogin" class="separated-link metrics-link">Восстановить пароль</a>
                                             </p>
                                             <br />
-                                            <p>
-                                                <?php
-                                                echo "Здесь описание";
-                                                ?>
-                                            </p>
+                                            <p>Для входа на сайт вам необходимо ввести ваши учетные данные, которые вы указали при регистрации и нажать кнопку "Отправить".</p>
+                                            <p>Вы можете отметить чекбокс "Запомнить меня", чтобы входить на сайт без повторного ввода логина и пароля.</p>
                                         </div><!-- payment-form-astro -->
                                     </div><!-- substep -->
                                 </div><!-- gs grid-lof2 gs-last -->
@@ -140,8 +140,7 @@ try {
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
 <?php
-                                //    Вывод сообщений об ошибках
-                                if( ! empty( $feedback ) ) {
+                                if( ! empty( $feedback ) ) { // Вывод сообщений об ошибках
                                 print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
                                     print "<ul>\n";
                                         print "<li>\n";
@@ -157,10 +156,10 @@ try {
             </div><!-- hero selfclear -->
         </div><!-- showcase -->
     </div><!-- main -->
-    <?php
-
+<?php
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

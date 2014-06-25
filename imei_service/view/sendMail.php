@@ -14,3 +14,4 @@ error_reporting( E_ALL & ~E_NOTICE );
 //$request = \imei_service\view\VH::getRequest();
 //
 //print "sendMail - view";
+?>

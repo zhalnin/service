@@ -21,10 +21,9 @@ class FLogin extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 
-        $email = $_POST['email'];
-        $submitted = $_POST['submitted'];
-        $findEmail = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
-
+        $email      = $_POST['email'];
+        $submitted  = $_POST['submitted'];
+        $findEmail  = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
         if( $submitted !== 'yes' ) { // если форма не отправлена
             return self::statuses('CMD_INSUFFICIENT_DATA' ); // повторно открываем форму (вьюшку с формой)
         }
@@ -54,7 +53,6 @@ class FLogin extends Command {
             $findEmail->setPass($pass);
 
             $activateLogin = new \imei_service\domain\Login( $findEmail->getId() );
-
 
             if( is_object( $activateLogin ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager

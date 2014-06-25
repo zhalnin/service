@@ -11,18 +11,24 @@ namespace imei_service\view;
 error_reporting(E_ALL & ~E_NOTICE);
 
 try {
-
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
+    // подключаем обработчик bbcode
     require_once( "imei_service/view/utils/utils.printPage.php" );
-
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию newsPrint
     $newsPrint = $request->getObject( 'newsPrint' );
-
+    // содержимое тега title
     $title = $newsPrint->getName();
+    // содержимое тега meta
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
+    // содержимое тега meta
     $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
     Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
     Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
+
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 
 ?>
@@ -39,9 +45,8 @@ try {
     </div>
     <div id="main" class="">
 
-    <?php
-    require_once( "utils/security_mod.php" );
-    ?>
+    <!--        подключаем верхний шаблон-->
+    <?php require_once( "imei_service/view/templates/top.php" ); ?>
 
     <div id="main-slogan" class="main-content">
         <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -104,14 +109,16 @@ try {
               </div>";
 
     }
-    echo "
+?>
                         </div><!-- End of news-container -->
                      <div class=\"news-footer\"></div><!-- End of news-footer -->
                 </div><!-- End of news-content -->
             </div><!-- End of news-main -->
-            <div id=\"main-guestbook\"></div>";
-
+            <div id=\"main-guestbook\"></div>
+<?php
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

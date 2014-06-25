@@ -10,20 +10,23 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-//    require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
 
-//    $udidCollection = $request->getObject( 'udidCollection' );
-//
+    // содержимое тега title
     $title = "Регистрация на сайте imei-service.ru";
-//    $keywords = $udidCollection->getKeywords();
-//    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
-//    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
+    // содержимое тега meta
+    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
+    // содержимое тега meta
+    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
 
-//    echo "<tt><pre>".print_r( $udidCollection, true )."</pre></tt>";
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
+
+    // получаем сообщения об ошибках
     $feedback = $request->getFeedback();
 
     ?>
@@ -145,15 +148,13 @@ try {
                                     <div class="substep" style="">
                                         <div id="payment-form-astro" class="form-astro with-seperator">
                                             <p class="legend" style="">
-                                                <a href="?cmd=Register" class="metrics-link">Зарегистрироваться</a>
+                                                <a href="?cmd=Login" class="metrics-link">Войти на сайт</a>
                                                 <a href="?cmd=FLogin" class="separated-link metrics-link">Забыли логин или пароль?</a>
                                             </p>
                                             <br />
-                                            <p>
-                                                <?php
-                                                echo "Здесь описание";
-                                                ?>
-                                            </p>
+                                            <p>Для завершения регистрации вам необходимо заполнить все обязательные поля формы.</p>
+                                            <p>После нажатия кнопки "Отправить" вы получите письмо на указанный адрес email с кодом активации.</p>
+                                            <p>Вам необходимо будет пройти по полученной ссылке, чтобы активировать вашу учетную запись.</p>
                                         </div><!-- payment-form-astro -->
                                     </div><!-- substep -->
                                 </div><!-- gs grid-lof2 gs-last -->
@@ -177,8 +178,7 @@ try {
                             </div><!-- continue-content clearfix -->
                         </div><!-- step-continue part-edit clear -->
                         <?php
-                        //    Вывод сообщений об ошибках
-                        if( ! empty( $feedback ) ) {
+                        if( ! empty( $feedback ) ) { // Вывод сообщений об ошибках
                             print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
                             print "<ul>\n";
                             print "<li>\n";
@@ -195,9 +195,9 @@ try {
         </div><!-- showcase -->
     </div><!-- main -->
     <?php
-
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

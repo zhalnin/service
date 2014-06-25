@@ -10,17 +10,26 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
+    // подключаем обработчик bbcode
     require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию unlock
     $unlocks = $request->getObject( 'unlock' );
+    // получаем объект-коллекцию decorateUnlock
     $decorateUnlock = $request->getObject( 'decorateUnlock' );
 
-    // Название каталога
-    $title = $decorateUnlock->getName();
-    $keywords = $decorateUnlock->getKeywords();
-    $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
+    // содержимое тега title
+    $title          = $decorateUnlock->getName();
+    // содержимое тега meta
+    $keywords       = $decorateUnlock->getKeywords();
+    // содержимое тега meta
+    $description    = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
+
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>
 
@@ -38,9 +47,8 @@ try {
 
     <div id="main"  class="">
 
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+        <!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -164,11 +172,10 @@ try {
             </div><!-- showcase -->
         </div><!-- main -->
 
-
-
-<?php
-require_once("imei_service/view/templates/bottom.php");
-
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

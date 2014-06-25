@@ -6,29 +6,40 @@
  * Time: 20:24
  * To change this template use File | Settings | File Templates.
  */
-
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-
-    require_once( "imei_service/classes/class.PagerMysql.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
+    // подклчаем класс постраничной навигации
+    require_once( "imei_service/classes/class.PagerMysql.php" );
+    // подключаем шаблон для обработки вложенных постов в гостевой книге
     require_once( "imei_service/view/utils/utils.printChildPost.php" );
 
-    $title = "Гостевая книга";
-    $keywords = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
-    $description = "Гостевая книга";
+    // получаем объект request
+    $request                = \imei_service\view\VH::getRequest();
+    // получаем массив ['select'=>..., 'navigation'=>...] постраничной навигации
+    $guestbookMain          = $request->getObject('guestbook_pagination');
+    // получаем значение ключа select
+    $guestbook              = $guestbookMain['select'];
+    // получаем значение ключа 'navigaion'
+    $guestbookNavigation    = $guestbookMain['navigation'];
+    // получаем номер страницы
+    $page                   = $request->getProperty('page');
 
-    $request = \imei_service\view\VH::getRequest();
-    $guestbookMain = $request->getObject('guestbook_pagination');
-    $guestbook = $guestbookMain['select'];
-    $guestbookNavigation = $guestbookMain['navigation'];
-    $page = $request->getProperty('page');
+    // содержимое тега title
+    $title                  = "Гостевая книга";
+    // содержимое тега meta
+    $keywords               = "В гостевой книге сайта imei-service.ru вы можете оставить свой комментарий о работе сервиса или задать интересующий вопрос относительно анлока iPhone, проверки по IMEI, blacklist или регистрации UDID в аккаунте разработчика.";
+    // содержимое тега meta
+    $description            = "Гостевая книга";
+
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 
-    if( empty( $page ) ) {
-        $page = 1;
+    if( empty( $page ) ) { // если номер страницы не указан
+        $page = 1; // то присваиваем ей 1
     }
 
 ?>
@@ -46,21 +57,18 @@ try {
 </div>
 <div id="main" class="">
 
-    <?php
-    require_once( "utils/security_mod.php" );
-    ?>
+    <!--        подключаем обработчик авторизации-->
+    <?php require_once( "utils/security_mod.php" ); ?>
 
     <div id="main-slogan" class="main-content">
         <div id="slogan">Быстро - Качественно - Надежно</div>
     </div>
     <!--        End of main-slogan-->
 
-
     <div id="addNav" class="">
         <a href="?cmd=Guestbook"><div id="nav-guestbook" class="addNav-body rounded main-content"><h3 class="h3">Гостевая</h3></div></a>
         <a href="?cmd=Contacts"><div id="nav-contact" class="addNav-body rounded main-content"><h3 class="h3">Контакты</h3></div></a>
     </div>
-
 
     <div id="news-main" class="main-content">
         <div id="" class="news-content clear-fix">
@@ -71,7 +79,7 @@ try {
 
                 <?php
 
-                if( ! empty( $guestbook ) ) {
+                if( ! empty( $guestbook ) ) { // если содержимое не пустое
                     // Выводим постраничную навигацию
                     echo "<div class='page-navigator'>" . $guestbookNavigation . "</div>";
                     // В цикле получаем результат запроса и выводим его на страницу
@@ -120,13 +128,11 @@ try {
                         <?php
                         echo "</div>"; //  End of guestbook-all-body
 
-
                         }
 
                         echo "<div class='page-navigator'>" . $guestbookNavigation . "</div>";
-                    } else {
+                    } else { // если в БД нет ни одного сообщения
                     ?>
-
 
                     <div class='guestbook-all-body'>
                         <div class='guestbook-all-wrap main-content'>
@@ -145,19 +151,16 @@ try {
             </div><!-- End of news-main -->
 
 <?php
+$valid = $request->getProperty('valid'); // получаем параметр valid из формы
+if( ! empty( $valid ) ) { // если форма имеет параметр valid
 
-$valid = $request->getProperty('valid');
-//$valid = $_POST['valid'];
-if( ! empty( $valid ) ) {
-    $sid_add_message = $request->getProperty('sid_add_message');
-    $feedback = $request->getFeedback();
-//echo "<tt><pre> VALID ".print_r($request, true)."</pre></tt>";
+    $sid_add_message = $request->getProperty('sid_add_message'); // получаем id сессии
+    $feedback = $request->getFeedback();  // получаем сообщения об ошибках
 }
-//    echo "<tt><pre> NO VALID ".print_r($request, true)."</pre></tt>";
 ?>
 
 
-<!--            Возвращаем текст в iFrame-->
+<!--            Возвращаем текст в iFrame при ошибке отправки формы -->
     <script type="text/javascript">
         AM.Event.addEvent( window, 'load', function() {
 //            alert('load');
@@ -184,7 +187,7 @@ if( ! empty( $valid ) ) {
                         <fieldset>
 
 <?php
-                    if( intval( $enter !== 1 ) ) {
+                    if( intval( $enter !== 1 ) ) { // если пользователь не вошел на сайт (Гость)
 ?>
                             <legend><strong class="label">Заполните все обязательные поля</strong></legend>
                             <div class="fieldset-content">
@@ -284,7 +287,7 @@ if( ! empty( $valid ) ) {
 
 
 <?php
-    if( intval( $enter !== 1 ) ) {
+    if( intval( $enter !== 1 ) ) { // если пользователь зашел на сайт (Зарегистрированный пользователь)
 ?>
                                 <div class="mbs">
                                     <span  class="capcha">
@@ -355,7 +358,7 @@ if( ! empty( $valid ) ) {
 
 
             <?php
-            if( ! empty( $feedback ) ) {
+            if( ! empty( $feedback ) ) { // Вывод сообщений об ошибках
                 print "<div class='guestbook-error' style='color: rgb(255, 0, 0);'>";
                 print "<ul>\n";
                 print "<li>\n";
@@ -367,12 +370,12 @@ if( ! empty( $valid ) ) {
             echo "</div>";
 //        }
 ?>
-
             <div id="main-guestbook"></div>
 
-            <?php
-
-            require_once( "imei_service/view/templates/bottom.php" );
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

@@ -8,11 +8,13 @@
  */
 
 try {
-    if( isset( $_POST['mode'] ) ) {
+    if( isset( $_POST['mode'] ) ) { // если установлен режим mode
+        // если режим - это превью и поле text не пустое
         if( ( $_POST['mode'] == 'preview' ) && isset( $_POST['text'] ) ) {
-            echo $_POST['text'];
+            echo $_POST['text']; // выводим этот тексе
         }
     }
+// ловим ошибки
 } catch ( Exception $ex ) {
     print $ex->getMessage();
 }

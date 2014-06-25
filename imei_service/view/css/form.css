@@ -676,7 +676,7 @@ legend .label {
     text-indent: 4px;
     /*width: 376px;*/
 }
-textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+textarea:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
     box-shadow: 0 0 6px #0088CC;
     -khtml-box-shadow:  0 0 6px #0088CC;
     -ms-box-shadow:  0 0 6px #0088CC;

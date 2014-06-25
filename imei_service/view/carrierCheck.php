@@ -11,17 +11,21 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
+    // подключаем обработчик bbcode
     require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию carrierCheckCollection
     $carrierCheckCollection = $request->getObject( 'carrierCheckCollection' );
-
+    // содержимое тега title
     $title = $carrierCheckCollection->getName();
     $keywords = $carrierCheckCollection->getKeywords();
-//    $keywords = "imei,check,iPhone,instant check,check status, проверка по IMEI, узнать оператора";
     $description = "Проверка iPhone по IMEI iPhone поможет определить дату первой активации, к какому оператору привязан iPhone, статус Find My iPhone всего за 30 рублей, что займет несколько минут.";
 
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
     ?>
     <div id="header">
@@ -38,9 +42,8 @@ try {
 
     <div id="main"  class="">
 
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+<!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -96,9 +99,7 @@ try {
                                             </p>
                                             <br />
                                             <p>
-                                                <?php
-                                                echo nl2br($carrierCheckCollection->getDescription());
-                                                ?>
+                                                <?php echo nl2br($carrierCheckCollection->getDescription()); ?>
                                             </p>
                                         </div><!-- payment-form-astro -->
                                     </div><!-- substep -->
@@ -134,12 +135,10 @@ try {
             </div><!-- hero selfclear -->
         </div><!-- showcase -->
     </div><!-- main -->
-
-    <?php
-
-
+<?php
+// подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

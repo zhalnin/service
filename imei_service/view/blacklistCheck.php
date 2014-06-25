@@ -12,17 +12,23 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
+    // подключаем обработчик bbcode
     require_once( "imei_service/view/utils/utils.printPage.php" );
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
-    $request = \imei_service\view\VH::getRequest();
-    $blacklistCollection = $request->getObject( 'blacklistCheckCollection' );
+    // получаем объект request
+    $request                = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию blacklistCollection
+    $blacklistCollection    = $request->getObject( 'blacklistCheckCollection' );
+    // содержимое тега title
+    $title                  = $blacklistCollection->getName();
+    // содержимое тега meta
+    $keywords               = $blacklistCollection->getKeywords();
+    // содержимое тега meta
+    $description            = "Проверка iPhone на blacklist позволит определить: был ли ваш аппарат занесен в черный список как потерянный, украденный или имеется задолженность по контракту. Стоимость проверки iPhone на blacklist всего 60 рублей, займет от нескольких минут до нескольких часов, в зависимости от оператора.";
 
-    $title = $blacklistCollection->getName();
-    $keywords = $blacklistCollection->getKeywords();
-//    $keywords = "проверка на blacklist,blacklist,iPhone,imei,checkmend";
-    $description = "Проверка iPhone на blacklist позволит определить: был ли ваш аппарат занесен в черный список как потерянный, украденный или имеется задолженность по контракту. Стоимость проверки iPhone на blacklist всего 60 рублей, займет от нескольких минут до нескольких часов, в зависимости от оператора.";
-
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>
 
@@ -40,10 +46,8 @@ try {
     </div>
 
     <div id="main"  class="">
-
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+<!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -100,9 +104,7 @@ try {
                                             </p>
                                             <br />
                                             <p>
-                                                <?php
-                                                echo nl2br($blacklistCollection->getDescription());
-                                                ?>
+                                                <?php echo nl2br($blacklistCollection->getDescription()); ?>
                                             </p>
                                         </div><!-- payment-form-astro -->
                                     </div><!-- substep -->
@@ -138,10 +140,10 @@ try {
             </div><!-- hero selfclear -->
         </div><!-- showcase -->
     </div><!-- main -->
-
-    <?php
+<?php
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

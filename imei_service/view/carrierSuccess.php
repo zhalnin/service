@@ -9,22 +9,23 @@
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 try {
-
-
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
 
-
+    // выполняем переадресацию на страницу с проверкой на IMEI
     print "<html><head>\n";
     print "<meta http-equiv='Refresh' content='7; url=?cmd=CarrierCheck'>\n";
     print "</head></html>\n";
 
-
-
-    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
+    // содержимое тега title
     $title = "Заявка отправлена";
+    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
     $description = "Оповещение о успешной отправки заявки на проверку iPhone по IMEI";
+
+    // подключаем верхний шаблон
     require_once("imei_service/view/templates/top.php");
 
     ?>
@@ -88,7 +89,9 @@ try {
         <!--    <div id="main-guestbook"></div>-->
 
 <?php
-    require_once("templates/bottom.php");
+// подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

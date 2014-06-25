@@ -5,9 +5,14 @@
  * Date: 11/05/14
  * Time: 15:20
  */
+error_reporting( E_ALL & ~E_NOTICE );
 
+// подключаем помощник для вьюшки
 require_once( "imei_service/view/ViewHelper.php" );
+
+// получаем объект request
 $request = \imei_service\view\VH::getRequest();
+// переадресация на страницу с новостями - главная
 header( "Location:?cmd=News" );
 ?>
 

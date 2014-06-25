@@ -9,17 +9,17 @@
 
 namespace imei_service\view;
 try {
+    // содержимое тега title
+    $title          = "Быстрая и бесплатная проверка по IMEI iPhone";
+    // содержимое тега meta
+    $keywords       = "imei,check,iPhone,instant check,check status,проверка по IMEI,бесплатно узнать оператора,быстрая проверка imei";
+    // содержимое тега meta
+    $description    = "Бесплатная проверка по IMEI. Быстрая проверка по IMEI iPhone поможет определить, к какому оператору привязан iPhone, дату активации, статус Find My iPhone.";
 
-
-    //require_once("count.php");
-    $title = "Быстрая и бесплатная проверка по IMEI iPhone";
-    $keywords = "imei,check,iPhone,instant check,check status,проверка по IMEI,бесплатно узнать оператора,быстрая проверка imei";
-    $description = "Бесплатная проверка по IMEI. Быстрая проверка по IMEI iPhone поможет определить, к какому оператору привязан iPhone, дату активации, статус Find My iPhone.";
-
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 
     ?>
-
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
@@ -34,9 +34,9 @@ try {
 
     <div id="main"  class="">
 
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+        <!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
+
         <div id="progressbar"></div>
 
         <div id="main-slogan" class="main-content">
@@ -132,9 +132,6 @@ try {
             </ol>
         </div>
 
-
-
-
         <!-- begin of Top100 code -->
 
         <script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2943315"></script>
@@ -187,12 +184,13 @@ try {
         </script>
         <!--/Openstat-->
 
-
-
     </div><!-- footer-->
     </body>
     </html>
-<?php
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

@@ -9,21 +9,25 @@ namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-
+    // подключаем помощник для вьюшки
     require_once( "imei_service/view/ViewHelper.php" );
 
+    // получаем объект request
     $request = \imei_service\view\VH::getRequest();
 
-
+    // выполняем переадресацию на страницу с Новостями
     print "<html><head>\n";
     print "<meta http-equiv='Refresh' content='7; url=?cmd=News'>\n";
     print "</head></html>\n";
 
+    // содержимое тега title
+    $title          = "Успешный вход на сайт imei-service.ru";
+    // содержимое тега meta
+    $keywords       = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
+    // содержимое тега meta
+    $description    = "Оповещение о успешной отправки заявки на официальный анлок iPhone";
 
-
-    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
-    $title = "Успешный вход на сайт imei-service.ru";
-    $description = "Оповещение о успешной отправки заявки на официальный анлок iPhone";
+    // подключаем верхний шаблон
     require_once("imei_service/view/templates/top.php");
 
     ?>
@@ -84,11 +88,12 @@ try {
         </div><!--     End of news-content -->
     </div><!--        End of news-main-->
 
-
     <!--    <div id="main-guestbook"></div>-->
 
     <?php
-    require_once("templates/bottom.php");
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {

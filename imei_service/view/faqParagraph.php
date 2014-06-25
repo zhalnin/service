@@ -10,26 +10,32 @@
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
-require_once( "imei_service/view/ViewHelper.php" );
-require_once( "imei_service/view/utils/utils.printPage.php" );
-require_once( 'imei_service/domain/FaqParagraph.php' );
-
 try {
+    // подключаем помощник для вьюшки
+    require_once( "imei_service/view/ViewHelper.php" );
+    // подключаем обработчик bbcode
+    require_once( "imei_service/view/utils/utils.printPage.php" );
+//    require_once( 'imei_service/domain/FaqParagraph.php' );
 
-    $request = \imei_service\view\VH::getRequest();
-    $position = $request->getObject( 'faqPosition' );
-    $paragraphs = $request->getObject( 'faqParagraphCollection' );
-    $idc = $request->getProperty( 'idc' );
-    $idp = $request->getProperty( 'idp' );
-//echo "<tt><pre>".print_r($request, true)."</pre></tt>";
-    $title = $position->getName();
-//    $keywords = $catalog->getKeywords();
-//    $description = $catalog->getDescription();
-    $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
-    $description = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
+    // получаем объект request
+    $request        = \imei_service\view\VH::getRequest();
+    // получаем объект-коллекцию faqPosition
+    $position       = $request->getObject( 'faqPosition' );
+    // получаем объект-коллекцию faqParagraphCollection
+    $paragraphs     = $request->getObject( 'faqParagraphCollection' );
+    // получаем параметр idc - id catalog
+    $idc            = $request->getProperty( 'idc' );
+    // получаем параметр idp - id parent
+    $idp            = $request->getProperty( 'idp' );
+    // содержимое тега title
+    $title          = $position->getName();
+    // содержимое тега meta
+    $keywords       = $position->getKeywords();
+    $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
+
+    // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
-    ?>
-
+?>
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
@@ -43,9 +49,8 @@ try {
     </div>
     <div id="main" class="">
 
-        <?php
-        require_once( "utils/security_mod.php" );
-        ?>
+<!--        подключаем верхний шаблон-->
+        <?php require_once( "imei_service/view/templates/top.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
@@ -226,8 +231,9 @@ try {
 
     <!--    <div id="main-guestbook"></div>-->
     <?php
+    // подключаем нижний шаблон
     require_once( "imei_service/view/templates/bottom.php" );
-
+// ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();
 } catch( \imei_service\base\DBException $exc ) {
