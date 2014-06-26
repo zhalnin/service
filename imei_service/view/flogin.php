@@ -52,7 +52,7 @@ try {
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
                                 <div class="gs grid-1of2" style="position: static;">
                                     <div id="shipping-user" class="user-form-block substep" style="">
-                                        <form method="post">
+                                        <form method="post" id="flogin-form">
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
                                                     <strong class="label">Выслать учетные данные на указанный email</strong>

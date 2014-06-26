@@ -129,5 +129,9 @@
         </status>
     </command>
 
+    <command name="Search">
+        <view>search</view>
+    </command>
+
 </control>
 </woo-options>

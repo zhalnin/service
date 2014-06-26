@@ -48,12 +48,23 @@ AM.Event.addEvent(window, 'load', function() {
                 case 'guestbook-form':
                     form = tmp;
                     break;
+                case 'login-form':
+                    form = tmp;
+                    break;
+                case 'register-form':
+                    form = tmp;
+                    break;
+                case 'flogin-form':
+                    form = tmp;
+                    break;
+                case 'ractivation-form':
+                    form = tmp;
+                    break;
                 case 'g-search':
                     form_search = tmp;
                     break;
             }
         }
-
 //        var form = document.getElementsByTagName('form')[0],
             // look for button to send
          var button_send = AM.DOM.$("shipping-continue-button"),
@@ -75,6 +86,29 @@ AM.Event.addEvent(window, 'load', function() {
             // блок <div> с кнопкой submit
             submitButton = AM.DOM.$('chipping-continue-button-submit'),
             cancelButton = AM.DOM.$('cancel-button');
+
+        // add event to 'document' for 'keypress'
+        AM.Event.addEvent(document,'keypress',function(event){
+            // take event
+            var e = AM.Event.getEvent(event);
+            // если фокус не на поиске и нажат Enter и присутствует форма
+            if( document.activeElement.id != 'sp-searchtext' && e.keyCode == 13 && form ){
+                // set flag to true - stop watchForm()
+                checking = true;
+                // если это не добавить, то при нажатии на Enter перегружается форма
+                AM.Event.stopDefault(event);
+                //                // scroll window to x=0 and y=0
+                //                window.scrollTo(0,0);
+                // start 'watchForm();
+                AMForm.watchForm(form);
+            // если фокус на поиске и нажат Enter и присутствует форма поиска
+            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search ) {
+                // если это не добавить, то при нажатии на Enter перегружается форма
+                AM.Event.stopDefault(event);
+                form_search.submit();
+//                console.log(form_search);
+            }
+        });
 
         if( AM.DOM.$('refreshCode') != null ) {
             var refreshCode = AM.DOM.$('refreshCode');
@@ -246,24 +280,26 @@ AM.Event.addEvent(window, 'load', function() {
         AM.DOM.append(document.body, overlay);
 
 
-
-        // add event to 'document' for 'keypress'
-        AM.Event.addEvent(document,'keypress',function(event){
-            // take event
-            var e = AM.Event.getEvent(event);
-            // if key is 'Enter' and button pressed for the first time
-            if(e.keyCode == 13){
-                // set flag to true - stop watchForm()
-                checking = true;
-                // если это не добавить, то при нажатии на Enter перегружается форма
-                AM.Event.stopDefault(event);
-//                // scroll window to x=0 and y=0
-//                window.scrollTo(0,0);
-                // start 'watchForm();
-                AMForm.watchForm(form);
-
-            }
-        });
+//        // add event to 'document' for 'keypress'
+//        AM.Event.addEvent(document,'keypress',function(event){
+//            // take event
+//            var e = AM.Event.getEvent(event);
+//            // if key is 'Enter' and button pressed for the first time
+//            if( document.activeElement.id != 'sp-searchtext' && e.keyCode == 13){
+//                // set flag to true - stop watchForm()
+//                checking = true;
+//                // если это не добавить, то при нажатии на Enter перегружается форма
+//                AM.Event.stopDefault(event);
+//                //                // scroll window to x=0 and y=0
+//                //                window.scrollTo(0,0);
+//                // start 'watchForm();
+//                AMForm.watchForm(form);
+//            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 ) {
+//                // если это не добавить, то при нажатии на Enter перегружается форма
+//                AM.Event.stopDefault(event);
+//                console.log('search');
+//            }
+//        });
 
         // если скроллим, то экран "ожидания" оптимизируется по всему экрану
         AM.Event.addEvent(document, 'scroll', function(event) {

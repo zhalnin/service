@@ -41,8 +41,8 @@ try {
     </div>
     <div id="main" class="">
 
-        <!--        подключаем верхний шаблон-->
-        <?php require_once( "imei_service/view/templates/top.php" ); ?>
+        <!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>

@@ -31,7 +31,8 @@ use imei_service\base\SessionRegistry;
             </li>
             <li>
                 <div id="globalsearch">
-                    <form id="g-search" class="search empty" method="get" action="">
+                    <form id="g-search" class="search empty" method="get" >
+                        <input id="search-command" type="hidden" name="cmd" value="Search">
                         <div class="sp-label">
                             <label for="sp-searchtext">Search</label>
                             <input id="sp-searchtext"  type="text" name="q" autocomplete="off" />
@@ -66,7 +67,8 @@ use imei_service\base\SessionRegistry;
             </li>
             <li>
                 <div id="globalsearch">
-                    <form id="g-search" class="search empty" method="get" action="">
+                    <form id="g-search" class="search empty" method="get" action="?cmd=Search">
+                        <input id="search-command" type="hidden" name="cmd" value="Search">
                         <div class="sp-label">
                             <label for="sp-searchtext">Search</label>
                             <input id="sp-searchtext"  type="text" name="q" autocomplete="off" />
