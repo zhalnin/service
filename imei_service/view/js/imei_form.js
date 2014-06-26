@@ -47,8 +47,7 @@ var AMForm = {
                 return !obj.value || obj.value.match( new RegExp("[-a-zа-я0-9_.]{1,20} [-a-zа-я0-9_.]{1,20}",'i'));
 //                return obj.value.length >= 10;
             }
-        }
-        ,
+        },
         code: {
             msg: "Неверный код",
             test: function( obj ) {
@@ -77,7 +76,6 @@ var AMForm = {
             msg: 'Заполните поле "Имя"',
             test: function(obj) {
                 var pass = AM.DOM.$('pass');
-                console.log(pass.value);
                 return !obj.value || obj.value != pass.value;
             }
         }

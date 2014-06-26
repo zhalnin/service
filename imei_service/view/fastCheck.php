@@ -53,7 +53,7 @@ try {
                             <div id="shipping-contact-form" class="step-mode edit clearfix" style="">
                                 <div class="gs grid-1of2" style="">
                                     <div id="shipping-user" class="user-form-block substep" style="">
-                                        <form method="post">
+                                        <form method="post" id="fastCheck-form">
                                             <fieldset style="">
                                                 <legend style="">
                                                     <strong class="label"><b>Введите IMEI (15-ть цифр)</b></strong>

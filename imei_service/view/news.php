@@ -64,8 +64,8 @@ try {
     </div>
     <div id="main" class="">
 
-    <!--        подключаем верхний шаблон-->
-    <?php require_once( "imei_service/view/templates/top.php" ); ?>
+    <!--        подключаем обработчик авторизации-->
+    <?php require_once( "utils/security_mod.php" ); ?>
 
 <!--        <div id="globalsearch">-->
 <!--            <form id="g-search" class="search empty" method="get" action="http://www.apple.com/search/">-->

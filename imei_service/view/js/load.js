@@ -19,13 +19,44 @@ AM.Event.addEvent(window, 'load', function() {
 //        iframeTD.appendChild(iframe2);
 
 
-
+        var form = "",
+            form_search = "";
         // scroll window to x=0 and y=0
 //        window.scrollTo(0,0);
         // look for first form in page
-        var form = document.getElementsByTagName('form')[0],
+        for(var z = 0, zlen = document.getElementsByTagName('form').length; z < zlen; z++ ) {
+            var tmp = document.getElementsByTagName('form')[z];
+            switch( tmp.id ) {
+                case 'udid-form':
+                    form = tmp;
+                    break;
+                case 'unlock-form':
+                    form = tmp;
+                    break;
+                case 'unlockDetails-form':
+                    form = tmp;
+                    break;
+                case 'carrier-form':
+                    form = tmp;
+                    break;
+                case 'fastCheck-form':
+                    form = tmp;
+                    break;
+                case 'blacklist-form':
+                    form = tmp;
+                    break;
+                case 'guestbook-form':
+                    form = tmp;
+                    break;
+                case 'g-search':
+                    form_search = tmp;
+                    break;
+            }
+        }
+
+//        var form = document.getElementsByTagName('form')[0],
             // look for button to send
-            button_send = AM.DOM.$("shipping-continue-button"),
+         var button_send = AM.DOM.$("shipping-continue-button"),
             // look for button to reload
             button_reload = AM.DOM.$("shipping-button"),
             button_detail = AM.DOM.$("detail-button"),
@@ -172,7 +203,6 @@ AM.Event.addEvent(window, 'load', function() {
         }
 
 
-
         // or if is not key=='Enter' use button_send 'click'
         if(button_send != null){
             // add event 'click' to button_send
@@ -186,7 +216,6 @@ AM.Event.addEvent(window, 'load', function() {
         } else {
             return null;
         }
-
         // Проверяем наличие на странице кнопки "Отмена" - для отмены ответа на комментарий,
         // если есть, то назначаем событие для возврата всей формы вниз страницы
         if(cancelButton != null ) {

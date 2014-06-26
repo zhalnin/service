@@ -62,7 +62,7 @@ try {
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
                                 <div class="gs grid-1of2" style="">
                                     <div id="shipping-user" class="user-form-block substep" style="">
-                                        <form method="post">
+                                        <form method="post" id="udid-form">
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
                                                     <strong class="label"><?php echo $udidCollection->getOrderTitle();?></strong>

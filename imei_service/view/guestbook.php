@@ -183,7 +183,7 @@ if( ! empty( $valid ) ) { // если форма имеет параметр val
                 <div class="guest-all-form top-divided">
                     <!--                    <form method="POST" action="guestbook.php">-->
                     <!--                    <form method="POST" name="guestbook-form" action="faq2.php?idp=70">-->
-                    <form method="POST" >
+                    <form method="POST" id="guestbook-form">
                         <fieldset>
 
 <?php
