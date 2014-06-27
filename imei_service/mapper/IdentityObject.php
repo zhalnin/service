@@ -151,6 +151,10 @@ class IdentityObject {
         return $this->operator( ">", $value );
     }
 
+    function rl( $value ) {
+        return $this->operator( "RLIKE", $value );
+    }
+
 
     /**
      * Вызываем из методов операторов сравнения

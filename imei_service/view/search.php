@@ -1,0 +1,120 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: zhalnin
+ * Date: 27/06/14
+ * Time: 16:51
+ */
+
+namespace imei_service\view;
+error_reporting( E_ALL & ~E_NOTICE );
+
+try {
+    // подключаем помощник для вьюшки
+    require_once( "imei_service/view/ViewHelper.php" );
+
+    // получаем объект request
+    $request = \imei_service\view\VH::getRequest();
+
+    $resMain = $request->getObject('search_pagination');
+    // содержимое тега title
+    $title = "Поиск по сайту imei-service.ru";
+    // содержимое тега meta
+    $keywords = "udid registration,регистрация udid,аккаунт разработчика,iOS 8 beta,iOS8 бета,провижен профиль,provision";
+    // содержимое тега meta
+    $description = "Регистрация UDID iOS 8 в аккаунте разработчика позволит вам устанавливать прошивки бета-версии без опасения, что аппарат не активируется. Также появляется возможность установки платных приложений бесплатно.";
+
+    // подключаем верхний шаблон
+    require_once( "imei_service/view/templates/top.php" );
+?>
+    <div id="header">
+        <ul id="navigation" role="navigation">
+            <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
+            <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
+            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
+            <li id="nav-faq"><a  class="selected" href="?cmd=Faq"><span>Вопросы</span></a></li>
+        </ul>
+    </div>
+    <div id="main" class="">
+
+        <!--        подключаем обработчик авторизации-->
+        <?php require_once( "utils/security_mod.php" ); ?>
+
+        <div id="main-slogan" class="main-content">
+            <div id="slogan">Быстро - Качественно - Надежно</div>
+        </div>
+        <!--        End of main-slogan-->
+
+        <div id="news-main" class="main-content">
+            <div id="" class="news-content clear-fix">
+                <div id='' class="news-header">
+                    <h2  class="h2">Поиск</h2>
+                </div>
+                <div class='news-container'>
+                    <div class='faq-body'>
+
+<?php
+
+                echo "<div class='faq-title'>
+                            <h1 class=h2>Поиск по сайту</h1>
+                        </div>
+                        <div class='faq-image'>
+                            <img alt='IMEI-service - Вопросы' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
+                        </div>
+
+                        <div class='faq-info'>";
+                        if( $resMain->getPage()[0] == '' ) {
+                            echo "<h1 class=h2>Поиск не дал результатов, попробуйте изменить строку запроса.</h1>";
+                        } else {
+                            foreach( $resMain->getPage() as $result ) {
+                                if( $result['link'] == 'faq' ) {
+                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
+                                                        href=?cmd=Faq&idp=$result[id_position]&idc=$result[id_catalog]>".
+                                        "$result[name]</a></div>";
+                                }
+                                if( $result['link'] == 'news' ) {
+                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
+                                                        href=?cmd=News&idn=$result[id_position]>".
+                                        "$result[name]</a></div>";
+                                }
+                                if( $result['link'] == 'service' ) {
+                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
+                                                        href=?cmd=Unlock&idc=$result[id_catalog]&idp=$result[id_position]>".
+                                        "$result[name]</a></div>";
+                                }
+                                if( $result['link'] == 'service_catalog' ) {
+                                    if( empty( $result['ctr'] ) ) {
+                                        echo "<div class=main_txt><a class=\"main_txt_lnk\"
+                                                            href=?cmd=$result[type]>".
+                                            "$result[name]</a></div>";
+                                    } else {
+                                        echo "<div class=main_txt><a class=\"main_txt_lnk\"
+                                                            href=?cmd=$result[type]&ctr=$result[ctr]&idc=$result[id_catalog]&idp=$result[id_position]>".
+                                            "$result[name]</a></div>";
+                                    }
+                                }
+                            }
+                        }
+
+                echo "</div> "; // faq-info
+?>
+                    </div>  <!-- End of faq-body -->
+                </div>  <!--   End of news-container -->
+            </div> <!-- End of news-content clear-fix -->
+            <div class="news-footer"><?php if( $resMain->getPage()[0] != '' ) { print $resMain->printPageSearchNav(); } ?></div>
+        </div><!--     End of news-content -->
+    </div><!--        End of news-main-->
+
+    <?php
+    // подключаем нижний шаблон
+    require_once( "imei_service/view/templates/bottom.php" );
+// ловим сообщения об ошибках
+} catch( \imei_service\base\AppException $exc ) {
+    print $exc->getErrorObject();
+} catch( \imei_service\base\DBException $exc ) {
+    print $exc->getErrorObject();
+}
+?>

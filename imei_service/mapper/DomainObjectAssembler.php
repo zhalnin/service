@@ -7,7 +7,7 @@
  */
 
 namespace imei_service\mapper;
-
+error_reporting( E_ALL & ~E_NOTICE );
 
 class DomainObjectAssembler {
     protected static $PDO;
@@ -141,7 +141,7 @@ class DomainObjectAssembler {
                                                         $pageLink,
                                                         $parameters,
                                                         $page);
-
+//        echo "<tt><pre>".print_r( $pagfact->getPage(), true )."</pre></tt>";
 //        return $pagfact->getPage();
         return array ( "navigation"=>$pagfact->printPageNav(), "select"=>$this->factory->getCollection( $pagfact->getPage() ) );
 

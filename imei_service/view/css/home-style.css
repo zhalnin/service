@@ -1032,6 +1032,7 @@ span #uah.currency{
 }
 .news-container {
     border-top: 1px solid #DDDDDD;
+    min-height: 250px;
 }
 .news-body {
     color: #666666;

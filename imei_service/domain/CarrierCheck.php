@@ -75,7 +75,7 @@ class CarrierCheck extends DomainObject {
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
-        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'checkcarrier' )->field( 'hide' )->eq( 'show' ) );
+        return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'CarrierCheck' )->field( 'hide' )->eq( 'show' ) );
     }
 
 

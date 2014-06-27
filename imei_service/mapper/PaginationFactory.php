@@ -7,6 +7,7 @@
  */
 
 namespace imei_service\mapper;
+error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/base/Exceptions.php" );
 
@@ -294,13 +295,11 @@ abstract class PaginationFactory {
 }
 
 
-
-
-
-
-
-
-
+/**
+ * Class GuestbookPaginationFactory
+ * Постраничная навигация для Гостевой книги
+ * @package imei_service\mapper
+ */
 class GuestbookPaginationFactory extends PaginationFactory  {
     protected static $PDO;
     // Имя таблицы в БД
@@ -435,6 +434,278 @@ class GuestbookPaginationFactory extends PaginationFactory  {
         foreach( $obj->getComps() as $val ) {
             $sth->bindValue(":".$val['name'],$val['value']);
         }
+    }
+}
+
+
+/**
+ * Class SearchPaginationFactory
+ * Постраничная навигация для Поиска
+ * @package imei_service\mapper
+ */
+class SearchPaginationFactory extends PaginationFactory  {
+    protected static $PDO;
+    // Имя таблицы в БД
+    protected $tableName;
+    // Условие WHERE
+    protected $where;
+    // Условие ORDER BY
+    protected $order;
+    // Количество позиций на странице
+    protected $pageNumber;
+    // Количество ссылок на другие страницы
+    // слева и справа от текущей позиции
+    protected $pageLink;
+    // Дополнительные параметры
+    protected $parameters;
+
+    protected $search;
+
+    protected $page;
+
+
+    public function __construct( $tableName ,
+                                 $where = "",
+                                 $order = "",
+                                 $search = "",
+                                 $pageNumber = 10,
+                                 $pageLink = 3,
+                                 $parameters = "",
+                                 $page = "") {
+
+        $this->tableName = $tableName;
+        $this->where = $where;
+        $this->order = $order;
+        $this->search = $search;
+        $this->pageNumber = $pageNumber;
+        $this->pageLink = $pageLink;
+        $this->parameters = $parameters;
+        $this->page = $page;
+
+        if( ! isset( self::$PDO ) ) {
+            $dsn = \imei_service\base\DBRegistry::getDB();
+            if( is_null( $dsn ) ) {
+                throw new \imei_service\base\AppException( "No DSN" );
+            }
+            self::$PDO = $dsn;
+        }
+    }
+
+
+    function getStatement( $str ) {
+        if( ! isset( $this->statements[$str] ) ) {
+            $this->statements[$str] = self::$PDO->prepare( $str );
+        }
+        return $this->statements[$str];
+    }
+
+
+    public function getTotal() {
+
+        $count = 0;
+        $stmt0 = "SELECT COUNT(system_news.id_news)
+                    FROM system_news
+                    WHERE ".implode(" AND ",$this->search[0])." AND
+                                    system_news.hide = 'show'";
+        $stmt1 = "SELECT COUNT(system_menu_position.id_position)
+                    FROM system_menu_paragraph, system_menu_position
+                    WHERE ".implode(" AND ", $this->search[1])." AND
+                                    system_menu_position.hide = 'show' AND
+                                    system_menu_paragraph.hide = 'show' AND
+                                    system_menu_position.id_position = system_menu_paragraph.id_position
+                    GROUP BY system_menu_paragraph.id_position";
+//        $stmt2 = "SELECT COUNT( system_position.id_catalog )
+//                              FROM system_position, system_catalog
+//                              WHERE ".implode(' AND ', $this->search[2] )."
+//                                                AND system_position.hide = 'show'
+//                                                AND system_catalog.hide = 'show'
+//                                                AND system_position.id_catalog = system_catalog.id_catalog
+//                              GROUP BY system_position.id_catalog";
+        $stmt2 = "SELECT COUNT( system_position.id_catalog )
+                            FROM system_position, system_catalog
+                            WHERE ".implode(' AND ', $this->search[2] )."
+                                            AND system_position.hide = 'show'
+                                            AND system_catalog.hide = 'show'
+                                            AND system_position.id_catalog = system_catalog.id_catalog
+                            GROUP BY system_position.id_catalog";
+        $stmt3 = "SELECT COUNT( system_catalog.id_catalog )
+                              FROM system_catalog
+                              WHERE ".implode(' AND ', $this->search[3] )."
+                                                AND system_catalog.hide = 'show'
+                              GROUP BY system_catalog.id_catalog";
+
+        $res[] = $this->getStatement( $stmt0 );
+        $res[] = $this->getStatement( $stmt1 );
+        $res[] = $this->getStatement( $stmt2 );
+        $res[] = $this->getStatement( $stmt3 );
+//        echo "<tt><pre>".print_r( $res , true)."</pre></tt>";
+        foreach( $res as $r ) {
+            $result = $r->execute();
+            if( ! $result ) {
+                throw new \PDOException("Ошибка при подсчете позиций в getTotal()" );
+            }
+//        echo "<tt><pre>".print_r( $r->fetchColumn() , true)."</pre></tt>";
+            $count += $r->fetchColumn();
+            $r->closeCursor();
+        }
+
+//        echo "<tt><pre>".print_r( $count , true)."</pre></tt>";
+        return $count;
+    }
+
+    public function getPageNumber() { return $this->pageNumber; }
+
+    public function getPageLink() { return $this->pageLink; }
+
+    public function getParameters() { return $this->parameters; }
+
+    public function getPage() {
+        $page = intval( $_GET['page'] );
+        if( empty( $page ) ) { $page = 1; }
+        $total = $this->getTotal();
+        $number = (int)( $total / $this->getPageNumber() );
+        if( (float)( $total / $this->getPageNumber() - $number ) != 0 ) { $number++; }
+        $arr = array();
+        $first = ( $page - 1 ) * $this->getPageNumber();
+
+        $tmp = "SELECT system_menu_position.id_position AS id_position,
+                                    system_menu_position.id_catalog AS id_catalog,
+                                    system_menu_position.name AS name,
+                                    'faq' AS link,
+                                    '' AS type,
+                                    '' AS ctr
+                            FROM system_menu_paragraph, system_menu_position
+                            WHERE ".implode(' AND ', $this->search[1] )."
+                                                AND system_menu_paragraph.hide = 'show'
+                                                AND system_menu_position.hide = 'show'
+                                                AND system_menu_position.id_position = system_menu_paragraph.id_position
+                            GROUP BY system_menu_paragraph.id_position
+                            UNION
+                            SELECT system_position.id_position AS id_position,
+                                 system_position.id_catalog AS id_catalog,
+                                 system_position.operator AS name,
+                                 'service' AS link,
+                                 '' AS type,
+                                 '' AS ctr
+                            FROM system_position, system_catalog
+                            WHERE ".implode(' AND ', $this->search[2] )."
+                                            AND system_position.hide = 'show'
+                                            AND system_catalog.hide = 'show'
+                                            AND system_position.id_catalog = system_catalog.id_catalog
+                            GROUP BY system_position.id_catalog
+                            UNION
+                            SELECT 0,
+                                 system_catalog.id_catalog AS id_catalog,
+                                 system_catalog.name AS name,
+                                 'service_catalog' AS link,
+                                 system_catalog.modrewrite AS type,
+                                 system_catalog.abbreviatura AS ctr
+                            FROM system_position, system_catalog
+                            WHERE ".implode(' AND ', $this->search[3] )."
+                                            AND system_catalog.hide = 'show'
+                            GROUP BY system_catalog.id_catalog
+                            UNION
+                            SELECT system_news.id_news AS id_position,
+                                     0,
+                                     system_news.name AS name,
+                                     'news' AS link,
+                                     '' AS type,
+                                     '' AS ctr
+                             FROM system_news
+                             WHERE ".implode(' AND ', $this->search[0] )."
+                                               AND system_news.hide = 'show'
+                             ORDER BY name
+                             LIMIT $first, {$this->getPageNumber()}";
+
+        $sth = $this->getStatement( $tmp );
+//        echo "<tt><pre>".print_r($sth, true)."</pre></tt>";
+        $result = $sth->execute( );
+        if( ! $result ) {
+            throw new \PDOException( "Ошибка при выборке в getPage()" );
+        }
+        $arr = $sth->fetchAll();
+        return $arr;
+    }
+
+
+    /**
+     * Возвращает постраничную навигацию типа: " Предыдущая Следующая 1 2 3 "
+     * @return string
+     */
+    public function printPageSearchNav() {
+        // (string) - возвращаем результат
+        $returnPage = "";
+        // Для передачи позиции текущей страницы
+        $page = intval( $_GET['page'] );
+        if( empty( $page ) ) $page = 1;
+        $number = (int)( $this->getTotal() / $this->getPageNumber() );
+        if( (float)( $this->getTotal() / $this->getPageNumber() ) - $number != 0 ) { $number++; }
+
+        $returnPage .= "<span class='pagination'>
+                            <span class='pagination-prevnext'>";
+        // Если это первая страница - то выводим <span>
+        if( $page == 1 ) {
+            $returnPage .= "<span class='pagination-prev-inactive'>&nbsp;Предыдущая&nbsp;</span>";
+            // Если это не первая страница - то выводим стрелку для одиночного
+            // пролистывания
+        } else {
+            $returnPage .= "<a class='pagination-prev' href='"
+                ."?cmd=Search&page=".($page-1)."{$this->getParameters()}'>&nbsp;"
+                ."Предыдущая&nbsp;</a>";
+        }
+        // Если это последняя страница, то выводим <span>
+        if( $page == $number ) {
+            $returnPage .= "<span class='pagination-next-inactive'>&nbsp;Следующая&nbsp;</span>";
+            // Если это не последняя страница, то выводим стрелку для
+            // единичного перелистывания
+        } else {
+            $returnPage .= "<a class='pagination-next' href='?cmd=Search&page="
+                .($page+1)
+                ."{$this->getParameters()}'>&nbsp;"
+                ."Следующая&nbsp;</a>";
+        }
+
+        $returnPage .= "</span>&nbsp;<span class='pagination-numbers'>";
+
+
+
+
+        // Если текущая страница больше, чем желаемое количество + 1 ( 4 ), то
+        // указываем ссылки на предыдущие страницы, пример:
+        // страница 5 > желаемого количества отображаемых ссылок плюс 1 4
+        // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
+        if( $page > $this->getPageLink() + 1 ) {
+            for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
+                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+            }
+            // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
+            // если page меньше 4-х, то и выводим меньше
+        } else {
+            for( $i = 1; $i < $page; $i++ ) {
+                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+            }
+        }
+
+        // Указываем текущую страницу
+        $returnPage .= "&nbsp;<span class='pagination-current'>$i</span>&nbsp;";
+
+        // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
+        if( $page + $this->getPageLink() < $number ) {
+            for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
+                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+            }
+            // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
+        } else {
+//            print $i;
+//            print $page;
+//            print $number;
+            for( $i = $page + 1; $i <= $number; $i++ ) {
+                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+            }
+        }
+
+        $returnPage .= "</span></span>";
+        return $returnPage;
     }
 }
 

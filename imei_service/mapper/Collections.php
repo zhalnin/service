@@ -180,5 +180,14 @@ class FaqParagraphImageCollection
     }
 }
 
+class SearchCollection
+    extends Collection
+    implements \imei_service\domain\SearchCollection {
+
+    function targetClass() {
+        return "\\imei_service\\domain\\Search";
+    }
+}
+
 
 ?>

@@ -68,4 +68,8 @@ interface LoginCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface SearchCollection extends \Iterator {
+    function add( DomainObject $search );
+}
+
 ?>

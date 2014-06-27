@@ -15,9 +15,28 @@ abstract class Pager {
 
     protected function __construct(){}
 
+    /**
+     * Общее кол-во записей
+     * @return mixed
+     */
     abstract protected function getTotal();
+
+    /**
+     * Количество позиций на странице
+     * @return mixed
+     */
     abstract protected function getPageNumber();
+
+    /**
+     * Количество ссылок слева и справа от текущей страницы
+     * @return mixed
+     */
     abstract protected function getPageLink();
+
+    /**
+     * Дополнительные параметры, которые необходимо передать по ссылке
+     * @return mixed
+     */
     abstract protected function getParameters();
 
 

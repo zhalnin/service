@@ -7,6 +7,8 @@
  */
 
 namespace imei_service\mapper;
+use imei_service\domain\DomainObject;
+
 error_reporting( E_ALL & ~E_NOTICE );
 
 //require_once( 'imei_service/domain.php' );
@@ -450,6 +452,25 @@ class LoginObjectFactory extends DomainObjectFactory {
         $obj->setPass( $array['pass'] );
         $obj->setActivation( $array['activation'] );
         $obj->setStatus( $array['status'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj;
+    }
+}
+
+
+class SearchObjectFactory extends DomainObjectFactory {
+
+    function createObject( array $array ) {
+        $class = '\imei_service\domain\Search';
+        $old = $this->getFromMap( $class, $array['id_news'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_news'] );
+        $obj->setName( $array['name'] );
+        $obj->setIdPosition( $array['id_position'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+        $obj->setLink( $array['link'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

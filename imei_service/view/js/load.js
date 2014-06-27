@@ -101,12 +101,14 @@ AM.Event.addEvent(window, 'load', function() {
                 //                window.scrollTo(0,0);
                 // start 'watchForm();
                 AMForm.watchForm(form);
-            // если фокус на поиске и нажат Enter и присутствует форма поиска
-            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search ) {
-                // если это не добавить, то при нажатии на Enter перегружается форма
+            // если фокус на поиске и нажат Enter и присутствует форма поиска и поле поиска не пустое
+            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && document.activeElement.value != "" ) {
+//                // если это не добавить, то при нажатии на Enter перегружается форма
                 AM.Event.stopDefault(event);
                 form_search.submit();
-//                console.log(form_search);
+                // если фокус на поиске и нажат Enter и присутствует форма поиска и поле поиска пустое
+            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && document.activeElement.value == "" ) {
+                AM.Event.stopDefault(event);
             }
         });
 
