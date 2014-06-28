@@ -304,7 +304,7 @@ var AMForm = {
             } else {
                 if(  AM.DOM.next( editorSpan ) == null ) {
                     // добавляем блок с ошибкой
-                    console.log(editorSpan);
+//                    console.log(editorSpan);
                     AM.DOM.addClass('error', AM.DOM.first( editorSpan ) );
                     AMForm.showErrors( editorSpan,"Поле не заполнено" );
                 }

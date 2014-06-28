@@ -37,18 +37,15 @@ class Search extends DomainObject {
     }
 
 
-    static function paginationSearchMysql( $tableName, $search ) {
-        $finder = self::getFinder( __CLASS__ );
+    static function paginationSearchMysql( $tableName ) {
+
         return new \imei_service\mapper\SearchPaginationFactory( $tableName ,
             "",
             "",
-            $search,
             10,
             3,
-            "&q=".urlencode( $_GET['q'] ),
-            "");
+            "" );
     }
-
 
     function setName( $name_s ) {
         $this->name = $name_s;

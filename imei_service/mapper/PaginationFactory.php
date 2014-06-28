@@ -458,29 +458,40 @@ class SearchPaginationFactory extends PaginationFactory  {
     protected $pageLink;
     // Дополнительные параметры
     protected $parameters;
-
-    protected $search;
-
-    protected $page;
+    protected $search_news;
+    protected $search_faq;
+    protected $search_service;
+    protected $search_catalog_service;
 
 
     public function __construct( $tableName ,
                                  $where = "",
                                  $order = "",
-                                 $search = "",
                                  $pageNumber = 10,
                                  $pageLink = 3,
-                                 $parameters = "",
-                                 $page = "") {
+                                 $parameters = "") {
 
         $this->tableName = $tableName;
         $this->where = $where;
         $this->order = $order;
-        $this->search = $search;
         $this->pageNumber = $pageNumber;
         $this->pageLink = $pageLink;
         $this->parameters = $parameters;
-        $this->page = $page;
+
+        // разбиваем строку запроса по пробелам
+        $qSearch = preg_split("|[\s]+|", $_GET['q']  );
+
+        // проходим в цикле по полученному массиву и создаем 4 дополнительных массива для SELECT
+        foreach( $qSearch as $qLine ) {
+            // system_news
+            $this->search_news[] = "( ( LCASE( {$this->tableName[0]}.name ) RLIKE '".$qLine."') OR ( LCASE( {$this->tableName[0]}.body ) RLIKE '".$qLine."' ) )";
+            // system_menu_paragraph
+            $this->search_faq[] = "( LCASE( {$this->tableName[1]}.name ) RLIKE '".$qLine."')";
+            // system_position
+            $this->search_service[] = "( LCASE( {$this->tableName[2]}.operator ) RLIKE '".$qLine."')";
+            // system_catalog
+            $this->search_catalog_service[] = "( LCASE( {$this->tableName[3]}.name ) RLIKE '".$qLine."')";
+        }
 
         if( ! isset( self::$PDO ) ) {
             $dsn = \imei_service\base\DBRegistry::getDB();
@@ -505,46 +516,35 @@ class SearchPaginationFactory extends PaginationFactory  {
         $count = 0;
         $stmt0 = "SELECT COUNT(system_news.id_news)
                     FROM system_news
-                    WHERE ".implode(" AND ",$this->search[0])." AND
+                    WHERE ".implode(" AND ",$this->search_news)." AND
                                     system_news.hide = 'show'";
         $stmt1 = "SELECT COUNT(system_menu_position.id_position)
                     FROM system_menu_paragraph, system_menu_position
-                    WHERE ".implode(" AND ", $this->search[1])." AND
+                    WHERE ".implode(" AND ", $this->search_faq)." AND
                                     system_menu_position.hide = 'show' AND
                                     system_menu_paragraph.hide = 'show' AND
-                                    system_menu_position.id_position = system_menu_paragraph.id_position
-                    GROUP BY system_menu_paragraph.id_position";
-//        $stmt2 = "SELECT COUNT( system_position.id_catalog )
-//                              FROM system_position, system_catalog
-//                              WHERE ".implode(' AND ', $this->search[2] )."
-//                                                AND system_position.hide = 'show'
-//                                                AND system_catalog.hide = 'show'
-//                                                AND system_position.id_catalog = system_catalog.id_catalog
-//                              GROUP BY system_position.id_catalog";
+                                    system_menu_position.id_position = system_menu_paragraph.id_position";
         $stmt2 = "SELECT COUNT( system_position.id_catalog )
                             FROM system_position, system_catalog
-                            WHERE ".implode(' AND ', $this->search[2] )."
+                            WHERE ".implode(' AND ', $this->search_service )."
                                             AND system_position.hide = 'show'
                                             AND system_catalog.hide = 'show'
-                                            AND system_position.id_catalog = system_catalog.id_catalog
-                            GROUP BY system_position.id_catalog";
+                                            AND system_position.id_catalog = system_catalog.id_catalog";
         $stmt3 = "SELECT COUNT( system_catalog.id_catalog )
                               FROM system_catalog
-                              WHERE ".implode(' AND ', $this->search[3] )."
-                                                AND system_catalog.hide = 'show'
-                              GROUP BY system_catalog.id_catalog";
+                              WHERE ".implode(' AND ', $this->search_catalog_service )."
+                                                AND system_catalog.hide = 'show'";
 
         $res[] = $this->getStatement( $stmt0 );
         $res[] = $this->getStatement( $stmt1 );
         $res[] = $this->getStatement( $stmt2 );
         $res[] = $this->getStatement( $stmt3 );
-//        echo "<tt><pre>".print_r( $res , true)."</pre></tt>";
+
         foreach( $res as $r ) {
             $result = $r->execute();
             if( ! $result ) {
                 throw new \PDOException("Ошибка при подсчете позиций в getTotal()" );
             }
-//        echo "<tt><pre>".print_r( $r->fetchColumn() , true)."</pre></tt>";
             $count += $r->fetchColumn();
             $r->closeCursor();
         }
@@ -563,19 +563,22 @@ class SearchPaginationFactory extends PaginationFactory  {
         $page = intval( $_GET['page'] );
         if( empty( $page ) ) { $page = 1; }
         $total = $this->getTotal();
+//        echo "<tt><pre>".print_r($total, true)."</pre></tt>";
         $number = (int)( $total / $this->getPageNumber() );
         if( (float)( $total / $this->getPageNumber() - $number ) != 0 ) { $number++; }
         $arr = array();
         $first = ( $page - 1 ) * $this->getPageNumber();
+        echo "<tt><pre> first - ".print_r( $first , true)."</pre></tt>";
+        echo "<tt><pre> total - ".print_r( $total , true)."</pre></tt>";
 
-        $tmp = "SELECT system_menu_position.id_position AS id_position,
+        $tmp = "        SELECT system_menu_position.id_position AS id_position,
                                     system_menu_position.id_catalog AS id_catalog,
                                     system_menu_position.name AS name,
                                     'faq' AS link,
                                     '' AS type,
                                     '' AS ctr
                             FROM system_menu_paragraph, system_menu_position
-                            WHERE ".implode(' AND ', $this->search[1] )."
+                            WHERE ".implode(' AND ', $this->search_faq)."
                                                 AND system_menu_paragraph.hide = 'show'
                                                 AND system_menu_position.hide = 'show'
                                                 AND system_menu_position.id_position = system_menu_paragraph.id_position
@@ -588,7 +591,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                                  '' AS type,
                                  '' AS ctr
                             FROM system_position, system_catalog
-                            WHERE ".implode(' AND ', $this->search[2] )."
+                            WHERE ".implode(' AND ', $this->search_service)."
                                             AND system_position.hide = 'show'
                                             AND system_catalog.hide = 'show'
                                             AND system_position.id_catalog = system_catalog.id_catalog
@@ -601,7 +604,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                                  system_catalog.modrewrite AS type,
                                  system_catalog.abbreviatura AS ctr
                             FROM system_position, system_catalog
-                            WHERE ".implode(' AND ', $this->search[3] )."
+                            WHERE ".implode(' AND ', $this->search_catalog_service )."
                                             AND system_catalog.hide = 'show'
                             GROUP BY system_catalog.id_catalog
                             UNION
@@ -611,14 +614,14 @@ class SearchPaginationFactory extends PaginationFactory  {
                                      'news' AS link,
                                      '' AS type,
                                      '' AS ctr
-                             FROM system_news
-                             WHERE ".implode(' AND ', $this->search[0] )."
+                            FROM system_news
+                            WHERE ".implode(' AND ', $this->search_news )."
                                                AND system_news.hide = 'show'
-                             ORDER BY name
-                             LIMIT $first, {$this->getPageNumber()}";
+                            ORDER BY name
+                            LIMIT $first, {$this->getPageNumber()}";
 
         $sth = $this->getStatement( $tmp );
-//        echo "<tt><pre>".print_r($sth, true)."</pre></tt>";
+        echo "<tt><pre>".print_r( $sth , true)."</pre></tt>";
         $result = $sth->execute( );
         if( ! $result ) {
             throw new \PDOException( "Ошибка при выборке в getPage()" );
@@ -637,6 +640,7 @@ class SearchPaginationFactory extends PaginationFactory  {
         $returnPage = "";
         // Для передачи позиции текущей страницы
         $page = intval( $_GET['page'] );
+        $q = $_GET['q'];
         if( empty( $page ) ) $page = 1;
         $number = (int)( $this->getTotal() / $this->getPageNumber() );
         if( (float)( $this->getTotal() / $this->getPageNumber() ) - $number != 0 ) { $number++; }
@@ -650,7 +654,7 @@ class SearchPaginationFactory extends PaginationFactory  {
             // пролистывания
         } else {
             $returnPage .= "<a class='pagination-prev' href='"
-                ."?cmd=Search&page=".($page-1)."{$this->getParameters()}'>&nbsp;"
+                ."?cmd=Search&page=".($page-1)."&q=$q'>&nbsp;"
                 ."Предыдущая&nbsp;</a>";
         }
         // Если это последняя страница, то выводим <span>
@@ -661,7 +665,7 @@ class SearchPaginationFactory extends PaginationFactory  {
         } else {
             $returnPage .= "<a class='pagination-next' href='?cmd=Search&page="
                 .($page+1)
-                ."{$this->getParameters()}'>&nbsp;"
+                ."&q=$q'>&nbsp;"
                 ."Следующая&nbsp;</a>";
         }
 
@@ -676,13 +680,13 @@ class SearchPaginationFactory extends PaginationFactory  {
         // в цикле проходим 5-3(2) < 5 --> выводим ссылки на страницы 2, 3, 4
         if( $page > $this->getPageLink() + 1 ) {
             for( $i = $page - $this->getPageLink(); $i < $page; $i++ ) {
-                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Search&page=$i&q=$q'>&nbsp;$i&nbsp;</a>";
             }
             // Если меньше ( 4 ), то от 1 до 3-х - указываем ссылки на страницы 1, 2, 3
             // если page меньше 4-х, то и выводим меньше
         } else {
             for( $i = 1; $i < $page; $i++ ) {
-                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Search&page=$i&q=$q'>&nbsp;$i&nbsp;</a>";
             }
         }
 
@@ -692,7 +696,7 @@ class SearchPaginationFactory extends PaginationFactory  {
         // Если страница 1-я, то указываем ссылки на страницы справа - 2, 3, 4
         if( $page + $this->getPageLink() < $number ) {
             for( $i = $page + 1; $i <= $page + $this->getPageLink(); $i++ ) {
-                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Search&page=$i&q=$q'>&nbsp;$i&nbsp;</a>";
             }
             // Если уже 2-я страница и более, то указываем сслылки на страницы 3, 4, 5
         } else {
@@ -700,7 +704,7 @@ class SearchPaginationFactory extends PaginationFactory  {
 //            print $page;
 //            print $number;
             for( $i = $page + 1; $i <= $number; $i++ ) {
-                $returnPage .= "<a href='?cmd=Search&page=$i{$this->getParameters()}'>&nbsp;$i&nbsp;</a>";
+                $returnPage .= "<a href='?cmd=Search&page=$i&q=$q'>&nbsp;$i&nbsp;</a>";
             }
         }
 

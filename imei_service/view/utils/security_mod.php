@@ -71,7 +71,7 @@ use imei_service\base\SessionRegistry;
                         <input id="search-command" type="hidden" name="cmd" value="Search">
                         <div class="sp-label">
                             <label for="sp-searchtext">Search</label>
-                            <input id="sp-searchtext"  type="text" name="q" autocomplete="off" />
+                            <input id="sp-searchtext" class="sp-searchtext" type="text" name="q" autocomplete="off" />
                             <div class="reset"></div>
                             <div class="spinner hide"></div>
                         </div>

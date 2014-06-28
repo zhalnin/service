@@ -459,21 +459,4 @@ class LoginObjectFactory extends DomainObjectFactory {
     }
 }
 
-
-class SearchObjectFactory extends DomainObjectFactory {
-
-    function createObject( array $array ) {
-        $class = '\imei_service\domain\Search';
-        $old = $this->getFromMap( $class, $array['id_news'] );
-        if( $old ) { return $old; }
-        $obj = new $class( $array['id_news'] );
-        $obj->setName( $array['name'] );
-        $obj->setIdPosition( $array['id_position'] );
-        $obj->setIdCatalog( $array['id_catalog'] );
-        $obj->setLink( $array['link'] );
-
-        $this->addToMap( $obj );
-        $obj->markClean();
-        return $obj;
-    }
-}
+?>

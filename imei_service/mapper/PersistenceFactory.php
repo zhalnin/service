@@ -76,9 +76,9 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Login":
                 return new LoginPersistenceFactory();
                 break;
-            case "imei_service\\domain\\Search":
-                return new SearchPersistenceFactory();
-                break;
+//            case "imei_service\\domain\\Search":
+//                return new SearchPersistenceFactory();
+//                break;
         }
     }
 }
@@ -506,21 +506,21 @@ class GuestbookPersistenceFactory extends PersistenceFactory {
         return new GuestbookIdentityObject();
     }
 
-    function getPaginationFactory( $tableName,
-                                    $where,
-                                    $order,
-                                    $pageNumber,
-                                    $pageLink,
-                                    $parameters,
-                                    $page ) {
-        return new GuestbookPaginationFactory(  $tableName,
-                                                $where,
-                                                $order,
-                                                $pageNumber,
-                                                $pageLink,
-                                                $parameters,
-                                                $page);
-    }
+//    function getPaginationFactory( $tableName,
+//                                    $where,
+//                                    $order,
+//                                    $pageNumber,
+//                                    $pageLink,
+//                                    $parameters,
+//                                    $page ) {
+//        return new GuestbookPaginationFactory(  $tableName,
+//                                                $where,
+//                                                $order,
+//                                                $pageNumber,
+//                                                $pageLink,
+//                                                $parameters,
+//                                                $page);
+//    }
 }
 
 
@@ -559,48 +559,48 @@ class ContactsPersistenceFactory extends PersistenceFactory {
 }
 
 
-class SearchPersistenceFactory extends PersistenceFactory {
-    function getMapper() {
-        return new SearchMapper();
-    }
-
-    function getDomainObjectFactory() {
-        return new SearchObjectFactory();
-    }
-
-    function getCollection( array $array ) {
-        return new SearchCollection( $array, $this->getDomainObjectFactory() );
-    }
-
-    function getSelectionFactory() {
-        return new SearchSelectionFactory();
-    }
-
-    function getUpdateFactory() {
-        return new SearchUpdateFactory();
-    }
-
-    function getIdentityObject() {
-        return new SearchIdentityObject();
-    }
-
-    function getPaginationFactory( $tableName,
-                                   $where,
-                                   $order,
-                                   $search,
-                                   $pageNumber,
-                                   $pageLink,
-                                   $parameters,
-                                   $page ) {
-        return new SearchPaginationFactory(  $tableName,
-            $where,
-            $order,
-            $search,
-            $pageNumber,
-            $pageLink,
-            $parameters,
-            $page);
-    }
-}
+//class SearchPersistenceFactory extends PersistenceFactory {
+//    function getMapper() {
+//        return new SearchMapper();
+//    }
+//
+//    function getDomainObjectFactory() {
+//        return new SearchObjectFactory();
+//    }
+//
+//    function getCollection( array $array ) {
+//        return new SearchCollection( $array, $this->getDomainObjectFactory() );
+//    }
+//
+//    function getSelectionFactory() {
+//        return new SearchSelectionFactory();
+//    }
+//
+//    function getUpdateFactory() {
+//        return new SearchUpdateFactory();
+//    }
+//
+//    function getIdentityObject() {
+//        return new SearchIdentityObject();
+//    }
+//
+//    function getPaginationFactory( $tableName,
+//                                   $where,
+//                                   $order,
+//                                   $search,
+//                                   $pageNumber,
+//                                   $pageLink,
+//                                   $parameters,
+//                                   $page ) {
+//        return new SearchPaginationFactory(  $tableName,
+//                                            $where,
+//                                            $order,
+//                                            $search,
+//                                            $pageNumber,
+//                                            $pageLink,
+//                                            $parameters,
+//                                            $page);
+//    }
+//}
 
 ?>

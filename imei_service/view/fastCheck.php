@@ -188,8 +188,7 @@ try {
     </body>
     </html>
     <?php
-    // подключаем нижний шаблон
-    require_once( "imei_service/view/templates/bottom.php" );
+
 // ловим сообщения об ошибках
 } catch( \imei_service\base\AppException $exc ) {
     print $exc->getErrorObject();

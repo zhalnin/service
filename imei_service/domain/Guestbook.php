@@ -93,8 +93,6 @@ class Guestbook extends DomainObject {
         $idobj = new \imei_service\mapper\GuestbookIdentityObject( 'hide' );
         $idobj->eq( 'show' )->field( 'id_parent' )->eq( 0 );
 
-
-
         return $finder->findPagination( "system_guestbook",
                                         $idobj,
                                         " ORDER BY putdate DESC ",
