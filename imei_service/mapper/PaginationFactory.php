@@ -518,7 +518,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                     FROM system_news
                     WHERE ".implode(" AND ",$this->search_news)." AND
                                     system_news.hide = 'show'";
-        $stmt1 = "SELECT COUNT(system_menu_position.id_position)
+        $stmt1 = "SELECT COUNT(DISTINCT system_menu_position.id_position)
                     FROM system_menu_paragraph, system_menu_position
                     WHERE ".implode(" AND ", $this->search_faq)." AND
                                     system_menu_position.hide = 'show' AND
@@ -534,7 +534,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                               FROM system_catalog
                               WHERE ".implode(' AND ', $this->search_catalog_service )."
                                                 AND system_catalog.hide = 'show'";
-
+//        echo "<tt><pre> first - ".print_r( $stmt1 , true)."</pre></tt>";
         $res[] = $this->getStatement( $stmt0 );
         $res[] = $this->getStatement( $stmt1 );
         $res[] = $this->getStatement( $stmt2 );
@@ -568,8 +568,8 @@ class SearchPaginationFactory extends PaginationFactory  {
         if( (float)( $total / $this->getPageNumber() - $number ) != 0 ) { $number++; }
         $arr = array();
         $first = ( $page - 1 ) * $this->getPageNumber();
-        echo "<tt><pre> first - ".print_r( $first , true)."</pre></tt>";
-        echo "<tt><pre> total - ".print_r( $total , true)."</pre></tt>";
+//        echo "<tt><pre> first - ".print_r( $first , true)."</pre></tt>";
+//        echo "<tt><pre> total - ".print_r( $total , true)."</pre></tt>";
 
         $tmp = "        SELECT system_menu_position.id_position AS id_position,
                                     system_menu_position.id_catalog AS id_catalog,
@@ -582,7 +582,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                                                 AND system_menu_paragraph.hide = 'show'
                                                 AND system_menu_position.hide = 'show'
                                                 AND system_menu_position.id_position = system_menu_paragraph.id_position
-                            GROUP BY system_menu_paragraph.id_position
+                            GROUP BY system_menu_position.id_position
                             UNION
                             SELECT system_position.id_position AS id_position,
                                  system_position.id_catalog AS id_catalog,
@@ -603,7 +603,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                                  'service_catalog' AS link,
                                  system_catalog.modrewrite AS type,
                                  system_catalog.abbreviatura AS ctr
-                            FROM system_position, system_catalog
+                            FROM system_catalog
                             WHERE ".implode(' AND ', $this->search_catalog_service )."
                                             AND system_catalog.hide = 'show'
                             GROUP BY system_catalog.id_catalog
@@ -621,7 +621,7 @@ class SearchPaginationFactory extends PaginationFactory  {
                             LIMIT $first, {$this->getPageNumber()}";
 
         $sth = $this->getStatement( $tmp );
-        echo "<tt><pre>".print_r( $sth , true)."</pre></tt>";
+//        echo "<tt><pre>".print_r( $sth , true)."</pre></tt>";
         $result = $sth->execute( );
         if( ! $result ) {
             throw new \PDOException( "Ошибка при выборке в getPage()" );

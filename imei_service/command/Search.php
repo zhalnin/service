@@ -39,16 +39,7 @@ class Search extends Command {
 //            // system_catalog
 //            $search_catalog_service[] = "( LCASE( system_catalog.name ) RLIKE '".$qLine."')";
 //        }
-//
-//        $pagination = \imei_service\domain\Search::paginationSearchMysql( array('system_news',
-//                                                                                'system_menu_paragraph',
-//                                                                                'system_position',
-//                                                                                'system_catalog'),
-//                                                                        array( $search_news,
-//                                                                                $search_faq,
-//                                                                                $search_service,
-//                                                                                $search_catalog_service)
-//        );
+
         $pagination = \imei_service\domain\Search::paginationSearchMysql( array('system_news',
                                                                                 'system_menu_paragraph',
                                                                                 'system_position',

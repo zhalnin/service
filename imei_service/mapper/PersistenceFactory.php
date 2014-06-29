@@ -558,49 +558,4 @@ class ContactsPersistenceFactory extends PersistenceFactory {
     }
 }
 
-
-//class SearchPersistenceFactory extends PersistenceFactory {
-//    function getMapper() {
-//        return new SearchMapper();
-//    }
-//
-//    function getDomainObjectFactory() {
-//        return new SearchObjectFactory();
-//    }
-//
-//    function getCollection( array $array ) {
-//        return new SearchCollection( $array, $this->getDomainObjectFactory() );
-//    }
-//
-//    function getSelectionFactory() {
-//        return new SearchSelectionFactory();
-//    }
-//
-//    function getUpdateFactory() {
-//        return new SearchUpdateFactory();
-//    }
-//
-//    function getIdentityObject() {
-//        return new SearchIdentityObject();
-//    }
-//
-//    function getPaginationFactory( $tableName,
-//                                   $where,
-//                                   $order,
-//                                   $search,
-//                                   $pageNumber,
-//                                   $pageLink,
-//                                   $parameters,
-//                                   $page ) {
-//        return new SearchPaginationFactory(  $tableName,
-//                                            $where,
-//                                            $order,
-//                                            $search,
-//                                            $pageNumber,
-//                                            $pageLink,
-//                                            $parameters,
-//                                            $page);
-//    }
-//}
-
 ?>
