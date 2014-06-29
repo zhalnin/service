@@ -17,6 +17,8 @@ try {
     $request = \imei_service\view\VH::getRequest();
 
     $resMain = $request->getObject('search_pagination');
+    $getPage = $resMain->getPage();
+   // echo "<tt><pre>".print_r( empty( $getPage) , true)."</pre></tt>";
     // содержимое тега title
     $title = "Поиск по сайту imei-service.ru";
     // содержимое тега meta
@@ -66,7 +68,7 @@ try {
                         </div>
 
                         <div class='faq-info'>";
-                        if( $resMain->getPage()[0] == '' ) {
+                        if( empty( $getPage ) ) {
                             echo "<h1 class=h2>Поиск не дал результатов, попробуйте изменить строку запроса.</h1>";
                         } else {
                             foreach( $resMain->getPage() as $result ) {
@@ -104,7 +106,7 @@ try {
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->
-            <div class="news-footer"><?php if( $resMain->getPage()[0] != '' ) { print $resMain->printPageSearchNav(); } ?></div>
+            <div class="news-footer"><?php if( empty( $getPage ) ) { print $resMain->printPageSearchNav(); } ?></div>
         </div><!--     End of news-content -->
     </div><!--        End of news-main-->
 

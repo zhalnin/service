@@ -23,22 +23,6 @@ require_once( "imei_service/mapper/IdentityObject.php" );
 class Search extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-//        echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
-//
-//        $q = $request->getProperty( 'q' );
-//
-//        $qSearch = preg_split("|[\s]+|", $q  );
-//
-//        foreach( $qSearch as $qLine ) {
-//            // system_news
-//            $search_news[] = "( ( LCASE( system_news.name ) RLIKE '".$qLine."') OR ( LCASE( system_news.body ) RLIKE '".$qLine."' ) )";
-//            // system_menu_paragraph
-//            $search_faq[] = "( LCASE( system_menu_paragraph.name ) RLIKE '".$qLine."')";
-//            // system_position
-//            $search_service[] = "( LCASE( system_position.operator ) RLIKE '".$qLine."')";
-//            // system_catalog
-//            $search_catalog_service[] = "( LCASE( system_catalog.name ) RLIKE '".$qLine."')";
-//        }
 
         $pagination = \imei_service\domain\Search::paginationSearchMysql( array('system_news',
                                                                                 'system_menu_paragraph',

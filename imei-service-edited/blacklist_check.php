@@ -40,7 +40,7 @@ try
         // Объявляем объект постраничной навигации
         $query = "SELECT * FROM $tbl_cat_catalog
                 WHERE id_parent = $_GET[id_parent]
-                AND modrewrite = 'checkblacklist'
+                AND modrewrite = 'BlacklistCheck'
                 AND hide = 'show'";
     }
     $res = mysql_query($query);

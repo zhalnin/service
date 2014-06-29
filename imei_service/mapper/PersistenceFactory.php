@@ -506,21 +506,21 @@ class GuestbookPersistenceFactory extends PersistenceFactory {
         return new GuestbookIdentityObject();
     }
 
-//    function getPaginationFactory( $tableName,
-//                                    $where,
-//                                    $order,
-//                                    $pageNumber,
-//                                    $pageLink,
-//                                    $parameters,
-//                                    $page ) {
-//        return new GuestbookPaginationFactory(  $tableName,
-//                                                $where,
-//                                                $order,
-//                                                $pageNumber,
-//                                                $pageLink,
-//                                                $parameters,
-//                                                $page);
-//    }
+    function getPaginationFactory( $tableName,
+                                    $where,
+                                    $order,
+                                    $pageNumber,
+                                    $pageLink,
+                                    $parameters,
+                                    $page ) {
+        return new GuestbookPaginationFactory(  $tableName,
+                                                $where,
+                                                $order,
+                                                $pageNumber,
+                                                $pageLink,
+                                                $parameters,
+                                                $page);
+    }
 }
 
 

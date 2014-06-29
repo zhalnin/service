@@ -37,11 +37,11 @@ try
             "Ошибка выбора каталога");
     }
     $parent_catalog = mysql_fetch_array($res);
-//echo "<tt><pre>".print_r($_GET, true)."</pre></tt>";
+//echo "<tt><pre>".print_r($parent_catalog, true)."</pre></tt>";
 
     // Объявляем объект постраничной навигации
     $query = "SELECT * FROM $tbl_cat_catalog
-                WHERE id_parent = $_GET[id]
+                WHERE id_parent = $_GET[id_parent]
                   AND abbreviatura = '$_GET[ctr]'
                 AND hide = 'show'";
 
@@ -58,15 +58,16 @@ try
     $ctr = $_GET['ctr'];
     $id_parent = $_GET['id_parent'];
     $title = $catalog['name'];
-    $id_catalog = $catalog[id];
+    $id_catalog = $catalog['id_catalog'];
     $keywords = "unlock iPhone,официальный анлок,AT&T,Orange,UK,USA,Bouygues,Telia,SFR,Vodafone,T-mobile,Verizon";
     $description = "Официальный анлок iPhone. Стоимость разлочки iPhone зависит от оператора, к которому он привязан.";
 
 
     $query = "SELECT * FROM $tbl_cat_position
-                WHERE id = $id_catalog
+                WHERE id_catalog = $id_catalog
                 AND hide = 'show'
                 ORDER BY operator";
+//    print $query;
     $res = mysql_query($query);
     if(!$res){
         throw new ExceptionMySQL(mysql_error(),
@@ -112,6 +113,7 @@ try
 
     <?php
 if(mysql_num_rows($res)){
+//    echo "<tt><pre>".print_r($res, true)."</pre></tt>";
     ?>
     <div id="design">
     <div class="row block grid2col row block border">

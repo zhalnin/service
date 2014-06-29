@@ -110,9 +110,9 @@ try
 
 
 <?php
-// Если GET-параметр id не передан - выводим
+// Если GET-параметр id_news не передан - выводим
 // список новостных сообщений
-if(empty($_GET['id']))
+if(empty($_GET['id_news']))
 {
     $_GET['page'] = intval($_GET['page']);
 
@@ -163,6 +163,7 @@ if(empty($_GET['id']))
                     $reverseTextAlign = "text-align: right";
                 }
                 $alt = $news[$i]['alt'];
+//                echo "<tt><pre>".print_r($news, true)."</pre></tt>";
                 $photo_print = " src='{$news[$i]['urlpict_s']}' alt='$alt'";
                 $img = "<img class=''  $photo_print />";
 
@@ -176,7 +177,7 @@ if(empty($_GET['id']))
             }
             $detail = "";
 
-            $url = "?id=".$news[$i]['id'];
+            $url = "?id_news=".$news[$i]['id_news'];
 
             // Если индекс при модульном делении равен 1, т.е.
             // 0 или 1 или  2 % 3 == 1

@@ -483,6 +483,7 @@ class SearchPaginationFactory extends PaginationFactory  {
 
         // проходим в цикле по полученному массиву и создаем 4 дополнительных массива для SELECT
         foreach( $qSearch as $qLine ) {
+
             // system_news
             $this->search_news[] = "( ( LCASE( {$this->tableName[0]}.name ) RLIKE '".$qLine."') OR ( LCASE( {$this->tableName[0]}.body ) RLIKE '".$qLine."' ) )";
             // system_menu_paragraph

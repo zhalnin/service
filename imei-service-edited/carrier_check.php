@@ -39,7 +39,7 @@ if(empty($_GET['id_parent']))
     // Объявляем объект постраничной навигации
     $query = "SELECT * FROM $tbl_cat_catalog
                 WHERE id_parent = $_GET[id_parent]
-                AND modrewrite = 'checkcarrier'
+                AND modrewrite = 'CarrierCheck'
                 AND hide = 'show'";
 }
 $res = mysql_query($query);

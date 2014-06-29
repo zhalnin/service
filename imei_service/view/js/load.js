@@ -103,14 +103,11 @@ AM.Event.addEvent(window, 'load', function() {
                 // start 'watchForm();
                 AMForm.watchForm(form);
             // если фокус на поиске и нажат Enter и присутствует форма поиска и поле поиска не пустое
-            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && /^[^\s]+/i.test( document.activeElement.value ) ) {
+            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && /^[0-9a-zа-я]+/i.test( document.activeElement.value ) ) {
 //                // если это не добавить, то при нажатии на Enter перегружается форма
                 AM.Event.stopDefault(event);
                 form_search.submit();
-                // если фокус на поиске и нажат Enter и присутствует форма поиска и поле поиска пустое
-            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && document.activeElement.value == "" ) {
-                AM.Event.stopDefault(event);
-            } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && /^[\s]+/i.test( document.activeElement.value ) ) {
+            }else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && /^[^0-9a-zа-я]+/i.test( document.activeElement.value ) ) {
                 AM.Event.stopDefault(event);
             }
         });

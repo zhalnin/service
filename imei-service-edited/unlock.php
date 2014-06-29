@@ -53,7 +53,7 @@ try
     $parent_catalog = mysql_fetch_array($res);
     // Название каталога
     $title = $parent_catalog['name'];
-    $parent = $parent_catalog['id'];
+    $parent = $parent_catalog['id_catalog'];
     $keywords = "unlock iPhone,официальный анлок,AT&T,все операторы,official unlock";
     $description = "Официальный анлок iPhone от оператора не занимает много времени. Для этого надо лишь отправить IMEI аппарата на imei_service@icloud.com, оплатить услугу отвязки iPhone и ваш аппарат будет сим фри";
 
@@ -107,7 +107,7 @@ try
                             <?php
 
                             while($subcatalog = mysql_fetch_array($res)){
-                                echo "    <li><a href='unlock-service.php?ctr=$subcatalog[abbreviatura]&id=$parent' class='started'>
+                                echo "    <li><a href='unlock-service.php?ctr=$subcatalog[abbreviatura]&id_parent=$parent' class='started'>
                                 <div>
                                     <div>
                                         <img alt='$subcatalog[alt_flag]'   src='$subcatalog[rounded_flag]'>
