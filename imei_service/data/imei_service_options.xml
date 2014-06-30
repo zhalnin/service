@@ -131,6 +131,9 @@
 
     <command name="Search">
         <view>search</view>
+        <status value="CMD_ERROR">
+            <view>searchError</view>
+        </status>
     </command>
 
 </control>

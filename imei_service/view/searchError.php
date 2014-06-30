@@ -2,22 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 27/06/14
- * Time: 16:51
+ * Date: 30/06/14
+ * Time: 10:56
  */
-
 namespace imei_service\view;
 error_reporting( E_ALL & ~E_NOTICE );
 
 try {
-    // подключаем помощник для вьюшки
-    require_once( "imei_service/view/ViewHelper.php" );
-
-    // получаем объект request
-    $request = \imei_service\view\VH::getRequest();
-
-    $resMain = $request->getObject('search_pagination');
-   // echo "<tt><pre>".print_r( empty( $getPage) , true)."</pre></tt>";
+//    // подключаем помощник для вьюшки
+//    require_once( "imei_service/view/ViewHelper.php" );
+//
+//    // получаем объект request
+//    $request = \imei_service\view\VH::getRequest();
+//
+//    $resMain = $request->getObject('search_pagination');
+//    $getPage = $resMain->getPage();
+    // echo "<tt><pre>".print_r( empty( $getPage) , true)."</pre></tt>";
     // содержимое тега title
     $title = "Поиск по сайту imei-service.ru";
     // содержимое тега meta
@@ -27,7 +27,7 @@ try {
 
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
-?>
+    ?>
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a class="selected" href="?cmd=News"><span>Главная</span></a></li>
@@ -57,9 +57,9 @@ try {
                 <div class='news-container'>
                     <div class='faq-body'>
 
-<?php
+                        <?php
 
-                echo "<div class='faq-title'>
+                        echo "<div class='faq-title'>
                             <h1 class=h2>Поиск по сайту</h1>
                         </div>
                         <div class='faq-image'>
@@ -67,42 +67,16 @@ try {
                         </div>
 
                         <div class='faq-info'>";
-                            foreach( $resMain->getPage() as $result ) {
-                                if( $result['link'] == 'faq' ) {
-                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
-                                                        href=?cmd=Faq&idp=$result[id_position]&idc=$result[id_catalog]>".
-                                        "$result[name]</a></div>";
-                                }
-                                if( $result['link'] == 'news' ) {
-                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
-                                                        href=?cmd=News&idn=$result[id_position]>".
-                                        "$result[name]</a></div>";
-                                }
-                                if( $result['link'] == 'service' ) {
-                                    echo "<div class=main_txt><a class=\"main_txt_lnk\"
-                                                        href=?cmd=Unlock&idc=$result[id_catalog]&idp=$result[id_position]>".
-                                        "$result[name]</a></div>";
-                                }
-                                if( $result['link'] == 'service_catalog' ) {
-                                    if( empty( $result['ctr'] ) ) {
-                                        echo "<div class=main_txt><a class=\"main_txt_lnk\"
-                                                            href=?cmd=$result[type]>".
-                                            "$result[name]</a></div>";
-                                    } else {
-                                        echo "<div class=main_txt><a class=\"main_txt_lnk\"
-                                                            href=?cmd=$result[type]&ctr=$result[ctr]&idc=$result[id_catalog]&idp=$result[id_position]>".
-                                            "$result[name]</a></div>";
-                                    }
-                                }
-                            }
+
+                            echo "<h1 class=h2>Поиск не дал результатов, попробуйте изменить строку запроса.</h1>";
 
 
-                echo "</div> "; // faq-info
-?>
+                        echo "</div> "; // faq-info
+                        ?>
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->
-            <div class="news-footer"><?php if( empty( $getPage ) ) { print $resMain->printPageSearchNav(); } ?></div>
+            <div class="news-footer"></div>
         </div><!--     End of news-content -->
     </div><!--        End of news-main-->
 
