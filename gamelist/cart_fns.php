@@ -34,7 +34,7 @@ function totalPrice( $cart ) {
         foreach ( $cart as $id => $qty ) {
             $item = findProduct( $id );
             if( $item ) {
-                $price += $item[0]['price'] * $qty;
+                $price += $item['price'] * $qty;
             }
         }
     }

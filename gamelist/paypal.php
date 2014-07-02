@@ -5,6 +5,107 @@
  * Date: 01/07/14
  * Time: 18:36
  */
+
+include( 'base_fns.php' );
+
+$paypal_email = "zhalninpal-facilitator@me.com";
+$paypal_currency = 'RUB';
+$shipping = 10.00;
+
+
+function noPaypalTransId( $trans_id ) {
+
+    $sth = getStatement( 'SELECT id FROM orders WHERE paypal_trans_id = ?' );
+    $sth->execute( array( $trans_id ) );
+    $num_result = $sth->fetch();
+    if( $num_result == 0 ) {
+        return true;
+    }
+    return false;
+}
+
+function paymentAmountCorrect( $shipping, $params ) {
+
+    $amount = 0.00;
+
+    for( $i=1; $i <= $params['num_cart_items']; $i++ ) {
+        $sth = getStatement( 'SELECT price FROM products WHERE id = ?' );
+
+        $sth->execute( array( intval( $params["item_number{$i}"] ) ) );
+        if( $sth ) {
+            $item_price = $sth->fetch();
+            $amount += $item_price['price'] * $params["quantity{$i}"];
+        }
+    }
+    if( ( $amount + $shipping ) == $params['mc_gross'] ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function createOrder( $params ) {
+
+    $pdo = db_connect();
+    $sth = $pdo->prepare( 'INSERT INTO orders (   orders.firstname,
+                                                 orders.lastname,
+                                                 orders.email,
+                                                 orders.country,
+                                                 orders.address,
+                                                 orders.city,
+                                                 orders.zip_code,
+                                                 orders.state,
+                                                 orders.status,
+                                                 orders.amount,
+                                                 orders.paypal_trans_id,
+                                                 created_at )
+                                              VALUES ( ?,?,?,?,?,?,?,?,?,?,?,? )' );
+
+    $sth->execute( array(   $params['first_name'],
+        $params['last_name'],
+        $params['payer_email'],
+        $params['address_country'],
+        $params['address_street'],
+        $params['address_city'],
+        $params['address_zip'],
+        $params['address_state'],
+        $params['payment_status'],
+        $params['mc_gross'],
+        $params['txn_id'],
+        date('Y-m-d H:i:s') ) );
+
+    if( ! $sth ) {
+        return false;
+    }
+
+    $order_id = $pdo->lastInsertId();
+    for( $i=1; $i <= $params['num_cart_items']; $i++ ) {
+        $product = findProduct( $params["item_number{$i}"] );
+        $sth = getStatement( 'INSERT INTO items (   order_id,
+                                                    product_id,
+                                                    title,
+                                                    price,
+                                                    qty )
+                                                VALUES ( ?,?,?,?,? )' );
+
+
+
+        $sth->execute( array(   $order_id,
+            $product['id'],
+            $product['title'],
+            $product['price'],
+            $params["quantity{$i}"] ) );
+        if( ! $sth ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+
+
 $req = 'cmd=_notify-validate';
 
 foreach ( $_POST as $key => $value ) {
@@ -18,14 +119,14 @@ $header .= "Content-Lenght: " . strlen( $req ) . "\r\n\r\n";
 
 $fp = fsockopen( 'www.paypal.com', 80, $errno, $errstr, 30 );
 
-$item_name = $_POST['item_name'];
-$item_number = $_POST['item_number'];
-$payment_status = $_POST['payment_status'];
-$payment_amount = $_POST['mc_gross'];
-$payment_currency = $_POST['mc_currency'];
-$txn_id = $_POST['txn_id'];
-$receiver_email = $_POST['receiver_email'];
-$payer_email = $_POST['payer_email'];
+$item_name          = $_POST['item_name'];
+$item_number        = $_POST['item_number'];
+$payment_status     = $_POST['payment_status'];
+$payment_amount     = $_POST['mc_gross'];
+$payment_currency   = $_POST['mc_currency'];
+$txn_id             = $_POST['txn_id'];
+$receiver_email     = $_POST['receiver_email'];
+$payer_email        = $_POST['payer_email'];
 
 if( ! $fp ) {
 // HTTP ERROR
@@ -39,8 +140,18 @@ if( ! $fp ) {
             // check that receiver_email is your Primary PayPal email
             // check that payment_amount/payment_currency are correct
             // process payment
+            if( $_POST['payment_status'] == 'Completed'
+                && noPaypalTransId( $_POST['txn_id'] )
+                && $paypal_email == $_POST['receiver_email']
+                && $paypal_currency == $_POST['mc_currency']
+                && paymentAmountCorrect( $shipping, $_POST )
+            )
+            {
+                createOrder( $_POST );
+            }
         } else if( strcmp( $res, "INVALID" ) == 0 ) {
             // log for manual investigation
+            
         }
     }
     fclose( $fp );

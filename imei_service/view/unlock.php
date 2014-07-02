@@ -124,7 +124,7 @@ try {
                                 </form>
                             </div><!-- shipping user -->
                         </div><!-- shipping-box-title -->
-                        <div class="gs grid-1of2 gs-last" style="">
+                        <div class="gs grid-1of3 gs-last fdescr fbl" style="">
                             <div class="substep" style="">
                                 <div id="payment-form-astro" class="form-astro with-seperator">
                                     <p class="legend" style="">

@@ -44,7 +44,8 @@ try {
 
     }
 
-    include( $_SERVER['DOCUMENT_ROOT'].'/'.'service/gamelist/views/layouts/'.$controller.'.php' );
+//    include( $_SERVER['DOCUMENT_ROOT'].'/'.'service/gamelist/views/layouts/'.$controller.'.php' );
+    include( $_SERVER['DOCUMENT_ROOT'].'/'.'patterns/GITservice/gamelist/views/layouts/'.$controller.'.php' );
 
 } catch ( PDOException $ex ) {
     echo $ex->getMessage();

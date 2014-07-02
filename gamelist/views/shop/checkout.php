@@ -26,12 +26,13 @@ if( $_SESSION['cart'] ) {
             <tbody>
             <?php foreach( $_SESSION['cart'] as $id => $qty ):
                         $product = findProduct( $id );
+//                echo "<tt><pre> second INSERT - ".print_r( $product , true )."</pre></tt>";
                 ?>
                 <tr>
-                    <td><?php echo $product[0]['title']; ?></td>
-                    <td><?php echo number_format( $product[0]['price'], 2); ?> rub </td>
+                    <td><?php echo $product['title']; ?></td>
+                    <td><?php echo number_format( $product['price'], 2); ?> rub </td>
                     <td><input type="text" size="2" maxlength="2" name="<?php echo $id; ?>" value="<?php echo $qty; ?>" /></td>
-                    <td><?php echo number_format( $product[0]['price'] * $qty, 2); ?> rub </td>
+                    <td><?php echo number_format( $product['price'] * $qty, 2); ?> rub </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -48,7 +48,7 @@ function findProduct( $id ) {
     if( ! $result ) {
         throw new PDOException( 'Error has occured in findProduct() ' );
     }
-    return $sth->fetchAll();
+    return $sth->fetch();
 }
 
 
