@@ -94,6 +94,7 @@ class DomainObjectAssembler {
 //        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r( $delfact, true ) ."</pre></tt>";
+
     }
 
     /**
@@ -102,6 +103,7 @@ class DomainObjectAssembler {
      * @param IdentityObject $idobj
      */
     function deleteEarly( IdentityObject $idobj ) {
+//                echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
         $delfact = $this->factory->getDeleteFactory();
         list( $delete, $values ) = $delfact->newDeleteEarly( $idobj );
         $stmt = $this->getStatement( $delete );

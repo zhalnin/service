@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 30/06/14
- * Time: 13:42
+ * Date: 01/07/14
+ * Time: 16:38
  */
 
 function addToCart( $id ) {
@@ -17,44 +17,36 @@ function addToCart( $id ) {
     return false;
 }
 
+function totalItems( $cart ) {
+    $total = 0;
+    if( is_array( $cart ) ) {
+        foreach ( $cart as $id => $qty ) {
+            $total += $qty;
+    //    echo "<tt><pre>".print_r( $total , true )."</pre></tt>";
+        }
+    }
+    return $total;
+}
+
+function totalPrice( $cart ) {
+    $price = '0.00';
+    if( is_array( $cart ) ) {
+        foreach ( $cart as $id => $qty ) {
+            $item = findProduct( $id );
+            if( $item ) {
+                $price += $item[0]['price'] * $qty;
+            }
+        }
+    }
+    return $price;
+}
+
 function updateCart() {
-    foreach( $_SESSION['cart'] as $id => $qty ) {
+    foreach ( $_SESSION['cart'] as $id => $qty ) {
         if( $_POST[$id] == '0' ) {
             unset( $_SESSION['cart'][$id] );
         } else {
             $_SESSION['cart'][$id] = $_POST[$id];
         }
-
     }
 }
-
-function totalItems( $cart ) {
-    $num_items = 0;
-    if( is_array( $cart ) ) {
-        foreach ( $cart as $id => $qty ) {
-            $num_items += $qty;
-        }
-    return $num_items;
-    }
-}
-
-function totalPrice( $cart ) {
-    $price = '0.00';
-    $connection = db_connect();
-    if( is_array( $cart ) ){
-        foreach ( $cart as $id => $qty ) {
-            $query = "SELECT price FROM products WHERE products.id = ?";
-            $sth = $connection->prepare( $query );
-            $sth->execute( array( $id ) );
-            if( $sth ) {
-                $items_price = $sth->fetch();
-                $price += $items_price['price'] * $qty;
-            }
-        }
-    }
-//                echo "<tt><pre>".print_r($price, true)."</pre></tt>";
-    return $price;
-}
-
-
-?>

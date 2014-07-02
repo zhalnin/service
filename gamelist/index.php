@@ -2,13 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 30/06/14
- * Time: 13:09
+ * Date: 01/07/14
+ * Time: 14:47
  */
 try {
+
     session_start();
 
-    include( 'db_fns.php' );
+    include( 'base_fns.php' );
     include( 'cart_fns.php' );
 
     if( ! isset( $_SESSION['cart'] ) ) {
@@ -29,24 +30,24 @@ try {
             $add_item = addToCart( $id );
             $_SESSION['total_items'] = totalItems( $_SESSION['cart'] );
             $_SESSION['total_price'] = totalPrice( $_SESSION['cart'] );
-            header('Location: index.php');
+            header( 'Location: index.php' );
             break;
         case 'update_cart':
             updateCart();
             $_SESSION['total_items'] = totalItems( $_SESSION['cart'] );
             $_SESSION['total_price'] = totalPrice( $_SESSION['cart'] );
-            header('Location: index.php?view=checkout');
+            header( 'Location: index.php?view=checkout' );
             break;
         case 'checkout':
-                $shipping = 10.00;
+            $shipping = 10.00;
             break;
+
     }
 
-    include( $_SERVER['DOCUMENT_ROOT'].'/'.'patterns/talking/gamelist/views/layouts/'.$controller.'.php' );
+    include( $_SERVER['DOCUMENT_ROOT'].'/'.'service/gamelist/views/layouts/'.$controller.'.php' );
 
 } catch ( PDOException $ex ) {
-    print $ex->getMessage();
+    echo $ex->getMessage();
 } catch ( Exception $ex ) {
-    print $ex->getMessage();
+    echo $ex->getMessage();
 }
-?>
