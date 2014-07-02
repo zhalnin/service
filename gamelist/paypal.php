@@ -117,7 +117,7 @@ $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
 $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 $header .= "Content-Lenght: " . strlen( $req ) . "\r\n\r\n";
 
-$fp = fsockopen( 'www.paypal.com', 80, $errno, $errstr, 30 );
+$fp = fsockopen( 'www.sandbox.paypal.com', 80, $errno, $errstr, 30 );
 
 $item_name          = $_POST['item_name'];
 $item_number        = $_POST['item_number'];
@@ -151,7 +151,7 @@ if( ! $fp ) {
             }
         } else if( strcmp( $res, "INVALID" ) == 0 ) {
             // log for manual investigation
-            
+
         }
     }
     fclose( $fp );
