@@ -26,6 +26,7 @@ class Udid extends Command {
         $type = $request->getProperty( 'type' );
         $email = $request->getProperty( 'email' );
         $udid = $request->getProperty( 'udid' );
+        $email_admin = 'imei_service@icloud.com';
 
         if( empty( $email ) ) {
             $request->addFeedback( 'Заполните поле "Email"' );
@@ -47,8 +48,8 @@ class Udid extends Command {
 //        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
 
         $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-        $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, $udid, null, $type, null, null ); // отправляем письмо админу
-        $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, $udid, null, $type, null, null ); // отправляем письмо клиенту
+        $commsManager->make(1)->email( $email_admin, $email, null, $udid, null, $type, null, null ); // отправляем письмо админу
+        $commsManager->make(2)->email( $email_admin, $email, null, $udid, null, $type, null, null ); // отправляем письмо клиенту
 
         return self::statuses( 'CMD_UDID_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
     }

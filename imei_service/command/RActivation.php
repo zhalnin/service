@@ -20,6 +20,7 @@ class RActivation extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
         $email = $_POST['email'];
+        $email_admin = 'imei_service@icloud.com';
         $submitted = $_POST['submitted'];
         $findEmail = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
 
@@ -51,8 +52,8 @@ class RActivation extends Command {
 
             if( is_object( $activateLogin ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-                $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $activation ); // отправляем письмо админу
-                $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, $type, $login, $activation ); // отправляем письмо клиенту
+                $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, $login, $activation ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, $login, $activation ); // отправляем письмо клиенту
                 return self::statuses( 'CMD_OK' );
             }
         }

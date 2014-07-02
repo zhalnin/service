@@ -46,6 +46,7 @@ class BlacklistCheck extends Command {
         $type = $request->getProperty( 'type' ); // получаем параметр type
         $email = $request->getProperty( 'email' ); // получаем параметр email
         $imei = $request->getProperty( 'imei' ); // получаем параметр IMEI
+        $email_admin = 'imei_service@icloud.com';
 
         if( empty( $email ) ) { // если параметр email отсутствует
             $request->addFeedback( 'Заполните поле "Email"' );
@@ -71,9 +72,9 @@ class BlacklistCheck extends Command {
         // в классе MailConfig находим подходящий commsManager по типу
         $commsManager = \imei_service\classes\MailConfig::get( $type );
         // отправляем письмо админу
-        $commsManager->make(1)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null );
+        $commsManager->make(1)->email( $email_admin, $email, $imei, null, null, $type, null, null );
         // отправляем письмо клиенту
-        $commsManager->make(2)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null );
+        $commsManager->make(2)->email( $email_admin, $email, $imei, null, null, $type, null, null );
 
         // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
         return self::statuses( 'CMD_BLACKLIST_OK' );

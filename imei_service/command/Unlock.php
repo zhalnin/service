@@ -21,6 +21,7 @@ class Unlock extends Command {
 
         $id_catalog = $request->getProperty( 'idc' );
         $id_parent = $request->getProperty( 'idp' );
+        $email_admin = 'imei_service@icloud.com';
 
         if( ! $id_catalog ) {
             $id = 0;
@@ -53,8 +54,8 @@ class Unlock extends Command {
 //        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
 
             $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-            $commsManager->make(1)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null ); // отправляем письмо админу
-            $commsManager->make(2)->email( $email, 'imei_service@icloud.com', $imei, null, null, $type, null, null ); // отправляем письмо клиенту
+            $commsManager->make(1)->email( $email_admin, $email, $imei, null, null, $type, null, null ); // отправляем письмо админу
+            $commsManager->make(2)->email( $email_admin, $email, $imei, null, null, $type, null, null ); // отправляем письмо клиенту
 
             return self::statuses( 'CMD_UNLOCK_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
 //            return self::statuses( 'CMD_INSUFFICIENT_DATA' );

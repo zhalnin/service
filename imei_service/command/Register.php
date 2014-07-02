@@ -30,6 +30,7 @@ class Register extends Command {
         $code       = $_POST['code'];
         $recode     = $_SESSION['code'];
         $submitted  = $_POST['submitted'];
+        $email_admin = 'imei_service@icloud.com';
 
         $findEmail = \imei_service\domain\Login::findEmail( $email ); // проверка email на существование в БД
         $findLogin = \imei_service\domain\Login::findLogin( $login ); // проверка Логина на существование в БД
@@ -103,8 +104,8 @@ class Register extends Command {
         // Если учетные данные добавлены успешно ( будет создан объект, если не будет добавлена, то объект не будет создан )
         if( is_object( $login_obj ) ) {
             $commsManager = \imei_service\classes\MailConfig::get( 'register' );  // параметр - тип commsManager
-            $commsManager->make(1)->email( $email, 'imei_service@icloud.com', null, null, null, 'register', $login, $activation ); // отправляем письмо админу
-            $commsManager->make(2)->email( $email, 'imei_service@icloud.com', null, null, null, 'register', $login, $activation ); // отправляем письмо клиенту
+            $commsManager->make(1)->email( $email_admin, $email, null, null, null, 'register', $login, $activation ); // отправляем письмо админу
+            $commsManager->make(2)->email( $email_admin, $email, null, null, null, 'register', $login, $activation ); // отправляем письмо клиенту
             return self::statuses( 'CMD_REGISTER_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
         }
 //        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
