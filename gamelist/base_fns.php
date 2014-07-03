@@ -51,7 +51,23 @@ function findProduct( $id ) {
     return $sth->fetch();
 }
 
+function findOrders() {
+    $sth = getStatement( 'SELECT * FROM orders ORDER BY orders.id DESC' );
+    $result = $sth->execute();
+    if( ! $result ) {
+        throw new PDOException( 'Error has occured in findOrders()' );
+    }
+    return $sth->fetchAll();
+}
 
+function findItems( $id ) {
+    $sth = getStatement( 'SELECT * FROM items WHERE order_id = ?' );
+    $result = $sth->execute( array( $id ) );
+    if( ! $result ) {
+        throw new PDOException( 'Error has occured in findItems()' );
+    }
+    return $sth->fetchAll();
+}
 
 
 

@@ -106,18 +106,41 @@ function createOrder( $params ) {
 
 
 
-$req = 'cmd=_notify-validate';
+//$req = 'cmd=_notify-validate';
+//
+//foreach ( $_POST as $key => $value ) {
+//    $value = urlencode(stripslashes( $value ) );
+//    $req .= "&$key=$value";
+//}
+//
+//$header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+//$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+//$header .= "Content-Length: " . strlen( $req ) . "\r\n\r\n";
+//
+//$fp = fsockopen( 'www.sandbox.paypal.com', 80, $errno, $errstr, 30 );
 
-foreach ( $_POST as $key => $value ) {
-    $value = urlencode(stripslashes( $value ) );
-    $req .= "&$key=$value";
+$postdata="";
+foreach ($_POST as $key=>$value) $postdata.=$key."=".urlencode($value)."&";
+$postdata .= "cmd=_notify-validate";
+$curl = curl_init("https://www.sandbox.paypal.com/cgi-bin/webscr");
+curl_setopt ($curl, CURLOPT_HEADER, 0);
+curl_setopt ($curl, CURLOPT_POST, 1);
+curl_setopt ($curl, CURLOPT_POSTFIELDS, $postdata);
+curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt ($curl, CURLOPT_SSL_VERIFYHOST, 1);
+$response = curl_exec ($curl);
+
+file_put_contents('payment.txt',"$response"."\n",FILE_APPEND );
+
+curl_close ($curl);
+if ($response != "VERIFIED") die("You should not do that ...");
+
+foreach ( $_POST as $key => $val ) {
+
+    file_put_contents('payment.txt',"$key => $val"."\n",FILE_APPEND );
 }
 
-$header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
-$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-$header .= "Content-Lenght: " . strlen( $req ) . "\r\n\r\n";
-
-$fp = fsockopen( 'www.sandbox.paypal.com', 80, $errno, $errstr, 30 );
 
 $item_name          = $_POST['item_name'];
 $item_number        = $_POST['item_number'];
@@ -128,18 +151,21 @@ $txn_id             = $_POST['txn_id'];
 $receiver_email     = $_POST['receiver_email'];
 $payer_email        = $_POST['payer_email'];
 
-if( ! $fp ) {
-// HTTP ERROR
-} else {
-    fputs( $fp, $header . $req );
-    while( ! feof( $fp ) ) {
-        $res = fgets( $fp, 1024 );
-        if( strcmp( $res, "VERIFIED" ) == 0 ) {
+//if( ! $fp ) {
+//// HTTP ERROR
+//} else {
+//    fputs( $fp, $header . $req );
+//    while( ! feof( $fp ) ) {
+//        $res = fgets( $fp, 1024 );
+//        if( strcmp( $res, "VERIFIED" ) == 0 ) {
             // check the payment_status is Completed
             // check that txn_id has not been previously processed
             // check that receiver_email is your Primary PayPal email
             // check that payment_amount/payment_currency are correct
             // process payment
+
+file_put_contents('payment.txt', "$_POST[payment_status]"."\n",FILE_APPEND );
+
             if( $_POST['payment_status'] == 'Completed'
                 && noPaypalTransId( $_POST['txn_id'] )
                 && $paypal_email == $_POST['receiver_email']
@@ -149,11 +175,11 @@ if( ! $fp ) {
             {
                 createOrder( $_POST );
             }
-        } else if( strcmp( $res, "INVALID" ) == 0 ) {
-            // log for manual investigation
-
-        }
-    }
-    fclose( $fp );
-}
+//        } else if( strcmp( $res, "INVALID" ) == 0 ) {
+//            // log for manual investigation
+//
+//        }
+//    }
+//    fclose( $fp );
+//}
 ?>

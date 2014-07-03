@@ -40,6 +40,10 @@ if( $_SESSION['cart'] ) {
         <p><input type="submit" name="update" value="update" /></p>
     </form>
 
+    <p><b>Subtotal:</b> <?php echo number_format( $_SESSION['total_price'], 2 ); ?> rub </p>
+    <p><b>Subtotal:</b> <?php echo number_format( $shipping, 2 ); ?> rub </p>
+    <p><b>Grand Total:</b> <?php echo number_format( $_SESSION['total_price'] + $shipping, 2 ); ?> rub </p>
+
     <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_cart" >
         <input type="hidden" name="upload" value="1" >
@@ -65,9 +69,9 @@ if( $_SESSION['cart'] ) {
         <input type="hidden" name="lc" value="RUS" >
         <input type="hidden" name="rm" value="2" >
         <input type="hidden" name="shipping_1" value="<?php echo $shipping; ?>" >
-        <input type="hidden" name="return" value="http://zhalnin.tmweb/gamelist/index.php" >
-        <input type="hidden" name="cancel_return" value="http://zhalnin.tmweb/gamelist/" >
-        <input type="hidden" name="notify_url" value="http://zhalnin.tmweb/gamelist/paypal.php" >
+        <input type="hidden" name="return" value="http://zhalnin.tmweb.ru/gamelist/index.php?view=thankyou" >
+        <input type="hidden" name="cancel_return" value="http://zhalnin.tmweb.ru/gamelist/" >
+        <input type="hidden" name="notify_url" value="http://zhalnin.tmweb.ru/gamelist/paypal.php" >
         <input type="submit" name="pay now" value="pay" >
     </form>
 

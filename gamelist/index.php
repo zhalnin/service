@@ -41,6 +41,11 @@ try {
         case 'checkout':
             $shipping = 10.00;
             break;
+        case 'thankyou':
+            $_SESSION['cart'] = array();
+            $_SESSION['total_items'] = 0;
+            $_SESSION['total_price'] = 0.00;
+            break;
 
     }
 
