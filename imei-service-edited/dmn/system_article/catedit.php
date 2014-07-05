@@ -43,7 +43,7 @@ try
                                     "Название",
                                     true,
                                     $_REQUEST['name']);
-    $description    = new FieldText("description",
+    $description    = new FieldTextarea("description",
                                     "Описание",
                                     false,
                                     $_REQUEST['description']);

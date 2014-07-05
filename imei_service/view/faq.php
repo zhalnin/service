@@ -25,6 +25,8 @@ try {
     // содержимое тега meta
     $description    = $catalog->getDescription();
 
+//    echo "<tt><pre>".print_r( $catalog, true )."</pre></tt>";
+
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>

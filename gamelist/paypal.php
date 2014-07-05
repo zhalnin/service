@@ -8,6 +8,8 @@
 
 include( 'base_fns.php' );
 
+
+
 $paypal_email = "zhalninpal-facilitator@me.com";
 $paypal_currency = 'RUB';
 $shipping = 10.00;

@@ -56,6 +56,7 @@ try
                                     "Ссылка",
                                     false,
                                     $_POST['url']);
+
     $alt            = new FieldText("alt",
                                     "ALT-тег",
                                     false,

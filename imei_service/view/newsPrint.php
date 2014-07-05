@@ -22,11 +22,15 @@ try {
     // содержимое тега title
     $title = $newsPrint->getName();
     // содержимое тега meta
+    $description = $newsPrint->getPreview();
+    // содержимое тега meta
     $keywords = "udid,unlock,blacklist,carrier,iPhone,iPod,iPad,iTunes";
     // содержимое тега meta
-    $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
-    Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
-    Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
+    if( empty( $description ) ) {
+        $description = "Официальный анлок iPhone позволит вам обновлять ваш аппарат в iTunes. Регистрация UDID в аккаунте разработчика нужен для безопасной установки iOS 7.1 бета 3. iPhone.
+                        Проверка iPhone по IMEI/серийному номеру даст вам самую полную информацию о вашем iPhone.
+                        Проверка iPhone на blacklist даст вам информацию о статусе вашего аппарата (потерян/украден/задолженность по контракту)";
+    }
 
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );

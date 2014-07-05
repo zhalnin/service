@@ -31,8 +31,12 @@ try {
     $title          = $position->getName();
     // содержимое тега meta
     $keywords       = $position->getKeywords();
-    $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
-
+    // содержимое тега meta
+    $description = $position->getDescription();
+    if( empty( $description ) ) { // если отсутствует описание
+        $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
+    }
+//    echo "<tt><pre>".print_r( $position, true )."</pre></tt>";
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>
@@ -152,6 +156,11 @@ try {
 
                             }
 
+
+
+
+
+
                             // Выясняем тип параграфа
                             $class = "rightpanel_txt ";
                             switch( $paragraph->getType() ) {
@@ -220,6 +229,7 @@ try {
                                 </div><!-- shipping-button -->
                             </div>";
                         ?>
+
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->

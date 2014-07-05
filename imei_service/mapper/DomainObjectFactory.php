@@ -338,6 +338,7 @@ class FaqPositionObjectFactory extends DomainObjectFactory {
         if( $old ) { return $old; }
         $obj = new $class( $array['id_position'] );
         $obj->setName( $array['name'] );
+        $obj->setDescription( $array['description'] );
         $obj->setUrl( $array['url'] );
         $obj->setKeywords( $array['keywords'] );
         $obj->setModrewrite( $array['modrewrite'] );

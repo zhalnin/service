@@ -16,6 +16,7 @@ class FaqPosition extends DomainObject {
 
     private $id;
     private $name;
+    private $description;
     private $url;
     private $keywords;
     private $modrewrite;
@@ -26,6 +27,7 @@ class FaqPosition extends DomainObject {
 
     function __construct(   $id             =null,
                             $name           =null,
+                            $description    =null,
                             $url            =null,
                             $keywords       =null,
                             $modrewrite     =null,
@@ -34,6 +36,7 @@ class FaqPosition extends DomainObject {
                             $idCatalog      =0 ) {
 
         $this->name = $name;
+        $this->description = $description;
         $this->url = $url;
         $this->keywords = $keywords;
         $this->modrewrite = $modrewrite;
@@ -65,6 +68,10 @@ class FaqPosition extends DomainObject {
         $this->name = $name_s;
         $this->markDirty();
     }
+    function setDescription( $description_s ) {
+        $this->description = $description_s;
+        $this->markDirty();
+    }
     function setUrl( $url_s ) {
         $this->url = $url_s;
         $this->markDirty();
@@ -93,6 +100,9 @@ class FaqPosition extends DomainObject {
 
     function getName() {
         return $this->name;
+    }
+    function getDescription() {
+        return $this->description;
     }
     function getUrl() {
         return $this->url;

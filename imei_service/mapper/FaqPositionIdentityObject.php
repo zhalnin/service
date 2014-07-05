@@ -17,6 +17,7 @@ class FaqPositionIdentityObject extends IdentityObject {
     function __construct( $field=null ) {
         parent::__construct( $field, array( 'id_position',
                 'name',
+                'description',
                 'url',
                 'keywords',
                 'modrewrite',

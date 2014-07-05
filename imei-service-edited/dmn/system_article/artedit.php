@@ -59,10 +59,10 @@ try
                                     "Название",
                                     true,
                                     $_REQUEST['name']);
-//    $description = new field_textarea("description",
-//                                     "Описание",
-//                                    true,
-//                                    $_REQUEST['description']);
+    $description = new FieldTextarea("description",
+                                     "Описание",
+                                    true,
+                                    $_REQUEST['description']);
     $keywords       = new FieldText("keywords",
                                     "Ключевые слова",
                                     false,
@@ -84,7 +84,7 @@ try
                                         false,
                                         $_REQUEST['page']);
     $form           = new Form(array("name"           => $name,
-//                            "description"   => $description,
+                                    "description"   => $description,
                                     "keywords"      => $keywords,
                                     "modrewrite"    => $modrewrite,
                                     "hide"          => $hide,
@@ -107,6 +107,7 @@ try
             // Формируем SQL-запрос на добавление раздела
             $query = "UPDATE $tbl_position
                     SET name = '{$form->fields[name]->value}',
+                        description = '{$form->fields[keywords]->value}',
                         keywords = '{$form->fields[keywords]->value}',
                         modrewrite =  '{$form->fields[modrewrite]->value}',
                         hide  = '$showhide'

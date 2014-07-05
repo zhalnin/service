@@ -83,6 +83,7 @@ try
             $query = "INSERT INTO $tbl_position
                         VALUES (NULL,
                         '{$form->fields[name]->value}',
+                        '{$form->fields[description]->value}',
                         'article',
                         '{$form->fields[keywords]->value}',
                         '{$form->fields[modrewrite]->value}',
