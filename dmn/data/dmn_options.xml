@@ -1,5 +1,17 @@
 <woo-options>
     <dsn>mysql:host=localhost;dbname=imei-service</dsn>
+
+    <menu>
+        <point name="News">
+            <title>Новости</title>
+            <description>Управление новостным блоком</description>
+        </point>
+        <point name="Unlock">
+            <title>Официальный анлок</title>
+            <description>Управление блоком официального анлока</description>
+        </point>
+    </menu>
+
     <control>
         <view>main</view>
         <view status="CMD_OK">main</view>
