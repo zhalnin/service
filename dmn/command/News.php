@@ -15,5 +15,6 @@ class News extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
 
+//        return self::statuses( 'CMD_OK' );
     }
 } 

@@ -1,0 +1,146 @@
+.view {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+    float: left;
+    border: 10px solid #FFFFFF;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    box-shadow: 1px 1px 2px #E6E6E6;
+    -moz-box-shadow: 1px 1px 2px #E6E6E6;
+    -webkit-box-shadow: 1px 1px 2px #E6E6E6;
+    cursor: default;
+    background: #FFFFFF url(../icons/contacts/bgimg.jpg) no-repeat center center;
+}
+.view .mask {
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    overflow: hidden;
+    top:0;
+    left: 0;
+}
+.view img {
+    margin-top: 10px;
+    /*display: block;*/
+    display: inline-block;
+    position: relative;
+}
+.view h2 {
+    background: none repeat scroll 0 0 rgba(0,0,0,0.8);
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 17px;
+    position: relative;
+    padding: 10px;
+    margin: 20px 0 0;
+}
+.view p {
+    font-style: italic;
+    font-size: 12px;
+    color: #FFFFFF;
+    position: relative;
+    padding: 10px 20px 20px;
+    text-align: center;
+}
+
+/*Стиль*/
+.contact-image img {
+    transition: all 0.4s ease-in-out 0.2s;
+    -webkit-transition: all 0.4s ease-in-out 0.2s;
+    -moz-transition: all 0.4s ease-in-out 0.2s;
+    -ms-transition: all 0.4s ease-in-out 0.2s;
+    -o-transition: all 0.4s ease-in-out 0.2s;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+
+}
+.contact-image .mask {
+    background-color: rgba(0,0,0,0.6);
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    transform: scale(0) rotate(-180deg);
+    -webkit-transform: scale(0) rotate(-180deg);
+    -moz-transform: scale(0) rotate(-180deg);
+    -ms-transform: scale(0) rotate(-180deg);
+    -o-transform: scale(0) rotate(-180deg);
+    transition: all 0.4s ease-in;
+    -webkit-transition: all 0.4s ease-in;
+    -moz-transition: all 0.4s ease-out;
+    -ms-transition: all 0.4s ease-in;
+    -o-transition: all 0.4s ease-in;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+}
+.contact-image h2 {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+    background: transparent;
+    margin: 20px 20px 0 20px;
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+}
+.contact-image p {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+}
+
+
+/*Событие*/
+.contact-image:hover .mask {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    transform: scale(1) rotate(0deg);
+    -webkit-transform: scale(1) rotate(0deg);
+    -moz-transform: scale(1) rotate(0deg);
+    -ms-transform: scale(1) rotate(0deg);
+    -o-transform: scale(1) rotate(0deg);
+    transition-delay: 0.2s;
+    -webkit-transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s;
+    -ms-transition-delay: 0.2s;
+    -o-transition-delay: 0.2s;
+}
+.contact-image:hover img {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    transform: scale(0);
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transition-delay: 0s;
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -o-transition-delay: 0s;
+}
+.contact-image:hover h2,
+.contact-image:hover p {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    transition-delay: 0.5s;
+    -webkit-transition-delay: 0.5s;
+    -moz-transition-delay: 0.5s;
+    -ms-transition-delay: 0.5s;
+    -o-transition-delay: 0.5s;
+}

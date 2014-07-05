@@ -53,7 +53,12 @@
     </div>
 
 
+<<<<<<< HEAD
     <div id="main">
+=======
+<?php include( $_SERVER['DOCUMENT_ROOT'].'/'.'service/gamelist/views/'.$controller.'/'.$view.'.php' );  ?>
+<?php //include( $_SERVER['DOCUMENT_ROOT'].'/'.'patterns/GITservice/gamelist/views/'.$controller.'/'.$view.'.php' );  ?>
+>>>>>>> FETCH_HEAD
 
 
         <?php //include( $_SERVER['DOCUMENT_ROOT'].'/'.'service/gamelist/views/'.$controller.'/'.$view.'.php' );  ?>
