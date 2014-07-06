@@ -14,14 +14,19 @@ require_once( "imei_service/domain/Unlock.php" );
 require_once( "imei_service/classes/class.SendMail.php" );
 require_once( "imei_service/view/utils/utils.checkEmail.php" );
 require_once( "imei_service/view/utils/utils.checkIMEI.php" );
+require_once( "imei_service/classes/class.Cart.php" );
 
 class Unlock extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-
-        $id_catalog = $request->getProperty( 'idc' );
-        $id_parent = $request->getProperty( 'idp' );
-        $email_admin = 'imei_service@icloud.com';
+//        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";
+        $id_catalog         = $request->getProperty( 'idc' );
+        $id_parent          = $request->getProperty( 'idp' );
+        $position           = $request->getProperty( 'pos' );
+        $country            = $request->getProperty( 'ctr' );
+        $email_admin        = 'imei_service@icloud.com';
+        $action             = $request->getProperty( 'act' );
+        $sid_add_message    = $request->getProperty('sid_add_message'); // получаем id сессии
 
         if( ! $id_catalog ) {
             $id = 0;
@@ -61,6 +66,7 @@ class Unlock extends Command {
 //            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
 
         } else {
+
             $id = 0;
             $decorateCollection = \imei_service\domain\Unlock::find( $id );
             $request->setObject( 'decorateUnlock', $decorateCollection );
@@ -71,6 +77,15 @@ class Unlock extends Command {
             $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
 //        $obj->setUnlock( $unlock_collection );
             $request->setObject( 'unlockParent', $unlock_collection );
+
+            if( ! empty( $action ) ) {
+                $add_item = \imei_service\classes\Cart::setAddToCart( $id_catalog, $position );
+                $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
+                $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
+
+                $this->reloadPage( 0, "?cmd=Unlock&idc={$id_catalog}&idp={$id_parent}" );
+
+            }
             return self::statuses( 'CMD_OK' );
         }
     }

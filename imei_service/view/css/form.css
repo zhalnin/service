@@ -826,3 +826,49 @@ textarea {
 }
 /* END - Голубая кнопка в стиле iOS 7*/
 
+.buynow a {
+    background-image: url("../icons/cart/buynows.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: block;
+    float: right;
+    height: 25px;
+    /*margin: 0.8em 0 0 20px;*/
+    margin: 0 0 0 20px;
+    outline: medium none;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    text-indent: -9999px;
+    width: 72px;
+}
+.buynow a:hover, .buynow a:focus {
+    background-position: 0 -25px;
+}
+.buynow a:active {
+    background-position: 0 -50px;
+}
+
+li.cart {
+    right: -520px;
+    top: -15px;
+    position: relative;
+
+}
+.cart a {
+    background-image: url("../icons/cart/utilitynav-menu-icons.png");
+    background-position: 0 -202px;
+    background-repeat: no-repeat;
+    background-size: 450px 221px;
+    padding-left: 11px;
+    padding-right: 0;
+    text-indent: 10px;
+    position: relative;
+    display: block;
+    color: #333333;
+}
+.cart a:hover {
+    background-position:-216px -202px;
+    text-decoration:none;
+    color:#8a8a8a
+}

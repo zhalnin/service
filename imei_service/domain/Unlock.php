@@ -80,6 +80,14 @@ class Unlock extends DomainObject {
     }
 
 
+    static function findByCatalog( $id_catalog ) {
+        $finder = self::getFinder( __CLASS__ );
+        $unlockIdobjCatCart = new \imei_service\mapper\UnlockIdentityObject( 'id_catalog' );
+        $unlockIdobjCatCart->eq( $id_catalog );
+        return $finder->find( $unlockIdobjCatCart );
+    }
+
+
     function setName( $name_s ) {
         $this->name = $name_s;
         $this->markDirty();

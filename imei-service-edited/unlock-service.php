@@ -131,14 +131,14 @@ if(mysql_num_rows($res)){
     while($subcatalog = mysql_fetch_array($res)){
 
         echo "<div>
-                <div style='width: 150px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>$subcatalog[operator]</b></ins></div>
+                <div style='width: 150px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><b>$subcatalog[operator]</b></div>
                 <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='cost'>iPhone ".$subcatalog[compatible]."</div>
                 <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>".print_price($subcatalog[cost])."</div>
                 <div style='width: 170px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>$subcatalog[timeconsume] $subcatalog[status]</div>
             </div>";
     }
     echo "</div>
-                <div class=\"dividerdownbottom\"; style='width: 700px; height: 40px; clear : both;'></div>
+                <div class=\"dividerdownbottom\" style=\"width: 700px; height: 40px; clear : both;\"></div>
                     </div>
                 </div>
             </div>";  // End of design

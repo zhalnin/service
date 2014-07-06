@@ -11,6 +11,11 @@ session_start();
 $sid_add_message = session_id();
  error_reporting(E_ALL & ~E_NOTICE);
 //require_once("count.php");
+if( ! isset( $_SESSION['cart'] ) ) {
+    $_SESSION['cart'] = array();
+    $_SESSION['total_items'] = 0;
+    $_SESSION['total_price'] = '0.00';
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -22,10 +27,10 @@ $sid_add_message = session_id();
     <link rel="shortcut icon" href="/favicon.ico"/>
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link href="imei_service/view/css/home-style.css" type="text/css" rel="stylesheet">
     <link href="imei_service/view/css/animatedCSS.css" type="text/css" rel="stylesheet">
     <link href="imei_service/view/css/form.css" type="text/css" rel="stylesheet">
     <link href="imei_service/view/css/style.css" type="text/css" rel="stylesheet">
+    <link href="imei_service/view/css/home-style.css" type="text/css" rel="stylesheet">
 <!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
     <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
     <script type="text/javascript" src="imei_service/view/js/AlezhalModules.js"></script>

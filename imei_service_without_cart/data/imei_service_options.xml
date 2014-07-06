@@ -1,0 +1,140 @@
+<woo-options>
+    <dsn>mysql:host=localhost;dbname=imei-service</dsn>
+<control>
+    <view>main</view>
+    <view status="CMD_OK">main</view>
+    <view status="CMD_ERROR">error</view>
+
+    <command name="News">
+        <view>news</view>
+        <status value="CMD_OK">
+            <forward>NewsPrint</forward>
+        </status>
+    </command>
+
+    <command name="NewsPrint">
+        <view>newsPrint</view>
+    </command>
+
+    <command name="Guestbook">
+        <view>guestbook</view>
+        <status value="CMD_GUESTBOOK_OK">
+            <view>addMessageSuccess</view>
+        </status>
+    </command>
+
+    <command name="Contacts">
+        <view>contacts</view>
+    </command>
+
+    <command name="Unlock">
+        <view>unlock</view>
+        <status value="CMD_OK">
+            <forward>UnlockDetails</forward>
+        </status>
+        <status value="CMD_UNLOCK_OK">
+            <view>unlockSuccess</view>
+        </status>
+    </command>
+
+    <command name="UnlockDetails">
+        <view>unlockDetails</view>
+        <status value="CMD_UNLOCK_OK">
+            <view>unlockSuccess</view>
+        </status>
+    </command>
+
+    <command name="Udid">
+        <view>udid</view>
+        <status value="CMD_UDID_OK">
+            <view>udidSuccess</view>
+        </status>
+    </command>
+
+    <command name="CarrierCheck">
+        <view>carrierCheck</view>
+        <status value="CMD_CARRIER_OK">
+            <view>carrierSuccess</view>
+        </status>
+    </command>
+
+    <command name="FastCheck">
+        <view>fastCheck</view>
+    </command>
+
+    <command name="BlacklistCheck">
+        <view>blacklistCheck</view>
+        <status value="CMD_BLACKLIST_OK">
+            <view>blacklistSuccess</view>
+        </status>
+    </command>
+
+    <command name="Faq">
+        <view>faq</view>
+        <status value="CMD_OK">
+            <forward>FaqPosition</forward>
+        </status>
+    </command>
+
+    <command name="FaqPosition">
+        <view>faqPosition</view>
+        <status value="CMD_OK">
+            <forward>FaqParagraph</forward>
+        </status>
+    </command>
+
+    <command name="FaqParagraph">
+        <view>faqParagraph</view>
+    </command>
+
+    <command name="Parser">
+        <view>parserImei</view>
+    </command>
+
+    <command name="Login">
+        <view>login</view>
+        <status value="CMD_LOGIN_OK">
+            <view>loginSuccess</view>
+        </status>
+    </command>
+
+    <command name="Register">
+        <view>register</view>
+        <status value="CMD_REGISTER_OK">
+            <view>registerSuccess</view>
+        </status>
+    </command>
+
+    <command name="Activation">
+        <view>activationAlready</view>
+        <status value="CMD_ERROR">
+            <view>activationError</view>
+        </status>
+        <status value="CMD_ACTIVATION_OK">
+            <view>activationSuccess</view>
+        </status>
+    </command>
+
+    <command name="FLogin">
+        <view>flogin</view>
+        <status value="CMD_OK">
+            <view>floginSuccess</view>
+        </status>
+    </command>
+
+    <command name="RActivation">
+        <view>ractivation</view>
+        <status value="CMD_OK">
+            <view>ractivationSuccess</view>
+        </status>
+    </command>
+
+    <command name="Search">
+        <view>search</view>
+        <status value="CMD_ERROR">
+            <view>searchError</view>
+        </status>
+    </command>
+
+</control>
+</woo-options>

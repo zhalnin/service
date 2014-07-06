@@ -14,6 +14,12 @@ try {
     imei_service\Controller\controller::run();
 
 
+//    if( ! isset( $_SESSION['cart_imei_service'] ) ) {
+//        $_SESSION['cart_imei_service'] = array();
+//        $_SESSION['total_items_imei_service'] = 0;
+//        $_SESSION['total_price_imei_service'] = '0.00';
+//    }
+
 } catch ( \imei_service\base\AppException $ex ) {
    echo $ex->getErrorObject();
 } catch ( \imei_service\base\DBException $ex ) {

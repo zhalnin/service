@@ -28,4 +28,24 @@ function getNameServer() {
 //    return $name;
 }
 
+function getNameServerWithExt() {
+    $name = $_SERVER['SERVER_NAME'];
+    if( stripos( $name, 'www' ) === 0 ) {
+        $name = substr_replace( $name, '', 0, 4 );
+    }
+
+    // Для дебаггинга
+    if( ! empty( $_SERVER['SERVER_PORT'] ) ) {
+        $port = ':'.$_SERVER['SERVER_PORT'];
+    } else {
+        $port = '';
+    }
+    $path = $_SERVER['PHP_SELF'];
+    return "http://".$name.$port.$path;
+    // конец
+
+
+//    return $name;
+}
+
 ?>

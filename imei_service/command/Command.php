@@ -7,6 +7,8 @@
  */
 
 namespace imei_service\command;
+error_reporting( E_ALL & ~E_NOTICE );
+require_once( "imei_service/view/utils/getNameServer.php" );
 
 abstract class Command {
     private static $STATUS_STRINGS = array(
@@ -61,5 +63,16 @@ abstract class Command {
      * @return mixed
      */
     abstract function doExecute( \imei_service\controller\Request $request );
+
+    /**
+     * Для перезагрузки страницы по таймеру(refresh)
+     * @param $delay - задержка
+     * @param $resource - путь
+     */
+    function reloadPage( $delay, $resource ) {
+        $server = \imei_service\view\utils\getNameServerWithExt().$resource;
+        $delay = intval( $delay );
+        header("Refresh: {$delay}; URL= {$server}");
+    }
 }
 ?>

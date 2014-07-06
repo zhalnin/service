@@ -11,6 +11,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 //require_once( "imei_service/base/Registry.php" );
 use imei_service\base\SessionRegistry;
 
+
     $enter = SessionRegistry::getSession('auto');
     $login = SessionRegistry::getSession('login');
 //echo "<tt><pre>".print_r( $enter , true ) ."</pre></tt>";
@@ -28,6 +29,9 @@ use imei_service\base\SessionRegistry;
                 |
                 <a href="?cmd=Logout">Выйти</a>
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
+            </li>
+            <li class="cart">
+                <a href="?cmd=Cart" >Корзина (<?php echo $_SESSION['total_items_imei_service']; ?>)</a>
             </li>
             <li>
                 <div id="globalsearch">
@@ -64,6 +68,12 @@ use imei_service\base\SessionRegistry;
                     </li>
                 </ul>
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
+            </li>
+            <li class="cart">
+                <a href="?cmd=Cart" >Корзина (<?php echo $_SESSION['total_items_imei_service']; ?>)</a>
+<!--                --><?php //echo "<tt><pre>".print_r(  $_SESSION['cart_imei_service'], true )."</pre></tt>" ?>
+<!--                --><?php //echo "total - " . $_SESSION['total_items_imei_service']; ?>
+<!--                --><?php //echo "price - " . $_SESSION['total_price_imei_service']; ?>
             </li>
             <li>
                 <div id="globalsearch">

@@ -3,7 +3,8 @@
 * { margin: 0; padding: 0; }
 
 html, body {
-    background-color: #F5F6F7
+    /*background-color: #F5F6F7;*/
+    background-color: #f1f1f1;
 }
 body {
     font-size: 10px;
@@ -779,7 +780,9 @@ a.block {
 }
 
 body #showcase .row img.hero-image.flushleft {
-    left: 80px;
+    /*left: 80px;*/
+    left: 85px;
+    top: 1px;
 }
 body #showcase .row img.hero-image {
     bottom: 140px;
@@ -811,7 +814,8 @@ img.flushleft {
 }
 body #design .column.last {
     /*width: 418px;*/
-    width: 780px;
+    /*width: 780px;*/
+    width: 900px;
     /*margin-bottom: 20px;*/
     /*padding-bottom: 40px;*/
 }
@@ -834,8 +838,11 @@ body .row .column.last {
     float: left;
 }
 body #design h1 {
-    padding-top: 30px;
-    padding-bottom: 20px;
+    /*padding-top: 30px;*/
+    /*padding-bottom: 20px;*/
+    /*width: 600px;*/
+    /*text-align: center;*/
+    margin: 40px auto 80px;
     width: 600px;
     text-align: center;
 }
@@ -1725,6 +1732,9 @@ span #uah.currency{
     right: auto;
     top: auto;
     margin-bottom: 7px;
+}
+#login-wrap li {
+    display: inline-block;
 }
 #login-nav {
     display: block;

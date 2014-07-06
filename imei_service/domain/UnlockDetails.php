@@ -69,6 +69,18 @@ class UnlockDetails extends DomainObject {
         return $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ) );
     }
 
+    /**
+     * Выборка для корзины по каталогу и позиции
+     * @param $pos
+     * @param $id_catalog
+     * @return mixed
+     */
+    static function findByPosAndCat( $pos, $id_catalog ) {
+        $finder = self::getFinder( __CLASS__ );
+        $unlockIdobjCart = new \imei_service\mapper\UnlockDetailsIdentityObject( 'id_catalog' );
+        $unlockIdobjCart->eq( $id_catalog )->field( 'pos' )->eq( $pos );
+        return $finder->find( $unlockIdobjCart );
+    }
 //    function setUnlock( UnlockCollection $unlock ) {
 //        $this->unlock = $unlock;
 //    }

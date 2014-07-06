@@ -136,5 +136,9 @@
         </status>
     </command>
 
+    <command name="Cart">
+        <view>cart</view>
+    </command>
+
 </control>
 </woo-options>

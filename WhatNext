@@ -28,3 +28,80 @@ command сделал Activation, BlacklistCheck
 4. payment
 
 
+
+Изменения:
+
+
+body #design h1 {
+    padding-top: 30px;
+    padding-bottom: 150px;
+    width: 600px;
+    text-align: center;
+}
+body #design .column.last {
+    /*width: 780px;*/
+    width: 880px;
+}
+
+в icons:
+icons/cart/buynows.png
+
+в unlock-service:
+
+<div>
+                                        <div style='width: 160px; float: left; margin: 10px 0 20px 50px;'><b>Оператор</b></div>
+                                        <div style='width: 156px; float: left; margin: 10px 0 20px 50px;'><b>Совместимость</b></div>
+                                        <div style='width: 140px; float: left; margin: 10px 0 20px 65px;'><b>Стоимость</b></div>
+                                        <div style='width: 190px; float: left; margin: 10px 0 20px 60px;'><b>Сроки</b></div>
+                                    </div>
+
+echo "<div>
+                <div style='width: 180px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><b>$subcatalog[operator]</b></div>
+                <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='cost'>iPhone ".$subcatalog[compatible]."</div>
+                <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>".print_price($subcatalog[cost])."</div>
+                <div style='width: 240px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>$subcatalog[timeconsume] $subcatalog[status]<span class='buynow'><a href='#' title='Для выбора кликните на названии оператора и он будет добавлен в корзину' >в корзину</a></span></div>
+            </div>";
+
+
+в form.css:
+.buynow {
+    background-image: url("../icons/cart/buynows.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: block;
+    float: right;
+    height: 25px;
+    /*margin: 0.8em 0 0 20px;*/
+    margin: 0 0 0 20px;
+    outline: medium none;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    text-indent: -9999px;
+    width: 72px;
+}
+.buynow:hover, .buynow:focus {
+    background-position: 0 -25px;
+}
+.buynow:active {
+    background-position: 0 -50px;
+}
+
+в home-style.css:
+body #showcase .row img.hero-image.flushleft {
+    /*left: 80px;*/
+    left: 850px;
+    top: 1px;
+}
+
+body #design h1 {
+    /*padding-top: 30px;*/
+    /*padding-bottom: 150px;*/
+    margin: 40px auto 80px;
+    width: 600px;
+    text-align: center;
+}
+body #design .column.last {
+    /*width: 780px;*/
+    width: 900px;
+}
