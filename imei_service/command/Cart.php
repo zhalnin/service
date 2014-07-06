@@ -28,28 +28,13 @@ class Cart extends Command {
 
         foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $id_position ) {
             foreach ( $id_position as $position => $qty ) {
-//                $pdo = \imei_service\base\DBRegistry::getDB();
-//                $sth = $pdo->prepare( 'SELECT * FROM system_position
-//                                                        WHERE system_position.pos = ?
-//                                                        AND system_position.id_catalog = ?' );
-//                $result = $sth->execute( array( $position, $id_catalog ) );
-//                $item = $sth->fetch();
-//        echo "<tt><pre> - {$qty} - ".print_r( $item, true )."</pre></tt>";
-//            $colCatalog[] = \imei_service\domain\Unlock::findByCatalog( $id_catalog );
                 $colCatalog[][$qty] = \imei_service\domain\Unlock::findByCatalog( $id_catalog );
-            $colCatalogPosition[][$qty] = \imei_service\domain\UnlockDetails::findByPosAndCat( $position, $id_catalog );
-
-//            echo "<tt><pre>".print_r( $collection2, true )."</pre></tt>";
+                $colCatalogPosition[][$qty] = \imei_service\domain\UnlockDetails::findByPosAndCat( $position, $id_catalog );
             }
         }
-//        echo "<tt><pre>".print_r($colCatalog, true )."</pre></tt>";
-//        echo "<tt><pre>".print_r($colCatalogPosition, true )."</pre></tt>";
+
         $request->setObject( 'cartCatalog', $colCatalog );
         $request->setObject( 'cartCatalogPosition', $colCatalogPosition );
-
-
-//        $collection = \imei_service\domain\UnlockDetails::findAll( $request->getProperty( 'idc' ) );
-//        $request->setObject( 'unlockDetailsCart', $collection );
 
         return self::statuses( 'CMD_OK' );
     }
