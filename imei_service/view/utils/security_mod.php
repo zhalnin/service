@@ -31,7 +31,14 @@ use imei_service\base\SessionRegistry;
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
             </li>
             <li class="cart">
-                <a href="?cmd=Cart" >Корзина (<?php echo $_SESSION['total_items_imei_service']; ?>)</a>
+                <?php if( isset( $_SESSION['total_items_imei_service'] ) && $_SESSION['total_items_imei_service'] != 0  ) {
+                    $num_items = "( {$_SESSION['total_items_imei_service']} )";
+                } else {
+                    $num_items = "";
+                }
+                ?>
+
+                <a href="?cmd=Cart" >Корзина <?php echo $num_items; ?></a>
             </li>
             <li>
                 <div id="globalsearch">
@@ -70,7 +77,15 @@ use imei_service\base\SessionRegistry;
                 <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
             </li>
             <li class="cart">
-                <a href="?cmd=Cart" >Корзина (<?php echo $_SESSION['total_items_imei_service']; ?>)</a>
+                <?php if( isset( $_SESSION['total_items_imei_service'] ) && $_SESSION['total_items_imei_service'] != 0 ) {
+                    $num_items = "( {$_SESSION['total_items_imei_service']} )";
+                } else {
+                    $num_items = "";
+                }
+                ?>
+
+                <a href="?cmd=Cart" >Корзина <?php echo $num_items; ?></a>
+
 <!--                --><?php //echo "<tt><pre>".print_r(  $_SESSION['cart_imei_service'], true )."</pre></tt>" ?>
 <!--                --><?php //echo "total - " . $_SESSION['total_items_imei_service']; ?>
 <!--                --><?php //echo "price - " . $_SESSION['total_price_imei_service']; ?>

@@ -25,7 +25,8 @@ try {
 //    // содержимое тега meta
 //    $description    = $catalog->getDescription();
 
-//    echo "<tt><pre>".print_r( $catalog, true )."</pre></tt>";
+//    echo "<tt><pre>".print_r( $colCatalog, true )."</pre></tt>";
+//    echo gettype( $colCatalogPosition );
 
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
@@ -61,7 +62,7 @@ try {
 
                         <?php
                         echo "<div class='faq-title'>
-                                    <h1 class=h2>Название</h1>
+                                    <h1 class=h2>Содержимое корзины</h1>
                                 </div>
                                 <div class='faq-image'>
                                     <img alt='IMEI-service - Вопросы' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
@@ -69,26 +70,82 @@ try {
 
                                 <div class='faq-info'>";
 
+//                        item item_price qty subtotal
+//
+//                        1
+//                        2
+//                        3
+//
+//                                update  subtotal
+//                                        shipping
+//                                        grand total
 
-                        for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
-                            foreach ( $colCatalogPosition[$i] as $index => $qty) {
-                                echo "<tt><pre> total quantity - ".print_r( $index , true )."</pre></tt>";
-                                foreach( $colCatalogPosition[$i][$index] as $in ) {
-                                    echo "<tt><pre> operator - ".print_r( $in->getOperator() , true )."</pre></tt>";
-                                    echo "<tt><pre> rub - ".print_r( $in->getCost() , true )."</pre></tt>";
-                                }
-                                foreach( $colCatalog[$i][$index] as $int ) {
-                                    echo "<tt><pre> country - ".print_r( $int->getName() , true )."</pre></tt>";
-                                }
-//                            echo "<tt><pre>".print_r( $colCatalogPosition[$i][$index] , true )."</pre></tt>";
-//                            echo "<tt><pre>".print_r( $colCatalog[$i][$index] , true )."</pre></tt>";
 
+
+                        //    echo "<tt><pre> - ".print_r( $colCatalogPosition , true )."</pre></tt>";
+
+
+                        if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) {
+//                                    echo "<tt><pre> total quantity - ".print_r( $colCatalogPosition , true )."</pre></tt>";
+                            ?>
+                            <form action="?cmd=Cart&act=update" method="post" >
+                                <table width="100%" >
+                                    <thead>
+                                    <tr>
+                                        <td>Наименование</td>
+                                        <td>Стоимость</td>
+                                        <td>Количество</td>
+                                        <td>Всего</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <?php
+                            $sum_subtotal = 0;
+                            for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
+                                foreach ( $colCatalogPosition[$i] as $index => $qty) {
+                                    foreach( $colCatalog[$i][$index] as $int ) {
+                                        echo "<td>{$int->getName()}</td>";
+//                                        echo "<tt><pre> country - ".print_r( $qty , true )."</pre></tt>";
+                                    }
+                                    foreach( $colCatalogPosition[$i][$index] as $in ) {
+                                        $item_price = $in->getCost();
+                                        echo "<td>" . number_format( $in->getCost(), 2 ) . "</td>";
+//                                        echo "<tt><pre> operator - ".print_r( $in->getOperator() , true )."</pre></tt>";
+//                                        echo "<tt><pre> rub - ".print_r( $in->getPos() , true )."</pre></tt>";
+                                    }
+                                    $subtotal = $index * $item_price;
+//                            echo "<tt><pre>".print_r( $in->getIdCatalog(), true )."</pre></tt>";
+                                    echo "<td><input type=\"text\" maxlength=\"2\" size=\"2\" value=\"{$index}\"  name=\"{$in->getPos()}\" /></td>";
+                                    ?>
+                                          <td><?php echo number_format( $subtotal, 2 ) ?></td>
+                                    <?php
+    //                            echo "<tt><pre>".print_r( $colCatalogPosition[$i][$index] , true )."</pre></tt>";
+//                                echo "<tt><pre>".print_r( $qty , true )."</pre></tt>";
+
+                                    $sum_subtotal = $sum_subtotal + $subtotal;
+
+
+                                }
+
+//                                print "<br /> ----------------- <br />";
+                                echo "</tr>";
                             }
-                            print "<br /> ----------------- <br />";
+                            ?>
+                                  <tr>
+                                    <td><input type="hidden" name="id_catalog" value="<?php echo $in->getIdCatalog(); ?>" /></td>
+                                    <td><input type="submit" name="update" value="Обновить" /></td>
+                                    <td>Итого</td>
+                                    <td><?php echo number_format( $sum_subtotal, 2 ); ?></td>
+                                  </tr>
+                                  </tbody></table></form>
+                            <?php
+                            echo "<p><a href=\"#\" class=\"main_txt_lnk\">Оплатить</a></p>";
+
+                        } else {
+                            echo "<h2>Ваша корзина пуста</h2>";
                         }
 
-
-                        echo "<p><a href=\"#\" class=\"main_txt_lnk\">Название</a></p>";
 
                         echo "</div> "; // faq-info
                         ?>

@@ -73,16 +73,37 @@ class Cart {
                 }
             }
         }
-//                            echo "<tt><pre>".print_r( $price, true )."</pre></tt>";
         return $price;
     }
 
     protected function updateCart() {
+//                echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'], true )."</pre></tt>";
+//        echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
+        $idc = $_POST['id_catalog'];
+        foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $id_position ) {
+            foreach ( $id_position as $position => $qty ) {
+                if( $_POST[$position] == '0' ) {
+            echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'][$id_catalog][$position], true )."</pre></tt>";
+                    unset( $_SESSION['cart_imei_service'][$id_catalog][$position] );
+                    if( empty( $_SESSION['cart_imei_service'][$id_catalog] ) ) {
+                        unset( $_SESSION['cart_imei_service'][$id_catalog] );
+                    }
+                } else {
+                    echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'][$id_catalog][$position], true )."</pre></tt>";
+                    $_SESSION['cart_imei_service'][$id_catalog][$position] = $_POST[$position];
+                    $_SESSION['cart_imei_service'][$id_catalog][$position] = $_POST[$position];
+                }
+
+            }
+        }
+
+
         foreach ( $_SESSION['cart_imei_service'] as $id => $qty ) {
             if( $_POST[$id] == '0' ) {
-                unset( $_SESSION['cart_imei_service'][$id] );
+//                unset( $_SESSION['cart_imei_service'][$id] );
             } else {
-                $_SESSION['cart_imei_service'][$id] = $_POST[$id];
+//                $_SESSION['cart_imei_service'][$id_catalog][$id_position] = $_POST[$id];
+//                $_SESSION['cart_imei_service'][$id] = $_POST[$id];
             }
         }
     }
