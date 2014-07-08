@@ -68,25 +68,31 @@ class Unlock extends Command {
         } else {
 
             $id = 0;
-            $decorateCollection = \imei_service\domain\Unlock::find( $id );
-            $request->setObject( 'decorateUnlock', $decorateCollection );
+            $decorateCollection = \imei_service\domain\Unlock::find( $id ); // находим коллекцию по id в таблице
+            $request->setObject( 'decorateUnlock', $decorateCollection ); // сохраняем коллекцию в объект Request
+            // получаем объект фабрику с различными методами
             $factory = \imei_service\mapper\PersistenceFactory::getFactory( 'imei_service\\domain\\Unlock' );
+            // передаем нашу фабрику в объект для работы с базой данных
             $unlock_assembler = new \imei_service\mapper\DomainObjectAssembler( $factory );
+            // шаблон для создания условного оператора для запроса к БД
             $unlock_idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_catalog' );
             $unlock_idobj->eq( $request->getProperty( 'idc' ) )->field( 'hide' )->eq( 'show' );
+            // собственно сам запрос, который вернет коллекцию, по ней пройдем foreach с помощью класса Iterator
             $unlock_collection = $unlock_assembler->findOne( $unlock_idobj );
 //        $obj->setUnlock( $unlock_collection );
-            $request->setObject( 'unlockParent', $unlock_collection );
+            $request->setObject( 'unlockParent', $unlock_collection ); // сохраняем коллекцию в объект Request
 
-            if( ! empty( $action ) ) {
+            if( ! empty( $action ) ) { // если передано действие add_to_cart
+                // добавляем предмет в корзину
                 $add_item = \imei_service\classes\Cart::setAddToCart( $id_catalog, $position );
+                // подсчитываем общее количество
                 $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
+                // подсчитываем общую сумму
                 $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
-
-                $this->reloadPage( 0, "?cmd=Unlock&idc={$id_catalog}&idp={$id_parent}" );
+                $this->reloadPage( 0, "?cmd=Unlock&idc={$id_catalog}&idp={$id_parent}" ); // перегружаем страничку
 
             }
-            return self::statuses( 'CMD_OK' );
+            return self::statuses( 'CMD_OK' );// возвращаем успешный статус
         }
     }
 }

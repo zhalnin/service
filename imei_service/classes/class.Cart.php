@@ -23,16 +23,16 @@ class Cart {
 
     /**
      * Добавляем в корзину предмет
-     * @param $id_catalog - каталог
-     * @param $id_position - позиция
+     * @param $id_catalog - каталог в system_position
+     * @param $position - позиция в system_position
      * @return bool
      */
-    protected function addToCart( $id_catalog, $id_position ) {
-        if( isset( $_SESSION['cart_imei_service'][$id_catalog][$id_position] ) ) {
-            $_SESSION['cart_imei_service'][$id_catalog][$id_position]++;
+    protected function addToCart( $id_catalog, $position ) {
+        if( isset( $_SESSION['cart_imei_service'][$id_catalog][$position] ) ) {
+            $_SESSION['cart_imei_service'][$id_catalog][$position]++;
             return true;
         } else {
-            $_SESSION['cart_imei_service'][$id_catalog][$id_position] = 1;
+            $_SESSION['cart_imei_service'][$id_catalog][$position] = 1;
             return true;
         }
         return false;
@@ -47,8 +47,8 @@ class Cart {
     protected function totalItems( $cart ) {
         $total = 0;
         if( is_array( $cart ) ) {
-            foreach ( $cart as $id_catalog => $id_position ) {
-                foreach ( $id_position as $qty ) {
+            foreach ( $cart as $id_catalog => $position ) {
+                foreach ( $position as $qty ) {
                     $total += $qty;
                 }
             }
@@ -56,11 +56,16 @@ class Cart {
         return $total;
     }
 
+    /**
+     * Подсчитываем общую стоимость товаров в корзине
+     * @param $cart - сессия
+     * @return string - сумма
+     */
     protected function totalPrice( $cart ) {
         $price = '0.00';
         if( is_array( $cart ) ) {
-            foreach ( $cart as $id_catalog => $id_position ) {
-                foreach ( $id_position as $position => $qty ) {
+            foreach ( $cart as $id_catalog => $catalog ) {
+                foreach ( $catalog as $position => $qty ) {
                     $pdo = \imei_service\base\DBRegistry::getDB();
                     $sth = $pdo->prepare( 'SELECT cost FROM system_position
                                                         WHERE system_position.pos = ?
@@ -76,38 +81,29 @@ class Cart {
         return $price;
     }
 
+    /**
+     * Обновляем колличество предметов в корзине:
+     * из вьюшки получаем POST запрос с параметрами
+     * парсируем их и обновляем количество
+     */
     protected function updateCart() {
-//                echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'], true )."</pre></tt>";
 //        echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
-        $idc = $_POST['id_catalog'];
-        foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $id_position ) {
-            foreach ( $id_position as $position => $qty ) {
-                if( $_POST[$position] == '0' ) {
-            echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'][$id_catalog][$position], true )."</pre></tt>";
-                    unset( $_SESSION['cart_imei_service'][$id_catalog][$position] );
-                    if( empty( $_SESSION['cart_imei_service'][$id_catalog] ) ) {
-                        unset( $_SESSION['cart_imei_service'][$id_catalog] );
+        // из запроса получаем два индекса(8_2), где 8-id_catalog и 2-position в БД, и значение-количество предметов
+        foreach ($_POST as $index => $value ) {
+            if( preg_match('|[0-9]+|', $value ) ) { // если количество предметов это цифра/число
+                // разбиваем наш индекс по "_" и инициализируем переменные
+                list($id_catalog, $position ) = explode('_', $index);
+                if( $value == 0 ) { // если количество предметов равно 0
+                        unset( $_SESSION['cart_imei_service'][$id_catalog][$position] ); // уничтожаем эту позицию в корзине
+                    if( empty( $_SESSION['cart_imei_service'][$id_catalog] ) ) { // если по этому каталогу больше нет предметов
+                        unset( $_SESSION['cart_imei_service'][$id_catalog] ); // уничтожаем каталог в корзине
                     }
-                } else {
-                    echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'][$id_catalog][$position], true )."</pre></tt>";
-                    $_SESSION['cart_imei_service'][$id_catalog][$position] = $_POST[$position];
-                    $_SESSION['cart_imei_service'][$id_catalog][$position] = $_POST[$position];
+                } else { // если количество в корзине не равно 0
+                    $_SESSION['cart_imei_service'][$id_catalog][$position] = $value; // то данную позицию по каталогу обновляем
                 }
-
-            }
-        }
-
-
-        foreach ( $_SESSION['cart_imei_service'] as $id => $qty ) {
-            if( $_POST[$id] == '0' ) {
-//                unset( $_SESSION['cart_imei_service'][$id] );
-            } else {
-//                $_SESSION['cart_imei_service'][$id_catalog][$id_position] = $_POST[$id];
-//                $_SESSION['cart_imei_service'][$id] = $_POST[$id];
             }
         }
     }
-
 
     static function getTotalPrice( $cart ) {
         return self::instance()->totalPrice( $cart );

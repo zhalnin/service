@@ -28,28 +28,33 @@ class Cart extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 
-
+//        echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'] , true )."</pre></tt>";
 //        echo $_SESSION['total_items_imei_service'];
 //        echo $_SESSION['total_price_imei_service'];
-        echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'], true )."</pre></tt>";
-        $action = $request->getProperty( 'act' );
+
+        $action = $request->getProperty( 'act' ); // получаем название действия
         if( ! empty( $_SESSION['cart_imei_service'] ) ) { // Если корзина не пуста
-            if( ! empty( $action ) ) {
-//                $add_item = \imei_service\classes\Cart::setAddToCart( $id_catalog, $position );
-                \imei_service\classes\Cart::setUpdateCart();
-                $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
-                $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
-                $this->reloadPage( 0, "?cmd=Cart" );
-            }
-            foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $id_position ) { // получаем id каталога и id позиции
-                foreach ( $id_position as $position => $qty ) { // из массива с позицией получаем саму позицию и количество предметов по этой позиции
-                    // получаем объект по id каталогу из таблицы system_catalog и создаем массив из количества и выборки
-                    $colCatalog[][$qty] = \imei_service\domain\Unlock::findByCatalog( $id_catalog );
-                    // получаем объект по id каталогу и позиции из таблицы system_position и создаем массив из количества и выборки
-                    $colCatalogPosition[][$qty] = \imei_service\domain\UnlockDetails::findByPosAndCat( $position, $id_catalog );
+            // получаем id каталога и массив с позициями и количеством предметов в каждом
+            foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $positions ) {
+                // из массива с позицией получаем саму позицию и количество предметов по этой позиции
+                foreach ( $positions as $position => $qty ) {
+                    if( preg_match('|[0-9]+|', $qty ) ) { // если количество является цифрой/числом
+                        // получаем объект по id каталогу из таблицы system_catalog и создаем массив из количества и выборки
+                        $colCatalog[][$qty] = \imei_service\domain\Unlock::findByCatalog( $id_catalog );
+                        // получаем объект по id каталогу и позиции из таблицы system_position и создаем массив из количества и выборки
+                        $colCatalogPosition[][$qty] = \imei_service\domain\UnlockDetails::findByPosAndCat( $position, $id_catalog );
+                    }
                 }
             }
 
+            if( ! empty( $action ) ) { // если передано действие update
+                \imei_service\classes\Cart::setUpdateCart(); // обновляем количество в корзине
+                // подсчитываем общее количество
+                $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
+                // подсчитываем общую сумму
+                $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
+                $this->reloadPage( 0, "?cmd=Cart" ); // перегружаем страничку
+            }
             $request->setObject( 'cartCatalog', $colCatalog ); // Сохраняем в request
             $request->setObject( 'cartCatalogPosition', $colCatalogPosition ); // Сохраняем в request
 

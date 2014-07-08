@@ -70,23 +70,11 @@ try {
 
                                 <div class='faq-info'>";
 
-//                        item item_price qty subtotal
-//
-//                        1
-//                        2
-//                        3
-//
-//                                update  subtotal
-//                                        shipping
-//                                        grand total
 
-
-
-                        //    echo "<tt><pre> - ".print_r( $colCatalogPosition , true )."</pre></tt>";
+//                            echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'] , true )."</pre></tt>";
 
 
                         if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) {
-//                                    echo "<tt><pre> total quantity - ".print_r( $colCatalogPosition , true )."</pre></tt>";
                             ?>
                             <form action="?cmd=Cart&act=update" method="post" >
                                 <table width="100%" >
@@ -99,48 +87,43 @@ try {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+
                                         <?php
                             $sum_subtotal = 0;
+
+//                                        echo "<tt><pre> - ".print_r( $colCatalog , true )."</pre></tt>";
+                            // подсчитываем результирующее количество в коллекции и проходим в цикле
                             for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
+                                // получаем по индексу количество предметов по данной позиции
                                 foreach ( $colCatalogPosition[$i] as $index => $qty) {
                                     foreach( $colCatalog[$i][$index] as $int ) {
-                                        echo "<td>{$int->getName()}</td>";
-//                                        echo "<tt><pre> country - ".print_r( $qty , true )."</pre></tt>";
+                                        $name = $int->getName();
                                     }
                                     foreach( $colCatalogPosition[$i][$index] as $in ) {
-                                        $item_price = $in->getCost();
-                                        echo "<td>" . number_format( $in->getCost(), 2 ) . "</td>";
-//                                        echo "<tt><pre> operator - ".print_r( $in->getOperator() , true )."</pre></tt>";
-//                                        echo "<tt><pre> rub - ".print_r( $in->getPos() , true )."</pre></tt>";
+                                        $cost = $in->getCost();
+                                        $id_catalog = $in->getIdCatalog();
+                                        $position = $in->getPos();
                                     }
-                                    $subtotal = $index * $item_price;
-//                            echo "<tt><pre>".print_r( $in->getIdCatalog(), true )."</pre></tt>";
-                                    echo "<td><input type=\"text\" maxlength=\"2\" size=\"2\" value=\"{$index}\"  name=\"{$in->getPos()}\" /></td>";
-                                    ?>
-                                          <td><?php echo number_format( $subtotal, 2 ) ?></td>
-                                    <?php
-    //                            echo "<tt><pre>".print_r( $colCatalogPosition[$i][$index] , true )."</pre></tt>";
-//                                echo "<tt><pre>".print_r( $qty , true )."</pre></tt>";
+                                    $subtotal = $index * $cost;
+
+                                echo  "<tr><td>$name</td>
+                                       <td>" . number_format( $cost, 2 ) . "</td>
+                                       <td><input type=\"text\" maxlength=\"2\" size=\"2\" name=\"{$id_catalog}_{$position}\" value=\"{$index}\" /></td>
+                                       <td>" . number_format( $subtotal, 2 ) . "</td></tr>";
 
                                     $sum_subtotal = $sum_subtotal + $subtotal;
-
-
                                 }
-
-//                                print "<br /> ----------------- <br />";
-                                echo "</tr>";
                             }
                             ?>
                                   <tr>
-                                    <td><input type="hidden" name="id_catalog" value="<?php echo $in->getIdCatalog(); ?>" /></td>
+                                    <td></td>
                                     <td><input type="submit" name="update" value="Обновить" /></td>
                                     <td>Итого</td>
                                     <td><?php echo number_format( $sum_subtotal, 2 ); ?></td>
                                   </tr>
                                   </tbody></table></form>
                             <?php
-                            echo "<p><a href=\"#\" class=\"main_txt_lnk\">Оплатить</a></p>";
+                            echo "<p><a href=\"#\" class=\"main_txt_lnk\">Оформить заказ</a></p>";
 
                         } else {
                             echo "<h2>Ваша корзина пуста</h2>";

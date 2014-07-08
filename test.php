@@ -7,78 +7,21 @@
  * To change this template use File | Settings | File Templates.
  */
 namespace imei_service\view\utils;
-require_once( "imei_service/view/utils/encodeString.php" );
-header('Content-type: text/html; charset=utf8');
-function ut8_win($str)
-{
-    $win = array("а","б","в","г","д","е","ё","ж","з","и",
-        "й","к","л","м","н","о","п","р","с","т",
-        "у","ф","х","ц","ч","ш","щ","ъ","ы","ь",
-        "э","ю","я","А","Б","В","Г","Д","Е","Ё",
-        "Ж","З","И","Й","К","Л","М","Н","О","П",
-        "Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ",
-        "Ъ","Ы","Ь","Э","Ю","Я","");
-    $utf8 = array("\xD0\xB0","\xD0\xB1","\xD0\xB2","\xD0\xB3","\xD0\xB4",
-        "\xD0\xB5","\xD0\x91","\xD0\xB6","\xD0\xB7","\xD0\xB8",
-        "\xD0\xB9","\xD0\xBA","\xD0\xBB","\xD0\xBC","\xD0\xBD",
-        "\xD0\xBE","\xD0\xBF","\xD1\x80","\xD1\x81","\xD1\x82",
-        "\xD1\x83","\xD1\x84","\xD1\x85","\xD1\x86","\xD1\x87",
-        "\xD1\x88","\xD1\x89","\xD1\x8A","\xD1\x8B","\xD1\x8C",
-        "\xD1\x8D","\xD1\x8E","\xD1\x8F","\xD0\x90","\xD0\x91",
-        "\xD0\x92","\xD0\x93","\xD0\x94","\xD0\x95","\xD0\x81",
-        "\xD0\x96","\xD0\x97","\xD0\x98","\xD0\x99","\xD0\x9A",
-        "\xD0\x9B","\xD0\x9C","\xD0\x9D","\xD0\x9E","\xD0\x9F",
-        "\xD0\xA0","\xD0\xA1","\xD0\xA2","\xD0\xA3","\xD0\xA4",
-        "\xD0\xA5","\xD0\xA6","\xD0\xA7","\xD0\xA8","\xD0\xA9",
-        "\xD0\xAA","\xD0\xAB","\xD0\xAC","\xD0\xAD","\xD0\xAE",
-        "\xD0\xAF","+");
-    return str_replace($utf8, $win, $str);
-}
-
-function renameImg( $name, $dir ) {
-//    $dir = pathOnServer( $dir );
-    $path_parts = pathinfo( $name );  // получаем массив с метаданными изображения
-    $ext = ".".$path_parts['extension'];  // получаем точку с расширением, к примеру: ".png"
-//    $path = basename( $name, $ext ); // получаем имя файла без расширения
-//    $path = preg_replace(  "| |","_", $path ); // заменяем пробелы нижним подчеркиванием
-    $path = $ext; // добавляем в конец расширение
-    $path = str_replace( "//","/", $dir."/".time().$path ); // заменяем двойной слеш одинарным и собираем весь путь
-    return $path;
-}
-
-    if( ! empty( $_FILES['filename']['tmp_name'] ) ) {
-        $name = renameImg($_FILES['filename']['name'], 'files' );
-
-
-//        $names = \imei_service\view\utils\encodestring($name['filename']);
-        echo "<tt><pre>".print_r( pathinfo($name), true)."</pre></tt>";
 
 
 
-//    echo "<tt><pre>".print_r( $_FILES, true)."</pre></tt>";
 
-//    echo "<tt><pre>".print_r( $_POST, true)."</pre></tt>";
+$_SESSION['test'][1][33]='test';
 
-} else {
-//
-//    if( ! empty( $_FILES['filename']['tmp_name'] ) ) {
-//        echo "<tt><pre>".print_r( $_FILES['filename']['tmp_name'], true)."</pre></tt>";
-//    }
-
-
-
-?>
-
-
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="filename">
-    <input type="submit">
-
-</form>
-
-
-<?php
+$first = array(1,2,3,4,5);
+$second = array(11,22,33);
+foreach ( $_SESSION['test'] as $firs => $secon ) {
+    print_r($firs);
+    foreach ($secon as $fir => $sec ) {
+        print_r($sec);
+    }
 
 }
 
+//print $_SESSION['test'][1][33];
 ?>
