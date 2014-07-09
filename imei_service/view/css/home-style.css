@@ -781,7 +781,7 @@ a.block {
 
 body #showcase .row img.hero-image.flushleft {
     /*left: 80px;*/
-    left: 85px;
+    left: 100px;
     top: 1px;
 }
 body #showcase .row img.hero-image {
@@ -803,6 +803,17 @@ img.flushleft {
      width: 700px;
 
 }
+
+.dividerdownmidi3 {
+    z-index: 100;
+    background: url("../images/showcase_divider_midi.png") no-repeat scroll 0 0 transparent;
+    width: 800px;
+    margin-left: 50px;
+}.dividerdownbottom3 {
+     background: url("../images/showcase_divider_bottom.png") no-repeat scroll 0 0 transparent;
+     width: 700px;
+
+ }
 .main_txt.column.last {
     padding-bottom: 40px;
 
@@ -1912,4 +1923,8 @@ ul#login-nav {
     top: 32px;
     width: 290px;
     z-index: 9999;
+}
+
+#logo_service {
+    z-index: 1;
 }

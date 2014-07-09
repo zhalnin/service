@@ -176,6 +176,9 @@ require_once("../../config/class.config.dmn.php");
                     case 'Vodafone':
                         $operator = "Vodafone";
                         break;
+                    default:
+                        $operator = $position['operator'];
+                        break;
                 }
                 // Определем материал дома
                 $cost = $position['cost'];

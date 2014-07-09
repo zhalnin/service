@@ -215,6 +215,9 @@ try
                 case 'Vodafone':
                     $operator = "Vodafone";
                     break;
+                default:
+                    $operator = $position[$i]['operator'];
+                    break;
             }
 
             // Выводим позицию

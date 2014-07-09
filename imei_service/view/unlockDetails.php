@@ -74,16 +74,15 @@ try {
                                         <div style='width: 140px; float: left; margin: 10px 0 20px 65px;'><b>Стоимость</b></div>
                                         <div style='width: 190px; float: left; margin: 10px 0 20px 60px;'><b>Сроки</b></div>
                                     </div>
-<?php
-//echo "<tt><pre>".print_r($unlockDetails, true)."</pre></tt>";
-        foreach ( $unlockDetails as $uda ) {
-                echo "<div>
-                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>".$uda->getOperator()."</b></ins></div>
-                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone ".$uda->getCompatible()."</div>
-                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>".printPrice($uda->getCost())."</div>
-                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>".$uda->getTimeconsume()." ".$uda->getStatus()."<span class='buynow'><a style='display:block;' href='?cmd=Unlock&act=add_to_cart&ctr={$_GET['ctr']}&idp={$_GET['idp']}&idc={$_GET['idc']}&pos={$uda->getPos()}' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
-                    </div>";
-            }
+            <?php foreach ( $unlockDetails as $uda ): ?>
+                    <div>
+                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b><?php echo $uda->getOperator(); ?></b></ins></div>
+                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone <?php echo $uda->getCompatible(); ?></div>
+                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'><?php echo printPrice($uda->getCost()); ?></div>
+                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'><?php echo $uda->getTimeconsume() . " " . $uda->getStatus(); ?><span class='buynow'><a style='display:block;' href='?cmd=Unlock&act=add_to_cart&ctr=<?php echo $_GET['ctr']; ?>&idp=<?php echo $_GET['idp']; ?>&idc=<?php echo $_GET['idc']; ?>&pos=<?php echo $uda->getPos(); ?>' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
+                    </div>
+            <?php endforeach;
+
             echo "</div><!-- End of column last dividerdownmidi -->
                                 <div class=\"dividerdownbottom\"; style='width: 700px; height: 40px; clear : both;'></div>
                             </div><!-- End of column last -->
