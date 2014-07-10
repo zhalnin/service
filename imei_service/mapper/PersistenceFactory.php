@@ -49,6 +49,9 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Udid":
                 return new UdidPersistenceFactory();
                 break;
+            case "imei_service\\domain\\UdidkDetails":
+                return new UdidDetailsPersistenceFactory();
+                break;
             case "imei_service\\domain\\CarrierCheck":
                 return new CarrierCheckPersistenceFactory();
                 break;
@@ -367,6 +370,35 @@ class UdidPersistenceFactory extends PersistenceFactory {
         return new UdidIdentityObject();
     }
 }
+
+
+class UdidDetailsPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new UdidDetailsMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new UdidDetailsObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new UdidDetailsCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new UdidDetailsSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new UdidDetailsUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new UdidDetailsIdentityObject();
+    }
+}
+
 
 
 class UnlockPersistenceFactory extends PersistenceFactory {

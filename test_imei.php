@@ -118,7 +118,7 @@ try {
                                         <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>3 минуты<span class='buynow'><a style='display:block;' href='#' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
                                     </div>
                                     <div>
-                                        <div style='width: 180px; float: left; margin: 10px 0 0 0px; font-size: 11pt' id='operator'><ins><b>Только SimLock</b></ins></div>
+                                        <div style='width: 180px; float: left; margin: 10px 0 0 0px; font-size: 11pt' id='operator'><ins><b>Проверка SimLock</b></ins></div>
                                         <div style='width: 163px; float: left; margin: 10px 0 0 52px;' id='compatible'>iPhone</div>
                                         <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>".printPrice(20)."</div>
                                         <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>3 минуты<span class='buynow'><a style='display:block;' href='#' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>

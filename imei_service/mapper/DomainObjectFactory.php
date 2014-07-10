@@ -14,6 +14,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 //require_once( 'imei_service/domain.php' );
 require_once( 'imei_service/domain/FaqPosition.php' );
 require_once( 'imei_service/domain/FaqParagraphImage.php' );
+require_once( 'imei_service/domain/UnlockDetails.php' );
 
 
 abstract class DomainObjectFactory {
@@ -202,6 +203,14 @@ class UdidObjectFactory extends DomainObjectFactory {
         $obj->setTitleFlag( $array['title_flag'] );
         $obj->setAltFlag( $array['alt_flag'] );
         $obj->setIdParent( $array['id_parent'] );
+
+        $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
+        $udid_assembler = new DomainObjectAssembler( $factory );
+        $udid_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
+        $udid_idobj->eq( $array['id_catalog'] );
+        $udidDetails = $udid_assembler->find( $udid_idobj );
+//        echo "<tt><pre>".print_r( $udidDetails, true) ."</pre></tt>";
+        $obj->setUdidDetails( $udidDetails );
 
         $this->addToMap( $obj );
         $obj->markClean();

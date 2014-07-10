@@ -27,6 +27,7 @@ class Udid extends DomainObject {
     private $titleFlag;
     private $altFlag;
     private $idParent;
+    private $udidDetails;
 
 
     function __construct(   $id             =null,
@@ -75,6 +76,19 @@ class Udid extends DomainObject {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
         return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'udid' )->field( 'hide' )->eq( 'show' ) );
+    }
+
+    function setUdidDetails( UnlockDetailsCollection $udidDetails ) {
+        $this->udidDetails = $udidDetails;
+    }
+
+    function getUdidDetails() {
+        if( ! isset( $this->udidDetails ) ) {
+            $finder = self::getFinder( 'imei_service\\domain\\UnlockDetails');
+            $udid_idobj = new \imei_service\mapper\UnlockDetailsIdentityObject( 'id_catalog' );
+            $this->udidDetails = $finder->find( $udid_idobj->eq( $this->getId() ) );
+        }
+        return $this->udidDetails;
     }
 
 

@@ -94,131 +94,133 @@ try
                 $strhide = "<a href=poshide.php?$url>Скрыть</a>";
                 $style = "";
             }
+
             // Определяем оператора
-            $operator = "AT&T";
-            switch ($position[$i]['operator'])
-            {
-                case 'AT&T':
-                    $operator = "AT&T";
-                    break;
-                case 'Avea':
-                    $operator = "Aveaa";
-                    break;
-                case 'Bouygues':
-                    $operator = "Bouygues";
-                    break;
-                case 'Bell':
-                    $operator = "Bell";
-                    break;
-                case 'Cellcom':
-                    $operator = "Cellcom";
-                    break;
-                case 'Claro':
-                    $operator = "Claro";
-                    break;
-                case 'Etisalat':
-                    $operator = "Etisalat";
-                    break;
-                case 'EMEA':
-                    $operator = "EMEA";
-                    break;
-                case 'Entel':
-                    $operator = "Entel";
-                    break;
-                case 'Fido/Rogers':
-                    $operator = "Fido/Rogers";
-                    break;
-                case 'KPN':
-                    $operator = "KPN";
-                    break;
-                case 'KT-Freetel':
-                    $operator = "KT-Freetel";
-                    break;
-                case 'Mobilkom':
-                    $operator = "Mobilkom";
-                    break;
-                case 'Mobinil':
-                    $operator = "Mobinil";
-                    break;
-                case 'Movistar':
-                    $operator = "Movistar";
-                    break;
-                case 'Netcom':
-                    $operator = "Netcom";
-                    break;
-                case 'Omnitel':
-                    $operator = "Omnitel";
-                    break;
-                case 'Optus':
-                    $operator = "Optus";
-                    break;
-                case 'Orange':
-                    $operator = "Orange";
-                    break;
-                case 'O2':
-                    $operator = "O2";
-                    break;
-                case 'Pelephone':
-                    $operator = "Pelephone";
-                    break;
-                case 'Play':
-                    $operator = "Play";
-                    break;
-                case 'SFR':
-                    $operator = "SFR";
-                    break;
-                case 'STC':
-                    $operator = "STC";
-                    break;
-                case 'Softbank':
-                    $operator = "Softbank";
-                    break;
-                case 'Sunrise':
-                    $operator = "Sunrise";
-                    break;
-                case 'Swisscom':
-                    $operator = "Swisscom";
-                    break;
-                case '3Three/Hutchison':
-                    $operator = "3Three/Hutchison";
-                    break;
-                case 'Tukcell':
-                    $operator = "Tukcell";
-                    break;
-                case 'Telenor':
-                    $operator = "Telenor";
-                    break;
-                case 'Tele2':
-                    $operator = "Tele2";
-                    break;
-                case 'Telia':
-                    $operator = "Telia";
-                    break;
-                case 'Telus':
-                    $operator = "Telus";
-                    break;
-                case 'Telstra':
-                    $operator = "Telstra";
-                    break;
-                case 'Tim':
-                    $operator = "Tim";
-                    break;
-                case 'T-Mobile':
-                    $operator = "T-Mobile";
-                    break;
-                case 'Vivo':
-                    $operator = "Vivo";
-                    break;
-                case 'Verizon':
-                    $operator = "Verizon";
-                    break;
-                case 'Vodafone':
-                    $operator = "Vodafone";
-                    break;
-                default:
-                    $operator = $position[$i]['operator'];
-                    break;
-            }
+            $operator = $position[$i]['operator'];
+//            $operator = "AT&T";
+//            switch ($position[$i]['operator'])
+//            {
+//                case 'AT&T':
+//                    $operator = "AT&T";
+//                    break;
+//                case 'Avea':
+//                    $operator = "Aveaa";
+//                    break;
+//                case 'Bouygues':
+//                    $operator = "Bouygues";
+//                    break;
+//                case 'Bell':
+//                    $operator = "Bell";
+//                    break;
+//                case 'Cellcom':
+//                    $operator = "Cellcom";
+//                    break;
+//                case 'Claro':
+//                    $operator = "Claro";
+//                    break;
+//                case 'Etisalat':
+//                    $operator = "Etisalat";
+//                    break;
+//                case 'EMEA':
+//                    $operator = "EMEA";
+//                    break;
+//                case 'Entel':
+//                    $operator = "Entel";
+//                    break;
+//                case 'Fido/Rogers':
+//                    $operator = "Fido/Rogers";
+//                    break;
+//                case 'KPN':
+//                    $operator = "KPN";
+//                    break;
+//                case 'KT-Freetel':
+//                    $operator = "KT-Freetel";
+//                    break;
+//                case 'Mobilkom':
+//                    $operator = "Mobilkom";
+//                    break;
+//                case 'Mobinil':
+//                    $operator = "Mobinil";
+//                    break;
+//                case 'Movistar':
+//                    $operator = "Movistar";
+//                    break;
+//                case 'Netcom':
+//                    $operator = "Netcom";
+//                    break;
+//                case 'Omnitel':
+//                    $operator = "Omnitel";
+//                    break;
+//                case 'Optus':
+//                    $operator = "Optus";
+//                    break;
+//                case 'Orange':
+//                    $operator = "Orange";
+//                    break;
+//                case 'O2':
+//                    $operator = "O2";
+//                    break;
+//                case 'Pelephone':
+//                    $operator = "Pelephone";
+//                    break;
+//                case 'Play':
+//                    $operator = "Play";
+//                    break;
+//                case 'SFR':
+//                    $operator = "SFR";
+//                    break;
+//                case 'STC':
+//                    $operator = "STC";
+//                    break;
+//                case 'Softbank':
+//                    $operator = "Softbank";
+//                    break;
+//                case 'Sunrise':
+//                    $operator = "Sunrise";
+//                    break;
+//                case 'Swisscom':
+//                    $operator = "Swisscom";
+//                    break;
+//                case '3Three/Hutchison':
+//                    $operator = "3Three/Hutchison";
+//                    break;
+//                case 'Tukcell':
+//                    $operator = "Tukcell";
+//                    break;
+//                case 'Telenor':
+//                    $operator = "Telenor";
+//                    break;
+//                case 'Tele2':
+//                    $operator = "Tele2";
+//                    break;
+//                case 'Telia':
+//                    $operator = "Telia";
+//                    break;
+//                case 'Telus':
+//                    $operator = "Telus";
+//                    break;
+//                case 'Telstra':
+//                    $operator = "Telstra";
+//                    break;
+//                case 'Tim':
+//                    $operator = "Tim";
+//                    break;
+//                case 'T-Mobile':
+//                    $operator = "T-Mobile";
+//                    break;
+//                case 'Vivo':
+//                    $operator = "Vivo";
+//                    break;
+//                case 'Verizon':
+//                    $operator = "Verizon";
+//                    break;
+//                case 'Vodafone':
+//                    $operator = "Vodafone";
+//                    break;
+//                default:
+//                    $operator = $position[$i]['operator'];
+//                    break;
+//            }
 
             // Выводим позицию
             echo "<tr $style>
