@@ -20,62 +20,62 @@ if(empty($_POST)) $_REQUEST['hide'] = true;
 try
 {
     $name               = new FieldText("name",
-                            "Название",
-                            true,
-                            $_POST['name']);
+                                        "Название",
+                                        true,
+                                        $_POST['name']);
     $order_title        = new FieldText("order_title",
                                         "Название заказа",
                                         true,
                                         $_POST['order_title']);
     $description        = new FieldTextarea("description",
-                                    "Описание",
-                                    false,
-                                    $_POST['description'],
-                                    '100',
-                                    '20');
+                                            "Описание",
+                                            false,
+                                            $_POST['description'],
+                                            '100',
+                                            '20');
     $keywords           = new FieldText("keywords",
                                         "Ключевые слова",
                                         false,
                                         $_POST['keywords']);
     $abbreviatura       = new FieldText("abbreviatura",
-                            "Аббревиатура страны",
-                            false,
-                            $_POST['abbreviatura']);
+                                        "Аббревиатура страны",
+                                        false,
+                                        $_POST['abbreviatura']);
     $modrewrite         = new FieldTextEnglish("modrewrite",
                                         "Название для<br/>ReWrite",
                                         false,
                                         $_POST['modrewrite']);
     $hide               = new FieldCheckbox("hide",
-                            "Отображать",
-                            $_REQUEST['hide']);
+                                            "Отображать",
+                                            $_REQUEST['hide']);
     $urlpict            = new FieldFile("urlpict",
-                                    "Большой флаг",
-                                    false,
-                                    $_FILES,
-                                    "../../images/country_flag/");
+                                        "Большой флаг",
+                                        false,
+                                        $_FILES,
+                                        "../../images/country_flag/");
     $alt                = new FieldText("alt",
-                                    "ALT-тег",
-                                    false,
-                                    $_POST['alt']);
+                                        "ALT-тег",
+                                        false,
+                                        $_POST['alt']);
     $title_flag         = new FieldText("title_flag",
-                                    "Название страны",
-                                    false,
-                                    $_POST['title_flag']);
-    $rounded_flag        = new FieldFile("rounded_flag",
-                            "Маленький флаг",
-                            false,
-                            $_FILES,
-                            "../../images/rounded_flag/");
+                                        "Название страны",
+                                        false,
+                                        $_POST['title_flag']);
+    $rounded_flag       = new FieldFile("rounded_flag",
+                                        "Маленький флаг",
+                                        false,
+                                        $_FILES,
+                                        "../../images/rounded_flag/");
     $alt_flag           = new FieldText("alt_flag",
-                            "ALT-тег",
-                            false,
-                            $_POST['alt_flag']);
+                                        "ALT-тег",
+                                        false,
+                                        $_POST['alt_flag']);
     $id_parent          = new FieldHiddenInt("id_parent",
-                                    true,
-                                    $_REQUEST['id_parent']);
+                                            true,
+                                            $_REQUEST['id_parent']);
     $page               = new FieldHiddenInt("page",
-                                false,
-                                $_REQUEST['page']);
+                                            false,
+                                            $_REQUEST['page']);
     // Форма
     $form               = new Form(array("name"           => $name,
                                         "order_title"   => $order_title,
@@ -92,8 +92,8 @@ try
                                         "modrewrite"    => $modrewrite,
                                         "id_parent"     => $id_parent,
                                         "page"          => $page),
-                    "Добавить",
-                    "field");
+                                        "Добавить",
+                                        "field");
 
     // Обработчик HTML-формы
     if(!empty($_POST))

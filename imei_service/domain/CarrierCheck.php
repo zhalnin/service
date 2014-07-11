@@ -28,6 +28,7 @@ class CarrierCheck extends DomainObject {
     private $titleFlag;
     private $altFlag;
     private $idParent;
+    private $carrierCheckDetails;
 
 
     function __construct(   $id             =null,
@@ -76,6 +77,19 @@ class CarrierCheck extends DomainObject {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
         return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'CarrierCheck' )->field( 'hide' )->eq( 'show' ) );
+    }
+
+    function setCarrierCheckDetails( UnlockDetailsCollection $carrierCheckDetails ) {
+        $this->carrierCheckDetails = $carrierCheckDetails;
+    }
+
+    function getCarrierCheckDetails() {
+        if( ! isset( $this->carrierCheckDetails ) ) {
+            $finder = self::getFinder( 'imei_service\\domain\\UnlockDetails');
+            $carrierCheck_idobj = new \imei_service\mapper\UnlockDetailsIdentityObject( 'id_catalog' );
+            $this->carrierCheckDetails = $finder->find( $carrierCheck_idobj->eq( $this->getId() ) );
+        }
+        return $this->carrierCheckDetails;
     }
 
 

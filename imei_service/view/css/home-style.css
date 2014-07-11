@@ -753,7 +753,7 @@ body #showcase .row {
     margin: 0;
     margin-left: 0;
   /*min-height: 320px;*/
-    min-height: 400px;
+    min-height: 200px;
     padding: 10px 0 10px 120px;
     position: relative;
     z-index: 1;
@@ -881,7 +881,7 @@ body .divider-up.divider-down {
     background: url("../images/section_divider_crease_up.jpg") no-repeat scroll 50% 100% / 1120px 90px, url("../images/section_divider_crease_down.jpg") no-repeat scroll 50% 0 / 1120px 92px transparent;
 }
 body .border{
-    border-top: 1px solid #DDDDDD;
+    /*border-top: 1px solid #DDDDDD;*/
     clear: both;
     padding-top: 9px;
     /*width: 100%;*/
@@ -1133,7 +1133,11 @@ span #uah.currency{
     clear: both;
     border-top: 1px solid #E4E4E4;
 }
-
+.news-slogan {
+    height: 28px;
+    clear: both;
+    border-bottom: 1px solid #E4E4E4;
+}
 
 
 

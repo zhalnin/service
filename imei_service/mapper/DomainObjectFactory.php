@@ -241,6 +241,14 @@ class CarrierCheckObjectFactory extends DomainObjectFactory {
         $obj->setAltFlag( $array['alt_flag'] );
         $obj->setIdParent( $array['id_parent'] );
 
+        $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
+        $carrierCheck_assembler = new DomainObjectAssembler( $factory );
+        $carrierCheck_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
+        $carrierCheck_idobj->eq( $array['id_catalog'] );
+        $carrierCheckDetails = $carrierCheck_assembler->find( $carrierCheck_idobj );
+//        echo "<tt><pre>".print_r( $carrierCheckDetails, true) ."</pre></tt>";
+        $obj->setCarrierCheckDetails( $carrierCheckDetails );
+
         $this->addToMap( $obj );
         $obj->markClean();
         return $obj;
@@ -298,6 +306,15 @@ class BlacklistCheckObjectFactory extends DomainObjectFactory {
         $obj->setTitleFlag( $array['title_flag'] );
         $obj->setAltFlag( $array['alt_flag'] );
         $obj->setIdParent( $array['id_parent'] );
+
+
+        $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
+        $blacklistCheck_assembler = new DomainObjectAssembler( $factory );
+        $blacklistCheck_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
+        $blacklistCheck_idobj->eq( $array['id_catalog'] );
+        $blacklistCheckDetails = $blacklistCheck_assembler->find( $blacklistCheck_idobj );
+//        echo "<tt><pre>".print_r( $blacklistCheckDetails, true) ."</pre></tt>";
+        $obj->setBlacklistCheckDetails( $blacklistCheckDetails );
 
         $this->addToMap( $obj );
         $obj->markClean();

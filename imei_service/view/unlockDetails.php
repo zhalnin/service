@@ -60,7 +60,9 @@ try {
             <div id="slogan">Быстро - Качественно - Надежно</div>
         </div><!-- End of main-slogan -->
             <div id="news-main" class="main-content" style="overflow: hidden;">
-                <div id="slogan"><span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
+                <div class="news-slogan">
+                    <div id="slogan"><span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
+                </div>
                 <div id="showcase" class="content">
                     <div id="design">
                         <div class="row block grid2col row block border">
@@ -68,30 +70,31 @@ try {
                             <div class="column last">
                                 <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$unlockParent->getAbbreviatura().'&idp='.$unlockParent->getIdParent() ?>"><?php echo $unlockParent->getName();?></a></h1>
                                 <div class='column last dividerdownmidi'>
-                                    <div>
-                                        <div style='width: 160px; float: left; margin: 10px 0 20px 50px;'><b>Оператор</b></div>
-                                        <div style='width: 156px; float: left; margin: 10px 0 20px 50px;'><b>Совместимость</b></div>
-                                        <div style='width: 140px; float: left; margin: 10px 0 20px 65px;'><b>Стоимость</b></div>
-                                        <div style='width: 190px; float: left; margin: 10px 0 20px 60px;'><b>Сроки</b></div>
+                                    <div class="table_items">
+                                        <div class="table_name"><b>Наименование</b></div>
+                                        <div class="table_cost"><b>Совместимость</b></div>
+                                        <div class="table_quantity"><b>Стоимость</b></div>
+                                        <div class="table_total"><b>Сроки</b></div>
                                     </div>
-            <?php foreach ( $unlockDetails as $uda ): ?>
-                    <div style='clear:both'>
-                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b><?php echo $uda->getOperator(); ?></b></ins></div>
-                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'><?php echo $uda->getCompatible() . " " . $uda->getStatus();  ?></div>
-                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'><?php echo printPrice($uda->getCost()); ?></div>
-                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'><?php echo $uda->getTimeconsume()?><span class='buynow'><a style='display:block;' href='?cmd=Unlock&act=add_to_cart&ctr=<?php echo $_GET['ctr']; ?>&idp=<?php echo $_GET['idp']; ?>&idc=<?php echo $_GET['idc']; ?>&pos=<?php echo $uda->getPos(); ?>' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
-                    </div>
-            <?php endforeach;
+                            <?php foreach ( $unlockDetails as $uda ): ?>
+                                    <div class="table_div" style='clear:both'>
+                                        <div class="table_name_div" id='operator'><ins><b><?php echo $uda->getOperator(); ?></b></ins></div>
+                                        <div class="table_quantity_div" id='compatible'><?php echo $uda->getCompatible() . " " . $uda->getStatus();  ?></div>
+                                        <div class="table_cost_div" id='timeconsume'><?php echo printPrice($uda->getCost()); ?></div>
+                                        <div class="table_total_div" id='timeconsume'><?php echo $uda->getTimeconsume()?><span class='buynow'><a style='display:block;' href='?cmd=Unlock&act=add_to_cart&ctr=<?php echo $_GET['ctr']; ?>&idp=<?php echo $_GET['idp']; ?>&idc=<?php echo $_GET['idc']; ?>&pos=<?php echo $uda->getPos(); ?>' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
+                                    </div>
+                            <?php endforeach;
 
-            echo "</div><!-- End of column last dividerdownmidi -->
-                                <div class=\"dividerdownbottom\"; style='width: 700px; height: 40px; clear : both;'></div>
-                            </div><!-- End of column last -->
-                        </div><!-- End of row block grid2col row block border -->
-                    </div>";  // End of design
+             echo "</div><!-- End of column last dividerdownmidi -->
+                    <div class=\"dividerdownbottom\" style='width: 700px; height: 40px; clear : both;'></div>
+                </div><!-- End of column last -->
+            </div><!-- End of row block grid2col row block border -->
+        </div>";  // End of design
 
 ?>
 
             </div>  <!-- End of showcase -->
+                                <div class="news-footer"></div>
         </div>  <!-- End of news-main -->
         </div>  <!-- End of main -->
     <?php

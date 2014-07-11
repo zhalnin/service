@@ -27,44 +27,44 @@ try {
         3 );
 
     $cost           = new FieldText("cost",
-        "Стоимость",
-        true,
-        $_REQUEST['cost']);
+                                    "Стоимость",
+                                    true,
+                                    $_REQUEST['cost']);
     $timeconsume    = new FieldText("timeconsume",
-        "Сроки выполнения",
-        true,
-        $_REQUEST['timeconsume']);
+                                    "Сроки выполнения",
+                                    true,
+                                    $_REQUEST['timeconsume']);
     $compatible    = new FieldText("compatible",
-        "Совместимость",
-        false,
-        $_REQUEST['compatible']);
+                                    "Совместимость",
+                                    false,
+                                    $_REQUEST['compatible']);
     $status         = new FieldText("status",
-        "Статус аппарата",
-        false,
-        $_REQUEST['status']);
+                                    "Статус аппарата",
+                                    false,
+                                    $_REQUEST['status']);
 
     $currency       = new FieldSelect("currency",
-        "Валюта",
-        array("RUR" => "RUR",
-            "EUR" => "EUR",
-            "USD" => "USD"),
-        $_REQUEST['currency']);
+                                        "Валюта",
+                                        array("RUR" => "RUR",
+                                            "EUR" => "EUR",
+                                            "USD" => "USD"),
+                                            $_REQUEST['currency']);
     $hide           = new FieldCheckbox("hide",
-        "Отображать",
-        $_REQUEST['hide']);
+                                        "Отображать",
+                                        $_REQUEST['hide']);
     $id_catalog     = new FieldHiddenInt("id_catalog",
-        true,
-        $_REQUEST['id_catalog']);
+                                            true,
+                                            $_REQUEST['id_catalog']);
     $form           = new Form(array("operator"     => $operator,
-            "cost"          => $cost,
-            "timeconsume"   => $timeconsume,
-            "compatible"    => $compatible,
-            "status"        => $status,
-            "currency"      => $currency,
-            "hide"          => $hide,
-            "id_catalog"    => $id_catalog),
-        "Добавить",
-        "field");
+                                    "cost"          => $cost,
+                                    "timeconsume"   => $timeconsume,
+                                    "compatible"    => $compatible,
+                                    "status"        => $status,
+                                    "currency"      => $currency,
+                                    "hide"          => $hide,
+                                    "id_catalog"    => $id_catalog),
+                                "Добавить",
+                                "field");
     // Обработчик HTML-формы
     if( ! empty( $_POST ) ) {
         // Проверяем корректность заполнения HTML-формы

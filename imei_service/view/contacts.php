@@ -117,7 +117,7 @@ try {
                 </div>
 
             </div><!-- End of contact-container -->
-            <div class=\"contact-footer\"></div><!-- End of contact-footer -->
+            <div class="contact-footer"></div><!-- End of contact-footer -->
         </div><!-- End of contact-content -->
     </div><!-- End of contact-main -->
 

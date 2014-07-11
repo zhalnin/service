@@ -872,3 +872,130 @@ li.cart {
     text-decoration:none;
     color:#8a8a8a
 }
+.empty_cart {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    bottom: 50px;
+}
+.cart_refreshCode {
+    background: url("../icons/refresh_13x12.png") no-repeat 0 0 scroll ;
+    width: 17px;
+    height: 18px;
+    float: right;
+    display: block;
+    margin: 4px 0 0 1px;
+    /*position: relative;*/
+    border: none;
+    cursor: pointer;
+}
+
+/*для шапки таблицы корзины*/
+.cart_table div {
+    text-align: center;
+    font-size: 11pt;
+    float: left;
+}
+.cart_table_name {
+    width: 175px;
+    margin: 10px 4px 40px 0;
+}
+.cart_table_cost {
+    width: 194px;
+    margin: 10px 14px 40px 0;
+}
+.cart_table_quantity {
+    width: 205px;
+    margin: 10px 0 40px 0;
+}
+.cart_table_total {
+    width: 200px;
+    margin: 10px 0 40px 0;
+}
+
+/*для таблицы со значениями для корзины*/
+.cart_table_div div {
+    font-size: 10pt;
+}
+.cart_table_name_div {
+    width: 175px;
+    margin: 10px 4px 0 0;
+    float: left;
+}
+.cart_table_cost_div {
+    width: 194px;
+    margin: 10px 14px 0 0;
+    text-align: right;
+    float: left;
+}
+.cart_table_quantity_div {
+    width: 120px;
+    margin: 10px 0 0 85px;
+    float: left;
+}
+.table_total_div {
+    width: 300px;
+    margin: 10px 0 0 0;
+    float: left;
+}
+.table_total_div_currency {
+    width: 25px;
+    display: block;
+    float: left;
+    margin-left: 148px;
+}
+.table_total_div_value {
+    width: 40px;
+    display: block;
+    float: right;
+    margin-right: 90px;
+    text-align: right;
+}
+
+
+/*для шапки таблицы*/
+.table_items div {
+    text-align: center;
+    font-size: 11pt;
+    float: left;
+}
+.table_name {
+    width: 175px;
+    margin: 10px 4px 40px 0;
+}
+.table_cost {
+    width: 194px;
+    margin: 10px 14px 40px 0;
+}
+.table_quantity {
+    width: 205px;
+    margin: 10px 0 40px 0;
+}
+.table_total {
+    width: 200px;
+    margin: 10px 0 40px 0;
+}
+
+/*для таблицы со значениями*/
+.table_div div {
+    font-size: 10pt;
+    float: left;
+}
+.table_name_div {
+    width: 175px;
+    margin: 10px 4px 0 0;
+}
+.table_quantity_div {
+    width: 203px;
+    margin: 10px 0 0 2px;
+    text-align: center;
+}
+.table_cost_div {
+    width: 194px;
+    margin: 10px 14px 0 0;
+    text-align: right;
+}
+.table_total_div {
+    width: 220px;
+    margin: 10px 0 0 60px;
+}

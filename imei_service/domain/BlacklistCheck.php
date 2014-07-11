@@ -28,6 +28,7 @@ class BlacklistCheck extends DomainObject {
     private $titleFlag;
     private $altFlag;
     private $idParent;
+    private $blacklistCheckDetails;
 
 
     function __construct(   $id             =null,
@@ -77,6 +78,21 @@ class BlacklistCheck extends DomainObject {
         $idobj = new \imei_service\mapper\UnlockIdentityObject( 'id_parent' );
         return $finder->findOne( $idobj->eq( $id )->field( 'modrewrite' )->eq( 'BlacklistCheck' )->field( 'hide' )->eq( 'show' ) );
     }
+
+
+    function setBlacklistCheckDetails( UnlockDetailsCollection $blacklistCheckDetails ) {
+        $this->blacklistCheckDetails = $blacklistCheckDetails;
+    }
+
+    function getBlacklistCheckDetails() {
+        if( ! isset( $this->blacklistCheckDetails ) ) {
+            $finder = self::getFinder( 'imei_service\\domain\\UnlockDetails');
+            $blacklistCheck_idobj = new \imei_service\mapper\UnlockDetailsIdentityObject( 'id_catalog' );
+            $this->blacklistCheckDetails = $finder->find( $blacklistCheck_idobj->eq( $this->getId() ) );
+        }
+        return $this->blacklistCheckDetails;
+    }
+
 
 
     function setName( $name_s ) {

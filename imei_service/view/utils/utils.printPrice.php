@@ -44,6 +44,6 @@ function printPrice($price){
             $c = " RUB";
             break;
     }
-    return $result." ".$c;
+    return $c."  ".number_format($result, 2);
 }
 ?>

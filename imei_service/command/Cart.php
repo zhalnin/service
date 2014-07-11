@@ -33,6 +33,7 @@ class Cart extends Command {
 //        echo $_SESSION['total_price_imei_service'];
 
         $action = $request->getProperty( 'act' ); // получаем название действия
+//        echo "<tt><pre>".print_r( $action , true )."</pre></tt>";
         if( ! empty( $_SESSION['cart_imei_service'] ) ) { // Если корзина не пуста
             // получаем id каталога и массив с позициями и количеством предметов в каждом
             foreach ( $_SESSION['cart_imei_service'] as $id_catalog => $positions ) {

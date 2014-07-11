@@ -24,7 +24,7 @@ try {
     $colCatalogPosition     = $request->getObject( 'cartCatalogPosition' );
     $colCatalog             = $request->getObject( 'cartCatalog' );
 
-
+//    echo "<tt><pre>".print_r( $colCatalogPosition , true ) ."</pre></tt>";
     // содержимое тега title
     $title          = "Корзина";
     // содержимое тега meta
@@ -40,7 +40,7 @@ try {
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
-            <li id="nav-unlock"><a  class="selected" href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
+            <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
             <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
             <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
             <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
@@ -58,22 +58,24 @@ try {
             <div id="slogan">Быстро - Качественно - Надежно</div>
         </div><!-- End of main-slogan -->
         <div id="news-main" class="main-content" style="overflow: hidden;">
+            <div class="news-slogan"></div>
             <div id="slogan"><span>&nbsp;</span></div>
             <div id="showcase" class="content">
                 <div id="design">
                     <div class="row block grid2col row block border">
-                        <img class="hero-image flushleft" alt="Корзина" src="imei_service/view/images/Apple_logo_black_shadow.png"  width="120" height="150">
+                        <img class="hero-image flushleft" alt="Корзина" src="imei_service/view/images/country_flag/Apple_logo_black_shadow_256x192.png"  width="256" height="192">
                         <div class="column last">
-                            <h1><a href="<?php echo $_SERVER[PHP_SELF] .'/'; ?>">Корзина</a></h1>
-                            <div class='column last dividerdownmidi'>
+                            <h1><a href="#">Ваша корзина</a></h1>
+
                         <?php if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) {
                                 ?>
+                            <div class='column last dividerdownmidi'>
                                 <form action="?cmd=Cart&act=update" method="post" >
-                                    <div>
-                                        <div style='width: 160px; float: left; margin: 10px 0 20px 50px;'><b>Наименование</b></div>
-                                        <div style='width: 156px; float: left; margin: 10px 0 20px 50px;'><b>Стоимость</b></div>
-                                        <div style='width: 140px; float: left; margin: 10px 0 20px 65px;'><b>Количество</b></div>
-                                        <div style='width: 190px; float: left; margin: 10px 0 20px 60px;'><b>Всего</b></div>
+                                    <div class="cart_table">
+                                        <div class="cart_table_name"><b>Наименование</b></div>
+                                        <div class="cart_table_cost"><b>Стоимость</b></div>
+                                        <div class="cart_table_quantity"><b>Количество</b></div>
+                                        <div class="cart_table_total"><b>Всего</b></div>
                                     </div>
 
                                     <?php
@@ -96,44 +98,37 @@ try {
                                                 $position = $in->getPos();
                                             }
                                             $subtotal = $index * $cost;
+?>
+                                                <div class="cart_table_div" style='clear: both;'>
+                                                    <div class="cart_table_name_div" id='operator'><ins><b><?php echo $operator; ?></ins><?php if( ! empty( $country ) )  echo ' ('.$country.') '; ?></b></div>
+                                                    <div class="cart_table_cost_div" id='compatible'><?php echo number_format( $cost, 2 ); ?></div>
+                                                    <div class="cart_table_quantity_div" id='timeconsume'><input type="text" maxlength="2" size="2" <?php echo 'name='. $id_catalog.'_'.$position.' value='.$index ?> /></div>
+                                                    <div class="cart_table_total_div" id='timeconsume'><span class="table_total_div_currency">RUB</span><span class="table_total_div_value"><?php echo number_format( $subtotal, 2 ); ?></span></div>
+                                                </div>
 
-                                            echo "<div style='clear: both;'>
-                                                    <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>$country</ins> ($operator)</b></div>
-                                                    <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>".number_format( $cost, 2 )."</div>
-                                                    <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'><input type=\"text\" maxlength=\"2\" size=\"2\" name=\"{$id_catalog}_{$position}\" value=\"{$index}\" /></div>
-                                                    <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>".number_format( $subtotal, 2 )."</div>
-                                                </div>";
-
-
+<?php
                                             $sum_subtotal = $sum_subtotal + $subtotal;
                                         }
                                     }
-                                        echo "<div style='clear: both;'>
-                                                    <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'>&nbsp;</div>
-                                                    <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'></div>
-                                                    <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'><input type='submit' name='update' value='Обновить' /></div>
-                                                    <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'></div>
-                                                </div>
-                                                <div style='clear: both;'>
-                                                    <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'>&nbsp;</div>
-                                                    <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>&nbsp;</div>
-                                                    <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'><input type='button' name='checkout' value='Оформить заказ' /></div>
-                                                    <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>Итого: ".number_format( $sum_subtotal, 2 )."</div>
-                                                </div>
+                                        echo "<div style='clear:both;float: left; width: 900px;'>
+                                                <div style='clear:both; width: 300px; float: right;'><span style='float: left; display: block;  margin: 64px 0 20px 20px;'>Итого: </span><span style='float: right; display: block; margin: 64px 90px 20px 0;' >RUB&nbsp;&nbsp;".number_format( $sum_subtotal, 2 )."<span></div>
+                                                <div style='clear:both; width: 800px;'><input class='cart_refreshCode' type='submit' name='update' value='' /></div>
+                                                <div style=' width: 760px;'><span style='float: right; margin: 0 10px 20px 0; display: block;'>Обновить корзину: </span></div>
+                                                <div style='clear:both; width: 738px; display: block;'><input style='float: right; margin-bottom: 20px;' type='button' name='checkout' value='Оформить заявку' /></div>
+                                                <div style='clear:both; width: 672px; display: block;'><input style='float: right; margin-bottom: 20px;' type='button' name='checkout' value='PayPal' /></div>
+                                              </div>
                                                 </form>";
+                                        echo "</div>"; // End of column last dividerdownmidi
+                                        echo "<div class='dividerdownbottom' style='width: 700px; height: 40px; clear : both;'></div>";
                                 } else {
-                                    echo "<h2>Ваша корзина пуста</h2>";
+                                    echo "<h2 class='h2 empty_cart'>Вы не совершили ни одной покупки</h2>";
                                 }
                                 ?>
-
-
-                                </div><!-- End of column last dividerdownmidi -->
-
-                            <div class='dividerdownbottom' style='width: 700px; height: 40px; clear : both;'></div>
                         </div><!-- End of column last -->
                     </div><!-- End of row block grid2col row block border -->
                 </div><!-- End of design -->
             </div>  <!-- End of showcase -->
+            <div class="news-footer"></div>
         </div>  <!-- End of news-main -->
     </div>  <!-- End of main -->
     <?php
