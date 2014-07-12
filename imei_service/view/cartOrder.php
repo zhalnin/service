@@ -107,7 +107,9 @@ try {
 
                                                         <span class="udidPhone-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>UDID или IMEI (обязательно)</span>
+                                                                <span>Впишите UDID или IMEI,<br />
+                                                                        если номеров несколько, <br />
+                                                                        то каждый с новой строки (обязательно)</span>
                                                             </label>
                                                             <textarea name="data" class="textarea" id="cart_order"></textarea>
                                                         </span>
