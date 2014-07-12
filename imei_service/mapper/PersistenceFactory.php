@@ -76,10 +76,44 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\Login":
                 return new LoginPersistenceFactory();
                 break;
+            case "imei_service\\domain\\CartOrder";
+                return new CartOrderPersistenceFactory();
+                break;
 //            case "imei_service\\domain\\Search":
 //                return new SearchPersistenceFactory();
 //                break;
         }
+    }
+}
+
+class CartOrderPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new CartOrderMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new CartOrderObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new CartOrderCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new CartOrderSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new CartOrderUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new CartOrderIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new CartOrderDeleteFactory();
     }
 }
 

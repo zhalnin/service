@@ -27,6 +27,7 @@ abstract class DomainObject {
     }
 
     function getId() {
+//        echo "<tt><pre>".print_r($this->id, true)."</pre></tt>";
         return $this->id;
     }
 
@@ -69,6 +70,7 @@ abstract class DomainObject {
     }
 
     function setId( $id ) {
+//        echo "<tt><pre>".print_r($id, true)."</pre></tt>";
         $this->id = $id;
     }
 

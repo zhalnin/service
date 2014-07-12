@@ -28,10 +28,6 @@ class Cart extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 
-//        echo "<tt><pre>".print_r( $_SESSION['cart_imei_service'] , true )."</pre></tt>";
-//        echo $_SESSION['total_items_imei_service'];
-//        echo $_SESSION['total_price_imei_service'];
-
         $action = $request->getProperty( 'act' ); // получаем название действия
 //        echo "<tt><pre>".print_r( $action , true )."</pre></tt>";
         if( ! empty( $_SESSION['cart_imei_service'] ) ) { // Если корзина не пуста
@@ -49,17 +45,19 @@ class Cart extends Command {
             }
 
             if( ! empty( $action ) ) { // если передано действие update
-                \imei_service\classes\Cart::setUpdateCart(); // обновляем количество в корзине
-                // подсчитываем общее количество
-                $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
-                // подсчитываем общую сумму
-                $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
-                $this->reloadPage( 0, "?cmd=Cart" ); // перегружаем страничку
+                if( $action == 'update' ) {
+                    \imei_service\classes\Cart::setUpdateCart(); // обновляем количество в корзине
+                    // подсчитываем общее количество
+                    $_SESSION['total_items_imei_service'] = \imei_service\classes\Cart::getTotalItems( $_SESSION['cart_imei_service'] );
+                    // подсчитываем общую сумму
+                    $_SESSION['total_price_imei_service'] = \imei_service\classes\Cart::getTotalPrice( $_SESSION['cart_imei_service'] );
+                    $this->reloadPage( 0, "?cmd=Cart" ); // перегружаем страничку
+                }
             }
             $request->setObject( 'cartCatalog', $colCatalog ); // Сохраняем в request
             $request->setObject( 'cartCatalogPosition', $colCatalogPosition ); // Сохраняем в request
 
-            return self::statuses( 'CMD_OK' ); // Возвращаем успешный код и переходим во вьюшку cart.php
+             return self::statuses( 'CMD_OK' ); // Возвращаем успешный код и переходим во вьюшку cart.php
         }
     }
 }

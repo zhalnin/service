@@ -24,6 +24,7 @@ try {
     $colCatalogPosition     = $request->getObject( 'cartCatalogPosition' );
     $colCatalog             = $request->getObject( 'cartCatalog' );
 
+
 //    echo "<tt><pre>".print_r( $colCatalogPosition , true ) ."</pre></tt>";
     // содержимое тега title
     $title          = "Корзина";
@@ -65,7 +66,7 @@ try {
                     <div class="row block grid2col row block border">
                         <img class="hero-image flushleft" alt="Корзина" src="imei_service/view/images/country_flag/Apple_logo_black_shadow_256x192.png"  width="256" height="192">
                         <div class="column last">
-                            <h1><a href="#">Ваша корзина</a></h1>
+                            <h1>Ваша корзина</h1>
 
                         <?php if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) {
                                 ?>
@@ -80,6 +81,8 @@ try {
 
                                     <?php
                                     $sum_subtotal = 0;
+                                    $sum_shipping = 0;
+                                    $shipping = 0;
 
                                     // echo "<tt><pre> - ".print_r( $colCatalog , true )."</pre></tt>";
                                     // подсчитываем результирующее количество в коллекции и проходим в цикле
@@ -93,6 +96,7 @@ try {
                                             foreach( $colCatalogPosition[$i][$index] as $in ) {
 //                                                echo "<tt><pre> - ".print_r( $in , true )."</pre></tt>";
                                                 $operator   = $in->getOperator();
+                                                $status     = $in->getStatus();
                                                 $cost = $in->getCost();
                                                 $id_catalog = $in->getIdCatalog();
                                                 $position = $in->getPos();
@@ -100,7 +104,7 @@ try {
                                             $subtotal = $index * $cost;
 ?>
                                                 <div class="cart_table_div" style='clear: both;'>
-                                                    <div class="cart_table_name_div" id='operator'><ins><b><?php echo $operator; ?></ins><?php if( ! empty( $country ) )  echo ' ('.$country.') '; ?></b></div>
+                                                    <div class="cart_table_name_div" id='operator'><ins><b><?php echo $operator; ?></ins><?php if( ! empty( $country ) )  echo ' ('.$country.') '; ?><?php if( ! empty( $status ) )  echo  $status; ?></b></div>
                                                     <div class="cart_table_cost_div" id='compatible'><?php echo number_format( $cost, 2 ); ?></div>
                                                     <div class="cart_table_quantity_div" id='timeconsume'><input type="text" maxlength="2" size="2" <?php echo 'name='. $id_catalog.'_'.$position.' value='.$index ?> /></div>
                                                     <div class="cart_table_total_div" id='timeconsume'><span class="table_total_div_currency">RUB</span><span class="table_total_div_value"><?php echo number_format( $subtotal, 2 ); ?></span></div>
@@ -110,16 +114,124 @@ try {
                                             $sum_subtotal = $sum_subtotal + $subtotal;
                                         }
                                     }
+                                    echo "</div>"; // End of column last dividerdownmidi
+                                    echo "<div class='dividerdownbottom' style='width: 700px; height: 40px; clear : both;'></div>";
+
                                         echo "<div style='clear:both;float: left; width: 900px;'>
-                                                <div style='clear:both; width: 300px; float: right;'><span style='float: left; display: block;  margin: 64px 0 20px 20px;'>Итого: </span><span style='float: right; display: block; margin: 64px 90px 20px 0;' >RUB&nbsp;&nbsp;".number_format( $sum_subtotal, 2 )."<span></div>
-                                                <div style='clear:both; width: 800px;'><input class='cart_refreshCode' type='submit' name='update' value='' /></div>
-                                                <div style=' width: 760px;'><span style='float: right; margin: 0 10px 20px 0; display: block;'>Обновить корзину: </span></div>
-                                                <div style='clear:both; width: 738px; display: block;'><input style='float: right; margin-bottom: 20px;' type='button' name='checkout' value='Оформить заявку' /></div>
-                                                <div style='clear:both; width: 672px; display: block;'><input style='float: right; margin-bottom: 20px;' type='button' name='checkout' value='PayPal' /></div>
+                                                <div class='table_total_checkout'><span class='total_checkout'>Итого: </span><span class='cost_checkout' >RUB&nbsp;&nbsp;".number_format( $sum_subtotal, 2 )."<span></div>
+                                                <div id='bot-nav_cart' class='table_update_checkout'><a class='btn bigblue' ><input id='signInHyperLinkMini' class='' type='submit' name='update' value='Обновить корзину' /></a></div>
                                               </div>
                                                 </form>";
-                                        echo "</div>"; // End of column last dividerdownmidi
-                                        echo "<div class='dividerdownbottom' style='width: 700px; height: 40px; clear : both;'></div>";
+                                    ?>
+
+                                    <form action="?cmd=CartOrder" method="post">
+                                        <input type="hidden" name="upload" value="1" >
+                                        <input type="hidden" name="business" value="zhalninpal-facilitator@me.com" >
+
+                                        <?php
+                                        $num = 1;
+                                        for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
+                                            // получаем по индексу количество предметов по данной позиции
+                                            foreach ( $colCatalogPosition[$i] as $index => $qty) {
+                                                foreach( $colCatalog[$i][$index] as $int ) {
+                                                    $name       = $int->getName();
+                                                    $country    = $int->getTitleFlag();
+                                                }
+                                                foreach( $colCatalogPosition[$i][$index] as $in ) {
+//                                                        echo "<tt><pre> - ".print_r( $in , true )."</pre></tt>";
+                                                    $operator   = $in->getOperator();
+                                                    $status     = $in->getStatus();
+                                                    $cost       = $in->getCost();
+                                                    $id_catalog = $in->getIdCatalog();
+                                                    $position   = $in->getPos();
+                                                }
+                                                $subtotal = $index * $cost;
+                                                if( $cost <= 10 ) {
+                                                    $shipping = $cost;
+                                                } else {
+                                                    $shipping = $cost / 100  * 3.9  + 10;
+                                                }
+                                                ?>
+
+                                                <input type="hidden" name="item_name_<?php echo $num; ?>" value="<?php echo $operator; ?><?php if( ! empty( $country ) )  echo ' ('.$country.')'; ?><?php if( ! empty( $status ) )  echo  $status; ?>" >
+                                                <input type="hidden" name="item_number_<?php echo $num; ?>" value="<?php echo $id_catalog.'_'.$position; ?>" >
+                                                <input type="hidden" name="amount_<?php echo $num; ?>" value="<?php echo $cost; ?>" >
+                                                <input type="hidden" name="quantity_<?php echo $num; ?>" value="<?php echo $index; ?>" >
+
+                                                <?php
+                                                $num++;
+                                                $sum_subtotal = $sum_subtotal + $subtotal;
+                                                $sum_shipping = $sum_shipping + $shipping;
+
+                                            }
+                                        }
+                                        ?>
+                                        <input type="hidden" name="shipping_1" value="<?php echo $sum_shipping; ?>" >
+                                        <div id='bot-nav_cart' class='table_order_checkout'><a class='btn bigblue' ><input id='signInHyperLink' style='float: right; margin-bottom: 20px;' type='submit' name='checkout' value='Оформить заявку' /></a></div>
+                                    </form>
+
+
+
+
+
+                                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                        <input type="hidden" name="cmd" value="_cart" >
+                                        <input type="hidden" name="upload" value="1" >
+                                        <input type="hidden" name="business" value="zhalninpal-facilitator@me.com" >
+
+                                        <?php
+                                       $num = 1;
+                                        for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
+                                            // получаем по индексу количество предметов по данной позиции
+                                            foreach ( $colCatalogPosition[$i] as $index => $qty) {
+                                                foreach( $colCatalog[$i][$index] as $int ) {
+                                                    $name       = $int->getName();
+                                                    $country    = $int->getTitleFlag();
+                                                }
+                                                foreach( $colCatalogPosition[$i][$index] as $in ) {
+//                                                        echo "<tt><pre> - ".print_r( $in , true )."</pre></tt>";
+                                                    $operator   = $in->getOperator();
+                                                    $status     = $in->getStatus();
+                                                    $cost       = $in->getCost();
+                                                    $id_catalog = $in->getIdCatalog();
+                                                    $position   = $in->getPos();
+                                                }
+                                                $subtotal = $index * $cost;
+                                                if( $cost <= 10 ) {
+                                                    $shipping = $cost;
+                                                } else {
+                                                    $shipping = $cost / 100  * 3.9  + 10;
+                                                }
+                                                    ?>
+
+                                                    <input type="hidden" name="item_name_<?php echo $num; ?>" value="<?php echo $operator; ?><?php if( ! empty( $country ) )  echo ' ('.$country.')'; ?><?php if( ! empty( $status ) )  echo  $status; ?>" >
+                                                    <input type="hidden" name="item_number_<?php echo $num; ?>" value="<?php echo $id_catalog.'_'.$position; ?>" >
+                                                    <input type="hidden" name="amount_<?php echo $num; ?>" value="<?php echo $cost; ?>" >
+                                                    <input type="hidden" name="quantity_<?php echo $num; ?>" value="<?php echo $index; ?>" >
+
+                                                    <?php
+                                                    $num++;
+                                                    $sum_subtotal = $sum_subtotal + $subtotal;
+                                                    $sum_shipping = $sum_shipping + $shipping;
+
+                                            }
+                                        }
+                                            ?>
+
+                                        <input type="hidden" name="currency_code" value="RUB" >
+                                        <input type="hidden" name="lc" value="RUS" >
+                                        <input type="hidden" name="rm" value="2" >
+                                        <input type="hidden" name="shipping_1" value="<?php echo $sum_shipping; ?>" >
+                                        <input type="hidden" name="return" value="http://zhalnin.tmweb.ru/gamelist/index.php?view=thankyou" >
+                                        <input type="hidden" name="cancel_return" value="http://zhalnin.tmweb.ru/gamelist/" >
+                                        <input type="hidden" name="notify_url" value="http://zhalnin.tmweb.ru/gamelist/paypal.php" >
+                                        <input type="image" src="imei_service/view/images/paypal/paypal_mini.png" name="pay now" value="pay" class="pay-button" width="150" height="37" />
+                                    </form>
+
+                                    <?php
+
+                                       // echo "</div>"; // End of column last dividerdownmidi
+                                       // echo "<div class='dividerdownbottom' style='width: 700px; height: 40px; clear : both;'></div>";
                                 } else {
                                     echo "<h2 class='h2 empty_cart'>Вы не совершили ни одной покупки</h2>";
                                 }

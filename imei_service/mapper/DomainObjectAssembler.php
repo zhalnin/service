@@ -83,6 +83,7 @@ class DomainObjectAssembler {
         $stmt = $this->getStatement( $update );
         $stmt->execute( $values );
         if( $obj->getId() < 0 ) {
+//            echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
             $obj->setId( self::$PDO->lastInsertId() );
         }
         $obj->markClean();

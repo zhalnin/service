@@ -140,5 +140,12 @@
         <view>cart</view>
     </command>
 
+    <command name="CartOrder">
+        <view>cartOrder</view>
+        <status value="CMD_OK">
+            <view>cartOrderSuccess</view>
+        </status>
+    </command>
+
 </control>
 </woo-options>

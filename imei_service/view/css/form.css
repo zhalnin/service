@@ -999,3 +999,116 @@ li.cart {
     width: 220px;
     margin: 10px 0 0 60px;
 }
+
+.table_total_checkout {
+    clear:both;
+    width: 300px;
+    float: right;
+}
+.table_total_checkout .total_checkout {
+    float: left;
+    display: block;
+    margin: 64px 0 20px 20px;
+}
+.table_total_checkout .cost_checkout {
+    float: right;
+    display: block;
+    margin: 64px 90px 20px 0;
+}
+.table_update_checkout {
+    clear:both;
+    width: 800px;
+}
+.table_order_checkout {
+    clear:both;
+    width: 738px;
+    display: block;
+}
+
+
+.pay-button {
+    float: right;
+    margin-right: 60px;
+    /*margin-top: 10px;*/
+    margin-bottom: 20px;
+}
+
+
+/* START - Голубая кнопка в стиле iOS 7 для корзины*/
+#bot-nav_cart {
+    margin-left: 50px;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    white-space: nowrap !important;
+    width: auto !important;
+}
+
+#bot-nav_cart .btn.bigblue {
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+    position: relative !important;
+    white-space: nowrap !important;
+    width: auto !important;
+}
+#bot-nav_cart .btn.bigblue input[type="submit"] {
+    min-width: 94px !important;
+    overflow: visible !important;
+    padding: 0 10px !important;
+    position: relative !important;
+    text-align: -moz-center !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    background: url("../images/bluegrad.png") repeat-x scroll -15px 0 transparent !important;
+    border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 0;
+    color: #ffffff;
+}
+.btn .bigblue, #signInHyperLink {
+    background-image: url("../images/buttonsiginMordern.png");
+    background-repeat: no-repeat;
+    border-width: 0;
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    height: 27px;
+    line-height: 15px;
+    width: 117px;
+    margin: 0 90px 20px 0;
+}
+.btn .bigblue, #signInHyperLinkMini {
+    background-image: url("../images/buttonsiginMordern.png");
+    background-repeat: no-repeat;
+    border-width: 0;
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    height: 20px;
+    line-height: 15px;
+    width: 110px;
+    margin: 0 90px 20px 0;
+}
+/* END - Голубая кнопка в стиле iOS 7*/
+
+.textarea {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px #aaaaaa inset;
+    font-size: 12px;
+    height: 100px !important;
+    overflow: auto;
+    padding: 3px 2px;
+    resize: none;
+    text-indent: 4px;
+    width: 300px;
+}
