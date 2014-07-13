@@ -82,6 +82,7 @@ class DomainObjectAssembler {
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $update );
         $stmt->execute( $values );
+//        echo "<tt><pre>".print_r($stmt, true)."</pre></tt>";
         if( $obj->getId() < 0 ) {
 //            echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
             $obj->setId( self::$PDO->lastInsertId() );

@@ -79,12 +79,48 @@ abstract class PersistenceFactory {
             case "imei_service\\domain\\CartOrder";
                 return new CartOrderPersistenceFactory();
                 break;
+            case "imei_service\\domain\\CartItems";
+                return new CartItemsPersistenceFactory();
+                break;
 //            case "imei_service\\domain\\Search":
 //                return new SearchPersistenceFactory();
 //                break;
         }
     }
 }
+
+
+class CartItemsPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new CartItemsMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new CartItemsObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new CartItemsCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+        return new CartItemsSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new CartItemsUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new CartItemsIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new CartItemsDeleteFactory();
+    }
+}
+
 
 class CartOrderPersistenceFactory extends PersistenceFactory {
 

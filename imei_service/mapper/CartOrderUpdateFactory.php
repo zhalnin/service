@@ -11,7 +11,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "imei_service/mapper/UpdateFactory.php" );
 
-class CartOrderUpdateFactory extends UpdateFactory{
+class CartOrderUpdateFactory extends UpdateFactory {
 
     function newUpdate( \imei_service\domain\DomainObject $obj ) {
         $id = $obj->getId();

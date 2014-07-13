@@ -76,42 +76,46 @@ try {
                                 $total_cost     = $amount * $quantity;
 
                                 ?>
+                                    <div class="cartOrder_main">
+                                      <span id='item_name' class='cartOrder_name'><?php echo $i; ?>. <?php echo $item_name; ?></span>
+                                      <span id='quantity' class='cartOrder_quantity'><?php echo $quantity; ?> ед.</span>
+                                      <span id='amount'  class='cartOrder_amount'>по <?php echo number_format( $amount, 2 ); ?> RUB,</span>
+                                      <span id='subtotal' class='cartOrder_subtotal'> всего: <?php echo number_format( $total_cost, 2 ); ?> RUB</span><br />
 
-                                <?php
-                                echo "<span id='item_name' style='width: 300px; margin: 0 10px; display: inline-block'>$i. ".$item_name."</span><span id='quantity' style='width: 50px; margin: 0 10px; display: inline-block'>".$quantity." ед.</span><span id='amount'  style='width: 200px; margin: 0 10px; display: inline-block;'>по ".number_format( $amount, 2 )." RUB,</span><span id='subtotal' style='width: 250px; margin: 0 10px; display: inline-block;'> всего: ".number_format( $total_cost, 2 )." RUB</span><br />";
-
-                                $subtotal = $subtotal + $total_cost;
-                            }
-                            echo "<span style='width: 500px; margin: 10px 10px; display: inline-block;'><ins>Сумма к оплате: ".number_format( $subtotal, 2 )." RUB</ins></span>";
-                            ?>
+                                <?php $subtotal = $subtotal + $total_cost;
+                            } ?>
+                                        <span class='cartOrder_total'><ins>Сумма к оплате: <?php echo number_format( $subtotal, 2 ); ?> RUB</ins></span>
+                                    </div>
                             <div class="top-divided"></div>
                             <div id="shipping-contact-form" class="step-mode edit clearfix" autocomplete="off" style="">
                                 <div class="gs grid-1of2" style="">
                                     <div id="shipping-user" class="user-form-block substep" style="">
-                                        <form method="post" id="form">
+                                        <form method="post" id="cart-form" >
                                             <fieldset class="US first user-form-fieldset" style="">
                                                 <legend style="">
                                                     <strong class="label"><?php echo "Заполните все поля";?></strong>
                                                 </legend>
-                                                <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
                                                     <input type="submit" value="send" >
+                                                <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
                                                     <div class="mbs" style="">
                                                         <span class="companyName-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-companyName" style="">
                                                                 <span>Адрес Email (обязательно)</span>
                                                             </label>
-                                                            <input id="email" class="email" type="email" maxlength="35" size="35" name="email">
+                                                            <input id="email" class="email" type="email" maxlength="35" size="35" name="email" value="<?php echo $_POST['email']; ?>">
                                                         </span>
                                                     </div>
                                                     <div class="mbs" style="">
 
                                                         <span class="udidPhone-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>Впишите UDID или IMEI,<br />
-                                                                        если номеров несколько, <br />
-                                                                        то каждый с новой строки (обязательно)</span>
+                                                                <span>
+                                                                    IMEI: 012345806734567<br />
+                                                                    UDID: fd8s03jh88f92h3hf9eepz54z3xx6c5d6sjjw392<br />
+                                                                    Каждый номер с новой строки<br />
+                                                                         (обязательно)</span>
                                                             </label>
-                                                            <textarea name="data" class="textarea" id="cart_order"></textarea>
+                                                            <textarea name="data" class="textareaCart" id="cart_order"><?php echo nl2br( $_POST['data'] ); ?></textarea>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -123,6 +127,7 @@ try {
                                                 }
                                                 for( $i=1; $i <= $count; $i++ ):?>
 
+                                                    <input type='hidden' <?php echo "name='item_number_$i'"?> <?php echo "value='".$_POST['item_number_'.$i]."'" ?> />
                                                     <input type='hidden' <?php echo "name='item_name_$i'"?> <?php echo "value='".$_POST['item_name_'.$i]."'" ?> />
                                                     <input type='hidden' <?php echo "name='amount_$i'"?> <?php echo "value='".$_POST['amount_'.$i]."'" ?> />
                                                     <input type='hidden' <?php echo "name='quantity_$i'"?> <?php echo "value='".$_POST['quantity_'.$i]."'" ?> />

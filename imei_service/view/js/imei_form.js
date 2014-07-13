@@ -78,6 +78,13 @@ var AMForm = {
                 var pass = AM.DOM.$('pass');
                 return !obj.value || obj.value != pass.value;
             }
+        },
+        textareaCart: {
+            msg: "Очень мало информации",
+            test: function(obj) {
+                obj.value = obj.value.replace(new RegExp("\\s+",'g'),'');
+                return !obj.value || obj.value.length > 14;
+            }
         }
     },
 

@@ -12,6 +12,7 @@ session_start();
 
 require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/domain/CartOrder.php" );
+require_once( "imei_service/domain/CartItems.php" );
 require_once( "imei_service/view/utils/utils.checkEmail.php" );
 
 class CartOrder extends Command {
@@ -32,6 +33,7 @@ class CartOrder extends Command {
         $paypal_trans_id    = 'anonymous';
         $created_at         = date('Y-m-d H:i:s');
         $data               = $request->getProperty( 'data' );
+
 
         if( $request->getProperty( 'submitted') !== 'yes' ) { // если форма не отправлена
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
@@ -69,7 +71,6 @@ class CartOrder extends Command {
 
         $order_id = $cartOrder->getId();
 
-
     //        Добавляем в system_cart_items
         foreach( $_POST as $key => $val ) {
             if( preg_match('|amount_(.*)|', $key, $match ) ) {
@@ -83,13 +84,14 @@ class CartOrder extends Command {
             $item_name      = $_POST['item_name_'.$i];
             $amount         = $_POST['amount_'.$i];
             $quantity       = $_POST['quantity_'.$i];
+//            echo "<tt><pre>".print_r( $item_number, true )."</pre></tt>";
 
-//            new \imei_service\domain\CartItems( null,
-//                                                $item_number,
-//                                                $order_id,
-//                                                $item_name,
-//                                                $amount,
-//                                                $quantity );
+            new \imei_service\domain\CartItems( null,
+                                                $item_number,
+                                                $order_id,
+                                                $item_name,
+                                                $amount,
+                                                $quantity );
 
         }
 
@@ -100,7 +102,7 @@ class CartOrder extends Command {
         // после успешного добавления заказа и предметов закакза удаляем сессию
         session_unset();
         session_destroy();
-//            return self::statuses( 'CMD_OK' );
+            return self::statuses( 'CMD_OK' );
         }
 }
 

@@ -9,7 +9,7 @@
 
 
 AM.Event.addEvent(window, 'load', function() {
-    try{
+    try {
 //        var iframeTD = AM.DOM.$('iframe_td');
 //        var iframe2 = document.createElement('iframe');
 //        iframe2.id = 'iframe_redactor';
@@ -63,6 +63,9 @@ AM.Event.addEvent(window, 'load', function() {
                 case 'g-search':
                     form_search = tmp;
                     break;
+                case 'cart-form':
+                    form = tmp;
+                    break;
             }
         }
 //        var form = document.getElementsByTagName('form')[0],
@@ -95,13 +98,13 @@ AM.Event.addEvent(window, 'load', function() {
             // если фокус не на поиске и нажат Enter и присутствует форма
             if( document.activeElement.id != 'sp-searchtext' && e.keyCode == 13 && form ){
                 // set flag to true - stop watchForm()
-                checking = true;
+//                checking = true;
                 // если это не добавить, то при нажатии на Enter перегружается форма
-                AM.Event.stopDefault(event);
+//                AM.Event.stopDefault(event);
                 //                // scroll window to x=0 and y=0
                 //                window.scrollTo(0,0);
                 // start 'watchForm();
-                AMForm.watchForm(form);
+//                AMForm.watchForm(form);
             // если фокус на поиске и нажат Enter и присутствует форма поиска и поле поиска не пустое
             } else if( document.activeElement.id == 'sp-searchtext' && e.keyCode == 13 && form_search && /^[0-9a-zа-я]+/i.test( document.activeElement.value ) ) {
 //                // если это не добавить, то при нажатии на Enter перегружается форма

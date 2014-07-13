@@ -156,7 +156,7 @@ element.style {
 }
 .grid-1of2, .grid-2of4, .grid-3of6, .grid-4of8, .grid-5of10, .grid-8of16, .grid-10of20 {
     /*width: 50%;*/
-    width: 440px;
+    width: 430px;
 }
 .grid-1of3 {
     width: 470px;
@@ -1099,7 +1099,7 @@ li.cart {
 }
 /* END - Голубая кнопка в стиле iOS 7*/
 
-.textarea {
+.textareaCart {
     background: none repeat scroll 0 0 white;
     border: 1px solid #d6d6d6;
     border-radius: 4px;
@@ -1110,5 +1110,34 @@ li.cart {
     padding: 3px 2px;
     resize: none;
     text-indent: 4px;
+    width: 350px;
+}
+
+.cartOrder_main {
+    color: #666666;
+}
+.cartOrder_name {
     width: 300px;
+    margin: 0 10px;
+    display: inline-block;
+}
+.cartOrder_quantity {
+    width: 50px;
+    margin: 0 10px;
+    display: inline-block;
+}
+.cartOrder_amount {
+    width: 200px;
+    margin: 0 10px;
+    display: inline-block;
+}
+.cartOrder_subtotal {
+    width: 250px;
+    margin: 0 10px;
+    display: inline-block;
+}
+.cartOrder_total {
+    width: 500px;
+    margin: 10px 10px;
+    display: inline-block;
 }
