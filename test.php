@@ -1,265 +1,126 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: zhalnin
- * Date: 22.12.12
- * Time: 15:03
- * To change this template use File | Settings | File Templates.
- */
-namespace imei_service\view\templates;
-try {
-session_start();
-$sid_add_message = session_id();
-error_reporting(E_ALL & ~E_NOTICE);
-//require_once("count.php");
-if( ! isset( $_SESSION['cart'] ) ) {
-    $_SESSION['cart'] = array();
-    $_SESSION['total_items'] = 0;
-    $_SESSION['total_price'] = '0.00';
-}
-
-
-    // подключаем обработчик bbcode
-//    require_once( "imei_service/view/utils/utils.printPage.php" );
-//    // подключаем обработчик курса валют
-//    require_once( "imei_service/view/utils/utils.printPrice.php" );
-//    // подключаем помощник для вьюшки
-//    require_once( "imei_service/view/ViewHelper.php" );
-
-    // получаем объект request
-//    $request        = \imei_service\view\VH::getRequest();
-//    // получаем объект-коллекцию unlockParent
-//    $unlockParent   = $request->getObject('unlockParent');
-//    // получаем объект-коллекцию unlockDetails
-//    $unlockDetails  = $request->getObject('unlockDetails');
-//    // получаем объект-коллекцию decorateUnlock
-//    $decorateUnlock = $request->getObject('decorateUnlock');
-//    // содержимое тега title
-//    $title          = $unlockParent->getName();
-    $title = "UDID";
-    // содержимое тега meta
-    $keywords       = "unlock iPhone,официальный анлок,AT&T,Orange,UK,USA,Bouygues,Telia,SFR,Vodafone,T-mobile,Verizon";
-    // содержимое тега meta
-    $description    = "Официальный анлок iPhone. Стоимость разлочки iPhone зависит от оператора, к которому он привязан.";
-
-    // подключаем верхний шаблон
-    require_once( "imei_service/view/templates/top.php" );
-
-
-    ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <title><?php echo htmlspecialchars($title, ENT_QUOTES); ?></title>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-    <meta content="width=1024" name="viewport">
-    <meta content="<? echo htmlspecialchars($description, ENT_QUOTES); ?>" name="Description">
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link href="imei_service/view/css/animatedCSS.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/form.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/style.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/home-style.css" type="text/css" rel="stylesheet">
-    <!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
-    <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
-    <script type="text/javascript" src="imei_service/view/js/AlezhalModules.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/helperFunctions.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/wysiwyg.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/imei_form.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/utilities.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/lib.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/load.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/currency.js"></script>
-    <script type="text/javascript" src="imei_service/view/js/dragMaster.js"></script>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf8" >
+    <style type='text/css'>
+        * {
+            /*margin: 0;*/
+            /*padding: 0;*/
+        }
+        ul li {
+            
+        }
+        li {
+            /*list-style-image: url(../dataimg/optdot_prd.gif);*/
+            list-style-type: none;
+            margin: 0 10px;
+        }
+        .main_txt {
+            font-family: Tahoma;
+            /*font-size: 11px;*/
+            text-align: justify;
+            /*text-indent: 50px;*/
+            /*color: #000000;*/
+            color: #666666;
+            font-size: 1em;
+            line-height: 1.5em;
+            padding-top: 5px;
+            padding-bottom: 5px;
+
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .main_txt_lnk {
+            color: #B20000;
+            text-decoration: none;
+        }
+
+        .main_txt_lnk:hover {
+            color: #00023E;
+        }
+        #tp {
+            /*background-color: #ededed;
+            width: 648px;
+            height: 122px;
+            background-image: url(\"http://imei-service.ru/images/letter/top_apple.png\");*/
+        }
+        #mid {
+            background-color: #f1f1f1;
+            width: 630px;
+            margin-left: 9px;
+            text-align: center;
+            padding-bottom: 100px;
+            color: #000000;
+        }
+
+        #btm {
+            /* background-color: #ededed;
+             width: 630px;
+             height: 21px;
+             background-image: url(\"http://imei-service.ru/images/letter/btm.gif\");
+             margin-left: 9px;*/
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        p {
+            margin-bottom: 18px;
+        }
+        .footer_txt {
+            font-family: Tahoma;
+            /*font-size: 11px;*/
+            text-align: justify;
+            text-indent: 20px;
+            /*color: #000000;*/
+            color: #666666;
+            font-size: 0.8em;
+            line-height: 1.5em;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-left: 50px;
+        }
+        .nested {
+            margin-left: 20px;
+        }
+        .nested li {
+            list-style-type: disc;
+        }
+        a {
+            color: #0088CC;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #container {
+            width: 650px;
+            margin: 30 auto;
+        }
+
+    </style>
 </head>
-<body>
-    <div id="header">
-        <ul id="navigation" role="navigation">
-            <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
-            <li id="nav-unlock"><a  class="selected" href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
-            <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
-            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
-            <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
-            <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
-            <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
-        </ul>
-    </div><!-- End of header -->
+</html>
+<?php
+    $t = "";
+    $t .= "<ul>";
+    for( $i=1; $i<2; $i++ ) {
 
-    <div id="main"  class="">
+        $item_name      = 'Проверка iPhone по IMEI';
+        $amount         = 30;
+        $quantity       = 2;
+        $total          = 60;
+        $subtotal       = 60;
+        $data           = 'IMEI: 012345678909876';
 
-    <!--        подключаем обработчик авторизации-->
-<!--    --><?php //require_once( "imei_service/view/utils/security_mod.php" ); ?>
+        $t .= "<li>Наименование: ".$item_name."</li>"
+            ."<li>Стоимость: ".$amount." RUB</li>"
+            ."<li>Количество: ".$quantity." ед.</li>"
+            ."<li>Итог: ".$total." RUB</li>"
+            ."<li>Общая стоимость: ".$subtotal." RUB</li>";
 
-    <div id="main-slogan" class="main-content">
-        <div id="slogan">Быстро - Качественно - Надежно</div>
-    </div><!-- End of main-slogan -->
-    <div id="news-main" class="main-content">
-    <div id="slogan"><span class='currency' id='uah'></span><span class='currency' id='usd'></span><span class='currency' id='eur'></span><span class='currency' id='rub'></span></div>
-    <div id="showcase" class="content">
-    <div id="design">
-    <div class="row block grid2col row block border">
-        <img class="hero-image flushleft" alt="Регистрация UDID в аккаунте разработчика" src="imei_service/view/images/udid/UDID2.png" width="256" height="192">
-        <div class="column last" style="z-index: 2;">
-            <h1><a href=<?php echo $_SERVER[PHP_SELF].'/'?>>Регистрация UDID в аккаунте разработчика</a></h1>
-            <div class='column last dividerdownmidi'>
-                <div>
-                    <div style='width: 160px; float: left; margin: 10px 0 20px 50px;'><b>Наименование</b></div>
-                    <div style='width: 156px; float: left; margin: 10px 0 20px 50px;'><b>Совместимость</b></div>
-                    <div style='width: 140px; float: left; margin: 10px 0 20px 65px;'><b>Стоимость</b></div>
-                    <div style='width: 190px; float: left; margin: 10px 0 20px 60px;'><b>Сроки</b></div>
-                </div>
-                <?php
+    }
+    $t .= "</ul>";
 
-                    echo "<div>
-                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>Регистрация UDID</b></ins></div>
-                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone</div>
-                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>100 рублей</div>
-                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>3-х минут<span class='buynow'><a style='display:block;' href='#' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
-                    </div>
-                    <div>
-                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>Проверка по IMEI</b></ins></div>
-                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone</div>
-                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>30 рублей</div>
-                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>3-х минут<span class='buynow'><a style='display:block;' href='#' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
-                    </div>
-                    <div>
-                        <div style='width: 160px; float: left; margin: 10px 0 0 30px; font-size: 11pt' id='operator'><ins><b>Проверка на blacklist</b></ins></div>
-                        <div style='width: 183px; float: left; margin: 10px 0 0 22px;' id='compatible'>iPhone</div>
-                        <div style='width: 150px; float: left; margin: 10px 0 0 60px;' id='timeconsume'>70 рублей</div>
-                        <div style='width: 260px; float: left; margin: 10px 0 0 10px;' id='timeconsume'>3-х минут<span class='buynow'><a style='display:block;' href='#' title='Для выбора кликните на названии и лот будет добавлен в корзину' >купить</a></span></div>
-                    </div>";
-
-                echo "</div><!-- End of column last dividerdownmidi -->
-                                <div class=dividerdownbottom style='width: 700px; height: 40px; clear : both;'></div>
-                            </div><!-- End of column last -->
-                        </div><!-- End of row block grid2col row block border -->
-                    </div>";  // End of design
-
-                ?>
-
-                <div class="hero selfclear">
-                    <div id="shipping-box" class="box box-nomargin shipping-box ptn">
-                        <!--                <span class="step-header is-stepped stepnumber2" style="opacity: 1;"></span>-->
-                        <h2 id="shipping-box-title" class="heading primary" style="opacity: 1;" ><a href="<?php echo $_SERVER[PHP_SELF]; ?>.'/#">Регистрация UDID в аккаунте разработчика</a></h2>
-                        <div id="shipping" class="step edit" style="opacity: 1;">
-                            <div class="step-content top-divided" style="">
-                                <div id="shipping-contact-form" class="step-mode edit clearfix" style="">
-                                    <div class="gs grid-1of2" style="">
-                                        <div id="shipping-user" class="user-form-block substep" style="">
-                                            <form method="post" id="unlockDetails-form">
-                                                <fieldset style="">
-                                                    <legend style="">
-                                                        <strong class="label"><b>Регистрация UDID</b></strong>
-                                                    </legend>
-                                                    <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
-
-                                                        <div class="mbs" style="">
-                                                                <span class="companyName-field field-with-placeholder" style="">
-                                                                    <label class="placeholder" for="shipping-user-companyName" style="">
-                                                                        <span>Адрес Email (обязательно)</span>
-                                                                    </label>
-                                                                    <input id="email" class="email" type="email" maxlength="" size="35" name="email">
-                                                                </span>
-                                                        </div>
-                                                        <div class="mbs" style="">
-
-                                                                    <span class="daytimePhone-field field-with-placeholder" style="">
-                                                                    <label class="placeholder" for="shipping-user-daytimePhone" style="">
-                                                                        <span>IMEI (15-ть цифр)</span>
-                                                                    </label>
-                                                                    <input id="imei" class="imei" type="text" maxlength="" size="8" name="imei">
-                                                                </span>
-                                                        </div>
-                                                    </div>
-                                                    <input id="item" type="hidden" name="item" value="официальный анлок iPhone">
-                                                    <input id="type" type="hidden" name="type" value="unlock">
-                                                    <input id="operator" type="hidden" name="operator" value="регистрация UDID">
-                                                </fieldset>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="gs grid-1of3 gs-last fdescr fbl" style="">
-                                        <div class="substep" style="">
-                                            <div id="payment-form-astro" class="form-astro with-seperator">
-                                                <p class="legend" style="">
-                                                    <strong id="coherent_id_103">Условия</strong>
-                                                    <a href="?cmd=CarrierCheck" class="separated-link metrics-link">Проверить iPhone на привязку к оператору</a>
-                                                </p>
-                                                <br />
-                                                <p>
-                                                    <?php
-                                                    echo "Какое-то описание";
-                                                    ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  <!--  End of shipping-contact-form -->
-                            </div>  <!--  End of step-content top-divided -->
-                            <div class="step-continue part-edit clear" style="">
-                                <div class="continue-content clearfix">
-                                    <div class="gs grid-3of4" style="">
-                                        <div class="chat chat-now cchat">
-                                            <div id="shipping-step-defaults" style="">
-                                                <div id="shipping-continue-button" class="button rect transactional" title="Отправить" value="click" type="submit" style="visibility: visible">
-                                                    <span style="">
-                                                        <span class="effect"></span>
-                                                        <span class="label"> Отправить </span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gs grid-1of4 gs-last r-align" style="">
-                                        <div id="shipping-button" class="button rect transactional blues" title="Сбросить" type="button" style="">
-                                                <span style="">
-                                                    <span class="effect"></span>
-                                                    <span class="label"> Сбросить </span>
-                                                </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  <!-- End of shipping -->
-                    </div>  <!--  End of shipping-box -->
-                </div>  <!-- End of hero selfclear -->
-            </div>  <!-- End of showcase -->
-        </div>  <!-- End of news-main -->
-    </div>  <!-- End of main -->
-
-        <div id="footer">
-            <div id="footer-content">
-                <ol id="breadcrumbs">
-                    <li>
-                        <p>Designed by alezhal-studio</p>
-                    </li>
-                    <li>
-                        |
-                    </li>
-                    <li>
-                        <p>Copyright © 2012 - 2014 All rights reserved.</p>
-                    </li>
-                </ol>
-            </div>
-        </div><!-- footer-->
-
-
-
-
-
-
-</body>
-    </html>
-    <?php
-
-// ловим сообщения об ошибках
-} catch( \imei_service\base\AppException $exc ) {
-    print $exc->getErrorObject();
-} catch( \imei_service\base\DBException $exc ) {
-    print $exc->getErrorObject();
-}
+echo $t;
 ?>
-
-
-

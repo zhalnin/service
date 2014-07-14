@@ -79,7 +79,7 @@ try {
                                     <div class="cartOrder_main">
                                       <span id='item_name' class='cartOrder_name'><?php echo $i; ?>. <?php echo $item_name; ?></span>
                                       <span id='quantity' class='cartOrder_quantity'><?php echo $quantity; ?> ед.</span>
-                                      <span id='amount'  class='cartOrder_amount'>по <?php echo number_format( $amount, 2 ); ?> RUB,</span>
+                                      <span id='amount'  class='cartOrder_amount'>по <?php echo number_format( $amount, 2 ); ?> RUB</span>
                                       <span id='subtotal' class='cartOrder_subtotal'> всего: <?php echo number_format( $total_cost, 2 ); ?> RUB</span><br />
 
                                 <?php $subtotal = $subtotal + $total_cost;
@@ -95,7 +95,6 @@ try {
                                                 <legend style="">
                                                     <strong class="label"><?php echo "Заполните все поля";?></strong>
                                                 </legend>
-                                                    <input type="submit" value="send" >
                                                 <div id="shipping-user-address_section" class="user-address fieldset-content" style="">
                                                     <div class="mbs" style="">
                                                         <span class="companyName-field field-with-placeholder" style="">
@@ -109,13 +108,13 @@ try {
 
                                                         <span class="udidPhone-field field-with-placeholder" style="">
                                                             <label class="placeholder" for="shipping-user-udidPhone" style="">
-                                                                <span>
-                                                                    IMEI: 012345806734567<br />
-                                                                    UDID: fd8s03jh88f92h3hf9eepz54z3xx6c5d6sjjw392<br />
-                                                                    Каждый номер с новой строки<br />
+                                                                <span>Комментарий к заказу:<br />
+                                                                    IMEI/UDID<br />
+                                                                    Если номеров несколько,<br />
+                                                                    то каждый номер с новой строки<br />
                                                                          (обязательно)</span>
                                                             </label>
-                                                            <textarea name="data" class="textareaCart" id="cart_order"><?php echo nl2br( $_POST['data'] ); ?></textarea>
+                                                            <textarea name="data" class="textareaCart" id="cart_order"><?php echo $_POST['data']; ?></textarea>
                                                         </span>
                                                     </div>
                                                 </div>

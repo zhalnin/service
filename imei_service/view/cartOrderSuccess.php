@@ -20,7 +20,7 @@ try {
     print "</head></html>\n";
 
     // содержимое тега title
-    $title = "Заявка отправлена";
+    $title = "Заказ принят";
     $keywords = "непривязанный джейлбрейк,кастомная прошивка,Evasi0n,udid,redsn0w,sn0wbreeze,absinthe";
     $description = "Оповещение о успешной отправки заявки на проверку iPhone по IMEI";
 
@@ -34,7 +34,7 @@ try {
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>
             <li id="nav-unlock"><a href="?cmd=Unlock"><span>Официальный Анлок iPhone</span></a></li>
             <li id="nav-udid"><a href="?cmd=Udid"><span>Регистрация UDID</span></a></li>
-            <li id="nav-carrier"><a  class="selected" href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
+            <li id="nav-carrier"><a href="?cmd=CarrierCheck"><span>Проверка оператора по IMEI</span></a></li>
             <li id="nav-fast_check"><a href="?cmd=FastCheck"><span>Быстрая проверка</span></a></li>
             <li id="nav-blacklist"><a href="?cmd=BlacklistCheck"><span>Blacklist</span></a></li>
             <li id="nav-faq"><a href="?cmd=Faq"><span>Вопросы</span></a></li>
@@ -49,7 +49,7 @@ try {
         <div id="news-main" class="main-content">
             <div id="" class="news-content clear-fix">
                 <div id='' class="news-header">
-                    <h2  class="h2">Успешная заявка на проверку iPhone по IMEI</h2>
+                    <h2  class="h2">Ваш заказ на сайте imei-service.ru принят</h2>
                 </div>
                 <div class='news-container'>
                     <div class='success-body'>
@@ -57,7 +57,7 @@ try {
                             <h1 class=h2>Спасибо, что воспользовались нашим сервисом!</h1>
                         </div>
                         <div class='success-image'>
-                            <img alt='IMEI-service - Заявка на проверку iPhone по IMEI' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
+                            <img alt='Успешная заявка на сайте imei-service.ru' src='imei_service/view/images/Apple_logo_black_shadow.png'/>
                         </div>
 
                         <!--                    <div class='success-all-info'>-->
@@ -65,16 +65,13 @@ try {
 
                         <div class='success-info'>
                             <p>
-                                Ваша заявка будет обработана в кратчайшие сроки!<br/><br/>
-                                Через некоторое время вы получите письмо на тот почтовый адрес, что вы указали в заявке<br/><br/>
-                                Мы вам сообщим:<br/>
-                                ‣ О возможности отвязки <br/>
-                                ‣ Сроки выполнения отвязки<br/>
-                                ‣ Реквизиты для оплаты<br/>
-                                ‣ Услуги 100% легальные<br/><br/>
+                                Через некоторое время вы получите письмо на тот электронный адрес, что вы указали в заявке.<br/><br/>
+                                В нем будут указаны реквизиты для оплаты оформленного вами заказа.<br/><br />
+                                Если в течение 24 часов не будет произведена оплата, то заказ аннулируется.<br /><br />
+                                Услуги 100% легальные.<br/><br/>
                                 <span class="nowrap">Гарантируем </span>
 
-                                <span class="more">качество услуг и максимально короткие сроки</span>
+                                <span class="more">качество услуг и максимально короткие сроки.</span>
                             </p>
                         </div>
                     </div>  <!-- End of success-body -->

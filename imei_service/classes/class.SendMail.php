@@ -122,9 +122,15 @@ abstract class Mail {
 abstract class AdminMail extends Mail{
     protected $style;
 
-    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
         $style = parent::getStyle();
 
+        // проходим в цикле, чтобы узнать количество добавляемых позиций
+        foreach( $_POST as $key => $val ) {
+            if( preg_match('|amount_(.*)|', $key, $match ) ) {
+                $count = $match[1];
+            }
+        }
         // Заявка на регистрацию UDID
         // Заявка на официальный анок
         // Заявка на проверку iPhone по IMEI
@@ -146,8 +152,7 @@ abstract class AdminMail extends Mail{
                     $style
                     <div id=\"container\">
                          <div id=\"tp\"></div>
-                         <div id=\"mid\">
-                             <h1>Обновление на сайте</h1>";
+                         <div id=\"mid\">";
 
         $footer = "         <div id=\"slice\"></div>
                         </div>
@@ -175,17 +180,19 @@ abstract class AdminMail extends Mail{
                 case 'udid':
                     $subject = "Поступила заявка на регистрацию UDID";
                     $subject_detail = "Для аппарата с UDID - $udid";
-                    $middle = "<div class=\"main_txt\">
-                                <p>$subject</p>
-                                <p>$subject_detail</p>
-                                <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
+                    $middle = "<h1>Обновление на сайте</h1>
+                                <div class=\"main_txt\">
+                                    <p>$subject</p>
+                                    <p>$subject_detail</p>
+                                    <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
                     $body = $top . $middle . $footer;
                     break;
                 case 'unlock':
                     $subject = "Поступила заявка на официальный анлок";
                     $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Обновление на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 $operatorDetails
@@ -196,7 +203,8 @@ abstract class AdminMail extends Mail{
                 case 'carrier':
                     $subject = "Поступила заявка на проверку iPhone по IMEI";
                     $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Обновление на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
@@ -206,7 +214,8 @@ abstract class AdminMail extends Mail{
                 case 'blacklist':
                     $subject = "Поступила заявка на blacklist iPhone";
                     $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Обновление на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
@@ -216,7 +225,8 @@ abstract class AdminMail extends Mail{
                 case 'guestbook':
                     $subject = "Новый пост в гостевой книге";
                     $subject_detail = "";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Изменение в гостевой книге</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новое сообщение от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
@@ -226,7 +236,8 @@ abstract class AdminMail extends Mail{
                 case 'register':
                     $subject = "Новая регистрация на сайте imei-service.ru";
                     $subject_detail = "";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Новый пользователь на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новая регистрация от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
@@ -236,7 +247,8 @@ abstract class AdminMail extends Mail{
                 case 'flogin':
                     $subject = "Новый запрос на восстановление пароля";
                     $subject_detail = "";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Забыт пароль на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новый запрос на восстановление пароля от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
@@ -246,13 +258,51 @@ abstract class AdminMail extends Mail{
                 case 'ractivation':
                     $subject = "Новый запрос на повторную отправку кода активации";
                     $subject_detail = "";
-                    $middle = "<div class=\"main_txt\">
+                    $middle = "<h1>Повторная отправка кода активации на сайте</h1>
+                                <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новый запрос от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
                     $body = $top . $middle . $footer;
                     break;
+                case 'cart_order':
+                    $subject = "Новый заказ № {$_POST['order_id']}";
+                    $subject_detail = '';
+                    // проходим в цикле, чтобы узнать количество добавляемых позиций
+                    $cart_list = "<ul>";
+                        $subtotal = 0;
+                        for( $i=1; $i <= $count; $i++ ) {
+
+                            $item_number    = $_POST['item_number_'.$i];
+                            $item_name      = $_POST['item_name_'.$i];
+                            $amount         = $_POST['amount_'.$i];
+                            $quantity       = $_POST['quantity_'.$i];
+                            $total_cost     = $amount * $quantity;
+
+                        $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
+                                    ."<li>Стоимость: ".$amount." RUB</li>"
+                                    ."<li>Количество: ".$quantity." ед.</li>"
+                                    ."<li>Итог: ".$total_cost." RUB</li>";
+                        }
+                        $subtotal = $subtotal + $total_cost;
+                        $data = $_POST['data'];
+                    $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
+                    $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                    $cart_list .= "</ul>";
+
+                    $middle = "<h1>Новый заказ № {$_POST['order_id']}</h1>
+                                <div class='main_txt'>
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p>Новый заказ от пользователя: <a href=\"mailto:$email_client\">$email_client</a> </p>
+                                <hr />
+                                <h2>Перечень заказанных товров:</h2>
+                                <p>$cart_list</p>
+                                <hr />
+                                <p>Ожидаем оплату по номеру заказа № {$_POST['order_id']}</p>";
+                    $body = $top . $middle .$footer;
+
             }
 
 
@@ -271,9 +321,17 @@ abstract class AdminMail extends Mail{
 abstract class ClientMail extends Mail {
     protected $style;
 
-    function email($email,$email_client,$imei=null,$udid=null,$operator=null,$type, $login=null, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
         $style = parent::getStyle();
         $nameServer = \imei_service\view\utils\getNameServer();
+
+        // проходим в цикле, чтобы узнать количество добавляемых позиций
+        foreach( $_POST as $key => $val ) {
+            if( preg_match('|amount_(.*)|', $key, $match ) ) {
+                $count = $match[1];
+            }
+        }
+
         // Формируем письмо
         $top = "
             <html>
@@ -286,18 +344,14 @@ abstract class ClientMail extends Mail {
                 $style
                     <div id=\"container\">
                         <div id=\"tp\"></div>
-                        <div id=\"mid\">
-                         <h1>Ваша заявка принята!</h1>
-                         <h3>Благодарим вас за посещение нашего сайта!</h3>";
+                        <div id=\"mid\">";
 
         
         $bottom =       "
                             <ul>
-                                <li><ins>Webmoney</ins>
+                                <li><ins>qiwi</ins>
                                     <ul class=\"nested\">
-                                        <li>R210243604114</li>
-                                        <li>U224827413926</li>
-                                        <li>Z231606126103</li>
+                                        <li>+79217451508</li>
                                     </ul>
                                 </li>
                                 <li><ins>yandex money</ins>
@@ -305,9 +359,11 @@ abstract class ClientMail extends Mail {
                                         <li>410011463324480</li>
                                     </ul>
                                 </li>
-                                <li><ins>qiwi</ins>
+                                <li><ins>Webmoney</ins>
                                     <ul class=\"nested\">
-                                        <li>+79217451508</li>
+                                        <li>R210243604114</li>
+                                        <li>U224827413926</li>
+                                        <li>Z231606126103</li>
                                     </ul>
                                 </li>
                                 <li><ins>paypal</ins>
@@ -315,14 +371,15 @@ abstract class ClientMail extends Mail {
                                         <li>zhalninpal@me.com</li>
                                     </ul>
                                 </li>
-                                <li><ins>пополнить мобильный счет</ins>
+                                <li><ins>пополнить мобильный счет</ins><br />
+                                    <b>Только при оплате до 500 рублей!</b>
                                     <ul class=\"nested\">
                                         <li>+7(921)745-15-08(Северо-Западный Мегафон)</li>
                                     </ul>
                                 </li>
                             </ul>
                             <br/>
-                            <p>Комиссии по переводу денежных средств оплачиваете Вы. <br />После оплаты обязательно ответьте на email: <a href=\"mailto:$email\">$email</a> с указанием способа оплаты, подтверждением (скан чека, номер транзакции)</p><br/><br/>";
+                            <p>Комиссии по переводу денежных средств оплачиваете Вы. <br />После оплаты обязательно ответьте на email: <a href=\"mailto:$email\">$email</a> с указанием способа оплаты</p><br/><br/>";
         $footer =
                         "</div>
                         <div id=\"slice\"></div>
@@ -350,7 +407,9 @@ abstract class ClientMail extends Mail {
             case 'udid':
                 $subject = "Регистрация UDID";
                
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Ваша заявка принята!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на регистрацю UDID </p>
                              <h3>Если вы не оставляли заявку на сайте , то просто проигнорируйте это сообщение!</h3>
                              <p>Вам следует оплатить услугу регистрации аппарата в аккаунте разработчика для UDID - $udid </p>
@@ -361,7 +420,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'unlock':
                 $subject = "Официальный анлок";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Ваша заявка принята!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на официальный анлок </p>
                              <p> Мы уточним возможность официального анлока для аппарата с IMEI - $imei и вышлем вам письмо
                              с указанием стоимости, сроков работы и реквизиты для оплаты</p>";
@@ -369,7 +430,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'carrier':
                 $subject = "Проверка iPhone по IMEI";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Ваша заявка принята!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на проверку iPhone по IMEI </p>
                              <h3>Если вы не оставляли заявку на сайте , то просто проигнорируйте это сообщение!</h3>
                              <p>Вам следует оплатить услугу проверки iPhone для IMEI - $imei </p>
@@ -378,7 +441,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'blacklist':
                 $subject = "Проверка iPhone на blacklist";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Ваша заявка принята!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш адрес электронной почты $email_client был указан в заявке на проверку iPhone на blacklist </p>
                              <h3> Если вы не оставляли заявку на сайте , то просто проигнорируйте это сообщение!</h3>
                              <p> Вам следует оплатить услугу проверки iPhone для IMEI - $imei </p>
@@ -387,7 +452,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'guestbook':
                 $subject = "Пост в гостевой книге";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Ваша пост успешно размещен!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Уважаемый, $login, спасибо за потраченное время, чтобы оставить свое сообщение в Гостевой книге </p>
                              <p> Ваш адрес электронной почты $email_client был указан при отправке сообщения </p>
                              <h3> Ваш адрес электронной почты останется скрыт, нужен только для подтверждения вашей гуманности </h3>
@@ -398,7 +465,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'register':
                 $subject = "Подтверждение регистрации на сайте imei-service.ru";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Подтверждение регистрации принято!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Спасибо, что нашли время зарегистрироваться на нашем сайте </p>
                              <p> Ваш адрес электронной почты $email_client был указан при регистрации на сайте imei-servcie.ru </p>
                              <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
@@ -409,7 +478,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'flogin':
                 $subject = "Повторная отправка логина и пароля на сайте imei-service.ru";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Повторная отправка логина и пароля выполнена!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш запрос на восстановление пароля на сайте imei-server.ru был успешно выполнен!</p>
                              <p> Ваш адрес электронной почты $email_client был указан при запросе восстановления пароля на сайте imei-servcie.ru </p>
                              <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
@@ -423,7 +494,9 @@ abstract class ClientMail extends Mail {
                 break;
             case 'ractivation':
                 $subject = "Повторная отправка кода активации регистрации на сайте imei-service.ru";
-                $middle = "<div class=\"main_txt\">
+                $middle = "<h1>Повторная отправка кода активации регистрации выполнена!</h1>
+                         <h3>Благодарим вас за посещение нашего сайта!</h3>
+                         <div class=\"main_txt\">
                              <p> Ваш запрос на повторную отправку кода активации регистрации на сайте imei-server.ru был успешно выполнен! </p>
                              <p> Ваш адрес электронной почты $email_client был указан при запросе повторной отправки кода активации регистрации на сайте imei-servcie.ru </p>
                              <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
@@ -432,6 +505,52 @@ abstract class ClientMail extends Mail {
                              <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
                 $body = $top . $middle . $footer;
                 break;
+            case 'cart_order':
+                $subject = "Ваш номер заказа № {$_POST['order_id']} на сайте imei-service.ru";
+                // проходим в цикле, чтобы узнать количество добавляемых позиций
+                $cart_list = "<ul>";
+                $subtotal = 0;
+                for( $i=1; $i <= $count; $i++ ) {
+
+                    $item_number    = $_POST['item_number_'.$i];
+                    $item_name      = $_POST['item_name_'.$i];
+                    $amount         = $_POST['amount_'.$i];
+                    $quantity       = $_POST['quantity_'.$i];
+                    $total_cost     = $amount * $quantity;
+
+                    $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость: ".$amount." RUB</li>"
+                        ."<li>Количество: ".$quantity." ед.</li>"
+                        ."<li>Итог: ".$total_cost." RUB</li>";
+                }
+                $subtotal = $subtotal + $total_cost;
+                $data = $_POST['data'];
+                $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
+                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "</ul>";
+
+                $middle = "<h1>Ваш заказ принят!</h1>
+                            <h3>Благодарим вас за размещение заказа на нашем сайте!</h3>
+                                <div class='main_txt'>
+                                <p>$subject был размещен {$_POST['created_at']}</p>
+                                <hr />
+                                <h2>Был принят заказ:</h2>
+                                <p>$cart_list</p>
+                                <hr />
+                                <h2>Обратите внимание:</h2><br />
+                                <p>Если при отправке заказа на сайте, вы забыли по какой-то причине указать<br />
+                                IMEI или UDID, то вы можете прислать их(его) до оплаты заказа в ответном письме(не удаляйте номер заказа из заголовка)</p>
+                                <p>Если оплата заказа не будет произведена в течение 24 часов,<br />
+                                то он будет аннулирован.</p>
+                                <p>Если был отправлен неверный IMEI или UDID, то возрат денежных средств невозможен!</p>
+                                <p>Если аппарат уже разлочен, то возрат денежных средств невозможен!</p>
+                                <p>Если заказ был отправлен с неверным выбором оператора, то возрат денежных средств невозможен!</p>
+                                <h2>Мы вам гарантируем:</h2><br />
+                                <p>Если ваш заказ корректно оформлен, но выполнение его окажется невозможным, <br />
+                                 денежные средства будут вам возвращены.</p>
+                                 <h2>Оплату заказа вы можете произвести по следующим рекзвизитам:</h2><br />";
+                $body = $top . $middle . $bottom . $footer;
+
 
         }
         $header = 'From: support@imei-service.ru' . "\r\n";
@@ -455,16 +574,16 @@ abstract class ClientMail extends Mail {
  * Отправляем письма об услуге Blacklist - проверка на черный список
  */
 class BlacklistAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
 
     }
 }
 class BlacklistClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
 
     }
 }
@@ -475,15 +594,15 @@ class BlacklistClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class CarrierAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class CarrierClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
@@ -493,16 +612,16 @@ class CarrierClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class UnlockAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
 
     }
 }
 class UnlockClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
@@ -512,15 +631,15 @@ class UnlockClient extends ClientMail{
  * Отправляем письма об услуге Carrier - проверка на оператора
  */
 class UdidAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class UdidClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
@@ -529,15 +648,15 @@ class UdidClient extends ClientMail{
  * Отправляем письма об услуге Guestbook - пост в гостевой книге
  */
 class GuestbookAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class GuestbookClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
@@ -547,53 +666,75 @@ class GuestbookClient extends ClientMail{
  * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
  */
 class RegisterAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class RegisterClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
 
 /**
- * Class RegisterAdmin and RegisterClient
- * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
+ * Class FLoginAdmin and FLoginClient
+ * Отправляем письма с новым паролем
  */
 class FLoginAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class FLoginClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 
 
 /**
- * Class RegisterAdmin and RegisterClient
- * Отправляем письма необходимости активации учетной записи и уведомлении о таковой  - регистрация на сайте
+ * Class RActivationAdmin and RActivationClient
+ * Отправляем письма необходимости повторной активации учетной записи и уведомлении о таковой
  */
 class RActivationAdmin extends AdminMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login=null, $activation=null ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
 class RActivationClient extends ClientMail{
-    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation ){
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
 
-        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation );
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
     }
 }
+
+
+/**
+ * Class CartOrderAdmin и CartOrderClient
+ * Отправляем письма с указание реквизитов оплаты деталей зкакза
+ * @package imei_service\classes
+ */
+class CartOrderAdmin extends AdminMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
+
+//        echo "<tt><pre>".print_r( $cart, true )."</pre></tt>";
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
+    }
+}
+class CartOrderClient extends ClientMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
+//        echo "<tt><pre>".print_r( $cart, true )."</pre></tt>";
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
+    }
+}
+
 
 
 
@@ -744,6 +885,23 @@ class RActivationCommsManager extends CommsManager {
 }
 
 
+/**
+ * Class CartOrderCommsManager
+ * для отправки реквизитов для оплаты заказа
+ */
+class CartOrderCommsManager extends CommsManager {
+
+    function make( $type ){
+        switch( $type ){
+            case self::ADMIN:
+                return new CartOrderAdmin();
+            case self::CLIENT:
+                return new CartOrderClient();
+        }
+    }
+}
+
+
 
 
 /**
@@ -790,6 +948,9 @@ class MailConfig {
                 break;
             case 'ractivation':
                 return new RActivationCommsManager();
+                break;
+            case 'cart_order':
+                return new CartOrderCommsManager();
                 break;
         }
     }

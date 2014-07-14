@@ -14,43 +14,53 @@ require_once( "imei_service/command/Command.php" );
 require_once( "imei_service/domain/CartOrder.php" );
 require_once( "imei_service/domain/CartItems.php" );
 require_once( "imei_service/view/utils/utils.checkEmail.php" );
+require_once( "imei_service/classes/class.SendMail.php" );
 
+/**
+ * Class CartOrder
+ * Получает форму из cart, парсирует запрос и выполняет INSERT в
+ * system_cart_order, system_cart_items
+ * @package imei_service\command
+ */
 class CartOrder extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
 //        echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
 //        Добавляем в system_cart_orders
-        $firstname          = 'anonymous';
-        $lastname           = 'anonymous';
-        $email              = $request->getProperty( 'email' );
-        $country            = 'anonymous';
-        $address            = 'anonymous';
-        $city               = 'anonymous';
-        $zip_code           = 'anonymous';
-        $state              = 'anonymous';
-        $status             = 'anonymous';
-        $amount             = $request->getProperty( 'subtotal' );
-        $paypal_trans_id    = 'anonymous';
-        $created_at         = date('Y-m-d H:i:s');
-        $data               = $request->getProperty( 'data' );
+        $firstname          = 'anonymous';                          // имя
+        $lastname           = 'anonymous';                          // фамилия
+        $email              = $request->getProperty( 'email' );     // электронная почта
+        $country            = '-';                                  // страна
+        $address            = '-';                                  // адрес
+        $city               = '-';                                  // город
+        $zip_code           = '-';                                  // индекс
+        $state              = '-';                                  // штат
+        $status             = 'handle';                             // статус заказа
+        $amount             = $request->getProperty( 'subtotal' );  // общая сумма
+        $paypal_trans_id    = '-';                                  // ID транзакции PayPal
+        $created_at         = date('Y-m-d H:i:s');                  // дата и время создания заказа
+        $data               = $request->getProperty( 'data' );      // данные в текстовом поле
+        $email_admin        = 'imei_service@icloud.com';
+        $type               = 'cart_order';
 
 
         if( $request->getProperty( 'submitted') !== 'yes' ) { // если форма не отправлена
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
-        if( empty( $email ) ) {
+        if( empty( $email ) ) { // если поле email пустое
             $request->addFeedback( 'Заполните поле "Email"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
-        if( checkEmail( $email ) == false ) {
+        if( checkEmail( $email ) == false ) { // если email не надлежащего формата
             $request->addFeedback( 'Введите корректный адрес "Email"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
-        if( empty( $data ) ) {
+        if( empty( $data ) ) { // если поле данных описания предмета пустое
             $request->addFeedback( 'Заполните поле "Данных"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
 
+        // создаем экземпляр класса CartOrder
         $cartOrder = new \imei_service\domain\CartOrder( null,
                                                         $firstname,
                                                         $lastname,
@@ -66,26 +76,31 @@ class CartOrder extends Command {
                                                         $created_at,
                                                         $data );
 
+        // выполняем операцию на созданным классом - \imei_service\mapper\DomainObjectAssembler
 //        $cartOrder->finder()->insert( $cartOrder );
+        // или альтернативный метод через ObjectWatcher - выполнить надо любым из указанных способов
+        // в командном классе, чтобы получить lastInsertId для следующего запроса INSERT
         \imei_service\domain\ObjectWatcher::instance()->performOperations();
 
+        // получаем только что вставленный ID в таблицу system_cart_orders
         $order_id = $cartOrder->getId();
 
-    //        Добавляем в system_cart_items
+        // проходим в цикле, чтобы узнать количество добавляемых позиций
         foreach( $_POST as $key => $val ) {
             if( preg_match('|amount_(.*)|', $key, $match ) ) {
                 $count = $match[1];
             }
         }
-
+        // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
         for( $i=1; $i <= $count; $i++ ) {
 
-            $item_number    = $_POST['item_number_'.$i];
-            $item_name      = $_POST['item_name_'.$i];
-            $amount         = $_POST['amount_'.$i];
-            $quantity       = $_POST['quantity_'.$i];
-//            echo "<tt><pre>".print_r( $item_number, true )."</pre></tt>";
+            $item_number    = $_POST['item_number_'.$i];    // номер предмета
+            $item_name      = $_POST['item_name_'.$i];      // наименование предмета
+            $amount         = $_POST['amount_'.$i];         // стоимость предмета
+            $quantity       = $_POST['quantity_'.$i];       // количество позиций одного предмета
 
+            // создаем экземпляр класса CartItems
+            // после него нет явного вызова операции INSERT, она происходит в контроллере
             new \imei_service\domain\CartItems( null,
                                                 $item_number,
                                                 $order_id,
@@ -95,15 +110,27 @@ class CartOrder extends Command {
 
         }
 
-//        echo "<tt><pre>".print_r( $res, true )."</pre></tt>";
 
 //        Отправляем email покупателю и админу
+//            echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
+
+
+
 
         // после успешного добавления заказа и предметов закакза удаляем сессию
         session_unset();
         session_destroy();
-            return self::statuses( 'CMD_OK' );
-        }
+        $_POST['order_id'] = $order_id;
+        $_POST['created_at'] = $created_at;
+        $cart = $_POST;
+
+        $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
+        $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо админу
+        $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо клиенту
+
+        // возвращаем статус успешного завершения и передаресуем на cartOrderSuccess
+        return self::statuses( 'CMD_OK' );
+    }
 }
 
 ?>

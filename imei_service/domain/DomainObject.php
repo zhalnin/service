@@ -8,7 +8,9 @@
 
 namespace imei_service\domain;
 
+//включаем IDENTITY_MAP и UNIT_OF_WORK шаблоны
 require_once( "imei_service/domain/ObjectWatcher.php" );
+// включаем вспомогательный класс-фабрику
 require_once( "imei_service/domain/HelperFactory.php" );
 
 abstract class DomainObject {
@@ -26,15 +28,31 @@ abstract class DomainObject {
         }
     }
 
+    /**
+     * Получаем id вставленной записи в БД
+     * @return int|null
+     */
     function getId() {
 //        echo "<tt><pre>".print_r($this->id, true)."</pre></tt>";
         return $this->id;
     }
 
+    /**
+     * Возвращаем коллекцию
+     * @param $type
+     * @return
+     * \imei_service\mapper\ContactsCollection|
+     * \imei_service\mapper\GuestbookCollection|
+     * \imei_service\mapper\NewsCollection
+     */
     static function getCollection( $type ) {
         return HelperFactory::getCollection( $type );
     }
 
+    /**
+     * Вспомогательный метод для вызова статического метода
+     * @return \imei_service\mapper\ContactsCollection|\imei_service\mapper\GuestbookCollection|\imei_service\mapper\NewsCollection
+     */
     function collection() {
         return self::getCollection( get_class( $this ) );
     }
@@ -50,6 +68,11 @@ abstract class DomainObject {
     static function getFinder( $type ) {
         return HelperFactory::getFinder( $type );
     }
+
+    /**
+     * Вспомогательный метод для вызова статического метода
+     * @return \imei_service\mapper\DomainObjectAssembler
+     */
     function finder() {
         return self::getFinder( get_class( $this ) );
     }
@@ -69,6 +92,10 @@ abstract class DomainObject {
         return self::getIdentityObject( get_class( $this ) );
     }
 
+    /**
+     * Устанавливаем id вставленной записи в БД
+     * @param $id
+     */
     function setId( $id ) {
 //        echo "<tt><pre>".print_r($id, true)."</pre></tt>";
         $this->id = $id;
@@ -78,18 +105,35 @@ abstract class DomainObject {
         $this->id = -1;
     }
 
+    /**
+     * Добавляем в массив new текущий объект Domain
+     * означает, что id = -1 - т.е. вставляем новую строку в таблицу
+     */
     function markNew() {
         ObjectWatcher::addNew( $this );
     }
 
+    /**
+     * Добавляем в массив delete текущий объект Domain
+     * с ключом Domain + id
+     */
     function markDeleted() {
         ObjectWatcher::addDelete( $this );
     }
 
+    /**
+     * Добавляем в массив dirty текущий объект Domain
+     * с ключом Domain + id, если его еще нет в массиве new
+     * т.е. данные обновляются
+     */
     function markDirty() {
         ObjectWatcher::addDirty( $this );
     }
 
+    /**
+     * Удаляем массивы delete, dirty и из new удаляем текущий объект Domain
+     * с ключом Domain + id
+     */
     function markClean() {
         ObjectWatcher::addClean( $this );
     }
