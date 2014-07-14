@@ -55,7 +55,7 @@ try {
                     </div>
 
                     <div class='guestbook-all-image'>
-                        <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $result['name']; ?>" >
+                        <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="42" height="42" alt="<? echo $result['name']; ?>" >
                     </div>
 
                     <div class='guestbook-all-info'>

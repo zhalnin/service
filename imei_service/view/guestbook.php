@@ -99,7 +99,7 @@ try {
                             </div>
 
                             <div class='guestbook-all-image'>
-                                <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="64" height="64" alt="<? echo $record->getName(); ?>" >
+                                <img src="imei_service/view/images/guestbook/avatar_64x64.png" border="0" width="42" height="42" alt="<? echo $record->getName(); ?>" >
                             </div>
 
                             <div class='guestbook-all-info'>
@@ -108,7 +108,7 @@ try {
                                     echo "<div class='panswer-wrap main-content-blue'>
                                                 <p class='panswer ptdg'><b><i>Администратор</i></b></p>
                                                 <div class='panswer-image'>
-                                                    <img src=\"imei_service/view/images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"64\" height=\"64\" alt=".$record->getName()." >
+                                                    <img src=\"imei_service/view/images/guestbook/avatar_blue_64x64.png\" border=\"0\" width=\"42\" height=\"42\" alt=".$record->getName()." >
                                                 </div>
                                                 <p class=\"panswer\">".nl2br($answerSelect)."</p>
                                               </div>";
