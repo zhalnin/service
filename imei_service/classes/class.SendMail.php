@@ -176,134 +176,174 @@ abstract class AdminMail extends Mail{
                 </body>
             </html>";
 
-            switch($type){
-                case 'udid':
-                    $subject = "Поступила заявка на регистрацию UDID";
-                    $subject_detail = "Для аппарата с UDID - $udid";
-                    $middle = "<h1>Обновление на сайте</h1>
+        switch($type){
+            case 'udid':
+                $subject = "Поступила заявка на регистрацию UDID";
+                $subject_detail = "Для аппарата с UDID - $udid";
+                $middle = "<h1>Обновление на сайте</h1>
                                 <div class=\"main_txt\">
                                     <p>$subject</p>
                                     <p>$subject_detail</p>
                                     <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'unlock':
-                    $subject = "Поступила заявка на официальный анлок";
-                    $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<h1>Обновление на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'unlock':
+                $subject = "Поступила заявка на официальный анлок";
+                $subject_detail = "Для аппарата с IMEI - $imei";
+                $middle = "<h1>Обновление на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 $operatorDetails
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'carrier':
-                    $subject = "Поступила заявка на проверку iPhone по IMEI";
-                    $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<h1>Обновление на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'carrier':
+                $subject = "Поступила заявка на проверку iPhone по IMEI";
+                $subject_detail = "Для аппарата с IMEI - $imei";
+                $middle = "<h1>Обновление на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'blacklist':
-                    $subject = "Поступила заявка на blacklist iPhone";
-                    $subject_detail = "Для аппарата с IMEI - $imei";
-                    $middle = "<h1>Обновление на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'blacklist':
+                $subject = "Поступила заявка на blacklist iPhone";
+                $subject_detail = "Для аппарата с IMEI - $imei";
+                $middle = "<h1>Обновление на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Ждем подтверждения платежа с <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'guestbook':
-                    $subject = "Новый пост в гостевой книге";
-                    $subject_detail = "";
-                    $middle = "<h1>Изменение в гостевой книге</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'guestbook':
+                $subject = "Новый пост в гостевой книге";
+                $subject_detail = "";
+                $middle = "<h1>Изменение в гостевой книге</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новое сообщение от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'register':
-                    $subject = "Новая регистрация на сайте imei-service.ru";
-                    $subject_detail = "";
-                    $middle = "<h1>Новый пользователь на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'register':
+                $subject = "Новая регистрация на сайте imei-service.ru";
+                $subject_detail = "";
+                $middle = "<h1>Новый пользователь на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новая регистрация от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'flogin':
-                    $subject = "Новый запрос на восстановление пароля";
-                    $subject_detail = "";
-                    $middle = "<h1>Забыт пароль на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'flogin':
+                $subject = "Новый запрос на восстановление пароля";
+                $subject_detail = "";
+                $middle = "<h1>Забыт пароль на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новый запрос на восстановление пароля от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'ractivation':
-                    $subject = "Новый запрос на повторную отправку кода активации";
-                    $subject_detail = "";
-                    $middle = "<h1>Повторная отправка кода активации на сайте</h1>
+                $body = $top . $middle . $footer;
+                break;
+            case 'ractivation':
+                $subject = "Новый запрос на повторную отправку кода активации";
+                $subject_detail = "";
+                $middle = "<h1>Повторная отправка кода активации на сайте</h1>
                                 <div class=\"main_txt\">
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p> Новый запрос от пользователя $login с адресом email: <a href=\"mailto:$email_client\">$email_client</a> </p>
                              </div>";
-                    $body = $top . $middle . $footer;
-                    break;
-                case 'cart_order':
-                    $subject = "Новый заказ № {$_POST['order_id']}";
-                    $subject_detail = '';
-                    // проходим в цикле, чтобы узнать количество добавляемых позиций
-                    $cart_list = "<ul>";
-                        $subtotal = 0;
-                        for( $i=1; $i <= $count; $i++ ) {
+                $body = $top . $middle . $footer;
+                break;
+            case 'cart_order':
+                $subject = "Новый заказ № <{$_POST['order_id']}>";
+                $subject_detail = '';
+                // проходим в цикле, чтобы узнать количество добавляемых позиций
+                $cart_list = "<ul>";
+                $subtotal = 0;
+                for( $i=1; $i <= $count; $i++ ) {
 
-                            $item_number    = $_POST['item_number_'.$i];
-                            $item_name      = $_POST['item_name_'.$i];
-                            $amount         = $_POST['amount_'.$i];
-                            $quantity       = $_POST['quantity_'.$i];
-                            $total_cost     = $amount * $quantity;
+                    $item_number    = $_POST['item_number_'.$i];
+                    $item_name      = $_POST['item_name_'.$i];
+                    $amount         = $_POST['amount_'.$i];
+                    $quantity       = $_POST['quantity_'.$i];
+                    $total_cost     = $amount * $quantity;
 
-                        $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
-                                    ."<li>Стоимость: ".$amount." RUB</li>"
-                                    ."<li>Количество: ".$quantity." ед.</li>"
-                                    ."<li>Итог: ".$total_cost." RUB</li>";
-                        }
-                        $subtotal = $subtotal + $total_cost;
-                        $data = $_POST['data'];
-                    $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
-                    $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
-                    $cart_list .= "</ul>";
+                    $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость: ".$amount." RUB</li>"
+                        ."<li>Количество: ".$quantity." ед.</li>"
+                        ."<li>Итог: ".$total_cost." RUB</li>";
+                }
+                $subtotal = $subtotal + $total_cost;
+                $data = $_POST['data'];
+                $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
+                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "</ul>";
 
-                    $middle = "<h1>Новый заказ № {$_POST['order_id']}</h1>
+                $middle = "<h1>Новый заказ № {$_POST['order_id']}</h1>
                                 <div class='main_txt'>
                                 <p>$subject</p>
                                 <p>$subject_detail</p>
                                 <p>Новый заказ от пользователя: <a href=\"mailto:$email_client\">$email_client</a> </p>
                                 <hr />
-                                <h2>Перечень заказанных товров:</h2>
+                                <h2>Перечень заказанных товаров:</h2>
                                 <p>$cart_list</p>
                                 <hr />
                                 <p>Ожидаем оплату по номеру заказа № {$_POST['order_id']}</p>";
-                    $body = $top . $middle .$footer;
+                $body = $top . $middle .$footer;
+                break;
+            case 'cart_paypal':
+                $subject = "Новый PayPal заказ <{$_POST['txn_id']}>";
+                $subject_detail = '';
+                // проходим в цикле, чтобы узнать количество добавляемых позиций
+                $cart_list = "<ul>";
+                $subtotal = 0;
+                for( $i=1; $i <= $_POST['num_cart_items']; $i++ ) {
 
-            }
+                    $item_number    = $_POST['item_number'.$i];
+                    $item_name      = $_POST['item_name'.$i];
+                    $amount         = $_POST['amount'.$i];
+                    $quantity       = $_POST['quantity'.$i];
+                    $total_cost     = $_POST['mc_gross_'.$i];
+
+                    $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость с комиссией: ".$total_cost." RUB</li>"
+                        ."<li>Количество: ".$quantity." ед.</li>";
+                }
+                $subtotal = $_POST['mc_gross'];
+                $data = $_POST['memo'];
+                if( empty( $data ) ) {
+                    $data = " - ";
+                }
+                $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
+                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "</ul>";
+
+                $middle = "<h1>Новый PayPal заказ</h1>
+                                <div class='main_txt'>
+                                <p>$subject  с номером транзакции:  {$_POST['txn_id']}</p>
+                                <p>$subject_detail</p>
+                                <p>Новый заказ от пользователя: {$_POST['address_name']} с email: <a href=\"mailto:$email_client\">$email_client</a>  и  с ID получателя: {$_POST['receiver_id']}</p>
+                                <hr />
+                                <h2>Перечень заказанных товаров:</h2>
+                                <p>$cart_list</p>
+                                <hr />
+                                <p>Оплата по номеру транзакции:  {$_POST['txn_id']} произведена: {$_POST['payment_date']}</p>";
+                $body = $top . $middle .$footer;
+                break;
+
+        }
 
 
         $header = 'From: support@imei-service.ru' . "\r\n";
@@ -346,7 +386,7 @@ abstract class ClientMail extends Mail {
                         <div id=\"tp\"></div>
                         <div id=\"mid\">";
 
-        
+
         $bottom =       "
                             <ul>
                                 <li><ins>qiwi</ins>
@@ -381,32 +421,32 @@ abstract class ClientMail extends Mail {
                             <br/>
                             <p>Комиссии по переводу денежных средств оплачиваете Вы. <br />После оплаты обязательно ответьте на email: <a href=\"mailto:$email\">$email</a> с указанием способа оплаты</p><br/><br/>";
         $footer =
-                        "</div>
-                        <div id=\"slice\"></div>
-                    </div>
+            "</div>
+            <div id=\"slice\"></div>
+        </div>
 
-                        <div id=\"btm\"></div>
-                        <div class=\"footer_txt\">
-                            <p>
-                                <br/>
-                                ------------------------------<br/>
-                                <br/>
-                                <br/>
-                                <b>site:</b> <a href=\"http://imei-service.ru\">imei-service.ru</a><br/>
-                                <b>email:</b> <a href=\"mailto:imei_service@icloud.com\">imei_service@icloud.com</a><br/>
-                                <b>Skype:</b> <a href=\"skype:zhalnin78?add\">zhalnin78</a><br/>
-                                <b>phone:</b> <a href=\"#\">+7(921)7451508</a><br/><br/>
-                                <b><i>Алексей</i></b><br/>
-                            </p>
-                        </div>
-                    </div>
-                </body>
-            </html>";
+            <div id=\"btm\"></div>
+            <div class=\"footer_txt\">
+                <p>
+                    <br/>
+                    ------------------------------<br/>
+                    <br/>
+                    <br/>
+                    <b>site:</b> <a href=\"http://imei-service.ru\">imei-service.ru</a><br/>
+                    <b>email:</b> <a href=\"mailto:imei_service@icloud.com\">imei_service@icloud.com</a><br/>
+                    <b>Skype:</b> <a href=\"skype:zhalnin78?add\">zhalnin78</a><br/>
+                    <b>phone:</b> <a href=\"#\">+7(921)7451508</a><br/><br/>
+                    <b><i>Алексей</i></b><br/>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>";
 
         switch($type){
             case 'udid':
                 $subject = "Регистрация UDID";
-               
+
                 $middle = "<h1>Ваша заявка принята!</h1>
                          <h3>Благодарим вас за посещение нашего сайта!</h3>
                          <div class=\"main_txt\">
@@ -506,7 +546,7 @@ abstract class ClientMail extends Mail {
                 $body = $top . $middle . $footer;
                 break;
             case 'cart_order':
-                $subject = "Ваш номер заказа № {$_POST['order_id']} на сайте imei-service.ru";
+                $subject = "Ваш номер заказа № <{$_POST['order_id']}> на сайте imei-service.ru";
                 // проходим в цикле, чтобы узнать количество добавляемых позиций
                 $cart_list = "<ul>";
                 $subtotal = 0;
@@ -529,6 +569,7 @@ abstract class ClientMail extends Mail {
                 $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
                 $cart_list .= "</ul>";
 
+
                 $middle = "<h1>Ваш заказ принят!</h1>
                             <h3>Благодарим вас за размещение заказа на нашем сайте!</h3>
                                 <div class='main_txt'>
@@ -539,7 +580,7 @@ abstract class ClientMail extends Mail {
                                 <hr />
                                 <h2>Обратите внимание:</h2><br />
                                 <p>Если при отправке заказа на сайте, вы забыли по какой-то причине указать<br />
-                                IMEI или UDID, то вы можете прислать их(его) до оплаты заказа в ответном письме(не удаляйте номер заказа из заголовка)</p>
+                                IMEI или UDID, то вы можете прислать эти данные до оплаты заказа в ответном письме(не удаляйте номер заказа из заголовка)</p>
                                 <p>Если оплата заказа не будет произведена в течение 24 часов,<br />
                                 то он будет аннулирован.</p>
                                 <p>Если был отправлен неверный IMEI или UDID, то возрат денежных средств невозможен!</p>
@@ -550,6 +591,58 @@ abstract class ClientMail extends Mail {
                                  денежные средства будут вам возвращены.</p>
                                  <h2>Оплату заказа вы можете произвести по следующим рекзвизитам:</h2><br />";
                 $body = $top . $middle . $bottom . $footer;
+                break;
+            case 'cart_paypal':
+                $subject = "Ваш PayPal заказ <{$_POST['txn_id']}>";
+                $subject_detail = '';
+                // проходим в цикле, чтобы узнать количество добавляемых позиций
+                $cart_list = "<ul>";
+                $subtotal = 0;
+                for( $i=1; $i <= $_POST['num_cart_items']; $i++ ) {
+
+                    $item_number    = $_POST['item_number'.$i];
+                    $item_name      = $_POST['item_name'.$i];
+                    $amount         = $_POST['amount'.$i];
+                    $quantity       = $_POST['quantity'.$i];
+                    $total_cost     = $_POST['mc_gross_'.$i];
+
+                    $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость с комиссией: ".$total_cost." RUB</li>"
+                        ."<li>Количество: ".$quantity." ед.</li>";
+                }
+                $subtotal = $_POST['mc_gross'];
+                $data = $_POST['memo'];
+                if( empty( $data ) ) {
+                    $data = " - ";
+                }
+                $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
+                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "</ul>";
+
+                $middle = "<h1>Вы совершили покупку по PayPal</h1>
+                                <div class='main_txt'>
+                                <p>$subject</p>
+                                <p>$subject_detail</p>
+                                <p>Уважаемый(ая), {$_POST['address_name']}, спасибо, что воспользовались нашими услугами!</p>
+                                
+                                <hr />
+                                <h2>Перечень заказанных товаров:</h2>
+                                <p>$cart_list</p>
+                                <hr />
+                               
+                                <h2>Обратите внимание:</h2><br />
+                                <p>Если при отправке заказа на сайте, вы забыли по какой-то причине указать<br />
+                                IMEI или UDID, то вы можете прислать эти данные до оплаты заказа в ответном письме(не удаляйте номер заказа из заголовка)</p>
+                                <p>Если оплата заказа не будет произведена в течение 24 часов,<br />
+                                то он будет аннулирован.</p>
+                                <p>Если был отправлен неверный IMEI или UDID, то возрат денежных средств невозможен!</p>
+                                <p>Если аппарат уже разлочен, то возрат денежных средств невозможен!</p>
+                                <p>Если заказ был отправлен с неверным выбором оператора, то возрат денежных средств невозможен!</p>
+                                <h2>Мы вам гарантируем:</h2><br />
+                                <p>Если ваш заказ корректно оформлен, но выполнение его окажется невозможным, <br />
+                                 денежные средства будут вам возвращены.</p>";
+                $body = $top . $middle .$footer;
+                break;
 
 
         }
@@ -736,6 +829,27 @@ class CartOrderClient extends ClientMail{
 }
 
 
+/**
+ * Class CartPaypalAdmin и CartPaypalClient
+ * Отправляем письма с указание деталей заказа PayPal
+ * @package imei_service\classes
+ */
+class CartPaypalAdmin extends AdminMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
+
+//        echo "<tt><pre>".print_r( $cart, true )."</pre></tt>";
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
+    }
+}
+class CartPaypalClient extends ClientMail{
+    function email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart ){
+//        echo "<tt><pre>".print_r( $cart, true )."</pre></tt>";
+
+        parent::email($email,$email_client,$imei,$udid,$operator,$type, $login, $activation, $cart );
+    }
+}
+
+
 
 
 
@@ -902,6 +1016,23 @@ class CartOrderCommsManager extends CommsManager {
 }
 
 
+/**
+ * Class CartPaypalCommsManager
+ * для отправки деталей заказа PayPal
+ */
+class CartPaypalCommsManager extends CommsManager {
+
+    function make( $type ){
+        switch( $type ){
+            case self::ADMIN:
+                return new CartPaypalAdmin();
+            case self::CLIENT:
+                return new CartPaypalClient();
+        }
+    }
+}
+
+
 
 
 /**
@@ -951,6 +1082,9 @@ class MailConfig {
                 break;
             case 'cart_order':
                 return new CartOrderCommsManager();
+                break;
+            case 'cart_paypal':
+                return new CartPaypalCommsManager();
                 break;
         }
     }

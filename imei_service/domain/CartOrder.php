@@ -41,6 +41,7 @@ class CartOrder extends DomainObject {
                             $firstname          =null,
                             $lastname           =null,
                             $email              =null,
+                            $data               =null,
                             $country            =null,
                             $address            =null,
                             $city               =null,
@@ -49,12 +50,12 @@ class CartOrder extends DomainObject {
                             $status             =null,
                             $amount             =null,
                             $paypalTransId      =null,
-                            $createdAt          =null,
-                            $data               =null ) {
+                            $createdAt          =null) {
 
         $this->firstname        = $firstname;
         $this->lastname         = $lastname;
         $this->email            = $email;
+        $this->data             = $data;
         $this->country          = $country;
         $this->address          = $address;
         $this->city             = $city;
@@ -64,7 +65,6 @@ class CartOrder extends DomainObject {
         $this->amount           = $amount;
         $this->paypalTransId    = $paypalTransId;
         $this->createdAt        = $createdAt;
-        $this->data             = $data;
 
         parent::__construct( $id );
     }

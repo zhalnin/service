@@ -20,6 +20,7 @@ class CartOrderUpdateFactory extends UpdateFactory {
         $values['firstname']        = $obj->getFirstName();
         $values['lastname']         = $obj->getLastName();
         $values['email']            = $obj->getEmail();
+        $values['data']             = $obj->getData();
         $values['country']          = $obj->getCountry();
         $values['address']          = $obj->getAddress();
         $values['city']             = $obj->getCity();
@@ -29,7 +30,7 @@ class CartOrderUpdateFactory extends UpdateFactory {
         $values['amount']           = $obj->getAmount();
         $values['paypal_trans_id']  = $obj->getPaypalTransId();
         $values['created_at']       = $obj->getCreatedAt();
-        $values['data']             = $obj->getData();
+
 
         if( $id > -1 ) {
             $cond['id'] = $id;

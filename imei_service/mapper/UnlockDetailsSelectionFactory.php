@@ -17,7 +17,7 @@ class UnlockDetailsSelectionFactory extends SelectionFactory {
     function newSelection( IdentityObject $obj ) {
         $fields = implode(',', $obj->getObjectFields() );
         $core = "SELECT $fields FROM system_position";
-        $orderby = "ORDER BY operator";
+        $orderby = "ORDER BY pos";
         list( $where, $values ) = $this->buildWhere( $obj );
         return array( $core." ".$where." ".$orderby, $values );
     }

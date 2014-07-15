@@ -147,5 +147,16 @@
         </status>
     </command>
 
+    <command name="Paypal">
+        <view>paypal</view>
+        <status value="CMD_OK">
+            <view>paypalThankYou</view>
+        </status>
+    </command>
+
+    <command name="PaypalThankYou">
+        <view>paypalThankYou</view>
+    </command>
+
 </control>
 </woo-options>

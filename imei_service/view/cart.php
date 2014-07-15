@@ -130,6 +130,10 @@ try {
 
                                         <?php
                                         $num = 1;
+                                        $sum_subtotal = 0;
+                                        $sum_shipping = 0;
+                                        $shipping = 0;
+
                                         for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
                                             // получаем по индексу количество предметов по данной позиции
                                             foreach ( $colCatalogPosition[$i] as $index => $qty) {
@@ -146,11 +150,11 @@ try {
                                                     $position   = $in->getPos();
                                                 }
                                                 $subtotal = $index * $cost;
-                                                if( $cost <= 10 ) {
-                                                    $shipping = $cost;
-                                                } else {
-                                                    $shipping = $cost / 100  * 3.9  + 10;
-                                                }
+//                                                if( $cost <= 10 ) {
+//                                                    $shipping = $cost;
+//                                                } else {
+//                                                    $shipping = $cost / 100  * 3.9  + 10;
+//                                                }
                                                 ?>
 
                                                 <input type="hidden" name="item_name_<?php echo $num; ?>" value="<?php echo $operator; ?><?php if( ! empty( $country ) )  echo ' ('.$country.')'; ?><?php if( ! empty( $status ) )  echo  $status; ?>" >
@@ -161,8 +165,13 @@ try {
                                                 <?php
                                                 $num++;
                                                 $sum_subtotal = $sum_subtotal + $subtotal;
-                                                $sum_shipping = $sum_shipping + $shipping;
+//                                                $sum_shipping = $sum_shipping + $shipping;
 
+                                            }
+                                            if( $sum_subtotal <= 10 ) {
+                                                $sum_shipping = $sum_subtotal;
+                                            } else {
+                                                $sum_shipping = $sum_subtotal / 100  * 3.9  + 10;
                                             }
                                         }
                                         ?>
@@ -180,7 +189,11 @@ try {
                                         <input type="hidden" name="business" value="zhalninpal-facilitator@me.com" >
 
                                         <?php
-                                       $num = 1;
+                                        $num = 1;
+                                        $sum_subtotal = 0;
+                                        $sum_shipping = 0;
+                                        $shipping = 0;
+
                                         for( $i=0; $i < count( $colCatalogPosition ); $i++ ) {
                                             // получаем по индексу количество предметов по данной позиции
                                             foreach ( $colCatalogPosition[$i] as $index => $qty) {
@@ -210,10 +223,15 @@ try {
                                                     <input type="hidden" name="quantity_<?php echo $num; ?>" value="<?php echo $index; ?>" >
 
                                                     <?php
-                                                    $num++;
-                                                    $sum_subtotal = $sum_subtotal + $subtotal;
-                                                    $sum_shipping = $sum_shipping + $shipping;
+                                                $num++;
+                                                $sum_subtotal = $sum_subtotal + $subtotal;
+//                                                $sum_shipping = $sum_shipping + $shipping;
 
+                                            }
+                                            if( $sum_subtotal <= 10 ) {
+                                                $sum_shipping = $sum_subtotal;
+                                            } else {
+                                                $sum_shipping = $sum_subtotal / 100  * 3.9  + 10;
                                             }
                                         }
                                             ?>
@@ -222,9 +240,9 @@ try {
                                         <input type="hidden" name="lc" value="RUS" >
                                         <input type="hidden" name="rm" value="2" >
                                         <input type="hidden" name="shipping_1" value="<?php echo $sum_shipping; ?>" >
-                                        <input type="hidden" name="return" value="http://zhalnin.tmweb.ru/gamelist/index.php?view=thankyou" >
-                                        <input type="hidden" name="cancel_return" value="http://zhalnin.tmweb.ru/gamelist/" >
-                                        <input type="hidden" name="notify_url" value="http://zhalnin.tmweb.ru/gamelist/paypal.php" >
+                                        <input type="hidden" name="return" value="http://zhalnin.tmweb.ru/runner.php?cmd=PaypalThankYou" >
+                                        <input type="hidden" name="cancel_return" value="http://zhalnin.tmweb.ru/runner.php?cmd=News" >
+                                        <input type="hidden" name="notify_url" value="http://zhalnin.tmweb.ru/runner.php?cmd=Paypal" >
                                         <input type="image" src="imei_service/view/images/paypal/paypal_mini.png" name="pay now" value="pay" class="pay-button" width="150" height="37" />
                                     </form>
 

@@ -65,6 +65,7 @@ class CartOrder extends Command {
                                                         $firstname,
                                                         $lastname,
                                                         $email,
+                                                        $data,
                                                         $country,
                                                         $address,
                                                         $city,
@@ -73,8 +74,7 @@ class CartOrder extends Command {
                                                         $status,
                                                         $amount,
                                                         $paypal_trans_id,
-                                                        $created_at,
-                                                        $data );
+                                                        $created_at);
 
         // выполняем операцию на созданным классом - \imei_service\mapper\DomainObjectAssembler
 //        $cartOrder->finder()->insert( $cartOrder );
@@ -118,8 +118,13 @@ class CartOrder extends Command {
 
 
         // после успешного добавления заказа и предметов закакза удаляем сессию
-        session_unset();
-        session_destroy();
+//        session_unset();
+//        session_destroy();
+        $_SESSION['cart_imei_service'] = array();
+        $_SESSION['total_items_imei_service'] = 0;
+        $_SESSION['total_price_imei_service'] = 0.00;
+
+
         $_POST['order_id'] = $order_id;
         $_POST['created_at'] = $created_at;
         $cart = $_POST;

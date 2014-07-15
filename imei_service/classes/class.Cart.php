@@ -81,6 +81,26 @@ class Cart {
         return $price;
     }
 
+
+    /**
+     * Получаем заказанные товары из каталога по  id_catalog и position
+     * @param $position
+     * @param $id_catalog
+     * @return mixed
+     * @throws \PDOException
+     */
+    protected function findProduct( $position, $id_catalog ) {
+        $pdo = \imei_service\base\DBRegistry::getDB();
+        $sth = $pdo->prepare( 'SELECT * FROM system_position
+                                                        WHERE system_position.pos = ?
+                                                        AND system_position.id_catalog = ?' );
+        $result = $sth->execute( array( $position, $id_catalog ) );
+        if( ! $result ) {
+            throw new \PDOException( "Error in class.Cart.php" );
+        }
+        return $sth->fetch();
+    }
+
     /**
      * Обновляем колличество предметов в корзине:
      * из вьюшки получаем POST запрос с параметрами
@@ -105,6 +125,50 @@ class Cart {
         }
     }
 
+
+
+
+
+
+
+    protected function noPaypalTransId( $trans_id ) {
+        $pdo = \imei_service\base\DBRegistry::getDB();
+        $sth = $pdo->prepare( 'SELECT id FROM system_cart_orders WHERE paypal_trans_id = ?' );
+        $sth->execute( array( $trans_id ) );
+        $num_result = $sth->fetch();
+        if( $num_result == 0 ) {
+            return true;
+        }
+        return false;
+    }
+
+
+    protected function paymentAmountCorrect( $shipping, $params ) {
+
+        $amount = 0.00;
+        $pdo = \imei_service\base\DBRegistry::getDB();
+
+        for( $i=1; $i <= $params['num_cart_items']; $i++ ) {
+            // инициализируем две переменные из строки, типа: 36_2
+            list($id_catalog, $position ) = explode( '_', $params["item_number{$i}"] );
+            $sth = $pdo->prepare( 'SELECT cost FROM system_position
+                                                        WHERE system_position.pos = ?
+                                                        AND system_position.id_catalog = ?' );
+            $result = $sth->execute( array( $position, $id_catalog ) );
+            if( $result ) {
+                $item_price = $sth->fetch();
+                $amount += $item_price['cost'] * $params["quantity{$i}"];
+            }
+        }
+        if( ( $amount / 100 * 3.9 + 10 ) == $params['mc_gross'] ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
     static function getTotalPrice( $cart ) {
         return self::instance()->totalPrice( $cart );
     }
@@ -120,5 +184,18 @@ class Cart {
     static function setUpdateCart() {
         self::instance()->updateCart();
     }
+
+    static function getProduct(  $position, $id_catalog ) {
+        return self::instance()->findProduct(  $position, $id_catalog );
+    }
+
+    static function getNoPaypalTransId(  $trans_id ) {
+        return self::instance()->noPaypalTransId(  $trans_id);
+    }
+
+    static function getPaymentAmountCorrect( $shipping, $params ) {
+        return self::instance()->paymentAmountCorrect( $shipping, $params );
+    }
+
 }
 ?>
