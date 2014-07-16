@@ -7,6 +7,7 @@
  */
 
 namespace dmn\mapper;
+error_reporting( E_ALL & ~E_NOTICE );
 
 
 
@@ -109,5 +110,9 @@ class DomainObjectAssembler {
         return array ( "navigation"=>$pagfact->printPageNav(), "select"=>$this->factory->getCollection( $pagfact->getPage() ) );
 
     }
+
+
+
+
 }
 ?>

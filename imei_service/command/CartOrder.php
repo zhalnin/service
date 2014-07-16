@@ -25,7 +25,6 @@ require_once( "imei_service/classes/class.SendMail.php" );
 class CartOrder extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
-//        echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
 //        Добавляем в system_cart_orders
         $firstname          = 'anonymous';                          // имя
         $lastname           = 'anonymous';                          // фамилия

@@ -37,11 +37,12 @@ try {
         <!--        подключаем обработчик авторизации-->
         <?php require_once( "utils/security_mod.php" ); ?>
 
-        <div id="progressbar"></div>
 
         <div id="main-slogan" class="main-content">
             <div id="slogan">Быстро - Качественно - Надежно</div>
         </div>
+
+        <div id="progressbar"></div>
 
         <div id="showcase" class="main-content">
             <div class="hero selfclear" >

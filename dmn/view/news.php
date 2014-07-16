@@ -68,12 +68,12 @@ try {
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
         $url = "id_news={$news[$i][id_news]}&page=$_GET[page]";
         if($news[$i]['hide'] == 'show') {
-            $showhide = "<a href=?cmd=Newshide&$url
+            $showhide = "<a href=?cmd=News&act=hide&$url
                                     title='Скрыть новость в блоке новостей'>
                                     Скрыть</a>";
             $style = "";
         } else  {
-            $showhide = "<a href=?cmd=Newsshow&$url
+            $showhide = "<a href=?cmd=News&act=show&$url
                                     title='Отобразить новость в блоке новостей'>
                                     Отобразить</a> ";
             $style = " class=hiddenrow";
@@ -113,17 +113,17 @@ try {
                         <td><p align='center'>{$news[$i][putdate]}</td>
 
                         <td align=center><a title='Редактировать текст новости'
-                                href=?cmd=Newsedit&$url>{$news[$i][name]}</a><br>
+                                href=?cmd=News&act=edit&$url>{$news[$i][name]}</a><br>
                                 ".nl2br(\dmn\view\utils\printPage($news[$i]['preview']))." $news_url </td>
 
                         <td align=center>$url_pict</td>
 
                         <td align=center>
-                        <a href=?cmd=Newsuppest&$url alt='поднять выше невидимых блоков'>Наверх</a><br/>
-                            <a href=?cmd=Newsup&$url>Вверх</a><br/>
+                        <a href=?cmd=News&act=uppest&$url alt='поднять выше невидимых блоков'>Наверх</a><br/>
+                            <a href=?cmd=News&act=up&$url>Вверх</a><br/>
                             $showhide<br/>
-                            <a href=?cmd=Newsedit&$url title='Редактировать текст новости'>Редактировать</a><br/>
-                            <a href=# onClick=\"delete_position('?cmd=Newsdel&$url',".
+                            <a href=?cmd=News&act=edit&$url title='Редактировать текст новости'>Редактировать</a><br/>
+                            <a href=# onClick=\"delete_position('?cmd=News&act=del&$url',".
             "'Вы действительно хотите удалить раздел?');\"  title='Удалить новость'>Удалить</a><br/>
                             <a href=?cmd=Newsdown&$url>Вниз</a><br/></td>
 
