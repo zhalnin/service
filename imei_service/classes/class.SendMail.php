@@ -406,11 +406,6 @@ abstract class ClientMail extends Mail {
                                         <li>Z231606126103</li>
                                     </ul>
                                 </li>
-                                <li><ins>paypal</ins>
-                                    <ul class=\"nested\">
-                                        <li>zhalninpal@me.com</li>
-                                    </ul>
-                                </li>
                                 <li><ins>пополнить мобильный счет</ins><br />
                                     <b>Только при оплате до 500 рублей!</b>
                                     <ul class=\"nested\">
@@ -420,6 +415,7 @@ abstract class ClientMail extends Mail {
                             </ul>
                             <br/>
                             <p>Комиссии по переводу денежных средств оплачиваете Вы. <br />После оплаты обязательно ответьте на email: <a href=\"mailto:$email\">$email</a> с указанием способа оплаты</p><br/><br/>";
+
         $footer =
             "</div>
             <div id=\"slice\"></div>

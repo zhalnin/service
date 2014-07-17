@@ -34,7 +34,7 @@ class CartOrder extends Command {
         $city               = '-';                                  // город
         $zip_code           = '-';                                  // индекс
         $state              = '-';                                  // штат
-        $status             = 'handle';                             // статус заказа
+        $status             = 'waiting';                             // статус заказа
         $amount             = $request->getProperty( 'subtotal' );  // общая сумма
         $paypal_trans_id    = '-';                                  // ID транзакции PayPal
         $created_at         = date('Y-m-d H:i:s');                  // дата и время создания заказа
