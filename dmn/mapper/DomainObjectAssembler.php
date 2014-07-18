@@ -20,8 +20,6 @@ class DomainObjectAssembler {
      * @param PersistenceFactory $factory
      */
     function __construct( PersistenceFactory $factory ) {
-//        echo "<tt><pre>".print_r($factory, true)."</pre></tt>";
-
         $this->factory = $factory; // сохраняем в переменную
         if( ! isset( self::$PDO ) ) { // если еще нет
             $dsn = \dmn\base\DBRegistry::getDB(); // то сохраняем дескриптор БД
@@ -65,20 +63,26 @@ class DomainObjectAssembler {
      * @return mixed
      */
     function find( IdentityObject $idobj ) {
+//        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
+        if( !empty( $orderBy ) ) {
+            list( $selection, $values ) = $selfact->newSelection( $idobj );
+//            echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+//            echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        }
         list( $selection, $values ) = $selfact->newSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
 //        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив
-//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
-//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
     function insert( \dmn\domain\DomainObject $obj ) {
 //        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
         $upfact = $this->factory->getUpdateFactory();
+//        echo "<tt><pre>".print_r($upfact, true)."</pre></tt>";
+
         list( $update, $values ) = $upfact->newUpdate( $obj );
 //        echo "<tt><pre>".print_r($update, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
@@ -89,6 +93,12 @@ class DomainObjectAssembler {
         }
         $obj->markClean();
     }
+
+    function upDown( $current, $previous ) {
+
+
+    }
+
 
     function findPagination( $tableName,
                              IdentityObject $where,
@@ -110,9 +120,5 @@ class DomainObjectAssembler {
         return array ( "navigation"=>$pagfact->printPageNav(), "select"=>$this->factory->getCollection( $pagfact->getPage() ) );
 
     }
-
-
-
-
 }
 ?>

@@ -33,7 +33,7 @@ foreach ( $options->menu->point as $point ):
     // Form point of menu
     echo "<div $style>
                   <a class=\"menu\"
-                     href='../$file'
+                     href='?cmd=$point[name]'
                      title='$block_description'>
                      $block_name
                   </a>

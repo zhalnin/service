@@ -68,9 +68,11 @@ try {
                         <div class="column last">
                             <h1>Ваша корзина</h1>
 
-                        <?php if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) {
-                                ?>
+                        <?php if( is_array( $colCatalogPosition )  && $_SESSION['total_items_imei_service'] != 0 ) { ?>
+
                             <div class='column last dividerdownmidi'>
+
+<!--                                Форма для обновления корзины-->
                                 <form action="?cmd=Cart&act=update" method="post" >
                                     <div class="cart_table">
                                         <div class="cart_table_name"><b>Наименование</b></div>
@@ -109,7 +111,6 @@ try {
                                                     <div class="cart_table_quantity_div" id='timeconsume'><input type="text" maxlength="2" size="2" <?php echo 'name='. $id_catalog.'_'.$position.' value='.$index ?> /></div>
                                                     <div class="cart_table_total_div" id='timeconsume'><span class="table_total_div_currency">RUB</span><span class="table_total_div_value"><?php echo number_format( $subtotal, 2 ); ?></span></div>
                                                 </div>
-
 <?php
                                             $sum_subtotal = $sum_subtotal + $subtotal;
                                         }
@@ -124,6 +125,7 @@ try {
                                                 </form>";
                                     ?>
 
+<!--                                    Форма оформления заказа-->
                                     <form action="?cmd=CartOrder" method="post">
                                         <input type="hidden" name="upload" value="1" >
                                         <input type="hidden" name="business" value="zhalninpal-facilitator@me.com" >
@@ -150,11 +152,6 @@ try {
                                                     $position   = $in->getPos();
                                                 }
                                                 $subtotal = $index * $cost;
-//                                                if( $cost <= 10 ) {
-//                                                    $shipping = $cost;
-//                                                } else {
-//                                                    $shipping = $cost / 100  * 3.9  + 10;
-//                                                }
                                                 ?>
 
                                                 <input type="hidden" name="item_name_<?php echo $num; ?>" value="<?php echo $operator; ?><?php if( ! empty( $country ) )  echo ' ('.$country.')'; ?><?php if( ! empty( $status ) )  echo  $status; ?>" >
@@ -165,8 +162,6 @@ try {
                                                 <?php
                                                 $num++;
                                                 $sum_subtotal = $sum_subtotal + $subtotal;
-//                                                $sum_shipping = $sum_shipping + $shipping;
-
                                             }
                                             if( $sum_subtotal <= 10 ) {
                                                 $sum_shipping = $sum_subtotal;
@@ -180,9 +175,7 @@ try {
                                     </form>
 
 
-
-
-
+<!--                                    Форма для оплаты на PayPal-->
                                     <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
                                         <input type="hidden" name="cmd" value="_cart" >
                                         <input type="hidden" name="upload" value="1" >

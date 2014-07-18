@@ -13,12 +13,19 @@ require_once( "imei_service/base/Registry.php" );
 
 class Cart {
     private static $instance;
+    private $pdo;
 
     static function instance() {
         if( ! isset( self::$instance ) ) {
             self::$instance = new self();
         }
         return self::$instance;
+    }
+
+    function __construct() {
+        if( ! isset( $this->pdo) ) {
+            $this->pdo =  \imei_service\base\DBRegistry::getDB();
+        }
     }
 
     /**
@@ -66,8 +73,8 @@ class Cart {
         if( is_array( $cart ) ) {
             foreach ( $cart as $id_catalog => $catalog ) {
                 foreach ( $catalog as $position => $qty ) {
-                    $pdo = \imei_service\base\DBRegistry::getDB();
-                    $sth = $pdo->prepare( 'SELECT cost FROM system_position
+//                    $pdo = \imei_service\base\DBRegistry::getDB();
+                    $sth = $this->pdo->prepare( 'SELECT cost FROM system_position
                                                         WHERE system_position.pos = ?
                                                         AND system_position.id_catalog = ?' );
                     $result = $sth->execute( array( $position, $id_catalog ) );
@@ -90,8 +97,8 @@ class Cart {
      * @throws \PDOException
      */
     protected function findProduct( $position, $id_catalog ) {
-        $pdo = \imei_service\base\DBRegistry::getDB();
-        $sth = $pdo->prepare( 'SELECT * FROM system_position
+//        $pdo = \imei_service\base\DBRegistry::getDB();
+        $sth = $this->pdo->prepare( 'SELECT * FROM system_position
                                                         WHERE system_position.pos = ?
                                                         AND system_position.id_catalog = ?' );
         $result = $sth->execute( array( $position, $id_catalog ) );
@@ -126,14 +133,15 @@ class Cart {
     }
 
 
-
-
-
-
-
+    /**
+     * Проверяем уникальность id транзакции,
+     * чтобы в таблице его не было
+     * @param $trans_id
+     * @return bool
+     */
     protected function noPaypalTransId( $trans_id ) {
-        $pdo = \imei_service\base\DBRegistry::getDB();
-        $sth = $pdo->prepare( 'SELECT id FROM system_cart_orders WHERE paypal_trans_id = ?' );
+//        $pdo = \imei_service\base\DBRegistry::getDB();
+        $sth = $this->pdo->prepare( 'SELECT id FROM system_cart_orders WHERE paypal_trans_id = ?' );
         $sth->execute( array( $trans_id ) );
         $num_result = $sth->fetch();
         if( $num_result == 0 ) {
@@ -143,15 +151,22 @@ class Cart {
     }
 
 
+    /**
+     * Сверяем стоимость товара с доставкой из БД с
+     * данными, отправляемыми формой на PayPal
+     * @param $shipping
+     * @param $params
+     * @return bool
+     */
     protected function paymentAmountCorrect( $shipping, $params ) {
 
         $amount = 0.00;
-        $pdo = \imei_service\base\DBRegistry::getDB();
+//        $pdo = \imei_service\base\DBRegistry::getDB();
 
         for( $i=1; $i <= $params['num_cart_items']; $i++ ) {
             // инициализируем две переменные из строки, типа: 36_2
             list($id_catalog, $position ) = explode( '_', $params["item_number{$i}"] );
-            $sth = $pdo->prepare( 'SELECT cost FROM system_position
+            $sth = $this->pdo->prepare( 'SELECT cost FROM system_position
                                                         WHERE system_position.pos = ?
                                                         AND system_position.id_catalog = ?' );
             $result = $sth->execute( array( $position, $id_catalog ) );

@@ -37,7 +37,7 @@ class NewsObjectFactory extends DomainObjectFactory {
      * @return mixed - возвращаем объект \imei_service\domain\News
      */
     function createObject( array $array ) {
-        $class = "\\imei_service\\domain\\News"; // название класса
+        $class = "\\dmn\\domain\\News"; // название класса
         $old = $this->getFromMap( $class, $array['id_news'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id_news'] ); // создаем экземпляр класса, в конструктор передаем id
@@ -46,10 +46,14 @@ class NewsObjectFactory extends DomainObjectFactory {
         $obj->setPreview( $array['preview'] );
         $obj->setBody( $array['body'] );
         $obj->setPutdate( $array['putdate'] );
-        $obj->setUrlpict_s( $array['urlpict_s'] );
-        $obj->setAlt( $array['alt'] );
+        $obj->setHideDate( $array['hidedate'] );
         $obj->setUrl( $array['url'] );
         $obj->setUrltext( $array['urltext'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setUrlpict( $array['urlpict'] );
+        $obj->setUrlpict_s( $array['urlpict_s'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
         $obj->setHidepict( $array['hidepict'] );
 
         $this->addToMap( $obj );

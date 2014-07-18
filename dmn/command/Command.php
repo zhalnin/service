@@ -7,6 +7,8 @@
  */
 
 namespace dmn\command;
+error_reporting( E_ALL & ~E_NOTICE );
+require_once( "dmn/view/utils/getNameServer.php" );
 
 
 abstract class Command {
@@ -52,6 +54,18 @@ abstract class Command {
         if( empty( $str ) ) { $str = 'CMD_DEFAULT'; }
         return self::$STATUS_STRINGS[$str];
     }
+
+    /**
+     * Для перезагрузки страницы по таймеру(refresh)
+     * @param $delay - задержка
+     * @param $resource - путь
+     */
+    function reloadPage( $delay, $resource ) {
+        $server = \dmn\view\utils\getNameServer().$resource;
+        $delay = intval( $delay );
+        header("Refresh: {$delay}; URL= {$server}");
+    }
+
 
     /**
      * Реализуется в дочерних классах

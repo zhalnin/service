@@ -43,25 +43,17 @@ class Paypal  extends Command {
             curl_setopt ($curl, CURLOPT_SSL_VERIFYHOST, 1);
             $response = curl_exec ($curl);
 
-//file_put_contents('payment.txt',"$response"."\n",FILE_APPEND );
 
             curl_close ($curl);
             if ($response != "VERIFIED") die("You should not do that ...");
-
-            // foreach ( $_POST as $key => $val ) {
-
-            //     file_put_contents('payment.txt',"$key => $val"."\n",FILE_APPEND );
-            // }
-
-
-            $item_name          = $_POST['item_name'];
-            $item_number        = $_POST['item_number'];
-            $payment_status     = $_POST['payment_status'];
-            $payment_amount     = $_POST['mc_gross'];
-            $payment_currency   = $_POST['mc_currency'];
-            $txn_id             = $_POST['txn_id'];
-            $receiver_email     = $_POST['receiver_email'];
-            $payer_email        = $_POST['payer_email'];
+//            $item_name          = $_POST['item_name'];
+//            $item_number        = $_POST['item_number'];
+//            $payment_status     = $_POST['payment_status'];
+//            $payment_amount     = $_POST['mc_gross'];
+//            $payment_currency   = $_POST['mc_currency'];
+//            $txn_id             = $_POST['txn_id'];
+//            $receiver_email     = $_POST['receiver_email'];
+//            $payer_email        = $_POST['payer_email'];
 
             if( $_POST['payment_status'] == 'Completed'
                 && \imei_service\classes\Cart::getNoPaypalTransId( $_POST['txn_id'] )
@@ -69,10 +61,6 @@ class Paypal  extends Command {
                 && $paypal_currency == $_POST['mc_currency']
                 && \imei_service\classes\Cart::getPaymentAmountCorrect( $shipping, $_POST )
             ) {
-
-//file_put_contents('payment.txt',"createOrder"."\n",FILE_APPEND );
-
-
                 $firstname          = $_POST['first_name'];     // фамилия
                 $lastname           = $_POST['last_name'];      // имя
                 $email              = $_POST['payer_email'];    // email покупателя
@@ -107,23 +95,18 @@ class Paypal  extends Command {
                     $paypal_trans_id,
                     $created_at);
 
-//file_put_contents('payment.txt',"createOrder - INSERT"."\n",FILE_APPEND );
                 // выполняем операцию на созданным классом - \imei_service\mapper\DomainObjectAssembler
                 $cartOrder->finder()->insert( $cartOrder );
                 // или альтернативный метод через ObjectWatcher - выполнить надо любым из указанных способов
                 // в командном классе, чтобы получить lastInsertId для следующего запроса INSERT
                 // \imei_service\domain\ObjectWatcher::instance()->performOperations();
 
-//file_put_contents('payment.txt',"createOrder - AFTER_INSERT"."\n",FILE_APPEND );
-
                 // получаем только что вставленный ID в таблицу system_cart_orders
                 $order_id = $cartOrder->getId();
 
-//file_put_contents('payment.txt',"createOrder - ORDER_ID"."\n",FILE_APPEND );
 
                 // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
                 for( $i=1; $i <= $_POST['num_cart_items']; $i++ ) {
-//file_put_contents('payment.txt',"createOrder - CYCLE _ $i "."\n",FILE_APPEND );
                     // инициализируем две переменные из строки, типа: 36_2
                     list($id_catalog, $position ) = explode( '_', $_POST["item_number{$i}"] );
                     // получаем предмет по позиции и id каталога
@@ -149,14 +132,6 @@ class Paypal  extends Command {
             } else {
                 file_put_contents('error_payment.txt',"Проверить статус платежа {$_POST['txn_id']}"."\n",FILE_APPEND );
             }
-
-
-            // после успешного добавления заказа и предметов закакза удаляем сессию
-//            session_unset();
-//            session_destroy();
-//            $_POST['order_id'] = $order_id;
-//            $_POST['created_at'] = $created_at;
-
 
              return self::statuses( 'CMD_OK' );
         }

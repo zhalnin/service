@@ -125,7 +125,7 @@ try {
                             <a href=?cmd=News&act=edit&$url title='Редактировать текст новости'>Редактировать</a><br/>
                             <a href=# onClick=\"delete_position('?cmd=News&act=del&$url',".
             "'Вы действительно хотите удалить раздел?');\"  title='Удалить новость'>Удалить</a><br/>
-                            <a href=?cmd=Newsdown&$url>Вниз</a><br/></td>
+                            <a href=?cmd=News&act=down&$url>Вниз</a><br/></td>
 
 
                     </tr>";

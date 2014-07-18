@@ -19,14 +19,14 @@ require_once("../../config/class.config.dmn.php");
 require_once("../utils/utils.position.php");
 
 // Проверяем, передано ли в параметре число
-$_GET['id'] = intval($_GET['id']);
+$_GET['id_news'] = intval($_GET['id_news']);
 $_GET['id_parent'] = intval($_GET['id_parent']);
 try
 {
-    up($_GET['id'],
+    up($_GET['id_news'],
         $tbl_news,
         "",
-        "id");
+        "id_news");
     header("Location: index.php?".
         "id_parent=$_GET[id_parent]&page=$_GET[page]");
 

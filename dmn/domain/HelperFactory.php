@@ -8,8 +8,8 @@
 
 namespace dmn\domain;
 
-require_once( "imei_service/mapper/DomainObjectAssembler.php" );
-require_once( "imei_service/mapper/PersistenceFactory.php" );
+require_once( "dmn/mapper/DomainObjectAssembler.php" );
+require_once( "dmn/mapper/PersistenceFactory.php" );
 
 class HelperFactory {
     /**
@@ -21,7 +21,7 @@ class HelperFactory {
      * - getUpdateFactory()
      * - getIdentityObject()
      * @param $type - имя класса
-     * @return \imei_service\mapper\DomainObjectAssembler с классом (NewsPersistenceFactory к примеру)
+     * @return \dmn\mapper\DomainObjectAssembler с классом (NewsPersistenceFactory к примеру)
      * будет иметь методы:
      * - конструктор - в нем сохраняем ссылку на класс ($this->factory = NewsPersistenceFactory) и создаем подключение к БД
      * - getStatement()
@@ -30,17 +30,17 @@ class HelperFactory {
      * - insert()
      */
     static  function getFinder( $type ) {
-        $factory = \imei_service\mapper\PersistenceFactory::getFactory( $type ); // получаем PersistenceFactory по имени класса \imei_service\domain\News - NewsPersistenceFactory и т.д.
-        return new \imei_service\mapper\DomainObjectAssembler( $factory ); // создаем экземпляр DomainObjectAssembler для работы с БД нужного класса
+        $factory = \dmn\mapper\PersistenceFactory::getFactory( $type ); // получаем PersistenceFactory по имени класса \dmn\domain\News - NewsPersistenceFactory и т.д.
+        return new \dmn\mapper\DomainObjectAssembler( $factory ); // создаем экземпляр DomainObjectAssembler для работы с БД нужного класса
     }
 
     static function getCollection( $type, array $array ) {
-        $factory = \imei_service\mapper\PersistenceFactory::getFactory( $type );
+        $factory = \dmn\mapper\PersistenceFactory::getFactory( $type );
         return $factory->getCollection( $array );
     }
 
     /**
-     * Из imei_service\domain\DomainObject принимаем имя класса и
+     * Из dmn\domain\DomainObject принимаем имя класса и
      * возвращаем итератор с условными операторами
      * $factory будет иметь методы:
      * - getMapper()
@@ -50,7 +50,7 @@ class HelperFactory {
      * - getUpdateFactory()
      * - getIdentityObject() - нам нужен ОН
      * @param $type - класс
-     * @return \imei_service\mapper\ContactsIdentityObject|\imei_service\mapper\GuestbookIdentityObject|\imei_service\mapper\NewsIdentityObject - возвращаем
+     * @return \dmn\mapper\ContactsIdentityObject|\dmn\mapper\GuestbookIdentityObject|\dmn\mapper\NewsIdentityObject - возвращаем
      * к примеру: new NewsIdentityObject() - т.е. экземпляр класса, в зависимости от имени класса в $type
      * будет иметь методы:
      * - getObjectFields()
@@ -67,7 +67,7 @@ class HelperFactory {
      * - __toString()
      */
     static function getIdentityObject( $type ) {
-        $factory = \imei_service\mapper\PersistenceFactory::getFactory( $type ); // получаем PersistenceFactory по имени класса \imei_service\domain\News - NewsPersistenceFactory и т.д.
+        $factory = \dmn\mapper\PersistenceFactory::getFactory( $type ); // получаем PersistenceFactory по имени класса \dmn\domain\News - NewsPersistenceFactory и т.д.
         return $factory->getIdentityObject(); // возвращаем объект
     }
 }

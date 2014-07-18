@@ -7,7 +7,7 @@
  */
 
 namespace dmn\mapper;
-
+error_reporting( E_ALL & ~E_NOTICE );
 
 abstract class UpdateFactory {
     abstract function newUpdate( \dmn\domain\DomainObject $obj );

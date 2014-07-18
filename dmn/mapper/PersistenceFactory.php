@@ -44,6 +44,7 @@ class NewsPersistenceFactory extends PersistenceFactory {
     }
 
     function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
         return new NewsSelectionFactory();
     }
 
