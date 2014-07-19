@@ -12,6 +12,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "dmn/domain/DomainObject.php" );
 require_once( "dmn/mapper/NewsIdentityObject.php" );
+require_once( "dmn/mapper/NewsUpDownFactory.php" );
 
 require_once( "dmn/base/Registry.php" );
 
@@ -91,14 +92,26 @@ class News extends DomainObject {
         return $finder->find( $newsIdobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
     }
 
-    static function find( $id ) {
-        $finder = self::getFinder( __CLASS__ );
-//        echo "<tt><pre>".print_r(__CLASS__, true)."</pre></tt>";
-        $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
-        return $finder->findOne( $idobj->eq( $id ) );
-    }
+    /**
+     * Метод для поиска
+     * @param $id
+     * @return mixed
+     */
+//    static function find( $id ) {
+//        $finder = self::getFinder( __CLASS__ );
+////        echo "<tt><pre>".print_r(__CLASS__, true)."</pre></tt>";
+//        $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
+//        return $finder->findOne( $idobj->eq( $id ) );
+//    }
 
 
+    /**
+     * Метод для сокрытия или отображения
+     * позиции в блоке новостей
+     * @param $id - id новости
+     * @param $value - значение поля hide ('show' или 'hide')
+     * @return mixed
+     */
     static function showHide( $id, $value ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
@@ -106,102 +119,45 @@ class News extends DomainObject {
     }
 
 
+    /**
+     * Метод для смены позиции в блоке новостей
+     * @param $id - id новости
+     * @param $direct - направление перемещения блока
+     */
     static function upDown( $id, $direct ) {
+        $result = array();
         switch( $direct ) {
             case 'up':
-//                $finder = self::getFinder(__CLASS__);
-//                $idobj = self::getIdentityObject( __CLASS__ );
-//                $current = $finder->findOne( $idobj->field('id_news')->eq( $id ), '' );
-//
-//
-//                $previous = $finder->findOne( $idobj->field('pos')->lt( $current->getPos() ), ' ORDER BY pos DESC ' );
-//
-//                echo "<tt><pre>".print_r($previous, true)."</pre></tt>";
-                $pdo = \dmn\base\DBRegistry::getDB();
-
-                $sel = "SELECT pos FROM system_news
-                                    WHERE id_news=?
-                                    LIMIT 1";
-                $sth = $pdo->prepare($sel);
-                $sth->execute( array( $id ) );
-
-                $current = $sth->fetch();
-
-
-
-                $sel2 = "SELECT pos FROM system_news
-                                    WHERE pos < ?
-                                    ORDER BY pos DESC
-                                    LIMIT 1";
-                $sth2 = $pdo->prepare($sel2);
-                $sth2->execute( array( $current[pos], ) );
-
-                $previous = $sth2->fetch();
-
-                $upd = "UPDATE system_news
-                                SET pos = ? + ? - pos
-                                WHERE pos IN( ?, ? )";
-                $sth3 = $pdo->prepare($upd);
-                $sth3->execute( array( $current[pos], $previous[pos], $current[pos], $previous[pos] ) );
+                $finder = self::getFinder( __CLASS__ );
+                $curobj = self::getIdentityObject( __CLASS__ );
+                $prevobj = self::getIdentityObject( __CLASS__ );
+                // получаем текущую позицию целевой строки в БД
+                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_news' )->eq( $id ), '' )->getPos();
+                $tmp = $finder->upDownSelect( $prevobj->field('pos')->lt( $result['current']), ' ORDER BY pos DESC ' );
+                if( !empty( $tmp ) ) { // если предыдущая позиция существует
+                    // получаем предыдущую позицию относительно целевой строки в БД
+                    $result['previous'] = $finder->upDownSelect( $prevobj->field('pos')->lt( $result['current']), ' ORDER BY pos DESC ' )->getPos();
+                    // меняем позицию местами
+                    $finder->upDownUpdate( $result, $direct );
+                }
                 break;
             case 'down':
-                $pdo = \dmn\base\DBRegistry::getDB();
-                $sel = "SELECT pos FROM system_news
-                            WHERE id_news=?
-                            LIMIT 1";
-                $sth = $pdo->prepare($sel);
-                $sth->execute( array( $id ) );
-
-                $current = $sth->fetch();
-
-                $sel2 = "SELECT pos FROM system_news
-                            WHERE pos > ?
-                            ORDER BY pos
-                            LIMIT 1";
-                $sth2 = $pdo->prepare($sel2);
-                $sth2->execute( array( $current[pos], ) );
-
-                $next = $sth2->fetch();
-
-                $upd = "UPDATE system_news
-                        SET pos = ? + ? - pos
-                        WHERE pos IN( ?, ? )";
-                $sth3 = $pdo->prepare($upd);
-                $sth3->execute( array( $next[pos], $current[pos], $next[pos], $current[pos] ) );
+                $finder = self::getFinder( __CLASS__ );
+                $curobj = self::getIdentityObject( __CLASS__ );
+                $prevobj = self::getIdentityObject( __CLASS__ );
+                // получаем текущую позицию целевой строки в БД
+                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_news' )->eq( $id ), '' )->getPos();
+                $tmp = $finder->upDownSelect( $prevobj->field('pos')->lt( $result['current']), ' ORDER BY pos DESC ' );
+                if( !empty( $tmp ) ) { // если существует следующая позиция
+                    // получаем предыдущую позицию относительно целевой строки в БД
+                    $result['next'] = $finder->upDownSelect( $prevobj->field('pos')->gt( $result['current']), ' ORDER BY pos ' )->getPos();
+                    // меняем позицию местами
+                    $finder->upDownUpdate( $result, $direct );
+                }
                 break;
-            case 'uppest':
-                $pdo = \dmn\base\DBRegistry::getDB();
-                $sel = "SELECT pos FROM system_news
-                            WHERE id_news=?
-                            LIMIT 1";
-                $sth = $pdo->prepare($sel);
-                $sth->execute( array( $id ) );
 
-                $current = $sth->fetch();
-
-                $sel2 = "SELECT MIN(pos) FROM system_news
-                            WHERE pos < ?
-                            AND hide='hide'
-                            ORDER BY pos DESC
-                            LIMIT 1";
-                $sth2 = $pdo->prepare($sel2);
-                $sth2->execute( array( $current[pos], ) );
-
-                $prev = $sth2->fetch();
-
-                $upd = "UPDATE system_news
-                        SET pos = ? + ? - pos
-                        WHERE pos IN( ?, ? )";
-                $sth3 = $pdo->prepare($upd);
-                $sth3->execute( array( $current[pos], $prev[pos], $current[pos],  $prev[pos] ) );
         }
-
-
-
     }
-
-
-
 
     function setName( $name_s ) {
         $this->name = $name_s;

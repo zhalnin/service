@@ -65,11 +65,6 @@ class DomainObjectAssembler {
     function find( IdentityObject $idobj ) {
 //        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
-        if( !empty( $orderBy ) ) {
-            list( $selection, $values ) = $selfact->newSelection( $idobj );
-//            echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
-//            echo "<tt><pre>".print_r($values, true)."</pre></tt>";
-        }
         list( $selection, $values ) = $selfact->newSelection( $idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
 //        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
@@ -78,28 +73,80 @@ class DomainObjectAssembler {
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
+    /**
+     * Метод для вставки в БД
+     * @param \dmn\domain\DomainObject $obj
+     */
     function insert( \dmn\domain\DomainObject $obj ) {
-//        echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
+        // получаем мтод для обновления из фабрики
         $upfact = $this->factory->getUpdateFactory();
-//        echo "<tt><pre>".print_r($upfact, true)."</pre></tt>";
-
+        // инициализируем переменные значениями UPDATE и VALUES
         list( $update, $values ) = $upfact->newUpdate( $obj );
+//        echo "<tt><pre>".print_r($update, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        // формируем запрос
+        $stmt = $this->getStatement( $update );
+        // выполняем запрос
+        $stmt->execute( $values );
+        // если id = -1 - то запись новая, значит после вставки в поле БД
+        if( $obj->getId() < 0 ) {
+            // сохраняем только что вставленное значение
+            $obj->setId( self::$PDO->lastInsertId() );
+        }
+        // очищаем массивы
+        $obj->markClean();
+    }
+
+    /**
+     * Метод для выброки (SELECT) из system_news
+     * для перемещения позиции
+     * 1- выбираем текущую позицию
+     * 2- выбираем следующую или предыдущую позиции
+     * @param IdentityObject $idobj
+     * @param null $orderBy - сортировка ORDER BY
+     * @return mixed
+     */
+    function upDownSelect( IdentityObject $idobj, $orderBy=null ) {
+        $upDownfact = $this->factory->getUpDownFactory();
+//        $upDownfact->newUpDown( $idobj, '');
+        list( $selection, $values ) = $upDownfact->newUpDownSelect( $idobj, $orderBy );
+        $stmt = $this->getStatement( $selection );
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        $stmt->execute( $values );
+        $raw = $stmt->fetchAll();
+        $collection = $this->factory->getCollection( $raw );
+        $stmt->closeCursor();
+        return $collection->current();
+    }
+
+    /**
+     * Метод для обновления полей в БД
+     * для перемещения позиции
+     * @param array $result
+     * @param $direct
+     */
+    function upDownUpdate( array $result, $direct ){
+        $upDownfact = $this->factory->getUpDownFactory();
+        list( $update, $values ) = $upDownfact->newUpDownUpdate( $result, $direct );
 //        echo "<tt><pre>".print_r($update, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $update );
         $stmt->execute( $values );
-        if( $obj->getId() < 0 ) {
-            $obj->setId( self::$PDO->lastInsertId() );
-        }
-        $obj->markClean();
-    }
-
-    function upDown( $current, $previous ) {
-
-
     }
 
 
+    /**
+     * Метод для постраничной навигации для Гостевой книги
+     * @param $tableName
+     * @param IdentityObject $where
+     * @param $order
+     * @param $pageNumber
+     * @param $pageLink
+     * @param $parameters
+     * @param $page
+     * @return array
+     */
     function findPagination( $tableName,
                              IdentityObject $where,
                              $order,

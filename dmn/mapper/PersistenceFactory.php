@@ -19,6 +19,7 @@ abstract class PersistenceFactory {
     abstract function getSelectionFactory();
     abstract function getUpdateFactory();
 //    abstract function getDeleteFactory();
+    abstract function getUpDownFactory();
 
     static function getFactory( $target_class ) {
         switch( $target_class ) {
@@ -58,5 +59,9 @@ class NewsPersistenceFactory extends PersistenceFactory {
 
     function getDeleteFactory() {
         return new NewsDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new NewsUpDownFactory();
     }
 }

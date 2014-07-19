@@ -24,29 +24,30 @@ class News extends Command {
 //        echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
         $action     = $request->getProperty( 'act' );
         $id_news    = $request->getProperty( 'id_news' );
+        $page       = $request->getProperty( 'page' );
 
         switch( $action ) {
             case 'hide':
                 $obj = \dmn\domain\News::showHide( $id_news, 'show' );
                 $obj->setHide('hide');
-                $this->reloadPage( 0, "dmn.php?cmd=News" );
+                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
                 break;
             case 'show':
                 $obj = \dmn\domain\News::showHide( $id_news, 'hide' );
                 $obj->setHide('show');
-                $this->reloadPage( 0, "dmn.php?cmd=News" );
+                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
                 break;
             case 'up':
                 \dmn\domain\News::upDown( $id_news, 'up' );
-                $this->reloadPage( 0, "dmn.php?cmd=News" );
+                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
                 break;
             case 'down':
                 \dmn\domain\News::upDown( $id_news, 'down' );
-                $this->reloadPage( 0, "dmn.php?cmd=News" );
+                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
                 break;
             case 'uppest':
                 \dmn\domain\News::upDown( $id_news, 'uppest' );
-                $this->reloadPage( 0, "dmn.php?cmd=News" );
+                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
                 break;
         }
 
