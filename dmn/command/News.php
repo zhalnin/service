@@ -22,33 +22,16 @@ class News extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 
 //        echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
-        $action     = $request->getProperty( 'act' );
-        $id_news    = $request->getProperty( 'id_news' );
-        $page       = $request->getProperty( 'page' );
+        $action     = $request->getProperty( 'act' ); // действие над позицией
+        $id_news    = $request->getProperty( 'id_news' ); // id новости
+        $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
 
-        switch( $action ) {
-            case 'hide':
-                $obj = \dmn\domain\News::showHide( $id_news, 'show' );
-                $obj->setHide('hide');
-                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
-                break;
-            case 'show':
-                $obj = \dmn\domain\News::showHide( $id_news, 'hide' );
-                $obj->setHide('show');
-                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
-                break;
-            case 'up':
-                \dmn\domain\News::upDown( $id_news, 'up' );
-                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
-                break;
-            case 'down':
-                \dmn\domain\News::upDown( $id_news, 'down' );
-                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
-                break;
-            case 'uppest':
-                \dmn\domain\News::upDown( $id_news, 'uppest' );
-                $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
-                break;
+        // в зависимости от действия вызываем метод с
+        // определенными параметрами для выполнения действия над
+        // позицией в блоке новостей
+        if( ! empty( $action ) ) {
+            \dmn\domain\News::position( $id_news, $action );
+            $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
         }
 
         return self::statuses( 'CMD_OK' );
