@@ -66,7 +66,7 @@ try {
                     <div class="row block grid2col row block border">
                         <img class="hero-image flushleft" alt="<?php echo $blacklistCheckCollection->getAlt(); ?>" src="imei_service/view/<?php echo $blacklistCheckCollection->getUrlPict();?>" width="256" height="192" >
                         <div class="column last">
-                            <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$blacklistCheckCollection->getAbbreviatura().'&idp='.$blacklistCheckCollection->getIdParent() ?>"><?php echo $blacklistCheckCollection->getName();?></a></h1>
+                            <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=BlacklistCheck&ctr='.$blacklistCheckCollection->getAbbreviatura().'&idp='.$blacklistCheckCollection->getIdParent() ?>"><?php echo $blacklistCheckCollection->getName();?></a></h1>
                             <div class='column last dividerdownmidi'>
                                 <div class="cart_table">
                                     <div class="table_name"><b>Наименование</b></div>

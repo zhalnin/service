@@ -63,7 +63,7 @@ try {
                 <div class="row block grid2col row block border">
                     <img class="hero-image flushleft" alt="<?php echo $udidCollection->getAlt(); ?>" src="imei_service/view/<?php echo $udidCollection->getUrlPict();?>" width="256" height="192" >
                 <div class="column last">
-                    <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$udidCollection->getAbbreviatura().'&idp='.$udidCollection->getIdParent() ?>"><?php echo $udidCollection->getName();?></a></h1>
+                    <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Udid&ctr='.$udidCollection->getAbbreviatura().'&idp='.$udidCollection->getIdParent() ?>"><?php echo $udidCollection->getName();?></a></h1>
                 <div class='column last dividerdownmidi'>
 <!--                    <div style='clear:both'>-->
 <!--                        <div style='width: 160px; float: left; margin: 10px 0 20px 50px;'><b>Оператор</b></div>-->

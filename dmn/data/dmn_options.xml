@@ -22,6 +22,12 @@
         <view status="CMD_ERROR">error</view>
         <command name="News">
             <view>news</view>
+            <status value="CMD_ADD">
+                <forward>NewsAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>NewsEdit</forward>
+            </status>
         </command>
         <command name="CartOrder">
             <view>cartOrder</view>

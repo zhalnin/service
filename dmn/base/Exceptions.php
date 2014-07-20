@@ -10,13 +10,18 @@ namespace dmn\base;
 
 class AppException extends \Exception {
     private $error;
-    function __construct( $app_error ) {
+    private $msg;
+    function __construct( $app_error, $msg=null ) {
+        if( $msg != null ) {
+            $this->msg = $msg;
+        }
         parent::__construct( $app_error );
         $this->error = $app_error;
+
     }
 
     function getErrorObject() {
-        return "There is Error: $this->error";
+        return "There is Error: $this->error, $this->msg";
     }
 }
 

@@ -37,7 +37,6 @@ try {
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 
-
     ?>
     <div id="header">
         <ul id="navigation" role="navigation">
@@ -68,7 +67,7 @@ try {
                         <div class="row block grid2col row block border">
                             <img class="hero-image flushleft" alt="<?php echo $unlockParent->getAlt(); ?>" src="imei_service/view/<?php echo $unlockParent->getUrlPict();?>">
                             <div class="column last">
-                                <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$unlockParent->getAbbreviatura().'&idp='.$unlockParent->getIdParent() ?>"><?php echo $unlockParent->getName();?></a></h1>
+                                <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$unlockParent->getAbbreviatura().'&idp='.$unlockParent->getIdParent().'&idc='.$unlockParent->getId(); ?>"><?php echo $unlockParent->getName();?></a></h1>
                                 <div class='column last dividerdownmidi'>
                                     <div class="table_items">
                                         <div class="table_name"><b>Наименование</b></div>

@@ -36,7 +36,19 @@ class News extends Command {
         }
 
         if( ! empty( $action ) ) {
-            print $action;
+            switch( $action ) {
+                case 'add':
+                    print 'add';
+                    return self::statuses( 'CMD_ADD');
+                    break;
+                case 'edit':
+                    print 'edit';
+                    return self::statuses( 'CMD_EDIT');
+                    break;
+                case 'del':
+                    print 'delete';
+                    break;
+            }
         }
 
         return self::statuses( 'CMD_OK' );

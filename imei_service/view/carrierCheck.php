@@ -61,7 +61,7 @@ try {
                     <div class="row block grid2col row block border">
                     <img class="hero-image flushleft" alt="<?php echo $carrierCheckCollection->getAlt(); ?>" src="imei_service/view/<?php echo $carrierCheckCollection->getUrlPict();?>" width="256" height="192" >
                     <div class="column last">
-                        <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=Unlock&ctr='.$carrierCheckCollection->getAbbreviatura().'&idp='.$carrierCheckCollection->getIdParent() ?>"><?php echo $carrierCheckCollection->getName();?></a></h1>
+                        <h1><a href="<?php echo $_SERVER[PHP_SELF] .'?cmd=CarrierCheck&ctr='.$carrierCheckCollection->getAbbreviatura().'&idp='.$carrierCheckCollection->getIdParent() ?>"><?php echo $carrierCheckCollection->getName();?></a></h1>
                             <div class='column last dividerdownmidi'>
                                 <div class="table_items">
                                     <div class="table_name"><b>Наименование</b></div>
