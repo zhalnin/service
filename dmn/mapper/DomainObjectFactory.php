@@ -25,7 +25,7 @@ abstract class DomainObjectFactory {
 
 /**
  * Class NewsObjectFactory
- * @package imei_service\mapper
+ * @package dmn\mapper
  * Как аргумент в классе PersistenceFactory
  */
 class NewsObjectFactory extends DomainObjectFactory {
@@ -34,7 +34,7 @@ class NewsObjectFactory extends DomainObjectFactory {
      * Вызываем из класса Collection с итератором из метода
      * getRow()
      * @param array $array - результирующий набор данных (после SELECT)
-     * @return mixed - возвращаем объект \imei_service\domain\News
+     * @return mixed - возвращаем объект \dmn\domain\News
      */
     function createObject( array $array ) {
         $class = "\\dmn\\domain\\News"; // название класса
@@ -58,7 +58,47 @@ class NewsObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \imei_service\domain\News
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
+
+/**
+ * Class CartOrderObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class CartOrderObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\CartOrder"; // название класса
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setFirstName( $array['firstname'] );
+        $obj->setLastName( $array['lastname'] );
+        $obj->setEmail( $array['email'] );
+        $obj->setData( $array['data'] );
+        $obj->setCountry( $array['country'] );
+        $obj->setAddress( $array['address'] );
+        $obj->setCity( $array['city'] );
+        $obj->setZipCode( $array['zip_code'] );
+        $obj->setState( $array['state'] );
+        $obj->setStatus( $array['status'] );
+        $obj->setAmount( $array['amount'] );
+        $obj->setPayPalTransId( $array['paypal_trans_id'] );
+        $obj->setCreatedAt( $array['created_at'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
     }
 }
 

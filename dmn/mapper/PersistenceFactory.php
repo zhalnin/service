@@ -26,10 +26,18 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\News":
                 return new NewsPersistenceFactory();
                 break;
+            case "dmn\\domain\\CartOrder":
+                return new CartOrderPersistenceFactory();
+                break;
         }
     }
 }
 
+/**
+ * Class NewsPersistenceFactory
+ * Для работы с блоком новостей
+ * @package dmn\mapper
+ */
 class NewsPersistenceFactory extends PersistenceFactory {
 
     function getMapper() {
@@ -63,5 +71,47 @@ class NewsPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new NewsUpDownFactory();
+    }
+}
+
+
+/**
+ * Class CartOrderPersistenceFactory
+ * для работы с блоком заказов
+ * @package dmn\mapper
+ */
+class CartOrderPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new CartOrderMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new CartOrderObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new CartOrderCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new CartOrderSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new CartOrderUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new CartOrderIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new CartOrderDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new CartOrderUpDownFactory();
     }
 }

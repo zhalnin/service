@@ -161,5 +161,14 @@ class FaqParagraphImageCollection
     }
 }
 
+class CartOrderCollection
+    extends Collection
+    implements \dmn\domain\CartOrderCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\CartOrder";
+    }
+}
+
 
 ?>

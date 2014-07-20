@@ -61,4 +61,8 @@ interface FaqParagraphImageCollection extends \Iterator {
     function add( DomainObject $faq );
 }
 
+interface CartOrderCollection extends \Iterator {
+    function add( DomainObject $faq );
+}
+
 ?>

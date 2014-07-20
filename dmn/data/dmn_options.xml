@@ -10,6 +10,10 @@
             <title>Официальный анлок</title>
             <description>Управление блоком официального анлока</description>
         </point>
+        <point name="CartOrder">
+            <title>Заказы</title>
+            <description>Управление блоком заказов</description>
+        </point>
     </menu>
 
     <control>
@@ -18,6 +22,9 @@
         <view status="CMD_ERROR">error</view>
         <command name="News">
             <view>news</view>
+        </command>
+        <command name="CartOrder">
+            <view>cartOrder</view>
         </command>
     </control>
 </woo-options>

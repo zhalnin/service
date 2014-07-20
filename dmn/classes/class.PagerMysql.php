@@ -104,6 +104,7 @@ class PagerMysql extends Pager {
     return $this->parameters;
   }
 
+
   /**
    * Return array of Files's strings
    * by number page $index

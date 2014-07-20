@@ -22,16 +22,21 @@ class News extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 
 //        echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
-        $action     = $request->getProperty( 'act' ); // действие над позицией
+        $action     = $request->getProperty( 'pact' ); // действие над позицией
+        $position   = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
         $id_news    = $request->getProperty( 'id_news' ); // id новости
         $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
 
         // в зависимости от действия вызываем метод с
         // определенными параметрами для выполнения действия над
         // позицией в блоке новостей
-        if( ! empty( $action ) ) {
-            \dmn\domain\News::position( $id_news, $action );
+        if( ! empty( $position ) ) {
+            \dmn\domain\News::position( $id_news, $position );
             $this->reloadPage( 0, "dmn.php?cmd=News&page={$page}" );
+        }
+
+        if( ! empty( $action ) ) {
+            print $action;
         }
 
         return self::statuses( 'CMD_OK' );

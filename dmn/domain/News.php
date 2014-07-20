@@ -97,12 +97,11 @@ class News extends DomainObject {
      * @param $id
      * @return mixed
      */
-//    static function find( $id ) {
-//        $finder = self::getFinder( __CLASS__ );
-////        echo "<tt><pre>".print_r(__CLASS__, true)."</pre></tt>";
-//        $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
-//        return $finder->findOne( $idobj->eq( $id ) );
-//    }
+    static function find( $id ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
+        return $finder->findOne( $idobj->eq( $id ) );
+    }
 
 
     /**
