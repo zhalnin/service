@@ -22,8 +22,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 //require_once( "dmn/classes/class.FieldHiddenInt.php" );
 //require_once( "dmn/classes/class.Form.php" );
 
-require_once( "dmn/classes.php" );
 // Include exception for error handling
+require_once( "dmn/classes.php" );
 require_once( "dmn/base/Exceptions.php" );
 
 

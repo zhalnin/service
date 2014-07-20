@@ -20,17 +20,26 @@
         <view>main</view>
         <view status="CMD_OK">main</view>
         <view status="CMD_ERROR">error</view>
+
         <command name="News">
             <view>news</view>
+
             <status value="CMD_ADD">
                 <forward>NewsAdd</forward>
             </status>
+
             <status value="CMD_EDIT">
                 <forward>NewsEdit</forward>
             </status>
         </command>
+
+        <command name="NewsAdd">
+            <view>newsAdd</view>
+        </command>
+
         <command name="CartOrder">
             <view>cartOrder</view>
         </command>
+
     </control>
 </woo-options>
