@@ -17,7 +17,7 @@ require_once( "dmn/view/ViewHelper.php" );
 // получаем объект request
 $request        = \dmn\view\VH::getRequest();
 $form = $request->getObject('form');
-echo "<tt><pre>".print_r($form, true)."</pre></tt>";
+//echo "<tt><pre>".print_r($form, true)."</pre></tt>";
 
 try {
 

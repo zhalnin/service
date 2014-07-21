@@ -271,7 +271,8 @@ abstract class AdminMail extends Mail{
                 $subject_detail = '';
                 // проходим в цикле, чтобы узнать количество добавляемых позиций
                 $cart_list = "<ul>";
-                $subtotal = 0;
+                $subtotal = 0.00;
+                $total_cost = 0.00;
                 for( $i=1; $i <= $count; $i++ ) {
 
                     $item_number    = $_POST['item_number_'.$i];
@@ -280,15 +281,15 @@ abstract class AdminMail extends Mail{
                     $quantity       = $_POST['quantity_'.$i];
                     $total_cost     = $amount * $quantity;
 
-                    $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
-                        ."<li>Стоимость: ".$amount." RUB</li>"
+                    $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость: ".number_format( $amount, 2 )." RUB</li>"
                         ."<li>Количество: ".$quantity." ед.</li>"
-                        ."<li>Итог: ".$total_cost." RUB</li>";
-                }
+                        ."<li>Итог: ".number_format( $total_cost, 2 )." RUB</li>";
                 $subtotal = $subtotal + $total_cost;
+                }
                 $data = $_POST['data'];
                 $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
-                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "<li>Всего к оплате: ".number_format( $subtotal, 2 )." RUB</li>";
                 $cart_list .= "</ul>";
 
                 $middle = "<h1>Новый заказ № {$_POST['order_id']}</h1>
@@ -308,7 +309,7 @@ abstract class AdminMail extends Mail{
                 $subject_detail = '';
                 // проходим в цикле, чтобы узнать количество добавляемых позиций
                 $cart_list = "<ul>";
-                $subtotal = 0;
+                $subtotal = 0.00;
                 for( $i=1; $i <= $_POST['num_cart_items']; $i++ ) {
 
                     $item_number    = $_POST['item_number'.$i];
@@ -318,7 +319,7 @@ abstract class AdminMail extends Mail{
                     $total_cost     = $_POST['mc_gross_'.$i];
 
                     $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
-                        ."<li>Стоимость с комиссией: ".$total_cost." RUB</li>"
+                        ."<li>Стоимость с комиссией: ".number_format( $total_cost, 2 )." RUB</li>"
                         ."<li>Количество: ".$quantity." ед.</li>";
                 }
                 $subtotal = $_POST['mc_gross'];
@@ -327,7 +328,7 @@ abstract class AdminMail extends Mail{
                     $data = " - ";
                 }
                 $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
-                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "<li>Всего к оплате: ".number_format( $subtotal, 2 )." RUB</li>";
                 $cart_list .= "</ul>";
 
                 $middle = "<h1>Новый PayPal заказ</h1>
@@ -545,7 +546,8 @@ abstract class ClientMail extends Mail {
                 $subject = "Ваш номер заказа № <{$_POST['order_id']}> на сайте imei-service.ru";
                 // проходим в цикле, чтобы узнать количество добавляемых позиций
                 $cart_list = "<ul>";
-                $subtotal = 0;
+                $subtotal = 0.00;
+                $total_cost = 0.00;
                 for( $i=1; $i <= $count; $i++ ) {
 
                     $item_number    = $_POST['item_number_'.$i];
@@ -554,15 +556,15 @@ abstract class ClientMail extends Mail {
                     $quantity       = $_POST['quantity_'.$i];
                     $total_cost     = $amount * $quantity;
 
-                    $cart_list .= "<li>$count. Наименование: ". $item_name."</li>"
-                        ."<li>Стоимость: ".$amount." RUB</li>"
+                    $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
+                        ."<li>Стоимость: ".number_format( $amount, 2 )." RUB</li>"
                         ."<li>Количество: ".$quantity." ед.</li>"
-                        ."<li>Итог: ".$total_cost." RUB</li>";
-                }
+                        ."<li>Итог: ".number_format( $total_cost, 2 )." RUB</li>";
                 $subtotal = $subtotal + $total_cost;
+                }
                 $data = $_POST['data'];
                 $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
-                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "<li>Всего к оплате: ".number_format( $subtotal, 2 )." RUB</li>";
                 $cart_list .= "</ul>";
 
 
@@ -593,7 +595,7 @@ abstract class ClientMail extends Mail {
                 $subject_detail = '';
                 // проходим в цикле, чтобы узнать количество добавляемых позиций
                 $cart_list = "<ul>";
-                $subtotal = 0;
+                $subtotal = 0.00;
                 for( $i=1; $i <= $_POST['num_cart_items']; $i++ ) {
 
                     $item_number    = $_POST['item_number'.$i];
@@ -603,7 +605,7 @@ abstract class ClientMail extends Mail {
                     $total_cost     = $_POST['mc_gross_'.$i];
 
                     $cart_list .= "<li>$i. Наименование: ". $item_name."</li>"
-                        ."<li>Стоимость с комиссией: ".$total_cost." RUB</li>"
+                        ."<li>Стоимость с комиссией: ".number_format( $total_cost, 2 )." RUB</li>"
                         ."<li>Количество: ".$quantity." ед.</li>";
                 }
                 $subtotal = $_POST['mc_gross'];
@@ -612,7 +614,7 @@ abstract class ClientMail extends Mail {
                     $data = " - ";
                 }
                 $cart_list .= "<li>Комментарий к заказу: ".$data. "</li>";
-                $cart_list .= "<li>Всего к оплате: ".$subtotal." RUB</li>";
+                $cart_list .= "<li>Всего к оплате: ".number_format( $subtotal, 2 )." RUB</li>";
                 $cart_list .= "</ul>";
 
                 $middle = "<h1>Вы совершили покупку по PayPal</h1>

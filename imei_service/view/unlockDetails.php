@@ -38,6 +38,8 @@ try {
     require_once( "imei_service/view/templates/top.php" );
 
     ?>
+
+
     <div id="header">
         <ul id="navigation" role="navigation">
             <li id="nav-home"><a href="?cmd=News"><span>Главная</span></a></li>

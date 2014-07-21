@@ -104,8 +104,8 @@ class Register extends Command {
         // Если учетные данные добавлены успешно ( будет создан объект, если не будет добавлена, то объект не будет создан )
         if( is_object( $login_obj ) ) {
             $commsManager = \imei_service\classes\MailConfig::get( 'register' );  // параметр - тип commsManager
-            $commsManager->make(1)->email( $email_admin, $email, null, null, null, 'register', $login, $activation ); // отправляем письмо админу
-            $commsManager->make(2)->email( $email_admin, $email, null, null, null, 'register', $login, $activation ); // отправляем письмо клиенту
+            $commsManager->make(1)->email( $email_admin, $email, null, null, null, 'register', $login, $activation, null ); // отправляем письмо админу
+            $commsManager->make(2)->email( $email_admin, $email, null, null, null, 'register', $login, $activation, null ); // отправляем письмо клиенту
             return self::statuses( 'CMD_REGISTER_OK' ); // возвращаем успешный статус и вызываем страницу с поздравлением и уведомлением, что будет письмо с активацией
         }
 //        echo "<tt><pre>".print_r( $request , true ) ."</pre></tt>";

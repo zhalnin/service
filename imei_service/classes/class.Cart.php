@@ -183,6 +183,44 @@ class Cart {
     }
 
 
+    /**
+     * Метод для парсинга POST из формы, чтобы получить
+     * фактическую стоимость каждой единицы и
+     * общей стоимости для сравнения при оформлении заказа вручную (не PayPal)
+     * @param $shipping
+     * @param $params
+     * @return bool
+     */
+    protected function paymentAmountCorrectManual( $shipping, $params ) {
+
+        $amount = 0.00;
+        // проверка на соответствие суммы заказу
+        foreach( $params as $key => $val ) {
+            if( preg_match('|amount_(.*)|', $key, $match ) ) {
+                $count = $match[1];
+            }
+        }
+        // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
+        for( $i=1; $i <= $count; $i++ ) {
+            // инициализируем две переменные из строки, типа: 36_2
+            list($id_catalog, $position ) = explode( '_', $params["item_number_{$i}"] );
+            $sth = $this->pdo->prepare( 'SELECT cost FROM system_position
+                                                        WHERE system_position.pos = ?
+                                                        AND system_position.id_catalog = ?' );
+            $result = $sth->execute( array( $position, $id_catalog ) );
+            if( $result ) {
+                $item_price = $sth->fetch();
+                $amount += $item_price['cost'] * $params["quantity_{$i}"];
+            }
+        }
+        if( ( $amount ) == $params['subtotal'] ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     static function getTotalPrice( $cart ) {
         return self::instance()->totalPrice( $cart );
@@ -210,6 +248,10 @@ class Cart {
 
     static function getPaymentAmountCorrect( $shipping, $params ) {
         return self::instance()->paymentAmountCorrect( $shipping, $params );
+    }
+
+    static function getPaymentAmountCorrectManual( $shipping, $params ) {
+        return self::instance()->paymentAmountCorrectManual( $shipping, $params );
     }
 
 }

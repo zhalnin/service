@@ -57,8 +57,8 @@ class FLogin extends Command {
 
             if( is_object( $activateLogin ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-                $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, $login, $pass_u ); // отправляем письмо админу
-                $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, $login, $pass_u ); // отправляем письмо клиенту
+                $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, $login, $pass_u, null ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, $login, $pass_u, null ); // отправляем письмо клиенту
                 return self::statuses( 'CMD_OK' );
             }
         }

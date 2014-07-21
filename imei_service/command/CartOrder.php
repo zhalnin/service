@@ -15,6 +15,8 @@ require_once( "imei_service/domain/CartOrder.php" );
 require_once( "imei_service/domain/CartItems.php" );
 require_once( "imei_service/view/utils/utils.checkEmail.php" );
 require_once( "imei_service/classes/class.SendMail.php" );
+require_once( "imei_service/classes/class.Cart.php" );
+
 
 /**
  * Class CartOrder
@@ -41,6 +43,7 @@ class CartOrder extends Command {
         $data               = $request->getProperty( 'data' );      // данные в текстовом поле
         $email_admin        = 'imei_service@icloud.com';
         $type               = 'cart_order';
+        $shipping           = 0.00;
 
 
         if( $request->getProperty( 'submitted') !== 'yes' ) { // если форма не отправлена
@@ -59,81 +62,84 @@ class CartOrder extends Command {
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
 
-        // создаем экземпляр класса CartOrder
-        $cartOrder = new \imei_service\domain\CartOrder( null,
-                                                        $firstname,
-                                                        $lastname,
-                                                        $email,
-                                                        $data,
-                                                        $country,
-                                                        $address,
-                                                        $city,
-                                                        $zip_code,
-                                                        $state,
-                                                        $status,
-                                                        $amount,
-                                                        $paypal_trans_id,
-                                                        $created_at);
+        // запрос к БД для уточнения фактической стоимости и суммы заказа вцелом
+        $costFromDb = \imei_service\classes\Cart::getPaymentAmountCorrectManual( $shipping, $_POST );
 
-        // выполняем операцию на созданным классом - \imei_service\mapper\DomainObjectAssembler
-//        $cartOrder->finder()->insert( $cartOrder );
-        // или альтернативный метод через ObjectWatcher - выполнить надо любым из указанных способов
-        // в командном классе, чтобы получить lastInsertId для следующего запроса INSERT
-        \imei_service\domain\ObjectWatcher::instance()->performOperations();
+        if( $costFromDb === true ) { // если сумма заказа из БД совпадает с суммой заказа из формы
+            // создаем экземпляр класса CartOrder
+            $cartOrder = new \imei_service\domain\CartOrder( null,
+                $firstname,
+                $lastname,
+                $email,
+                $data,
+                $country,
+                $address,
+                $city,
+                $zip_code,
+                $state,
+                $status,
+                $amount,
+                $paypal_trans_id,
+                $created_at);
 
-        // получаем только что вставленный ID в таблицу system_cart_orders
-        $order_id = $cartOrder->getId();
+            // выполняем операцию на созданным классом - \imei_service\mapper\DomainObjectAssembler
+            //        $cartOrder->finder()->insert( $cartOrder );
+            // или альтернативный метод через ObjectWatcher - выполнить надо любым из указанных способов
+            // в командном классе, чтобы получить lastInsertId для следующего запроса INSERT
+            \imei_service\domain\ObjectWatcher::instance()->performOperations();
 
-        // проходим в цикле, чтобы узнать количество добавляемых позиций
-        foreach( $_POST as $key => $val ) {
-            if( preg_match('|amount_(.*)|', $key, $match ) ) {
-                $count = $match[1];
+            // получаем только что вставленный ID в таблицу system_cart_orders
+            $order_id = $cartOrder->getId();
+
+            // проходим в цикле, чтобы узнать количество добавляемых позиций
+            foreach( $_POST as $key => $val ) {
+                if( preg_match('|amount_(.*)|', $key, $match ) ) {
+                    $count = $match[1];
+                }
             }
+            // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
+            for( $i=1; $i <= $count; $i++ ) {
+
+                $item_number    = $_POST['item_number_'.$i];    // номер предмета
+                $item_name      = $_POST['item_name_'.$i];      // наименование предмета
+                $amount         = $_POST['amount_'.$i];         // стоимость предмета
+                $quantity       = $_POST['quantity_'.$i];       // количество позиций одного предмета
+
+                // создаем экземпляр класса CartItems
+                // после него нет явного вызова операции INSERT, она происходит в контроллере
+                new \imei_service\domain\CartItems( null,
+                    $item_number,
+                    $order_id,
+                    $item_name,
+                    $amount,
+                    $quantity );
+
+            }
+
+            // после успешного добавления заказа и предметов закакза удаляем сессию
+            //        session_unset();
+            //        session_destroy();
+            $_SESSION['cart_imei_service'] = array();
+            $_SESSION['total_items_imei_service'] = 0;
+            $_SESSION['total_price_imei_service'] = 0.00;
+
+
+            $_POST['order_id'] = $order_id;
+            $_POST['created_at'] = $created_at;
+            $cart = $_POST;
+
+            $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
+            $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо админу
+            $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо клиенту
+            //
+            // возвращаем статус успешного завершения и передаресуем на cartOrderSuccess
+            return self::statuses( 'CMD_OK' );
+
+        } else {
+            $request->addFeedback( 'Форма не корректна, вернитесь в корзину и попробуйте отправить еще раз,<br />
+                                    если ошибка повторится - удалите предметы из корзины и выберете их повторно' );
+            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
-        // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
-        for( $i=1; $i <= $count; $i++ ) {
-
-            $item_number    = $_POST['item_number_'.$i];    // номер предмета
-            $item_name      = $_POST['item_name_'.$i];      // наименование предмета
-            $amount         = $_POST['amount_'.$i];         // стоимость предмета
-            $quantity       = $_POST['quantity_'.$i];       // количество позиций одного предмета
-
-            // создаем экземпляр класса CartItems
-            // после него нет явного вызова операции INSERT, она происходит в контроллере
-            new \imei_service\domain\CartItems( null,
-                                                $item_number,
-                                                $order_id,
-                                                $item_name,
-                                                $amount,
-                                                $quantity );
-
-        }
-
-
-//        Отправляем email покупателю и админу
-//            echo "<tt><pre>".print_r( $_POST, true )."</pre></tt>";
-
-
-
-
-        // после успешного добавления заказа и предметов закакза удаляем сессию
-//        session_unset();
-//        session_destroy();
-        $_SESSION['cart_imei_service'] = array();
-        $_SESSION['total_items_imei_service'] = 0;
-        $_SESSION['total_price_imei_service'] = 0.00;
-
-
-        $_POST['order_id'] = $order_id;
-        $_POST['created_at'] = $created_at;
-        $cart = $_POST;
-
-        $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-        $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо админу
-        $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, null, null, $cart ); // отправляем письмо клиенту
-
-        // возвращаем статус успешного завершения и передаресуем на cartOrderSuccess
-        return self::statuses( 'CMD_OK' );
     }
 }
 

@@ -6,11 +6,10 @@
  * Time: 12:31
  * To change this template use File | Settings | File Templates.
  */
-
-
+namespace imei_service\view;
 error_reporting(E_ALL & ~E_NOTICE);
-try {
 
+try {
     // Название таблиц
     $tbl_ip             = 'powercounter_ip';
     $tbl_pages          = 'powercounter_pages';
@@ -19,7 +18,7 @@ try {
 
     // Параметры соединения
     $dblocation         = 'localhost';
-    $dbname             = 'imei_service';
+    $dbname             = 'imei-service';
     $dbuser             = 'root';
     $dbpasswd           = 'zhalnin5334';
 
@@ -37,15 +36,20 @@ try {
 
     // Соединяемся с сервером базы данных
     $dbcnx = @mysql_connect($dblocation,$dbuser,$dbpasswd);
-    if(!$dbcnx) return;
+//    if(!$dbcnx) return;
+    if(!$dbcnx) {
+        throw new \Exception('Error in connect DB');
+    }
     // Выбираем базу данных
-    if(!@mysql_select_db($dbname, $dbcnx)) exit();
+//    if(!@mysql_select_db($dbname, $dbcnx)) exit();
+    if(!@mysql_select_db($dbname, $dbcnx)) {
+        throw new \Exception('Error in select DB');
+    }
     // Если название не указано - формируем URL
     if(empty($titlepage))
     {
         $titlepage = "http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
     }
-
 
     // Экранируем спец_символы
     $titlepage = mysql_real_escape_string($titlepage);
@@ -53,7 +57,8 @@ try {
     $query = "SELECT id_page FROM $tbl_pages
                 WHERE title = '$titlepage'";
     $pgs = mysql_query($query);
-    if($pgs) {
+    if($pgs)
+    {
         // Выясним, первичный ключ(id_page)
         // текущей страницы (по названию страницы)
         if(mysql_num_rows($pgs) > 0) $id_page = mysql_result($pgs,0);
@@ -92,6 +97,8 @@ try {
                 }
             }
         }
+    } else {
+        throw new \Exception('Error in first SELECT');
     }
     // Пользовательский агент
     $useragent = $_SERVER['HTTP_USER_AGENT'];
@@ -135,6 +142,7 @@ try {
     {
         $server_name = substr($_SERVER["SERVER_NAME"], 4);
     }
+
     if(strpos($reff,$server_name)) $search = 'own_site';
 
     // Заносим всю собранную информацию в базу данных
@@ -146,6 +154,7 @@ try {
                     '$browser',
                     '$os')";
     @mysql_query($query_main);
+
     if(!empty($reff) && $search =='none')
     {
         $reff = mysql_real_escape_string($reff);
@@ -168,7 +177,7 @@ try {
                     if(strpos($reff,"yandpage") != null)
                         $quer = convert_cyr_string(urldecode($out[1]),"k","w");
                     else
-                        $quer = utf8_win($out[1]);
+                        $quer = \imei_service\view\utf8_win($out[1]);
                     break;
                 }
             case 'rambler':
@@ -186,13 +195,13 @@ try {
             case 'google':
                 {
                     preg_match("|[^a]q=([^&]+)|is", $reff."&", $out);
-                    $quer = utf8_win($out[1]);
+                    $quer = \imei_service\view\utf8_win($out[1]);
                     break;
                 }
             case 'msn':
                 {
                     preg_match("|q=([^&]+)|is", $reff."&", $out);
-                    $quer = utf8_win($out[1]);
+                    $quer = \imei_service\view\utf8_win($out[1]);
                     break;
                 }
             case 'aport':
@@ -241,8 +250,7 @@ try {
                       "\xD0\xAF","+");
         return str_replace($utf8, $win, $str);
     }
-} catch( \Exception $ex ) {
+}  catch( \Exception $ex ) {
     echo $ex->getMessage();
 }
-
 ?>

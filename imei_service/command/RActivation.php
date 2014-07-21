@@ -52,8 +52,8 @@ class RActivation extends Command {
 
             if( is_object( $activateLogin ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( $type );  // параметр - тип commsManager
-                $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, $login, $activation ); // отправляем письмо админу
-                $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, $login, $activation ); // отправляем письмо клиенту
+                $commsManager->make(1)->email( $email_admin, $email, null, null, null, $type, $login, $activation, null ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email_admin, $email, null, null, null, $type, $login, $activation, null ); // отправляем письмо клиенту
                 return self::statuses( 'CMD_OK' );
             }
         }

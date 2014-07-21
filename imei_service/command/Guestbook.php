@@ -126,8 +126,8 @@ class Guestbook extends Command {
             // Если учетные данные добавлены успешно ( будет создан объект, если не будет добавлена, то объект не будет создан )
             if( is_object( $guestbook_obj ) ) {
                 $commsManager = \imei_service\classes\MailConfig::get( 'guestbook' );  // параметр - тип commsManager
-                $commsManager->make(1)->email( $email_admin, $email, null, null, null, 'guestbook', $name, null ); // отправляем письмо админу
-                $commsManager->make(2)->email( $email_admin, $email, null, null, null, 'guestbook', $name, null ); // отправляем письмо клиенту
+                $commsManager->make(1)->email( $email_admin, $email, null, null, null, 'guestbook', $name, null, null ); // отправляем письмо админу
+                $commsManager->make(2)->email( $email_admin, $email, null, null, null, 'guestbook', $name, null, null ); // отправляем письмо клиенту
             }
             // если данные добавлены, то по возвращаемому статусу открываем addMessageSuccess.php
             return self::statuses( 'CMD_GUESTBOOK_OK' );

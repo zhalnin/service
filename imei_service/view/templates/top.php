@@ -10,7 +10,7 @@ namespace imei_service\view\templates;
 session_start();
 $sid_add_message = session_id();
  error_reporting(E_ALL & ~E_NOTICE);
-//require_once("count.php");
+require_once("imei_service/view/count.php");
 if( ! isset( $_SESSION['cart'] ) ) {
     $_SESSION['cart'] = array();
     $_SESSION['total_items'] = 0;

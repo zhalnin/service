@@ -58,8 +58,6 @@ class Cart extends Command {
             $request->setObject( 'cartCatalogPosition', $colCatalogPosition ); // Сохраняем в request
 
              return self::statuses( 'CMD_OK' ); // Возвращаем успешный код и переходим во вьюшку cart.php
-        } else {
-            $request->addFeedback("ksfjsdkjfkd");
         }
 
     }

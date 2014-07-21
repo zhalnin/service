@@ -86,9 +86,12 @@ class NewsAdd extends Command {
                                         "Add" ,
                                         "field" );
 
-        $request->setProperty('form', $form );
+        $error = $form->check();
+        echo "<tt><pre>".print_r($error, true)."</pre></tt>";
 
-        echo "<tt><pre>".print_r($form, true)."</pre></tt>";
+        $request->setObject('form', $form );
+
+//        echo "<tt><pre>".print_r($form, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         return self::statuses( 'CMD_OK' );
     }
