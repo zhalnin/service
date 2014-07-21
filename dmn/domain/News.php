@@ -156,6 +156,16 @@ class News extends DomainObject {
         }
     }
 
+    static function findMaxPos() {
+        $finder = self::getFinder( __CLASS__ );
+        return $finder->findMaxPos();
+    }
+
+    static function findPhotoSetting() {
+        $finder = self::getFinder( __CLASS__ );
+        return $finder->findPhotoSetting();
+    }
+
     /**
      * устанавливем имя
      * @param $name_s

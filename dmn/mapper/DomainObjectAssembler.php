@@ -97,6 +97,39 @@ class DomainObjectAssembler {
         $obj->markClean();
     }
 
+
+    /**
+     * Получаем максимальную позицию POS элемента в БД
+     * @return mixed
+     */
+    function findMaxPos() {
+//        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
+        $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
+        $selection = $selfact->newSelectionMaxPos(); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+        $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
+        $stmt->execute(); // выполняем запрос
+        $raw = $stmt->fetch(); // получаем результирующий массив
+        return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
+    }
+
+
+    /**
+     * Получаем массив с размерами изображений
+     * @return mixed
+     */
+    function findPhotoSetting() {
+        $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
+        $selection = $selfact->newSelectionPhotoSettings(); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+        $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
+        $stmt->execute(); // выполняем запрос
+        $raw = $stmt->fetch(); // получаем результирующий массив
+        return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
+    }
+
+
+
     /**
      * Метод для выброки (SELECT)
      * для перемещения позиции
@@ -119,6 +152,8 @@ class DomainObjectAssembler {
         $stmt->closeCursor();
         return $collection->current();
     }
+
+
 
     /**
      * Метод для обновления (UPDATE)  полей в БД

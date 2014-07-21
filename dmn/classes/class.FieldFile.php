@@ -71,15 +71,15 @@ class FieldFile extends Field {
             $path_parts = pathinfo( $file_name );
 //        $path_parts = pathinfo($tm);
             $ext = ".".$path_parts['extension'];
-            $path = basename( $file_name, $ext );
-//      $path = preg_replace( "| |","", $path);
+//            $path = basename( $file_name, $ext );
+//            $path = preg_replace( "| |","", $path);
             $add = $ext;
 
             foreach( $extentions as $exten ) {
                 if( preg_match( $exten, $ext ) ) $add = ".txt";
             }
-            $path .= $add;
-            $path = str_replace( "//","/",$dir."/".$prefix.$this->time.$path );
+            $path = str_replace( "//","/",$dir."/".$prefix.$this->time.$add );
+//            echo "<tt><pre>". print_r($path, TRUE) . "</pre></tt>";
             // Transfer file from temp directory of sever
             // to directory /files of Web-application
 //      if(copy($this->value[$this->name]['tmp_name'], $path))
@@ -155,8 +155,11 @@ class FieldFile extends Field {
     public function getFilename() {
         if( ! empty( $this->value ) ) {
             if( ! empty( $this->value[$this->name]['name'] ) ) {
-                $tmp_name = preg_replace( "|[ ']|","", $this->value[$this->name]['name'] );
-//        echo "<tt><pre>". print_r($this->value[$this->name]['name'], TRUE) . "</pre></tt>";
+                preg_match("|\.[a-z]{2,6}$|",  $this->value[$this->name]['name'], $ext );
+                $len = strlen( $ext[0] );
+//                $tmp_name = preg_replace( "|[ '_-]|","", $this->value[$this->name]['name'] );
+                $tmp_name = substr( $this->value[$this->name]['name'], -$len );
+//        echo "<tt><pre>". print_r($this->encodestring( $this->prefix.$this->time.$tmp_name), TRUE) . "</pre></tt>";
                 return $this->encodestring( $this->prefix.$this->time.$tmp_name);
             } else return "";
         } else return "";

@@ -38,7 +38,6 @@ class News extends Command {
         if( ! empty( $action ) ) {
             switch( $action ) {
                 case 'add':
-                    print 'add';
                     return self::statuses( 'CMD_ADD');
                     break;
                 case 'edit':
