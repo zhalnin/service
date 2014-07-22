@@ -35,6 +35,16 @@
 
         <command name="NewsAdd">
             <view>newsAdd</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+        <command name="NewsEdit">
+            <view>newsEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
         </command>
 
         <command name="CartOrder">

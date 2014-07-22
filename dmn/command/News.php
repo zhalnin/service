@@ -41,7 +41,6 @@ class News extends Command {
                     return self::statuses( 'CMD_ADD');
                     break;
                 case 'edit':
-                    print 'edit';
                     return self::statuses( 'CMD_EDIT');
                     break;
                 case 'del':

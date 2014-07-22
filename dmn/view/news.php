@@ -37,7 +37,6 @@ try {
             $page_link,
             "&cmd=News");
 
-//    echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
         // Добавить блок
         echo "<a href=?cmd=News&pact=add&page=$_GET[page]
                     title=Добавить новостной блок>
@@ -66,7 +65,7 @@ try {
     for($i = 0; $i < count($news); $i++) {
         // Если новость отмечена как невидимая (hide='hide'), выводим
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
-        $url = "id_news={$news[$i][id_news]}&page=$_GET[page]";
+        $url = "idn={$news[$i][id_news]}&page=$_GET[page]";
         if($news[$i]['hide'] == 'show') {
             $showhide = "<a href=?cmd=News&ppos=hide&$url
                                     title='Скрыть новость в блоке новостей'>
@@ -78,11 +77,13 @@ try {
                                     Отобразить</a> ";
             $style = " class=hiddenrow";
         }
+
+//    echo "<tt><pre>".print_r($news[$i][urlpict], true)."</pre></tt>";
         // Проверяем наличие изображения
         if($news[$i]['urlpict'] != '' &&
             $news[$i]['urlpict'] != '-'&&
-            is_file("../../".$news[$i]['urlpict'])) {
-            $url_pict = "<b><a href=../../{$news[$i][urlpict]}>есть</a></b>";
+            is_file("imei_service/view/".$news[$i]['urlpict'])) {
+            $url_pict = "<b><a href=imei_service/view/{$news[$i][urlpict]}>есть</a></b>";
         } else {
             $url_pict = "нет";
         }

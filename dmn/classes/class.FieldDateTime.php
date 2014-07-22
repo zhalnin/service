@@ -96,7 +96,7 @@ class FieldDatetime extends Field {
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
         $tag .= "</select>";
-
+//        echo "<tt><pre>".print_r($tag, true)."</pre></tt>";
         // Drop-down list for month
         $tag .= "<select title=\"Месяц\"
             $style $class type=\"text\"
@@ -141,6 +141,7 @@ class FieldDatetime extends Field {
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
         $tag .= "</select>";
+//            echo "<tt><pre>".print_r($tag, true)."</pre></tt>";
 
         if( $this->is_required ) $this->caption .= " *";
 

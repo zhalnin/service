@@ -89,78 +89,92 @@ class NewsAdd extends Command {
                                                 "hidepict" => $hidepict,
                                                 "page"     => $page,
                                                 "sumbitted"=> $submitted ),
-                                        "Add" ,
+                                        "Добавить" ,
                                         "field" );
 
-        if( $_POST['submitted'] != 'yes' ) {
-            $error = array( 'Попробуйте отправить форму повторно' );
-        }
-        $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
-        if( ! empty( $error ) ) { // если есть ошибки
-            if( is_array( $error ) ) { // если это массив
-                foreach ( $error as $er ) { // проходим в цикле
-                    $request->addFeedback( $er ); // добавляем сообщение об ошибке
+        if( $_POST['submitted'] == 'yes' ) {
+            $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
+            if( ! empty( $error ) ) { // если есть ошибки
+                if( is_array( $error ) ) { // если это массив
+                    foreach ( $error as $er ) { // проходим в цикле
+                        $request->addFeedback( $er ); // добавляем сообщение об ошибке
+                    }
                 }
-            }
-            $request->setObject('form', $form ); // выводим форму заново
+                $request->setObject('form', $form ); // выводим форму заново
 
-            return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
+            } else {
+
+                $rawPos = \dmn\domain\News::findMaxPos(); // работает \imei_service\domain\News - получаем коллекцию
+                $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
+                $rawPhotoSettings = \dmn\domain\News::findPhotoSetting(); // получаем массив с размерами фото
+
+
+                // Отображать дату или нет
+                if($form->fields['hidedate']->value) $hidedate = "show";
+                else $hidedate = "hide";
+
+                // Скрытая или открытая фотография
+                if($form->fields['hidepict']->value) $showhidepict = "show";
+                else $showhidepict = "hide";
+
+                // Выясняем, скрыта или открыта дректория
+                if($form->fields['hide']->value) {
+                    $showhide = "show";
+                } else {
+                    $showhide = "hide";
+                }
+                // Изображение
+                $str = $form->fields['filename']->getFilename();
+                //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
+                if( ! empty( $str ) ) {
+                    $url_pict = "files/news/$str";
+                    $url_pict_s = "files/news/s_$str";
+                    \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
+                        "imei_service/view/files/news/s_$str",
+                        $rawPhotoSettings['width_news'],
+                        $rawPhotoSettings['height_news'] );
+                } else {
+                    $url_pict = "";
+                    $url_pict_s = "";
+                }
+
+                // получаем объект News без id - значит будет INSERT
+                $newsObj = new \dmn\domain\News();
+
+                // устанавливаем название
+                $newsObj->setName( $form->fields['name']->value );
+                // устанавливаем превьюшку
+                $newsObj->setPreview( $form->fields['preview']->value );
+                // устанавливаем тело новости
+                $newsObj->setBody( $form->fields['body']->value );
+                // устанавливаем дату
+                $newsObj->setPutdate( $form->fields['date']->getMysqlFormat() );
+                // устанавливаем чекбокс сокрытия даты
+                $newsObj->setHidedate( $hidedate );
+                // устанавливаем текст ссылки
+                $newsObj->setUrltext( $form->fields['urltext']->value );
+                // устанавливаем ссылку
+                $newsObj->setUrl( $form->fields['url']->value );
+                // устанавливаем название изображения
+                $newsObj->setAlt( $form->fields['alt']->value );
+                // устанавливаем большое изображение
+                $newsObj->setUrlpict( $url_pict );
+                // устанавливаем малое изображение
+                $newsObj->setUrlpict_s( $url_pict_s );
+                // устанавливаем позицию
+                $newsObj->setPos( $position );
+                // устанавливаем чекбокс сокрытия новости
+                $newsObj->setHide( $showhide );
+                // устанавливаем чекбокс сокрытия изображения
+                $newsObj->setHidepict( $showhidepict );
+
+                $this->reloadPage( 0, "dmn.php?cmd=News" ); // перегружаем страничку
+                return self::statuses( 'CMD_OK' );
+            }
+
         } else {
-
-            $rawPos = \dmn\domain\News::findMaxPos(); // работает \imei_service\domain\News - получаем коллекцию
-            $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
-            $rawPhotoSettings = \dmn\domain\News::findPhotoSetting(); // получаем массив с размерами фото
-
-
-            // Отображать дату или нет
-            if($form->fields['hidedate']->value) $hidedate = "show";
-            else $hidedate = "hide";
-
-            // Скрытая или открытая фотография
-            if($form->fields['hidepict']->value) $showhidepict = "show";
-            else $showhidepict = "hide";
-
-            // Выясняем, скрыта или открыта дректория
-            if($form->fields['hide']->value) {
-                $showhide = "show";
-            } else {
-                $showhide = "hide";
-            }
-            // Изображение
-            $str = $form->fields['filename']->getFilename();
-            //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
-            if( ! empty( $str ) ) {
-                $url_pict = "files/news/$str";
-                $url_pict_s = "files/news/s_$str";
-                \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
-                                            "imei_service/view/files/news/s_$str",
-                                            $rawPhotoSettings['width_news'],
-                                            $rawPhotoSettings['height_news'] );
-            } else {
-                $url_pict = "";
-                $url_pict_s = "";
-            }
-
-
-
-            $newsObj = new \dmn\domain\News();
-
-            $newsObj->setName( $form->fields['name']->value );
-            $newsObj->setPreview( $form->fields['preview']->value );
-            $newsObj->setBody( $form->fields['body']->value );
-            $newsObj->setPutdate( $form->fields['date']->getMysqlFormat() );
-            $newsObj->setHidedate( $hidedate );
-            $newsObj->setUrltext( $form->fields['urltext']->value );
-            $newsObj->setUrl( $form->fields['url']->value );
-            $newsObj->setAlt( $form->fields['alt']->value );
-            $newsObj->setUrlpict( $url_pict );
-            $newsObj->setUrlpict_s( $url_pict_s );
-            $newsObj->setPos( $position );
-            $newsObj->setHide( $showhide );
-            $newsObj->setHidepict( $showhidepict );
-
-            $this->reloadPage( 0, "dmn.php?cmd=News" ); // перегружаем страничку
-            return self::statuses( 'CMD_OK' );
+            $request->setObject('form', $form );
         }
     }
 }
