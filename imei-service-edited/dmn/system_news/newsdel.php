@@ -34,7 +34,7 @@ try
     if(mysql_num_rows($new) > 0)
     {
         $news = mysql_fetch_array($new);
-        echo "<tt><pre>".print_r( $news, true )."</pre></tt>";
+//        echo "<tt><pre>".print_r( $news, true )."</pre></tt>";
         if(file_exists("../../".$news['urlpict']))
         {
             @unlink("../../".$news['urlpict']);

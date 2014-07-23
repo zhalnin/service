@@ -24,7 +24,7 @@ class News extends Command {
 //        echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
         $action     = $request->getProperty( 'pact' ); // действие над позицией
         $position   = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
-        $id_news    = $request->getProperty( 'id_news' ); // id новости
+        $id_news    = $request->getProperty( 'idn' ); // id новости
         $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
 
         // в зависимости от действия вызываем метод с
@@ -44,7 +44,7 @@ class News extends Command {
                     return self::statuses( 'CMD_EDIT');
                     break;
                 case 'del':
-                    print 'delete';
+                    return self::statuses( 'CMD_DELETE');
                     break;
             }
         }

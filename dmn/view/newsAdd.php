@@ -25,6 +25,8 @@ $feedback = $request->getFeedback();
 try {
     // Включаем заголовок страницы
     require_once("dmn/view/templates/top.php");
+
+    echo "<p><a href='#' onclick='history.back()'>Назад</a></p>";
     ?>
     <p class=help>
         ITALIC: <a href=# onclick="javascript:tagIns('[i]','[/i]'); return false;">[i][/i]</a><br/>

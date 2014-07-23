@@ -31,6 +31,10 @@
             <status value="CMD_EDIT">
                 <forward>NewsEdit</forward>
             </status>
+
+            <status value="CMD_DELETE">
+                <forward>NewsDelete</forward>
+            </status>
         </command>
 
         <command name="NewsAdd">
@@ -42,6 +46,13 @@
 
         <command name="NewsEdit">
             <view>newsEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+        <command name="NewsDelete">
+            <view>newsDelete</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>

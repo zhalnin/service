@@ -23,9 +23,10 @@ class NewsEdit extends Command {
         $id = $request->getProperty( 'idn' );
         if( $id ) { // если передан id_news
             $news = \dmn\domain\News::find( $id ); // находим элементы по заданному id_news
+            $news_date = $news->getPutdate();
 
             // получаем массив с датой в class.FieldDateTime затем из mktime формируем дату
-            if( ! empty( $news->getPutdate() ) ) {
+            if( ! empty( $news_date ) ) {
                 // месяц
                 $date['date']['month']  = substr( $news->getPutdate(), 5, 2 );
                 // день
@@ -189,17 +190,17 @@ class NewsEdit extends Command {
                 }
                 // Удаляем старые файлы, если они имеются
                 $delimg = $form->fields['delimg']->value;
-                if( ! empty( $delimg ) ) {
-                    $path = str_replace( "//", "/","imei_service/view/".$news->getUrlpict_s() );
-                    $path_small = str_replace( "//", "/","imei_service/view/".$news->getUrlpict() );
-                    if( file_exists( $path ) ) {
-                        @unlink( $path );
+                if( ! empty( $delimg ) ) { // если чекбокс установлен
+                    $path = str_replace( "//", "/","imei_service/view/".$news->getUrlpict_s() ); // путь до большого изображения
+                    $path_small = str_replace( "//", "/","imei_service/view/".$news->getUrlpict() ); // путь до малого изображения
+                    if( file_exists( $path ) ) { // если большое изображение существует
+                        @unlink( $path ); // удаляем
                     }
-                    if( file_exists( $path_small ) ) {
-                        @unlink( $path_small );
+                    if( file_exists( $path_small ) ) { // если малое изображение существует
+                        @unlink( $path_small ); // удаляем
                     }
                 }
-                $url_pict = $url_pict_s = "";
+//                $url_pict = $url_pict_s = "";
 
                 // Изображение
                 if( ! empty( $_FILES['filename']['name'] ) ) {

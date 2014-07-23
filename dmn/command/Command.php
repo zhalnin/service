@@ -23,7 +23,8 @@ abstract class Command {
         'CMD_BLACKLIST_OK'      => 7,
         'CMD_GUESTBOOK_OK'      => 8,
         'CMD_ADD'               => 9,
-        'CMD_EDIT'              => 10
+        'CMD_EDIT'              => 10,
+        'CMD_DELETE'            => 11
     );
     private $status = 0;
 

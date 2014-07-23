@@ -149,6 +149,7 @@ class News extends DomainObject {
             case 'hide': // сокрытие позиции
                 // создаем условный оператор для запроса в БД
                 $idobj = new \dmn\mapper\NewsIdentityObject( 'id_news' );
+//                echo "<tt><pre>". print_r($id, TRUE) . "</pre></tt>";
                 $obj = $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ));
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
                 $obj->setHide( $action );

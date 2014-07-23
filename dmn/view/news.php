@@ -47,7 +47,7 @@ try {
         // Если имеется хотя бы одна запись - выводим ее
         if( ! empty( $news ) ) {
             // Выводим ссылки на другие страницы
-            echo $obj->print_page();
+            echo $obj;
             echo "<br /><br />";
             ?>
 <table width="100%"
