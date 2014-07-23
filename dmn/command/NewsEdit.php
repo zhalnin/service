@@ -248,13 +248,13 @@ class NewsEdit extends Command {
                 // обновляем название изображения
                 $news->setAlt( $form->fields['alt']->value );
                 // обновляем позицию
-                $news->setPos( $position );
+//                $news->setPos( $position );
                 // обновляем чекбокс сокрытия новости
                 $news->setHide( $showhide );
                 // обновляем чекбокс сокрытия изображения
                 $news->setHidepict( $showhidepict );
 
-                $this->reloadPage( 0, "dmn.php?cmd=News" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=News&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }

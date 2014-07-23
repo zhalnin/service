@@ -10,7 +10,7 @@ namespace dmn\mapper;
 error_reporting( E_ALL & ~E_NOTICE );
 
 abstract class SelectionFactory {
-
+    // метод для получения запроса SELECT и вызова метода buildStatement
     abstract function newSelection( IdentityObject $obj );
 
     /**

@@ -169,7 +169,7 @@ class NewsAdd extends Command {
                 // устанавливаем чекбокс сокрытия изображения
                 $newsObj->setHidepict( $showhidepict );
 
-                $this->reloadPage( 0, "dmn.php?cmd=News" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=News&page=$_GET[page]" ); // перегружаем страничку
                 return self::statuses( 'CMD_OK' );
             }
 

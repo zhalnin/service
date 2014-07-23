@@ -36,6 +36,7 @@ class ObjectWatcher {
      */
     private function globalKey( DomainObject $obj ) {
         $key = get_class( $obj ) . "." . $obj->getId();
+//        echo "<tt><pre> KEY - ".print_r($key, true)."</pre></tt>";
         return $key;
     }
 
@@ -123,15 +124,25 @@ class ObjectWatcher {
      * Метод исполнитель
      */
     function performOperations() {
-//        echo "<tt><pre>".print_r($this->new, true)."</pre></tt>";
+        // вставка в БД - INSERT
         foreach ( $this->dirty as $key => $obj ) {
             $obj->finder()->insert( $obj );
         }
-        // проходим по массиву в поиске объекта для добавления в БД - это индекс 0 и он имеет вложенный массив с вставляемыми данными: [id]=>2 и т.д.
+        // обновление в БД - UPDATE
+        // проходим по массиву в поиске объекта для добавления в БД - это
+        // индекс 0 и он имеет вложенный массив с вставляемыми данными: [id]=>2 и т.д.
         foreach ( $this->new as $key => $obj ) {
-//            echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
             $obj->finder()->insert( $obj );
         }
+        // удаление в БД - DELETE
+        // проходим по массиву в поиске объекта для удаления из БД - это
+        // индекс 0 и он имеет вложенный массив с вставляемыми данными: [id]=>2 и т.д.
+        foreach ( $this->delete as $key => $obj ) {
+            $obj->finder()->delete( $obj );
+        }
+
+        // очищаем массивы
+        $this->delete = array();
         $this->dirty = array();
         $this->new = array();
     }

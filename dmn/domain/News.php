@@ -167,6 +167,7 @@ class News extends DomainObject {
         return $finder->findPhotoSetting();
     }
 
+
     /**
      * устанавливем имя
      * @param $name_s

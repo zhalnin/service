@@ -78,7 +78,7 @@ class DomainObjectAssembler {
      * @param \dmn\domain\DomainObject $obj
      */
     function insert( \dmn\domain\DomainObject $obj ) {
-        // получаем мтод для обновления из фабрики
+        // получаем мeтод для обновления - из фабрики
         $upfact = $this->factory->getUpdateFactory();
         // инициализируем переменные значениями UPDATE и VALUES
         list( $update, $values ) = $upfact->newUpdate( $obj );
@@ -93,6 +93,22 @@ class DomainObjectAssembler {
             // сохраняем только что вставленное значение
             $obj->setId( self::$PDO->lastInsertId() );
         }
+        // очищаем массивы
+        $obj->markClean();
+    }
+
+
+    function delete( \dmn\domain\DomainObject $obj ) {
+        // получаем мeтод для удаления - из фабрики
+        $delfact = $this->factory->getDeleteFactory();
+        // инициализируем переменные значениями UPDATE и VALUES
+        list( $delete, $values ) = $delfact->newDelete( $obj );
+//        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        // формируем запрос
+        $stmt = $this->getStatement( $delete );
+        // выполняем запрос
+        $stmt->execute( $values );
         // очищаем массивы
         $obj->markClean();
     }

@@ -78,18 +78,33 @@ abstract class DomainObject {
         $this->id = -1;
     }
 
+    /**
+     * Формируем массив по классу объекта и его id
+     * для добавления в БД новой записи
+     */
     function markNew() {
         ObjectWatcher::addNew( $this );
     }
 
+    /**
+     * Формируем массив по классу объекта и его id
+     * для удаления из БД записи
+     */
     function markDeleted() {
         ObjectWatcher::addDelete( $this );
     }
 
+    /**
+     * Формируем массив по классу объекта и его id
+     * для добавления в БД записи по заданному id
+     */
     function markDirty() {
         ObjectWatcher::addDirty( $this );
     }
 
+    /**
+     * Очищаем все массивы: delete, dirty, в new удаляем только искомый объект
+     */
     function markClean() {
         ObjectWatcher::addClean( $this );
     }

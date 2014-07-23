@@ -18,7 +18,7 @@ abstract class PersistenceFactory {
     abstract function getCollection( array $array );
     abstract function getSelectionFactory();
     abstract function getUpdateFactory();
-//    abstract function getDeleteFactory();
+    abstract function getDeleteFactory();
     abstract function getUpDownFactory();
 
     static function getFactory( $target_class ) {
