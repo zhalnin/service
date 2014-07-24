@@ -50,6 +50,7 @@ class FieldDatetime extends Field {
                 $time['year'] );
         }
         else $this->time = $time;
+//        echo "<tt><pre>".print_r($time, true)."</pre></tt>";
         $this->begin_year = $begin_year;
         $this->end_year = $end_year;
     }
@@ -91,7 +92,7 @@ class FieldDatetime extends Field {
             $style $class type=\"text\"
             name='".$this->name."[day]'>\n";
         for( $i = 1; $i <= 31; $i++ ) {
-            if( $date_day == $i ) $temp = "selected";
+            if( $date_day == $i ) $temp = 'selected';
             else $temp = "";
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
@@ -102,7 +103,7 @@ class FieldDatetime extends Field {
             $style $class type=\"text\"
             name='".$this->name."[month]'>\n";
         for( $i = 1; $i <= 12; $i++ ) {
-            if( $date_month == $i ) $temp = "selected";
+            if( $date_month == $i ) $temp = 'selected';
             else $temp = "";
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
@@ -113,7 +114,7 @@ class FieldDatetime extends Field {
             $style $class type=\"text\"
             name='".$this->name."[year]'>\n";
         for( $i = 2004; $i <= 2017; $i++ ) {
-            if( $date_year == $i ) $temp = "selected";
+            if( $date_year == $i ) $temp = 'selected';
             else $temp = "";
             $tag .= "<option value=\"$i\" $temp>$i";
         }
@@ -124,7 +125,7 @@ class FieldDatetime extends Field {
             title=\"Часы\" $style $class
             type=\"text\" name='".$this->name."[hour]'>";
         for( $i = 0; $i <= 23; $i++ ) {
-            if( $date_hour == $i ) $temp = "selected";
+            if( $date_hour == $i ) $temp = 'selected';
             else $temp = "";
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
@@ -136,7 +137,7 @@ class FieldDatetime extends Field {
              type=\"text\"
              name='".$this->name."[minute]'>";
         for( $i = 0; $i <= 59; $i++ ) {
-            if( $date_minute == $i ) $temp = "selected";
+            if( $date_minute == $i ) $temp = 'selected';
             else $temp = "";
             $tag .= "<option value=\"$i\" $temp>".sprintf( "%02d", $i );
         }
@@ -168,6 +169,7 @@ class FieldDatetime extends Field {
     public function check() {
         if( date( 'Y', $this->time ) > $this->end_year ||
             date( 'Y', $this->time ) < $this->begin_year )  {
+            print date('Y', $this->time);
             return "Поле \"".$this->caption."\" содержит
               недопустимые значения ( его значение
               должно лежать в диапазаоне ".

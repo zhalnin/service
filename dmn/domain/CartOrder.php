@@ -89,10 +89,9 @@ class CartOrder extends DomainObject {
      */
     static function find( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CartOrderIdentityObject( 'id_news' );
+        $idobj = new \dmn\mapper\CartOrderIdentityObject( 'id' );
         return $finder->findOne( $idobj->eq( $id ) );
     }
-
 
 
     /**

@@ -103,4 +103,36 @@ class CartOrderObjectFactory extends DomainObjectFactory {
 }
 
 
+/**
+ * Class CartItemsObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class CartItemsObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\CartItems"; // название класса
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setProductId( $array['product_id'] );
+        $obj->setOrderId( $array['order_id'] );
+        $obj->setTitle( $array['title'] );
+        $obj->setPrice( $array['price'] );
+        $obj->setQty( $array['qty'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
+
 ?>

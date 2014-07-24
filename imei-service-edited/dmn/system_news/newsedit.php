@@ -123,7 +123,7 @@ try
                                     "preview"   => $preview,
                                     "body"      => $body,
                                     "date"      => $date,
-                                    "hidedate" => $hidedate,
+                                    "hidedate"  => $hidedate,
                                     "urltext"   => $urltext,
                                     "url"       => $url,
                                     "alt"       => $alt,

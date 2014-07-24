@@ -29,6 +29,9 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\CartOrder":
                 return new CartOrderPersistenceFactory();
                 break;
+            case "dmn\\domain\\CartItems":
+                return new CartItemsPersistenceFactory();
+                break;
         }
     }
 }
@@ -113,5 +116,47 @@ class CartOrderPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new CartOrderUpDownFactory();
+    }
+}
+
+
+/**
+ * Class CartOrderPersistenceFactory
+ * для работы с блоком заказов
+ * @package dmn\mapper
+ */
+class CartItemsPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new CartItemsMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new CartItemsObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new CartItemsCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new CartItemsSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new CartItemsUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new CartItemsIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new CartItemsDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new CartItemsUpDownFactory();
     }
 }

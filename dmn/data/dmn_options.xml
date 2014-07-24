@@ -1,14 +1,17 @@
 <woo-options>
+
+
     <dsn>mysql:host=localhost;dbname=imei-service</dsn>
+
 
     <menu>
         <point name="News">
             <title>Новости</title>
             <description>Управление новостным блоком</description>
         </point>
-        <point name="Unlock">
-            <title>Официальный анлок</title>
-            <description>Управление блоком официального анлока</description>
+        <point name="Catalog">
+            <title>Услуги</title>
+            <description>Управление блоком доступных услуг</description>
         </point>
         <point name="CartOrder">
             <title>Заказы</title>
@@ -16,41 +19,38 @@
         </point>
     </menu>
 
+
     <control>
         <view>main</view>
         <view status="CMD_OK">main</view>
         <view status="CMD_ERROR">error</view>
 
+
+
         <command name="News">
             <view>news</view>
-
             <status value="CMD_ADD">
                 <forward>NewsAdd</forward>
             </status>
-
             <status value="CMD_EDIT">
                 <forward>NewsEdit</forward>
             </status>
-
             <status value="CMD_DELETE">
                 <forward>NewsDelete</forward>
             </status>
         </command>
-
         <command name="NewsAdd">
             <view>newsAdd</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
-
         <command name="NewsEdit">
             <view>newsEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
-
         <command name="NewsDelete">
             <view>newsDelete</view>
             <status value="CMD_OK">
@@ -58,9 +58,48 @@
             </status>
         </command>
 
+
+
         <command name="CartOrder">
             <view>cartOrder</view>
+            <status value="CMD_ADD">
+                <forward>CartOrderAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>CartOrderEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>CartOrderDelete</forward>
+            </status>
+            <status value="CMD_DETAIL">
+                <forward>CartOrderDetail</forward>
+            </status>
         </command>
+        <command name="CartOrderAdd">
+            <view>cartOrderAdd</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CartOrderEdit">
+            <view>cartOrderEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CartOrderDelete">
+            <view>cartOrderDelete</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CartOrderDetail">
+            <view>cartOrderDetail</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
 
     </control>
 </woo-options>

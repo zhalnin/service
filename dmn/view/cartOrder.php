@@ -44,8 +44,8 @@ try {
 //    echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
     // Добавить блок
     echo "<a href=?cmd=CartOrder&pact=add&page=$_GET[page]
-                    title=Добавить новостной блок>
-                    Добавить новостной блок</a><br><br>";
+                    title=Добавить блок заказа>
+                    Добавить блок заказа</a><br><br>";
 
     // Получаем содержимое текущей страницы
 //    $cartOrder = $obj->get_page();
@@ -64,6 +64,7 @@ try {
                cellspacing="0">
             <tr class="header" align="center">
                 <td width="10%">Дата</td>
+                <td width="5%">Заказ</td>
                 <td width="10%">Email</td>
                 <td >Описание</td>
                 <td width="7%">Стоимость</td>
@@ -75,7 +76,7 @@ try {
     for($i = 0; $i < count($cartOrder); $i++) {
         // Если новость отмечена как невидимая (hide='hide'), выводим
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
-        $url = "id={$cartOrder[$i][id]}&page=$_GET[page]";
+        $url = "id={$cartOrder[$i][order_id]}&page=$_GET[page]";
 
         // Преобразуем дату из формата MySQL YYYY-MM-DD hh:mm:ss
         // в формат DD.MM.YYYY hh:mm:ss
@@ -86,6 +87,7 @@ try {
         // Выводим новость
         echo "<tr>
                         <td><p align='center'>{$cartOrder[$i][created_at]}</td>
+                        <td align=center>{$cartOrder[$i][order_id]}</td>
                         <td align=center>{$cartOrder[$i][email]}</td>
                         <td align=center>{$cartOrder[$i]['title']}<br /><br />{$cartOrder[$i]['data']}</td>
                         <td align=center>{$cartOrder[$i][price]}</td>
@@ -93,7 +95,8 @@ try {
                         <td align=center>{$cartOrder[$i][status]}</td>
 
                         <td align=center>
-                            <a href=?cmd=CartOrder&pact=detail&$url title='Детальный просмотр'>Просмотр</a><br/>
+                            <a href=# onclick=\"show_detail( '?cmd=CartOrder&pact=detail&{$url}', 400, 450); return false\"
+                             title='Детальный просмотр'>Просмотр</a><br/>
                             <a href=?cmd=CartOrder&pact=edit&$url title='Редактировать текст новости'>Редактировать</a><br/>
                             <a href=# onClick=\"delete_position('?cmd=CartOrder&pact=del&$url',".
             "'Вы действительно хотите удалить раздел?');\"  title='Удалить новость'>Удалить</a><br/>

@@ -13,7 +13,7 @@ class AppException extends \Exception {
     private $msg;
     function __construct( $app_error, $msg=null ) {
         if( $msg != null ) {
-            $this->msg = $msg;
+            $this->msg = ", ".$msg;
         }
         parent::__construct( $app_error );
         $this->error = $app_error;
@@ -21,7 +21,7 @@ class AppException extends \Exception {
     }
 
     function getErrorObject() {
-        return "There is Error: $this->error, $this->msg";
+        return "There is Error: $this->error $this->msg";
     }
 }
 

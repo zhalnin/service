@@ -42,4 +42,5 @@ class NewsDelete extends Command {
 
         }
     }
-} 
+}
+?>

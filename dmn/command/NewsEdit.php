@@ -25,22 +25,22 @@ class NewsEdit extends Command {
             $news = \dmn\domain\News::find( $id ); // находим элементы по заданному id_news
             $news_date = $news->getPutdate();
 
-            // получаем массив с датой в class.FieldDateTime затем из mktime формируем дату
-            if( ! empty( $news_date ) ) {
-                // месяц
-                $date['date']['month']  = substr( $news->getPutdate(), 5, 2 );
-                // день
-                $date['date']['day']    = substr( $news->getPutdate(), 8, 2 );
-                // год
-                $date['date']['year']   = substr( $news->getPutdate(), 0, 4 );
-                // часы
-                $date['date']['hour']   = substr( $news->getPutdate(), 11, 2 );
-                // минуты
-                $date['date']['minute'] = substr( $news->getPutdate(), 14, 2 );
-
-            }
             // если еще не передан запрос и форма не была отправлена
             if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
+                // получаем массив с датой в class.FieldDateTime затем из mktime формируем дату
+                if( ! empty( $news_date ) ) {
+                    // месяц
+                    $_REQUEST['date']['month']  = substr( $news->getPutdate(), 5, 2 );
+                    // день
+                    $_REQUEST['date']['day']    = substr( $news->getPutdate(), 8, 2 );
+                    // год
+                    $_REQUEST['date']['year']   = substr( $news->getPutdate(), 0, 4 );
+                    // часы
+                    $_REQUEST['date']['hour']   = substr( $news->getPutdate(), 11, 2 );
+                    // минуты
+                    $_REQUEST['date']['minute'] = substr( $news->getPutdate(), 14, 2 );
+
+                }
                 // Добавляем в глобальный массив данные из запроса к БД
                 $_REQUEST['name']       = $news->getName(); // название
                 $_REQUEST['preview']    = $news->getPreview(); // превьюшка
@@ -88,7 +88,7 @@ class NewsEdit extends Command {
                                                         false);
             $date           = new \dmn\classes\FieldDatetime("date",
                                                         "Дата новости",
-                                                        $date['date'] );
+                                                        $_REQUEST['date'] );
             $hidedate       = new \dmn\classes\FieldCheckbox("hidedate",
                                                         "Отображать дату",
                                                         $_REQUEST['hidedate'] );

@@ -50,19 +50,23 @@ interface FaqCollection extends \Iterator {
 }
 
 interface FaqPositionCollection extends \Iterator {
-    function add( DomainObject $faq );
+    function add( DomainObject $faq_position );
 }
 
 interface FaqParagraphCollection extends \Iterator {
-    function add( DomainObject $faq );
+    function add( DomainObject $faq_paragraph );
 }
 
 interface FaqParagraphImageCollection extends \Iterator {
-    function add( DomainObject $faq );
+    function add( DomainObject $faq_paragraph_image );
 }
 
 interface CartOrderCollection extends \Iterator {
-    function add( DomainObject $faq );
+    function add( DomainObject $cart_order );
+}
+
+interface CartItemsCollection extends \Iterator {
+    function add( DomainObject $cart_items );
 }
 
 ?>

@@ -170,5 +170,14 @@ class CartOrderCollection
     }
 }
 
+class CartItemsCollection
+    extends Collection
+    implements \dmn\domain\CartItemsCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\CartItems";
+    }
+}
+
 
 ?>
