@@ -76,7 +76,7 @@ $title = 'Подробная информация';
                         </tr>
                         <tr>
                             <td align=right>Стоимость</td>
-                            <td><?php echo $cartOrder->getAmount(); ?></td>
+                            <td><?php echo $cartItems->getPrice(); ?></td>
                         </tr>
                         <tr>
                             <td align=right>Количество</td>

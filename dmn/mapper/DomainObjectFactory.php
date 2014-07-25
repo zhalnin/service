@@ -134,5 +134,45 @@ class CartItemsObjectFactory extends DomainObjectFactory {
     }
 }
 
+/**
+ * Class CatalogObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class CatalogObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\Catalog"; // название класса
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_catalog'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setOrderTitle( $array['order_title'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setAbbreviatura( $array['abbreviatrua'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setUrlpict( $array['urlpict'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setRoundedFlag( $array['rounded_flag'] );
+        $obj->setTitleFlag( $array['title_flag'] );
+        $obj->setAltFlag( $array['alt_flag'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
 
 ?>

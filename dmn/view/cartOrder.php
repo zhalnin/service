@@ -40,7 +40,7 @@ try {
         $page_link,
         "&cmd=CartOrder",
         array('id','order_id') );
-
+//    echo "<tt><pre>".print_r($obj->getPage(), true)."</pre></tt>";
 //    echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
     // Добавить блок
     echo "<a href=?cmd=CartOrder&pact=add&page=$_GET[page]
@@ -76,7 +76,7 @@ try {
     for($i = 0; $i < count($cartOrder); $i++) {
         // Если новость отмечена как невидимая (hide='hide'), выводим
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
-        $url = "id={$cartOrder[$i][order_id]}&page=$_GET[page]";
+        $url = "order_id={$cartOrder[$i][order_id]}&items_id={$cartOrder[$i][id]}&page=$_GET[page]";
 
         // Преобразуем дату из формата MySQL YYYY-MM-DD hh:mm:ss
         // в формат DD.MM.YYYY hh:mm:ss

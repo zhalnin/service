@@ -120,7 +120,6 @@ try {
                         <td align=center>$url_pict</td>
 
                         <td align=center>
-                        <a href=?cmd=News&ppos=uppest&$url alt='поднять выше невидимых блоков'>Наверх</a><br/>
                             <a href=?cmd=News&ppos=up&$url>Вверх</a><br/>
                             $showhide<br/>
                             <a href=?cmd=News&pact=edit&$url title='Редактировать текст новости'>Редактировать</a><br/>

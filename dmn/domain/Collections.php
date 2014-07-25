@@ -69,4 +69,8 @@ interface CartItemsCollection extends \Iterator {
     function add( DomainObject $cart_items );
 }
 
+interface CatalogCollection extends \Iterator {
+    function add( DomainObject $catalog );
+}
+
 ?>

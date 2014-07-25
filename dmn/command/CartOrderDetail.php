@@ -19,11 +19,12 @@ class CartOrderDetail extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 
         // получаем id_news редактируемой новости
-        $id = $request->getProperty( 'id' );
+        $id = $request->getProperty( 'order_id' );
+        $items_id = $request->getProperty( 'items_id' );
         if( $id ) { // если передан id
             $cartOrder = \dmn\domain\CartOrder::find( $id ); // находим элементы по заданному id
             $orderId = $cartOrder->getId(); // получаем order id
-            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId ); // находим элементы по заданному id
+            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId, $items_id ); // находим элементы по заданному id
 
             $request->setObject( 'cartOrderCollection', $cartOrder ); // сохраняем объекты для передачи во вьюшку
             $request->setObject( 'cartItemsCollection', $cartItems ); // сохраняем объекты для передачи во вьюшку

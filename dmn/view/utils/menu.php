@@ -25,11 +25,9 @@ foreach ( $options->menu->point as $point ):
     $block_description = $point->description;
 
     // Set another style for this point
-    if(strpos($_SERVER['PHP_SELF'], $point['name']) !== false)
-    {
+    if( strpos( $_SERVER['PHP_SELF'], $point['name'] ) !== false ) {
         $style = 'class=\"active\"';
-    }
-    else $style = '';
+    } else $style = '';
     // Form point of menu
     echo "<div $style>
                   <a class=\"menu\"
@@ -39,12 +37,6 @@ foreach ( $options->menu->point as $point ):
                   </a>
                 </div>";
 endforeach;
-
-
-
-
-
-//echo "<tt><pre>".print_r( $options->menu, true )."</pre><tt>";
 
 
 function ensure( $stmt, $msg ) {

@@ -11,8 +11,19 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "dmn/mapper/UpdateFactory.php" );
 
+/**
+ * Class NewsUpdateFactory
+ * Для обновления полей блока новостей
+ * @package dmn\mapper
+ */
 class NewsUpdateFactory extends UpdateFactory{
 
+    /**
+     * Получаем объект и инициализируем переменные
+     * строим запрос
+     * @param \dmn\domain\DomainObject $obj
+     * @return array
+     */
     function newUpdate( \dmn\domain\DomainObject $obj ) {
 
         $id = $obj->getId();

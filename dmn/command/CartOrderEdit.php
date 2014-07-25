@@ -19,11 +19,14 @@ class CartOrderEdit extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         // получаем id_news редактируемой новости
-        $id = $request->getProperty( 'id' );
+        $id = $request->getProperty( 'order_id' );
+//        echo "<tt><pre>".print_r($id, true)."</pre></tt>";
+        $items_id = $request->getProperty( 'items_id' );
+//        echo "<tt><pre>".print_r($items_id, true)."</pre></tt>";
         if( $id ) { // если передан id
             $cartOrder = \dmn\domain\CartOrder::find( $id ); // находим элементы по заданному id
             $orderId = $cartOrder->getId(); // получаем order id
-            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId ); // находим элементы по заданному id
+            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId, $items_id ); // находим элементы по заданному id
             $cartOrder_date = $cartOrder->getCreatedAt(); // получаем дату и время
 
             // если еще не передан запрос и форма не была отправлена

@@ -24,37 +24,6 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-3. dmn
-4. payment
+3. dmn - navigation пробовать перенести в domain или ...
 
 
-
-Изменения:
-
-CREATE TABLE `system_cart_orders` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(100) NOT NULL DEFAULT '',
-  `lastname` varchar(100) NOT NULL DEFAULT '',
-  `email` varchar(150) NOT NULL DEFAULT '',
-  `data` text NOT NULL,
-  `country` varchar(100) NOT NULL DEFAULT '',
-  `address` varchar(255) NOT NULL DEFAULT '',
-  `city` varchar(100) NOT NULL DEFAULT '',
-  `zip_code` varchar(10) NOT NULL DEFAULT '',
-  `state` varchar(100) NOT NULL DEFAULT '',
-  `status` varchar(50) NOT NULL DEFAULT '',
-  `amount` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `paypal_trans_id` varchar(20) NOT NULL DEFAULT '',
-  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
-CREATE TABLE `system_cart_items` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  `order_id` int(11) NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `price` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `qty` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

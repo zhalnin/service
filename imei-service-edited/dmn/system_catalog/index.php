@@ -28,6 +28,7 @@ $pageinfo = '<p class=help>Здесь осуществляется админи�
 require_once("../utils/top.php");
 
 $_GET['id_parent'] = intval($_GET['id_parent']);
+//echo "<tt><pre>".print_r($_GET['id_parent'], true)."</pre></tt>";
 
 try
 {

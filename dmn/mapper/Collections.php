@@ -179,5 +179,13 @@ class CartItemsCollection
     }
 }
 
+class CatalogCollection
+    extends Collection
+    implements \dmn\domain\CatalogCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\Catalog";
+    }
+}
 
 ?>

@@ -21,11 +21,12 @@ require_once( 'dmn/command/Command.php' );
 class CartOrderDelete extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
-        $id = $request->getProperty( 'id' );
+        $id = $request->getProperty( 'order_id' );
+        $items_id = $request->getProperty( 'items_id' );
         if( $id ) { // если передан id_news
             $cartOrder = \dmn\domain\CartOrder::find( $id ); // находим элементы по заданному id
             $orderId = $cartOrder->getId(); // получаем order id
-            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId ); // находим элементы по заданному id
+            $cartItems = \dmn\domain\CartItems::findByOrderId( $orderId , $items_id ); // находим элементы по заданному id
 
             // удаление блока c заказом
 //            $news->finder()->delete( $news );

@@ -101,5 +101,38 @@
         </command>
 
 
+
+        <command name="Catalog">
+            <view>catalog</view>
+            <status value="CMD_ADD">
+                <forward>CatalogAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>CatalogEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>CatalogDelete</forward>
+            </status>
+        </command>
+        <command name="CatalogAdd">
+            <view>catalogAdd</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CatalogEdit">
+            <view>catalogEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CatalogDelete">
+            <view>catalogDelete</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
     </control>
 </woo-options>

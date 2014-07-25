@@ -74,10 +74,10 @@ class CartItems extends DomainObject {
      * @param $id
      * @return mixed
      */
-    static function findByOrderId( $id ) {
+    static function findByOrderId( $id, $items_id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \dmn\mapper\CartItemsIdentityObject( 'order_id' );
-        return $finder->findOne( $idobj->eq( $id ) );
+        return $finder->findOne( $idobj->eq( $id )->field( 'id' )->eq( $items_id ) );
     }
 
 
