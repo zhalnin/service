@@ -168,9 +168,9 @@ class CatalogAdd extends Command {
                 // устанавливаем описание
                 $catalogObj->setDescription( $form->fields['description']->value );
                 // устанавливаем ключевые слова
-                $catalogObj->setKeywords( $form->fields['keywords']->value() );
+                $catalogObj->setKeywords( $form->fields['keywords']->value );
                 // устанавливаем аббревиатуру
-                $catalogObj->setAbbreviatura( $abbreviatura );
+                $catalogObj->setAbbreviatura( $form->fields['abbreviatura']->value );
                 // устанавливаем флаг услуги
                 $catalogObj->setModrewrite( $form->fields['modrewrite']->value );
                 // устанавливаем позицию
@@ -180,17 +180,17 @@ class CatalogAdd extends Command {
                 // устанавливаем путь до большого изображения
                 $catalogObj->setUrlpict( $img );
                 // устанавливаем название основного изображения
-                $catalogObj->setAlt( $alt );
+                $catalogObj->setAlt( $form->fields['alt']->value );
                 // устанавливаем изображение для услуги
                 $catalogObj->setRoundedFlag( $rounded_img );
                 // устанавливаем название услуги
-                $catalogObj->setTitleFlag( $title_flag );
+                $catalogObj->setTitleFlag( $form->fields['title_flag']->value );
                 // устанавливаем название изображения
-                $catalogObj->setAltFlag( $alt_flag );
+                $catalogObj->setAltFlag( $form->fields['alt_flag']->value );
                 // устанавливаем родительский id
                 $catalogObj->setIdParent( $id_parent );
 
-                $this->reloadPage( 0, "dmn.php?cmd=News&page=$_GET[page]" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=Catalog&id_parent=$_REQUEST[id_parent]&page=$_GET[page]" ); // перегружаем страничку
                 return self::statuses( 'CMD_OK' );
             }
 
