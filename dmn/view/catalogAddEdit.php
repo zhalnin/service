@@ -2,13 +2,11 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 22/07/14
- * Time: 16:36
+ * Date: 26/07/14
+ * Time: 12:56
  */
-
 namespace dmn\view;
 error_reporting( E_ALL & ~E_NOTICE );
-
 require_once( "dmn/classes.php" );
 // Include exception for error handling
 require_once( "dmn/base/Exceptions.php" );
@@ -17,7 +15,6 @@ require_once( "dmn/view/ViewHelper.php" );
 
 // получаем объект request
 $request        = \dmn\view\VH::getRequest();
-
 // получаем объект Форму
 $form = $request->getObject('form');
 // получаем сообщения об ошибках

@@ -51,7 +51,7 @@ try {
     echo "<a class=menu
                 href=dmn.php?cmd=Catalog&id_parent=0&page=$_GET[page]>
                     Корневой каталог</a>-&gt;".
-        \dmn\view\utils\navigation($_GET['id_parent'], "", system_catalog).
+        \dmn\view\utils\navigation($_GET['id_parent'], "", 'system_catalog').
         "<a class=menu href=dmn.php?cmd=Catalog&".
         "pact=add&".
         "id_catalog=$_GET[id_parent]&".

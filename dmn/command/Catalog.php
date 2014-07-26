@@ -20,13 +20,14 @@ class Catalog extends Command {
         $action     = $request->getProperty( 'pact' ); // действие над позицией
         $position   = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
         $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
-        $id_catalog = $request->getProperty( 'id_catalog' );
+        $id_catalog = $request->getProperty( 'id_catalog' ); // id каталога
+        $id_parent = $request->getProperty( 'id_parent' ); // id родительского каталога
         // в зависимости от действия вызываем метод с
         // определенными параметрами для выполнения действия над
         // позицией в блоке новостей
         if( ! empty( $position ) ) {
             \dmn\domain\Catalog::position( $id_catalog, $position );
-            $this->reloadPage( 0, "dmn.php?cmd=Catalog&page={$page}" );
+            $this->reloadPage( 0, "dmn.php?cmd=Catalog&id_parent={$id_parent}&page={$page}" );
         }
 
         if( ! empty( $action ) ) {

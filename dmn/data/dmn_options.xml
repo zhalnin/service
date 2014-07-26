@@ -40,13 +40,13 @@
             </status>
         </command>
         <command name="NewsAdd">
-            <view>newsAdd</view>
+            <view>newsAddEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="NewsEdit">
-            <view>newsEdit</view>
+            <view>newsAddEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
@@ -115,13 +115,13 @@
             </status>
         </command>
         <command name="CatalogAdd">
-            <view>catalogAdd</view>
+            <view>catalogAddEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CatalogEdit">
-            <view>catalogEdit</view>
+            <view>catalogAddEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
