@@ -73,7 +73,7 @@ try
                     cellpadding="0"
                     cellspacing="0">
                     <tr class="header" align="center">
-                        <td width=100>Оператор</td>
+                        <td width=100>Наименование</td>
                         <td width=150>Стоимость</td>
                         <td width=150>Совместимость</td>
                         <td width=150>Сроки</td>
@@ -226,15 +226,15 @@ try
             echo "<tr $style>
                     <td>
                         <a href=# onclick=\"show_detail('posdetail.php".
-                        "?id_position={$position[$i][id_position]}',400,350);".
+                        "?id_position={$position[$i]['id_position']}',400,350);".
                         " return false \"
                         title = \"Подробнее\">
                             $operator<br/>
                         </a>
                     </td>
-                    <td>{$position[$i][cost]}</td>
-                    <td>{$position[$i][compatible]}</td>
-                    <td>{$position[$i][timeconsume]}</td>";
+                    <td>{$position[$i]['cost']}</td>
+                    <td>{$position[$i]['compatible']}</td>
+                    <td>{$position[$i]['timeconsume']}</td>";
               echo "<td>
                         <a href=posup.php?$url>Вверх</a><br/>
                         $strhide<br/>

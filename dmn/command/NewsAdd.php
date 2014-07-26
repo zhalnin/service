@@ -105,7 +105,7 @@ class NewsAdd extends Command {
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
             } else {
 
-                $rawPos = \dmn\domain\News::findMaxPos(); // работает \imei_service\domain\News - получаем коллекцию
+                $rawPos = \dmn\domain\News::findMaxPos( null ); // работает \imei_service\domain\News - получаем коллекцию
                 $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
                 $rawPhotoSettings = \dmn\domain\News::findPhotoSetting(); // получаем массив с размерами фото
 

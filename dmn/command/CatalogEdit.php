@@ -21,8 +21,9 @@ class CatalogEdit extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 
         // получаем id_news редактируемой новости
-        $id = $request->getProperty( 'id_catalog' );
-        $id_parent = $request->getProperty( 'id_parent' ); // id родительского каталога
+        $id = $request->getProperty( 'idc' );
+        $idp = $request->getProperty( 'idp' ); // id родительского каталога
+//        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
         if( $id ) { // если передан id_news
             $catalog = \dmn\domain\Catalog::find( $id ); // находим элементы по заданному id_news
 
@@ -47,11 +48,10 @@ class CatalogEdit extends Command {
                 } else {
                     $_REQUEST['hide'] = false; // снимаем чекбокс
                 }
-                $_REQUEST['id_catalog'] = $id;
-                $_REQUEST['id_parent'] = $id_parent;
+                $_REQUEST['idc'] = $id;
+                $_REQUEST['idp'] = $idp;
                 $_REQUEST['page'] = $_GET['page'];
             }
-
             $name               = new \dmn\classes\FieldText("name",
                                                             "Название",
                                                             true,
@@ -103,9 +103,9 @@ class CatalogEdit extends Command {
                                                             "ALT-тег",
                                                             false,
                                                             $_REQUEST['alt_flag']);
-            $id_parent          = new \dmn\classes\FieldHiddenInt("id_parent",
+            $idp          = new \dmn\classes\FieldHiddenInt("idp",
                                                             true,
-                                                            $_REQUEST['id_parent']);
+                                                            $_REQUEST['idp']);
             $page               = new \dmn\classes\FieldHiddenInt("page",
                                                             false,
                                                             $_REQUEST['page']);
@@ -126,13 +126,13 @@ class CatalogEdit extends Command {
                                                                 "rounded_flag"  => $rounded_flag,
                                                                 "alt_flag"      => $alt_flag,
                                                                 "modrewrite"    => $modrewrite,
-                                                                "id_parent"     => $id_parent,
+                                                                "idp"     => $idp,
                                                                 "page"          => $page,
                                                                 "submitted"     => $submitted ),
                                                             "Редактировать",
                                                             "field");
-
-//            $request->setObject('form', $form ); // выводим форму заново
+//            echo "<tt><pre>".print_r($form, true)."</pre></tt>";
+            $request->setObject('form', $form ); // выводим форму заново
 
         }
 
@@ -165,6 +165,7 @@ class CatalogEdit extends Command {
                 // Изображение
                 if( ! empty( $_FILES['urlpict']['name'] ) ) {
                     // Удаляем старые изображения
+//                    echo "<tt><pre> urlpict - ".print_r( "imei_service/view/".$catalog->getUrlpict() , true)."</pre></tt>";
                     if( file_exists(  "imei_service/view/".$catalog->getUrlpict() ) ) {
                         @unlink( "imei_service/view/".$catalog->getUrlpict() );
                     }
@@ -173,7 +174,7 @@ class CatalogEdit extends Command {
                     // если новое изображение присутствует
                     if( ! empty( $str ) ) {
                         $img = "images/country_flag/$str"; // большое изображение
-                        // обновляем большое изображение
+                        // устанавливаем путь до большого изображения
                         $catalog->setUrlpict( $img );
                         // обновляем малое изображение
                     }
@@ -181,27 +182,21 @@ class CatalogEdit extends Command {
 
                 // Изображение
                 if( ! empty( $_FILES['rounded_flag']['name'] ) ) {
+//                    echo "<tt><pre> rounded - ".print_r( $catalog->getRoundedFlag() , true)."</pre></tt>";
                     // Удаляем старые изображения
-                    if( file_exists(  "imei_service/view/".$catalog->getUrlpict() ) ) {
-                        @unlink( "imei_service/view/".$catalog->getUrlpict() );
+                    if( file_exists(  "imei_service/view/".$catalog->getRoundedFlag() ) ) {
+                        @unlink( "imei_service/view/".$catalog->getRoundedFlag() );
                     }
                     // Новые изображения
                     $str = $form->fields['rounded_flag']->getFilename();
                     // если новое изображение присутствует
                     if( ! empty( $str ) ) {
                         $rounded_img = "images/rounded_flag/$str"; // большое изображение
-                        // меняем размер изображения
-                        \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
-                            "imei_service/view/files/news/s_$str",
-                            $rawPhotoSettings['width_news'],
-                            $rawPhotoSettings['height_news'] );
-                        // обновляем большое изображение
+                        // устанавливаем изображение для услуги
                         $catalog->setRoundedFlag( $rounded_img );
                         // обновляем малое изображение
                     }
                 }
-
-//                echo "<tt><pre>".print_r( $url_pict , true)."</pre></tt>";
 
                 // устанавливаем название
                 $catalog->setName( $form->fields['name']->value );
@@ -218,21 +213,17 @@ class CatalogEdit extends Command {
                 // устанавливаем позицию
                 $catalog->setPos( $form->fields['pos']->value );
                 // устанавливаем сокрытие/отображение
-                $catalog->setHide( $form->fields['hide']->value );
-                // устанавливаем путь до большого изображения
-                $catalog->setUrlpict( $img );
+                $catalog->setHide( $showhide );
                 // устанавливаем название основного изображения
                 $catalog->setAlt( $form->fields['alt']->value );
-                // устанавливаем изображение для услуги
-                $catalog->setRoundedFlag( $rounded_img );
                 // устанавливаем название услуги
                 $catalog->setTitleFlag( $form->fields['title_flag']->value );
                 // устанавливаем название изображения
                 $catalog->setAltFlag( $form->fields['alt_flag']->value );
                 // устанавливаем родительский id
-                $catalog->setIdParent( $id_parent );
+                $catalog->setIdParent( $form->fields['idp']->value );
 
-                $this->reloadPage( 0, "dmn.php?cmd=Catalog&id_parent=$_REQUEST[id_parent]&page=$_GET[page]" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=Catalog&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }

@@ -134,5 +134,46 @@
         </command>
 
 
+        <command name="CatalogPosition">
+            <view>catalogPosition</view>
+            <status value="CMD_ADD">
+                <forward>CatalogPositionAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>CatalogPositionEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>CatalogPositionDelete</forward>
+            </status>
+            <status value="CMD_DETAIL">
+                <forward>CatalogPositionDetail</forward>
+            </status>
+        </command>
+        <command name="CatalogPositionAdd">
+            <view>catalogPositionAddEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CatalogPositionEdit">
+            <view>catalogPositionAddEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CatalogPositionDelete">
+            <view>catalogPositionDelete</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="CatalogPositionDetail">
+            <view>catalogPositionDetail</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
     </control>
 </woo-options>

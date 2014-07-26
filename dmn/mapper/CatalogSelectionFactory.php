@@ -29,11 +29,12 @@ class CatalogSelectionFactory extends SelectionFactory {
      * Для получения максимальной позиции в таблице
      * @return string
      */
-    function newSelectionMaxPos() {
+    function newSelectionMaxPos( IdentityObject $obj ) {
+        $fields = implode( ',', $obj->getObjectFields() );
         $core = "SELECT MAX( pos ) as pos FROM system_catalog";  // составляем запрос
         $orderby = " ORDER BY pos ";
-//        echo "<tt><pre>".print_r($core, true)."</pre></tt>";
-        return $core." ".$orderby; // возвращаем запрос с условными операторами WHERE ... < ? AND id = ? и массив с значениями
+        list( $where, $values ) = $this->buildWhere( $obj );
+        return array( $core." ".$where." ".$orderby, $values ); // возвращаем запрос с условными операторами WHERE ... < ? AND id = ? и массив с значениями
     }
 
     /**

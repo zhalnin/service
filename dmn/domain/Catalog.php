@@ -161,9 +161,10 @@ class Catalog extends DomainObject {
         }
     }
 
-    static function findMaxPos() {
+    static function findMaxPos( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        return $finder->findMaxPos();
+        $idobj = new \dmn\mapper\CatalogIdentityObject( 'id_parent' );
+        return $finder->findMaxPos( $idobj->eq( $id ) );
     }
 
     static function findPhotoSetting() {

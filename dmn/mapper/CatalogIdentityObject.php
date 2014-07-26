@@ -8,7 +8,7 @@
 namespace dmn\mapper;
 error_reporting( E_ALL & ~E_NOTICE );
 
-require_once( "imei_service/mapper/IdentityObject.php" );
+require_once( "dmn/mapper/IdentityObject.php" );
 
 class CatalogIdentityObject extends IdentityObject {
 

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 04/07/14
- * Time: 15:47
+ * Date: 26/07/14
+ * Time: 19:03
  */
 
 namespace dmn\view;
@@ -13,7 +13,6 @@ try {
     require_once( "dmn/classes/class.PagerMysql.php" );
     require_once( "dmn/view/utils/navigation.php" );
     require_once( "dmn/view/utils/printPage.php" );
-    require_once( "dmn/domain/CatalogPosition.php" );
 //    require_once( "dmn/view/ViewHelper.php" );
 
 //    $request = \dmn\view\VH::getRequest();
@@ -31,6 +30,7 @@ try {
 
     $_GET['idp'] = intval($_GET['idp']);
 
+
     // Содержание страницы
 
     // Количество ссылок в постраничной навигации
@@ -38,12 +38,12 @@ try {
     // Количество позиций на странице
     $pnumber = 10;
     // Объявляеи объект постраничной навигации
-    $obj = new \dmn\classes\PagerMysql('system_catalog',
-        "WHERE id_parent=$_GET[idp]",
+    $obj = new \dmn\classes\PagerMysql('system_position',
+        "WHERE id_catalog=$_GET[idc]",
         "ORDER BY pos",
         $pnumber,
         $page_link,
-        "&cmd=Catalog&idp=$_GET[idp]");
+        "&cmd=Catalog&idc=$_GET[idc]");
 
     // Если это не корневой каталог выводим ссылки для возврата
     // и для добавления подкаталога
@@ -52,12 +52,12 @@ try {
     echo "<a class=menu
                 href=dmn.php?cmd=Catalog&idp=0&page=$_GET[page]>
                     Корневой каталог</a>-&gt;".
-        \dmn\view\utils\navigation($_GET['idp'], "", 'system_catalog').
-        "<a class=menu href=dmn.php?cmd=Catalog&".
+        \dmn\view\utils\navigation($_GET['idc'], "", 'system_catalog').
+        "<a class=menu href=dmn.php?cmd=CatalogPosition&".
         "pact=add&".
-        "idc=$_GET[idp]&".
+        "idc=$_GET[idc]&".
         "idp=$_GET[idp]&".
-        "page=$_GET[page]>Добавить подкаталог</a>";
+        "page=$_GET[page]>Добавить позицию</a>";
     echo "</td></tr></table>";
 
     // Получаем содержимое текущей страницы
@@ -66,8 +66,6 @@ try {
     if( ! empty( $catalog ) ) {
 
 //        echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
-
-
         // Выводим ссылки на другие страницы
         echo $obj;
         echo "<br /><br />";
@@ -78,66 +76,49 @@ try {
                cellpadding="0"
                cellspacing="0">
             <tr class="header" align="center">
-                <td align="center">Название</td>
-                <td width="70" align="center">Позиции</td>
-                <td align="center">Описание</td>
-                <td width="20" align="center">Поз.</td>
-                <td align="center">Фото</td>
-                <td width="50">Действия</td>
+                <td width=100>Наименование</td>
+                <td width=150>Стоимость</td>
+                <td width=150>Совместимость</td>
+                <td width=150>Сроки</td>
+                <td width=100>Действия</td>
             </tr>
     <?php
     for($i = 0; $i < count($catalog); $i++) {
 
-        // подсчитываем количество позиций в каждом каталоге
-        $pos = \dmn\domain\CatalogPosition::findCountPos( intval($catalog[$i][id_catalog]) );
-
         // Если новость отмечена как невидимая (hide='hide'), выводим
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
-        $url = "idc={$catalog[$i][id_catalog]}&".
-                "idp={$catalog[$i][id_parent]}&".
-                "&page=$_GET[page]";
+        $url = "idc={$catalog[$i]['id_catalog']}&".
+            "idp={$catalog[$i]['id_position']}&".
+            "&page=$_GET[page]";
         if($catalog[$i]['hide'] == 'show') {
-            $showhide = "<a href=?cmd=Catalog&ppos=hide&$url
+            $showhide = "<a href=?cmd=CatalogPosition&ppos=hide&$url
                                     title='Скрыть каталог'>
                                     Скрыть</a>";
             $style = "";
         } else  {
-            $showhide = "<a href=?cmd=Catalog&ppos=show&$url
+            $showhide = "<a href=?cmd=CatalogPosition&ppos=show&$url
                                     title='Отобразить каталог'>
                                     Отобразить</a> ";
             $style = " class=hiddenrow";
         }
 
-        // Проверяем наличие изображения
-        if($catalog[$i]['urlpict'] != '' &&
-            $catalog[$i]['urlpict'] != '-'&&
-            is_file("imei_service/view/".$catalog[$i]['urlpict'])) {
-            $url_pict = "<b><a href=imei_service/view/{$catalog[$i][urlpict]}>есть</a></b>";
-        } else {
-            $url_pict = "нет";
-        }
+//    echo "<tt><pre>".print_r($catalog[$i][urlpict], true)."</pre></tt>";
 
-        // Выводим катало
+        // Выводим каталог
         echo "<tr $style>
-                <td><a href=dmn.php?cmd=Catalog&".
-                "idp={$catalog[$i]['id_catalog']}&".
-                "page=$_GET[page]>".htmlspecialchars( $catalog[$i][name] )."</a></td>
+                <td>{$catalog[$i]['operator']}</td>
+                <td align=center>{$catalog[$i]['cost']}</td>
+                <td align=center>{$catalog[$i]['compatible']}</td>
+                <td align=center>{$catalog[$i]['timeconsume']}</td>
                 <td align=center>
-                        <a href=?cmd=CatalogPosition&idc={$catalog[$i]['id_catalog']}>".
-                         "Позиции ($pos[count])</a></td>
-                <td>
-                        ".nl2br(\dmn\view\utils\printPage($catalog[$i]['description']))."</td>
-
-                <td align=center>{$catalog[$i]['pos']}</td>
-                <td align=center>$url_pict</td>
-
-                <td align=center>
-                    <a href=?cmd=Catalog&ppos=up&$url>Вверх</a><br/>
+                 <a href=# onclick=\"show_detail( 'dmn.php?cmd=CatalogPosition&pact=detail&{$url}', 400, 250); return false\"
+                             title='Детальный просмотр'>Просмотр</a><br/>
+                    <a href=?cmd=CatalogPosition&ppos=up&$url>Вверх</a><br/>
                     $showhide<br/>
-                    <a href=?cmd=Catalog&pact=edit&$url title='Редактировать'>Редактировать</a><br/>
-                    <a href=# onClick=\"delete_position('?cmd=Catalog&pact=del&$url',".
-    "'Вы действительно хотите удалить раздел?');\"  title='Удалить новость'>Удалить</a><br/>
-                    <a href=?cmd=Catalog&ppos=down&$url>Вниз</a><br/></td>
+                    <a href=?cmd=CatalogPosition&pact=edit&$url title='Редактировать'>Редактировать</a><br/>
+                    <a href=# onClick=\"delete_position('?cmd=CatalogPosition&pact=del&$url',".
+            "'Вы действительно хотите удалить раздел?');\"  title='Удалить новость'>Удалить</a><br/>
+                    <a href=?cmd=CatalogPosition&ppos=down&$url>Вниз</a><br/></td>
             </tr>";
     }
     echo "</table><br>";

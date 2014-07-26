@@ -18,6 +18,7 @@ require_once( "dmn/base/Registry.php" );
  * @throws \dmn\base\DBException
  */
 function navigation( $id_catalog, $link, $catalog ) {
+
     $pdo = \dmn\base\DBRegistry::getDB(); // дескриптор БД
     $id_catalog = intval($id_catalog); // id каталога
     $stmt = "SELECT * FROM system_catalog
@@ -35,7 +36,7 @@ function navigation( $id_catalog, $link, $catalog ) {
 //    echo "<tt><pre>".print_r($raw, true)."</pre></tt>";
     if( ! empty( $raw ) ) { // если не пустой массив
         $link = "<a class=menu
-                    href=dmn.php?cmd=Catalog&id_parent=".$raw['id_catalog'].">
+                    href=dmn.php?cmd=Catalog&idp=".$raw['id_catalog'].">
                     ".$raw['name']."</a>-&gt;".$link;
         $link = navigation($raw['id_parent'],
                         $link,

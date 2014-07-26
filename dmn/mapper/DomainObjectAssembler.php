@@ -70,6 +70,7 @@ class DomainObjectAssembler {
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetchAll(); // получаем результирующий массив
+        $stmt->closeCursor();
         return $this->factory->getCollection( $raw ); // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
@@ -93,6 +94,7 @@ class DomainObjectAssembler {
             // сохраняем только что вставленное значение
             $obj->setId( self::$PDO->lastInsertId() );
         }
+        $stmt->closeCursor();
         // очищаем массивы
         $obj->markClean();
     }
@@ -109,6 +111,7 @@ class DomainObjectAssembler {
         $stmt = $this->getStatement( $delete );
         // выполняем запрос
         $stmt->execute( $values );
+        $stmt->closeCursor();
         // очищаем массивы
         $obj->markClean();
     }
@@ -118,17 +121,37 @@ class DomainObjectAssembler {
      * Получаем максимальную позицию POS элемента в БД
      * @return mixed
      */
-    function findMaxPos() {
+    function findMaxPos( IdentityObject $idobj ) {
 //        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
         $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
-        $selection = $selfact->newSelectionMaxPos(); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+        list( $selection, $values ) = $selfact->newSelectionMaxPos($idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
 //        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
-        $stmt->execute(); // выполняем запрос
+        $stmt->execute( array( $values ) ); // выполняем запрос
         $raw = $stmt->fetch(); // получаем результирующий массив
+        $stmt->closeCursor();
         return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
+
+    /**
+     * Получаем количество позиций POS элемента в БД
+     * @return mixed
+     */
+    function findCountPos( IdentityObject $idobj ) {
+//        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
+        $countfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
+        list( $selection, $values ) = $countfact->newSelectionCountPos($idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+//        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+        $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
+        $stmt->execute( $values ); // выполняем запрос
+//        echo "<tt><pre>".print_r($stmt, true)."</pre></tt>";
+        $raw = $stmt->fetch(); // получаем результирующий массив
+        $stmt->closeCursor();
+        return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
+    }
 
     /**
      * Получаем массив с размерами изображений
@@ -141,6 +164,7 @@ class DomainObjectAssembler {
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
         $stmt->execute(); // выполняем запрос
         $raw = $stmt->fetch(); // получаем результирующий массив
+        $stmt->closeCursor();
         return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
@@ -184,6 +208,7 @@ class DomainObjectAssembler {
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $update );
         $stmt->execute( $values );
+        $stmt->closeCursor();
     }
 
 

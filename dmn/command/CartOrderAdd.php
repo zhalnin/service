@@ -168,7 +168,7 @@ class CartOrderAdd extends Command {
                 $cartItems->setPrice( $form->fields['price']->value );
                 $cartItems->setQty( $form->fields['qty']->value );
 
-                $this->reloadPage( 0, "dmn.php?cmd=CartOrdes&page=$_GET[page]" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=CartOrder&page=$_GET[page]" ); // перегружаем страничку
                 return self::statuses( 'CMD_OK' );
             }
 

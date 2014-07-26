@@ -24,6 +24,6 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-3. dmn - navigation пробовать перенести в domain или ...
+3. catalogDelete, catalogPositionAdd, catatlogPositionEdit, catalogPositionDelete
 
 

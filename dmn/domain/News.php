@@ -157,9 +157,10 @@ class News extends DomainObject {
         }
     }
 
-    static function findMaxPos() {
+    static function findMaxPos( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        return $finder->findMaxPos();
+        $idobj = new \dmn\mapper\NewsIdentityObject();
+        return $finder->findMaxPos( $idobj );
     }
 
     static function findPhotoSetting() {

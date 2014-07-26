@@ -71,9 +71,9 @@ class CatalogAdd extends Command {
                                                         "ALT-тег",
                                                         false,
                                                         $_POST['alt_flag']);
-        $id_parent          = new \dmn\classes\FieldHiddenInt("id_parent",
+        $idp          = new \dmn\classes\FieldHiddenInt("idp",
                                                         true,
-                                                        $_REQUEST['id_parent']);
+                                                        $_REQUEST['idp']);
         $page               = new \dmn\classes\FieldHiddenInt("page",
                                                         false,
                                                         $_REQUEST['page']);
@@ -94,11 +94,12 @@ class CatalogAdd extends Command {
                                                             "rounded_flag"  => $rounded_flag,
                                                             "alt_flag"      => $alt_flag,
                                                             "modrewrite"    => $modrewrite,
-                                                            "id_parent"     => $id_parent,
+                                                            "idp"     => $idp,
                                                             "page"          => $page,
                                                             "submitted"     => $submitted ),
                                                         "Добавить",
                                                         "field");
+
 
         if( $_POST['submitted'] == 'yes' ) {
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
@@ -113,18 +114,10 @@ class CatalogAdd extends Command {
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
             } else {
 
-                $rawPos = \dmn\domain\Catalog::findMaxPos(); // работает \imei_service\domain\News - получаем коллекцию
+                $rawPos = \dmn\domain\Catalog::findMaxPos( $form->fields['idp']->value ); // работает \imei_service\domain\News - получаем коллекцию
+
                 $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
                 $rawPhotoSettings = \dmn\domain\Catalog::findPhotoSetting(); // получаем массив с размерами фото
-
-
-                // Отображать дату или нет
-                if($form->fields['hidedate']->value) $hidedate = "show";
-                else $hidedate = "hide";
-
-                // Скрытая или открытая фотография
-                if($form->fields['hidepict']->value) $showhidepict = "show";
-                else $showhidepict = "hide";
 
                 // Выясняем, скрыта или открыта дректория
                 if($form->fields['hide']->value) {
@@ -137,26 +130,25 @@ class CatalogAdd extends Command {
                 //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
                 if( ! empty( $str ) ) {
                     $img = "images/country_flag/$str";
-//                    \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
-//                        "imei_service/view/files/news/s_$str",
+//                    \dmn\view\utils\resizeImg(  "imei_service/view/images/country_flag/$str",
+//                        "imei_service/view/images/country_flag/s_$str",
 //                        $rawPhotoSettings['width_news'],
 //                        $rawPhotoSettings['height_news'] );
                 } else {
                     $img = "";
                 }
                 // Изображение малое
-                $rounded_str = $form->fields['rounded_flag']->getFilename();
+                $rounded_flag = $form->fields['rounded_flag']->getFilename();
                 //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
                 if( ! empty( $rounded_flag ) ) {
-                    $rounded_img = "images/country_flag/$rounded_str";
-//                    \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
-//                        "imei_service/view/files/news/s_$str",
+                    $rounded_img = "images/country_flag/$rounded_flag";
+//                    \dmn\view\utils\resizeImg(  "imei_service/view/images/country_flag/$str",
+//                        "imei_service/view/images/country_flag/s_$str",
 //                        $rawPhotoSettings['width_news'],
 //                        $rawPhotoSettings['height_news'] );
                 } else {
                     $rounded_img = "";
                 }
-
 
                 // получаем объект News без id - значит будет INSERT
                 $catalogObj = new \dmn\domain\Catalog();
@@ -174,9 +166,9 @@ class CatalogAdd extends Command {
                 // устанавливаем флаг услуги
                 $catalogObj->setModrewrite( $form->fields['modrewrite']->value );
                 // устанавливаем позицию
-                $catalogObj->setPos( $form->fields['pos']->value );
+                $catalogObj->setPos( $position );
                 // устанавливаем сокрытие/отображение
-                $catalogObj->setHide( $form->fields['hide']->value );
+                $catalogObj->setHide( $showhide );
                 // устанавливаем путь до большого изображения
                 $catalogObj->setUrlpict( $img );
                 // устанавливаем название основного изображения
@@ -188,9 +180,10 @@ class CatalogAdd extends Command {
                 // устанавливаем название изображения
                 $catalogObj->setAltFlag( $form->fields['alt_flag']->value );
                 // устанавливаем родительский id
-                $catalogObj->setIdParent( $id_parent );
+                $catalogObj->setIdParent( $form->fields['idp']->value );
 
-                $this->reloadPage( 0, "dmn.php?cmd=Catalog&id_parent=$_REQUEST[id_parent]&page=$_GET[page]" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=Catalog&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
+                // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }
 

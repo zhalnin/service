@@ -188,4 +188,13 @@ class CatalogCollection
     }
 }
 
+class CatalogPositionCollection
+    extends Collection
+    implements \dmn\domain\CatalogPositionCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\CatalogPosition";
+    }
+}
+
 ?>
