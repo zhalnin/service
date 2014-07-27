@@ -96,7 +96,7 @@ error_reporting(E_ALL & ~E_NOTICE);
                            title="Вернуться на страницу администрирования сайта">
                             Администрирование</a>&nbsp;&nbsp;
 
-                        <a href="?cmd=Main"
+                        <a href="runner.php?cmd=News"
                            title="Вернуться на главную страницу сайта" >
                             Вернуться на сайт</a>
 

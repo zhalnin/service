@@ -10,6 +10,7 @@ namespace dmn\view;
 error_reporting(E_ALL & ~E_NOTICE);
 try {
 
+//    require_once( "dmn/view/utils/security_mod.php" );
     require_once( "dmn/classes/class.PagerMysql.php" );
 
     require_once( "dmn/view/utils/printPage.php" );
