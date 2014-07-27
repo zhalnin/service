@@ -15,14 +15,10 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
     id_position(secondary key)
 
 
-1. Посмотреть и заимплементить:
-    function markDeleted() {
-           ObjectWatcher::addDelete( $this );
-       }
 
-2. Комментарии по всему коду:
+1. Комментарии по всему коду:
 view - полностью
 command сделал Activation, BlacklistCheck
 
-
+2. Начать с cmd=Article
 

@@ -17,6 +17,10 @@
             <title>Заказы</title>
             <description>Управление блоком заказов</description>
         </point>
+        <point name="ArtCatalog">
+            <title>Статьи</title>
+            <description>Управление блоком статей</description>
+        </point>
     </menu>
 
 
@@ -166,6 +170,37 @@
         </command>
         <command name="CatalogPositionDetail">
             <view>catalogPositionDetail</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
+        <command name="ArtCatalog">
+            <view>artCatalog</view>
+            <status value="CMD_ADD">
+                <forward>ArtCatalogAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>ArtCatalogEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>ArtCatalogDelete</forward>
+            </status>
+        </command>
+        <command name="ArtCatalogAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtCatalogEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtCatalogDelete">
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
