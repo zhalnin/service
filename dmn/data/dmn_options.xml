@@ -10,8 +10,8 @@
             <description>Управление новостным блоком</description>
         </point>
         <point name="Catalog">
-            <title>Услуги</title>
-            <description>Управление блоком доступных услуг</description>
+            <title>Каталог</title>
+            <description>Управление блоком каталога и позиций</description>
         </point>
         <point name="CartOrder">
             <title>Заказы</title>
@@ -40,19 +40,18 @@
             </status>
         </command>
         <command name="NewsAdd">
-            <view>newsAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="NewsEdit">
-            <view>newsAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="NewsDelete">
-            <view>newsDelete</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
@@ -76,19 +75,18 @@
             </status>
         </command>
         <command name="CartOrderAdd">
-            <view>cartOrderAdd</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CartOrderEdit">
-            <view>cartOrderEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CartOrderDelete">
-            <view>cartOrderDelete</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
@@ -115,19 +113,18 @@
             </status>
         </command>
         <command name="CatalogAdd">
-            <view>catalogAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CatalogEdit">
-            <view>catalogAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CatalogDelete">
-            <view>catalogDelete</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
@@ -150,13 +147,13 @@
             </status>
         </command>
         <command name="CatalogPositionAdd">
-            <view>catalogPositionAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
         </command>
         <command name="CatalogPositionEdit">
-            <view>catalogPositionAddEdit</view>
+            <view>messageEdit</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>

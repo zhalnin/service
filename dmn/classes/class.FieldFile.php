@@ -155,11 +155,11 @@ class FieldFile extends Field {
     public function getFilename() {
         if( ! empty( $this->value ) ) {
             if( ! empty( $this->value[$this->name]['name'] ) ) {
-                preg_match("|\.[a-z]{2,6}$|",  $this->value[$this->name]['name'], $ext );
+                preg_match("|\.[a-zA-Z]{2,6}$|",  $this->value[$this->name]['name'], $ext );
                 $len = strlen( $ext[0] );
 //                $tmp_name = preg_replace( "|[ '_-]|","", $this->value[$this->name]['name'] );
                 $tmp_name = substr( $this->value[$this->name]['name'], -$len );
-//        echo "<tt><pre>". print_r($this->encodestring( $this->prefix.$this->time.$tmp_name), TRUE) . "</pre></tt>";
+//        echo "<tt><pre>". print_r( $ext[0], TRUE) . "</pre></tt>";
                 return $this->encodestring( $this->prefix.$this->time.$tmp_name);
             } else return "";
         } else return "";

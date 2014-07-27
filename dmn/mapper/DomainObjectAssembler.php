@@ -128,7 +128,7 @@ class DomainObjectAssembler {
 //        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
-        $stmt->execute( array( $values ) ); // выполняем запрос
+        $stmt->execute( $values ); // выполняем запрос
         $raw = $stmt->fetch(); // получаем результирующий массив
         $stmt->closeCursor();
         return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection

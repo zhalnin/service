@@ -12,7 +12,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 require_once( "dmn/domain/DomainObject.php" );
 require_once( "dmn/mapper/CatalogIdentityObject.php" );
 require_once( "dmn/mapper/CatalogUpDownFactory.php" );
-
+require_once( "dmn/domain/CatalogPosition.php" );
 require_once( "dmn/base/Registry.php" );
 
 class Catalog extends DomainObject {
@@ -107,6 +107,28 @@ class Catalog extends DomainObject {
         return $finder->findOne( $idobj->eq( $id ) );
     }
 
+    /**
+     * Метод для поиска родительского каталога
+     * @param $id
+     * @return mixed
+     */
+    static function findParent( $id ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \dmn\mapper\CatalogIdentityObject( 'id_parent' );
+        return $finder->find( $idobj->eq( $id ) );
+    }
+
+    /**
+     * Метод для поиска родительского каталога
+     * @param $id
+     * @return mixed
+     */
+    static function findCatalog( $id ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \dmn\mapper\CatalogIdentityObject( 'id_catalog' );
+        return $finder->find( $idobj->eq( $id ) );
+    }
+
 
     /**
      * Метод для смены,
@@ -161,15 +183,76 @@ class Catalog extends DomainObject {
         }
     }
 
+    /**
+     * Метод для получения максимальной позиции
+     * @param $id
+     * @return mixed
+     */
     static function findMaxPos( $id ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \dmn\mapper\CatalogIdentityObject( 'id_parent' );
         return $finder->findMaxPos( $idobj->eq( $id ) );
     }
 
+    /**
+     * Метод для получения настроек параметров изображений
+     * @return mixed
+     */
     static function findPhotoSetting() {
         $finder = self::getFinder( __CLASS__ );
         return $finder->findPhotoSetting();
+    }
+
+    /**
+     * Метод для рекурсивного удаления подкаталогов и позиций
+     * заданного каталога
+     * @param $idc - id каталога
+     */
+    static function delete( $idc ) {
+        // находим каталог, включая родительский
+        // с которого началось удаление и при рекурсивном вызове
+        // будем находить каждый следующий каталог
+        $catParent = \dmn\domain\Catalog::find( $idc );
+        if( is_object( $catParent ) ) {
+
+            $roundedFlag = $catParent->getRoundedFlag();
+            if( ! empty( $roundedFlag ) ) { // если поле не пустое
+                // путь до большого изображения
+                $path_rounded = str_replace( "//", "/","imei_service/view/".$catParent->getRoundedFlag() );
+                if( file_exists( $path_rounded ) ) { // если большое изображение существует
+//                    print $path_rounded;
+                    @unlink( $path_rounded ); // удаляем
+                }
+            }
+            $countryFlag = $catParent->getUrlpict();
+            if( ! empty( $countryFlag ) ) { // если поле не пустое
+                $path_country = str_replace( "//", "/","imei_service/view/".$catParent->getUrlpict() ); // путь до малого изображения
+                if( file_exists( $path_country ) ) { // если малое изображение существует
+//                    print $path_country;
+                    @unlink( $path_country ); // удаляем
+                }
+            }
+
+            // ставим каталог в очередь на удаление
+            $catParent->markDeleted();
+            // по id_catalog каталога находим все его позиции
+            $posParent = \dmn\domain\CatalogPosition::findAllPosition( $catParent->getId() );
+            if( is_object( $posParent ) ) {
+                // проходим по ним в цикле
+                foreach ( $posParent as $pos ) {
+//                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
+                    // и добавляем позиции в очередь на удаление
+                    $pos->markDeleted();
+                }
+                // находим у заданного каталога его подкаталоги по его id_catalog
+                $catChild = \dmn\domain\Catalog::findParent( $catParent->getId() );
+                // проходим в цикле по полученным подкаталогам
+                foreach ( $catChild as $cat) {
+                    // и вызываем метод рекурсивно
+                    self::delete( $cat->getId() );
+                }
+            }
+        }
     }
 
 

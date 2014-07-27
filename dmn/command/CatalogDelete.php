@@ -20,24 +20,13 @@ require_once( 'dmn/command/Command.php' );
 class CatalogDelete extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
-        $id = $request->getProperty( 'idn' );
-        if( $id ) { // если передан id_news
-            $news = \dmn\domain\News::find( $id ); // находим элементы по заданному id_news
-            $path = str_replace( "//", "/","imei_service/view/".$news->getUrlpict_s() ); // путь до большого изображения
-            $path_small = str_replace( "//", "/","imei_service/view/".$news->getUrlpict() ); // путь до малого изображения
-            if( file_exists( $path ) ) { // если большое изображение существует
-                @unlink( $path ); // удаляем
-            }
-            if( file_exists( $path_small ) ) { // если малое изображение существует
-                @unlink( $path_small ); // удаляем
-            }
+        $idp = $request->getProperty( 'idp' );
+        $idc = $request->getProperty( 'idc' );
+        if( $idc ) { // если передан id каталога
 
-            // удаление блока новостей
-//            $news->finder()->delete( $news );
-//            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $news->markDeleted();
+            \dmn\domain\Catalog::delete( $idc );
 
-            $this->reloadPage( 0, "dmn.php?cmd=News&page=$_GET[page]" ); // перегружаем страничку
+            $this->reloadPage( 0, "dmn.php?cmd=Catalog&idc=$_REQUEST[idc]&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
             return self::statuses( 'CMD_OK' );
 
         }

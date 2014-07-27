@@ -21,7 +21,7 @@ class CatalogPositionDetail extends Command {
         // получаем id_news редактируемой новости
         $idp = $request->getProperty( 'idp' );
         if( $idp ) { // если передан id
-            $catalogPosition = \dmn\domain\CatalogPosition::find( $idp ); // находим элементы по заданному id
+            $catalogPosition = \dmn\domain\CatalogPosition::findDetail( $idp ); // находим элементы по заданному id
             $request->setObject( 'catalogPositionDetail', $catalogPosition ); // сохраняем объекты для передачи во вьюшку
         } else {
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );

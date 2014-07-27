@@ -94,13 +94,13 @@ class CatalogAdd extends Command {
                                                             "rounded_flag"  => $rounded_flag,
                                                             "alt_flag"      => $alt_flag,
                                                             "modrewrite"    => $modrewrite,
-                                                            "idp"     => $idp,
+                                                            "idp"           => $idp,
                                                             "page"          => $page,
                                                             "submitted"     => $submitted ),
                                                         "Добавить",
                                                         "field");
 
-
+//        echo "<tt><pre>".print_r($form, true)."</pre></tt>";
         if( $_POST['submitted'] == 'yes' ) {
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
             if( ! empty( $error ) ) { // если есть ошибки
@@ -115,7 +115,8 @@ class CatalogAdd extends Command {
             } else {
 
                 $rawPos = \dmn\domain\Catalog::findMaxPos( $form->fields['idp']->value ); // работает \imei_service\domain\News - получаем коллекцию
-
+//                echo "<tt><pre>".print_r($rawPos, true)."</pre></tt>";
+//                echo "<tt><pre>".print_r($form->fields['idp']->value, true)."</pre></tt>";
                 $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
                 $rawPhotoSettings = \dmn\domain\Catalog::findPhotoSetting(); // получаем массив с размерами фото
 
@@ -127,7 +128,7 @@ class CatalogAdd extends Command {
                 }
                 // Изображение большое
                 $str = $form->fields['urlpict']->getFilename();
-                //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
+//                            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
                 if( ! empty( $str ) ) {
                     $img = "images/country_flag/$str";
 //                    \dmn\view\utils\resizeImg(  "imei_service/view/images/country_flag/$str",
@@ -139,7 +140,7 @@ class CatalogAdd extends Command {
                 }
                 // Изображение малое
                 $rounded_flag = $form->fields['rounded_flag']->getFilename();
-                //            echo "<tt><pre>".print_r($str, true)."</pre></tt>";
+//                            echo "<tt><pre>".print_r($rounded_flag, true)."</pre></tt>";
                 if( ! empty( $rounded_flag ) ) {
                     $rounded_img = "images/country_flag/$rounded_flag";
 //                    \dmn\view\utils\resizeImg(  "imei_service/view/images/country_flag/$str",

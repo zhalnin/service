@@ -207,7 +207,7 @@ class UdidObjectFactory extends DomainObjectFactory {
         $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
         $udid_assembler = new DomainObjectAssembler( $factory );
         $udid_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
-        $udid_idobj->eq( $array['id_catalog'] );
+        $udid_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
         $udidDetails = $udid_assembler->find( $udid_idobj );
 //        echo "<tt><pre>".print_r( $udidDetails, true) ."</pre></tt>";
         $obj->setUdidDetails( $udidDetails );
@@ -244,7 +244,7 @@ class CarrierCheckObjectFactory extends DomainObjectFactory {
         $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
         $carrierCheck_assembler = new DomainObjectAssembler( $factory );
         $carrierCheck_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
-        $carrierCheck_idobj->eq( $array['id_catalog'] );
+        $carrierCheck_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
         $carrierCheckDetails = $carrierCheck_assembler->find( $carrierCheck_idobj );
 //        echo "<tt><pre>".print_r( $carrierCheckDetails, true) ."</pre></tt>";
         $obj->setCarrierCheckDetails( $carrierCheckDetails );
@@ -311,7 +311,7 @@ class BlacklistCheckObjectFactory extends DomainObjectFactory {
         $factory = PersistenceFactory::getFactory( 'imei_service\domain\UnlockDetails' );
         $blacklistCheck_assembler = new DomainObjectAssembler( $factory );
         $blacklistCheck_idobj = new UnlockDetailsIdentityObject( 'id_catalog' );
-        $blacklistCheck_idobj->eq( $array['id_catalog'] );
+        $blacklistCheck_idobj->eq( $array['id_catalog'] )->field( 'hide' )->eq( 'show' );
         $blacklistCheckDetails = $blacklistCheck_assembler->find( $blacklistCheck_idobj );
 //        echo "<tt><pre>".print_r( $blacklistCheckDetails, true) ."</pre></tt>";
         $obj->setBlacklistCheckDetails( $blacklistCheckDetails );

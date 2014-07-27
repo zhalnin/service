@@ -23,6 +23,8 @@ try {
     // получаем объект-коллекцию carrierCheckCollection
     $carrierCheckCollection = $request->getObject( 'carrierCheckCollection' );
     $carrierCheckDetailsCollection = $carrierCheckCollection->getCarrierCheckDetails();
+
+//    echo "<tt><pre>".print_r($carrierCheckCollection, true)."</pre></tt>";
     // содержимое тега title
     $title = $carrierCheckCollection->getName();
     $keywords = $carrierCheckCollection->getKeywords();
