@@ -14,14 +14,15 @@ require_once( "dmn/base/Registry.php" );
  * @param $id_catalog - id каталога
  * @param $link - формируемая ссылка уже в функции рекурсивно
  * @param $catalog - имя таблицы в БД
+ * @param $cmd - команда для адресации
  * @return string - отображение нахождения в дереве каталога
  * @throws \dmn\base\DBException
  */
-function navigation( $id_catalog, $link, $catalog ) {
+function navigation( $id_catalog, $link, $catalog, $cmd ) {
 
     $pdo = \dmn\base\DBRegistry::getDB(); // дескриптор БД
     $id_catalog = intval($id_catalog); // id каталога
-    $stmt = "SELECT * FROM system_catalog
+    $stmt = "SELECT * FROM $catalog
                 WHERE id_catalog = ?";
     $sth = $pdo->prepare( $stmt ); // подготавливаем запрос
     $result = $sth->execute( array( $id_catalog ) ); // выполняем запрос
@@ -36,11 +37,12 @@ function navigation( $id_catalog, $link, $catalog ) {
 //    echo "<tt><pre>".print_r($raw, true)."</pre></tt>";
     if( ! empty( $raw ) ) { // если не пустой массив
         $link = "<a class=menu
-                    href=dmn.php?cmd=Catalog&idp=".$raw['id_catalog'].">
+                    href=dmn.php?cmd=$cmd&idp=".$raw['id_catalog'].">
                     ".$raw['name']."</a>-&gt;".$link;
         $link = navigation($raw['id_parent'],
                         $link,
-                        $catalog);
+                        $catalog,
+                        $cmd );
     }
     return $link;
 }

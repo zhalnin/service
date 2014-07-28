@@ -77,4 +77,7 @@ interface CatalogPositionCollection extends \Iterator {
     function add( DomainObject $catalogPosition );
 }
 
+interface ArtCatalogCollection extends \Iterator {
+    function add( DomainObject $artCatalog );
+}
 ?>

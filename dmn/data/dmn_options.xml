@@ -178,6 +178,9 @@
 
         <command name="ArtCatalog">
             <view>artCatalog</view>
+            <status value="CMD_POS_OK">
+                <view>posCatalog</view>
+            </status>
             <status value="CMD_ADD">
                 <forward>ArtCatalogAdd</forward>
             </status>

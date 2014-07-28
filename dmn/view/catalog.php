@@ -52,7 +52,7 @@ try {
     echo "<a class=menu
                 href=dmn.php?cmd=Catalog&idp=0&page=$_GET[page]>
                     Корневой каталог</a>-&gt;".
-        \dmn\view\utils\navigation($_GET['idp'], "", 'system_catalog').
+        \dmn\view\utils\navigation($_GET['idp'], "", 'system_catalog','Catalog').
         "<a class=menu href=dmn.php?cmd=Catalog&".
         "pact=add&".
         "idc=$_GET[idp]&".
@@ -83,7 +83,7 @@ try {
                 <td align="center">Описание</td>
                 <td width="20" align="center">Поз.</td>
                 <td align="center">Фото</td>
-                <td width="50">Действия</td>
+                <td width="50" aligh="center">Действия</td>
             </tr>
     <?php
     for($i = 0; $i < count($catalog); $i++) {

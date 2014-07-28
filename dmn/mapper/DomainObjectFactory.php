@@ -213,4 +213,38 @@ class CatalogPositionObjectFactory extends DomainObjectFactory {
 }
 
 
+/**
+ * Class ArtCatalogObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class ArtCatalogObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\ArtCatalog"; // название класса
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_catalog'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdParent( $array['id_parent'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
+
 ?>

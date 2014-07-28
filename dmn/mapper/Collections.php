@@ -197,4 +197,13 @@ class CatalogPositionCollection
     }
 }
 
+class ArtCatalogCollection
+    extends Collection
+    implements \dmn\domain\ArtCatalogCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\ArtCatalog";
+    }
+}
+
 ?>

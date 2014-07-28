@@ -93,7 +93,6 @@ class CatalogAdd extends Command {
                                                             "title_flag"    => $title_flag,
                                                             "rounded_flag"  => $rounded_flag,
                                                             "alt_flag"      => $alt_flag,
-                                                            "modrewrite"    => $modrewrite,
                                                             "idp"           => $idp,
                                                             "page"          => $page,
                                                             "submitted"     => $submitted ),

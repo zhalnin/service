@@ -38,6 +38,9 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\CatalogPosition":
                 return new CatalogPositionPersistenceFactory();
                 break;
+            case "dmn\\domain\\ArtCatalog":
+                return new ArtCatalogPersistenceFactory();
+                break;
         }
     }
 }
@@ -248,6 +251,47 @@ class CatalogPositionPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new CatalogPositionUpDownFactory();
+    }
+}
+
+/**
+ * Class ArtCatalogPersistenceFactory
+ * для работы с блоком каталогов
+ * @package dmn\mapper
+ */
+class ArtCatalogPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new ArtCatalogMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new ArtCatalogObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new ArtCatalogCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new ArtCatalogSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new ArtCatalogUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new ArtCatalogIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new ArtCatalogDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new ArtCatalogUpDownFactory();
     }
 }
 ?>
