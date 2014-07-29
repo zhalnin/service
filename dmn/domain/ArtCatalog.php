@@ -187,23 +187,23 @@ class ArtCatalog extends DomainObject {
         $catParent = \dmn\domain\ArtCatalog::find( $idc );
         if( is_object( $catParent ) ) {
 
-            $roundedFlag = $catParent->getRoundedFlag();
-            if( ! empty( $roundedFlag ) ) { // если поле не пустое
-                // путь до большого изображения
-                $path_rounded = str_replace( "//", "/","imei_service/view/".$catParent->getRoundedFlag() );
-                if( file_exists( $path_rounded ) ) { // если большое изображение существует
-//                    print $path_rounded;
-                    @unlink( $path_rounded ); // удаляем
-                }
-            }
-            $countryFlag = $catParent->getUrlpict();
-            if( ! empty( $countryFlag ) ) { // если поле не пустое
-                $path_country = str_replace( "//", "/","imei_service/view/".$catParent->getUrlpict() ); // путь до малого изображения
-                if( file_exists( $path_country ) ) { // если малое изображение существует
-//                    print $path_country;
-                    @unlink( $path_country ); // удаляем
-                }
-            }
+//            $roundedFlag = $catParent->getRoundedFlag();
+//            if( ! empty( $roundedFlag ) ) { // если поле не пустое
+//                // путь до большого изображения
+//                $path_rounded = str_replace( "//", "/","imei_service/view/".$catParent->getRoundedFlag() );
+//                if( file_exists( $path_rounded ) ) { // если большое изображение существует
+////                    print $path_rounded;
+//                    @unlink( $path_rounded ); // удаляем
+//                }
+//            }
+//            $countryFlag = $catParent->getUrlpict();
+//            if( ! empty( $countryFlag ) ) { // если поле не пустое
+//                $path_country = str_replace( "//", "/","imei_service/view/".$catParent->getUrlpict() ); // путь до малого изображения
+//                if( file_exists( $path_country ) ) { // если малое изображение существует
+////                    print $path_country;
+//                    @unlink( $path_country ); // удаляем
+//                }
+//            }
 
             // ставим каталог в очередь на удаление
             $catParent->markDeleted();

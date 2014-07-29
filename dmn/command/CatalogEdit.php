@@ -26,7 +26,7 @@ class CatalogEdit extends Command {
 //        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
         if( $id ) { // если передан id_news
             $catalog = \dmn\domain\Catalog::find( $id ); // находим элементы по заданному id_news
-
+//            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
             // если еще не передан запрос и форма не была отправлена
             if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
 
@@ -209,8 +209,8 @@ class CatalogEdit extends Command {
                 $catalog->setAbbreviatura( $form->fields['abbreviatura']->value );
                 // устанавливаем флаг услуги
                 $catalog->setModrewrite( $form->fields['modrewrite']->value );
-                // устанавливаем позицию
-                $catalog->setPos( $form->fields['pos']->value );
+//                // устанавливаем позицию
+//                $catalog->setPos( $form->fields['pos']->value );
                 // устанавливаем сокрытие/отображение
                 $catalog->setHide( $showhide );
                 // устанавливаем название основного изображения

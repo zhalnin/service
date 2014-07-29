@@ -26,7 +26,7 @@ class ArtCatalogEdit extends Command {
 //        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
         if( $id ) { // если передан id_news
             $catalog = \dmn\domain\ArtCatalog::find( $id ); // находим элементы по заданному id_news
-
+//            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
             // если еще не передан запрос и форма не была отправлена
             if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
 
@@ -126,8 +126,8 @@ class ArtCatalogEdit extends Command {
                 $catalog->setKeywords( $form->fields['keywords']->value );
                 // устанавливаем флаг услуги
                 $catalog->setModrewrite( $form->fields['modrewrite']->value );
-                // устанавливаем позицию
-                $catalog->setPos( $form->fields['pos']->value );
+//                // устанавливаем позицию
+//                $catalog->setPos( $form->fields['pos']->value );
                 // устанавливаем сокрытие/отображение
                 $catalog->setHide( $showhide );
                 // устанавливаем родительский id
