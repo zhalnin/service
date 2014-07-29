@@ -20,13 +20,13 @@ require_once( 'dmn/command/Command.php' );
 class ArtCatalogDelete extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
-        $idp = $request->getProperty( 'idp' );
+        $idpar = $request->getProperty( 'idpar' );
         $idc = $request->getProperty( 'idc' );
         if( $idc ) { // если передан id каталога
 
             \dmn\domain\ArtCatalog::delete( $idc );
 
-            $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idc=$_REQUEST[idc]&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
+            $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idc=$_REQUEST[idc]&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
             return self::statuses( 'CMD_OK' );
 
         }

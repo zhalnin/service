@@ -13,6 +13,8 @@ require_once( "dmn/command/Command.php" );
 require_once( "dmn/base/Registry.php" );
 require_once( "dmn/domain/CartOrder.php" );
 require_once( "dmn/domain/CartItems.php" );
+require_once( "dmn/classes/class.PagerMysqlTwoTables.php" );
+
 
 class CartOrder extends Command {
 
@@ -22,6 +24,8 @@ class CartOrder extends Command {
         $action     = $request->getProperty( 'pact' ); // действие над позицией
 //        $id_news    = $request->getProperty( 'idn' ); // id новости
         $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
+        $page_link  = 3; // Количество ссылок в постраничной навигации
+        $pnumber    = 10; // Количество позиций на странице
 
         if( ! empty( $action ) ) {
             switch( $action ) {
@@ -40,6 +44,18 @@ class CartOrder extends Command {
             }
         }
 
+        // Объявляеи объект постраничной навигации
+        $cartOrder = new \dmn\classes\PagerMysqlTwoTables(array('system_cart_orders','system_cart_items'),
+                                                            "",
+                                                            "",
+                                                            $pnumber,
+                                                            $page_link,
+                                                            "&cmd=CartOrder",
+                                                            array('id','order_id') );
+
+        if( is_object( $cartOrder ) ) {
+            $request->setObject( 'cartOrder', $cartOrder );
+        }
 
         return self::statuses('CMD_OK'); // передаем статус выполнения и далее смотрим переадресацию
     }

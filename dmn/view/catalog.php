@@ -10,13 +10,14 @@ namespace dmn\view;
 error_reporting(E_ALL & ~E_NOTICE);
 try {
 
-    require_once( "dmn/classes/class.PagerMysql.php" );
     require_once( "dmn/view/utils/navigation.php" );
     require_once( "dmn/view/utils/printPage.php" );
     require_once( "dmn/domain/CatalogPosition.php" );
-//    require_once( "dmn/view/ViewHelper.php" );
+    require_once( "dmn/view/ViewHelper.php" );
 
-//    $request = \dmn\view\VH::getRequest();
+    $request    = \dmn\view\VH::getRequest();
+    $catalogs   = $request->getObject( 'catalog' ); // получаем объект PagerMySQL
+    $idp        = $request->getProperty( 'idp' );
 
 //    echo "<tt><pre>".print_r($request, true)."</pre></tt>";
 
@@ -29,22 +30,7 @@ try {
     // Включаем заголовок страницы
     require_once("dmn/view/templates/top.php");
 
-    $_GET['idp'] = intval($_GET['idp']);
-
     // Содержание страницы
-
-    // Количество ссылок в постраничной навигации
-    $page_link = 3;
-    // Количество позиций на странице
-    $pnumber = 10;
-    // Объявляеи объект постраничной навигации
-    $obj = new \dmn\classes\PagerMysql('system_catalog',
-        "WHERE id_parent=$_GET[idp]",
-        "ORDER BY pos",
-        $pnumber,
-        $page_link,
-        "&cmd=Catalog&idp=$_GET[idp]");
-
     // Если это не корневой каталог выводим ссылки для возврата
     // и для добавления подкаталога
     echo '<table cellpadding="0" cellspacing="0" border="0">
@@ -52,24 +38,23 @@ try {
     echo "<a class=menu
                 href=dmn.php?cmd=Catalog&idp=0&page=$_GET[page]>
                     Корневой каталог</a>-&gt;".
-        \dmn\view\utils\navigation($_GET['idp'], "", 'system_catalog','Catalog').
+        \dmn\view\utils\navigation($idp, "", 'system_catalog','Catalog').
         "<a class=menu href=dmn.php?cmd=Catalog&".
         "pact=add&".
-        "idc=$_GET[idp]&".
-        "idp=$_GET[idp]&".
+        "idc=$idp&".
+        "idp=$idp&".
         "page=$_GET[page]>Добавить подкаталог</a>";
     echo "</td></tr></table>";
 
-    // Получаем содержимое текущей страницы
-    $catalog = $obj->get_page();
+    if( is_object( $catalogs ) ) {
+        // Получаем содержимое текущей страницы
+        $catalog = $catalogs->get_page();
+    }
     // Если имеется хотя бы одна запись - выводим ее
     if( ! empty( $catalog ) ) {
 
-//        echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
-
-
         // Выводим ссылки на другие страницы
-        echo $obj;
+        echo $catalogs;
         echo "<br /><br />";
         ?>
         <table width="100%"
@@ -144,7 +129,7 @@ try {
     }
 
     // Выводим ссылки на другие страницы
-    echo $obj;
+    echo $catalogs;
 
     // Включаем завершение страницы
     require_once("dmn/view/templates/bottom.php");

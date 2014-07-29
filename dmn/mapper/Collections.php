@@ -206,4 +206,23 @@ class ArtCatalogCollection
     }
 }
 
+class ArtUrlCollection
+    extends Collection
+    implements \dmn\domain\ArtUrlCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\ArtUrl";
+    }
+}
+
+
+class ArtArtCollection
+    extends Collection
+    implements \dmn\domain\ArtArtCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\ArtArt";
+    }
+}
+
 ?>

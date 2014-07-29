@@ -11,11 +11,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 try {
 
-    require_once( "dmn/classes/class.PagerMysqlTwoTables.php" );
     require_once( "dmn/command/Command.php" );
     require_once( "dmn/base/Registry.php" );
     require_once( "dmn/domain/CartOrder.php" );
     require_once( "dmn/view/utils/printPage.php" );
+    require_once( "dmn/view/ViewHelper.php" );
+
+    $request    = \dmn\view\VH::getRequest();
+    $cartOrders = $request->getObject( 'cartOrder' );
 
 
     // Данные переменные определяют название страницы и подсказку
@@ -27,19 +30,12 @@ try {
     require_once("dmn/view/templates/top.php");
 
     // Содержание страницы
+    if( is_object( $cartOrders ) ) {
+        // Получаем содержимое текущей страницы
+        $cartOrder = $cartOrders->getPage();
+    }
 
-    // Количество ссылок в постраничной навигации
-    $page_link = 3;
-    // Количество позиций на странице
-    $pnumber = 10;
-    // Объявляеи объект постраничной навигации
-    $obj = new \dmn\classes\PagerMysqlTwoTables(array('system_cart_orders','system_cart_items'),
-        "",
-        "",
-        $pnumber,
-        $page_link,
-        "&cmd=CartOrder",
-        array('id','order_id') );
+
 //    echo "<tt><pre>".print_r($obj->getPage(), true)."</pre></tt>";
 //    echo "<tt><pre>".print_r($obj, true)."</pre></tt>";
     // Добавить блок
@@ -47,14 +43,12 @@ try {
                     title=Добавить блок заказа>
                     Добавить блок заказа</a><br><br>";
 
-    // Получаем содержимое текущей страницы
-//    $cartOrder = $obj->get_page();
-    $cartOrder = $obj->getPage();
+
 //    echo "<tt><pre>".print_r( $cartOrder, true )."</pre></tt>";
     // Если имеется хотя бы одна запись - выводим ее
     if( ! empty( $cartOrder ) ) {
         // Выводим ссылки на другие страницы
-        echo $obj;
+        echo $cartOrders;
         echo "<br /><br />";
         ?>
         <table width="100%"
@@ -109,7 +103,7 @@ try {
     }
 
     // Выводим ссылки на другие страницы
-    echo $obj;
+    echo $cartOrders;
 
     // Включаем завершение страницы
     require_once("dmn/view/templates/bottom.php");

@@ -80,4 +80,12 @@ interface CatalogPositionCollection extends \Iterator {
 interface ArtCatalogCollection extends \Iterator {
     function add( DomainObject $artCatalog );
 }
+
+interface ArtUrlCollection extends \Iterator {
+    function add( DomainObject $artUrl );
+}
+
+interface ArtArtCollection extends \Iterator {
+    function add( DomainObject $artUrl );
+}
 ?>

@@ -178,9 +178,6 @@
 
         <command name="ArtCatalog">
             <view>artCatalog</view>
-            <status value="CMD_POS_OK">
-                <view>posCatalog</view>
-            </status>
             <status value="CMD_ADD">
                 <forward>ArtCatalogAdd</forward>
             </status>
@@ -204,6 +201,100 @@
             </status>
         </command>
         <command name="ArtCatalogDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
+        <command name="ArtUrl">
+            <view>artCatalog</view>
+            <status value="CMD_ADD">
+                <forward>ArtUrlAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>ArtUrlEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>ArtUrlDelete</forward>
+            </status>
+        </command>
+        <command name="ArtUrlAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtUrlEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtUrlDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
+        <command name="ArtArt">
+            <view>artCatalog</view>
+            <status value="CMD_ADD">
+                <forward>ArtArtAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>ArtArtEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>ArtArtDelete</forward>
+            </status>
+        </command>
+        <command name="ArtArtAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtArtEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtArtDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
+
+        <command name="ArtParagraph">
+            <view>artParagraph</view>
+            <status value="CMD_ADD">
+                <forward>ArtParagraphAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>ArtParagraphEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>ArtParagraphDelete</forward>
+            </status>
+        </command>
+        <command name="ArtParagraphAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtParagraphEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="ArtParagraphDelete">
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>

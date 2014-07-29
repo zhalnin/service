@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 28/07/14
- * Time: 23:03
+ * Date: 29/07/14
+ * Time: 18:29
  */
 
 namespace dmn\command;
@@ -16,24 +16,23 @@ require_once( "dmn/classes.php" );
 // Подключаем функцию изменения размера изображения
 require_once("dmn/view/utils/resizeImage.php");
 
-class ArtCatalogEdit extends Command {
+class ArtUrlEdit extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
 
         // получаем id_news редактируемой новости
-        $idc    = $request->getProperty( 'idc' );
-        $idpar  = $request->getProperty( 'idpar' ); // id родительского каталога
-        $idp    = $request->getProperty( 'idp' );
-//        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
-        if( $idc ) { // если передан id_news
-            $catalog = \dmn\domain\ArtCatalog::find( $idc ); // находим элементы по заданному id_news
-//            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
+        $idp = $request->getProperty( 'idp' );
+        $idc = $request->getProperty( 'idc' ); // id родительского каталога
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+        if( $idp ) { // если передан id_news
+            $catalog = \dmn\domain\ArtUrl::find( $idp ); // находим элементы по заданному id_news
+            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
             // если еще не передан запрос и форма не была отправлена
             if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
 
                 // Добавляем в глобальный массив данные из запроса к БД
                 $_REQUEST['name']           = $catalog->getName(); // название
-                $_REQUEST['description']    = $catalog->getDescription(); // тело новости
+                $_REQUEST['url']            = $catalog->getUrl(); // тело новости
                 $_REQUEST['keywords']       = $catalog->getKeywords(); // текст ссылки
                 $_REQUEST['modrewrite']     = $catalog->getModrewrite(); // название изображения
 
@@ -44,19 +43,17 @@ class ArtCatalogEdit extends Command {
                     $_REQUEST['hide'] = false; // снимаем чекбокс
                 }
                 $_REQUEST['idc'] = $idc;
-                $_REQUEST['idpar'] = $idpar;
+                $_REQUEST['idp'] = $idp;
                 $_REQUEST['page'] = $_GET['page'];
             }
             $name               = new \dmn\classes\FieldText("name",
                 "Название",
                 true,
                 $_REQUEST['name']);
-            $description        = new \dmn\classes\FieldTextarea("description",
-                "Описание",
+            $url                = new \dmn\classes\FieldText("url",
+                "URL",
                 false,
-                $_REQUEST['description'],
-                '100',
-                '20');
+                $_REQUEST['url']);
             $keywords           = new \dmn\classes\FieldText("keywords",
                 "Ключевые слова",
                 false,
@@ -68,9 +65,9 @@ class ArtCatalogEdit extends Command {
             $hide               = new \dmn\classes\FieldCheckbox("hide",
                 "Отображать",
                 $_REQUEST['hide']);
-            $idpar          = new \dmn\classes\FieldHiddenInt("idpar",
+            $idc          = new \dmn\classes\FieldHiddenInt("idc",
                 true,
-                $_REQUEST['idpar']);
+                $_REQUEST['idc']);
             $page               = new \dmn\classes\FieldHiddenInt("page",
                 false,
                 $_REQUEST['page']);
@@ -79,17 +76,16 @@ class ArtCatalogEdit extends Command {
                 "yes" );
             // Форма
             $form               = new \dmn\classes\Form( array( "name"          => $name,
-                    "description"   => $description,
-                    "keywords"      => $keywords,
-                    "modrewrite"    => $modrewrite,
-                    "hide"          => $hide,
-                    "idpar"         => $idpar,
-                    "page"          => $page,
-                    "submitted"     => $submitted ),
-                "Редактировать",
-                "field");
+                                                                "url"           => $url,
+                                                                "keywords"      => $keywords,
+                                                                "modrewrite"    => $modrewrite,
+                                                                "hide"          => $hide,
+                                                                "idc"           => $idc,
+                                                                "page"          => $page,
+                                                                "submitted"     => $submitted ),
+                                                            "Редактировать",
+                                                            "field");
 //            echo "<tt><pre>".print_r($form, true)."</pre></tt>";
-//            echo "<tt><pre>".print_r($request, true)."</pre></tt>";
             $request->setObject('form', $form ); // выводим форму заново
 
         }
@@ -122,8 +118,8 @@ class ArtCatalogEdit extends Command {
 //                echo "<tt><pre>".print_r( $form , true)."</pre></tt>";
                 // устанавливаем название
                 $catalog->setName( $form->fields['name']->value );
-                // устанавливаем описание
-                $catalog->setDescription( $form->fields['description']->value );
+                // устанавливаем ссылку
+                $catalog->setUrl( $form->fields['url']->value );
                 // устанавливаем ключевые слова
                 $catalog->setKeywords( $form->fields['keywords']->value );
                 // устанавливаем флаг услуги
@@ -133,9 +129,9 @@ class ArtCatalogEdit extends Command {
                 // устанавливаем сокрытие/отображение
                 $catalog->setHide( $showhide );
                 // устанавливаем родительский id
-                $catalog->setIdParent( $form->fields['idpar']->value );
+                $catalog->setIdCatalog( $form->fields['idc']->value );
 
-                $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
+                $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idc]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }

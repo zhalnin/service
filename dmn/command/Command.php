@@ -25,8 +25,7 @@ abstract class Command {
         'CMD_ADD'               => 9,
         'CMD_EDIT'              => 10,
         'CMD_DELETE'            => 11,
-        'CMD_DETAIL'            => 12,
-        'CMD_POS_OK'            => 13
+        'CMD_DETAIL'            => 12
     );
     private $status = 0;
 

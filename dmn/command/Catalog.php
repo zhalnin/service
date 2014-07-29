@@ -11,6 +11,8 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "dmn/command/Command.php" );
 require_once( "dmn/domain/Catalog.php" );
+require_once( "dmn/classes/class.PagerMysql.php" );
+
 
 class Catalog extends Command {
 
@@ -20,7 +22,9 @@ class Catalog extends Command {
         $position   = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
         $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
         $id_catalog = $request->getProperty( 'idc' ); // id каталога
-        $id_parent  = $request->getProperty( 'idp' ); // id родительского каталога
+        $idp        = intval( $request->getProperty( 'idp' ) ); // id родительского каталога
+        $page_link  = 3; // Количество ссылок в постраничной навигации
+        $pnumber    = 10; // Количество позиций на странице
 
 
         // в зависимости от действия вызываем метод с
@@ -28,7 +32,7 @@ class Catalog extends Command {
         // позицией в блоке новостей
         if( ! empty( $position ) ) {
             \dmn\domain\Catalog::position( $id_catalog, $position );
-            $this->reloadPage( 0, "dmn.php?cmd=Catalog&idp={$id_parent}&page={$page}" );
+            $this->reloadPage( 0, "dmn.php?cmd=Catalog&idp={$idp}&page={$page}" );
         }
 
         if( ! empty( $action ) ) {
@@ -46,6 +50,17 @@ class Catalog extends Command {
                     return self::statuses( 'CMD_DETAIL');
                     break;
             }
+        }
+
+        // Объявляеи объект постраничной навигации
+        $catalog = new \dmn\classes\PagerMysql('system_catalog',
+                                            " WHERE id_parent=$idp",
+                                            " ORDER BY pos",
+                                            $pnumber,
+                                            $page_link,
+                                            "&cmd=Catalog&idp=$idp");
+        if( is_object( $catalog ) ) {
+            $request->setObject( 'catalog', $catalog );
         }
 
 

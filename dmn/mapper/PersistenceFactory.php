@@ -41,6 +41,12 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\ArtCatalog":
                 return new ArtCatalogPersistenceFactory();
                 break;
+            case "dmn\\domain\\ArtUrl":
+                return new ArtUrlPersistenceFactory();
+                break;
+            case "dmn\\domain\\ArtArt":
+                return new ArtArtPersistenceFactory();
+                break;
         }
     }
 }
@@ -292,6 +298,89 @@ class ArtCatalogPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new ArtCatalogUpDownFactory();
+    }
+}
+
+/**
+ * Class ArtUrlPersistenceFactory
+ * для работы с блоком каталогов - ссылками
+ * @package dmn\mapper
+ */
+class ArtUrlPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new ArtUrlMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new ArtUrlObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new ArtUrlCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new ArtUrlSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new ArtUrlUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new ArtUrlIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new ArtUrlDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new ArtUrlUpDownFactory();
+    }
+}
+
+
+/**
+ * Class ArtArtPersistenceFactory
+ * для работы с блоком каталогов - статьей
+ * @package dmn\mapper
+ */
+class ArtArtPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new ArtArtMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new ArtArtObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new ArtArtCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new ArtArtSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new ArtArtUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new ArtArtIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new ArtArtDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new ArtArtUpDownFactory();
     }
 }
 ?>

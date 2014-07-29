@@ -247,4 +247,71 @@ class ArtCatalogObjectFactory extends DomainObjectFactory {
 }
 
 
+/**
+ * Class ArtUrlObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class ArtUrlObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\ArtUrl"; // название класса
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_position'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setUrl( $array['url'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
+
+
+/**
+ * Class ArtArtObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class ArtArtObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\News
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\ArtArt"; // название класса
+        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_position'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setDescription( $array['description'] );
+        $obj->setKeywords( $array['keywords'] );
+        $obj->setModrewrite( $array['modrewrite'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
 ?>

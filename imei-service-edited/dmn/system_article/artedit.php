@@ -93,6 +93,7 @@ try
                                     "page"          => $page),
                                 "Редактировать",
                                 "field");
+//    echo "<tt><pre>".print_r($form, true)."</pre></tt>";
     // Обработчик HTML-формы
     if(!empty($_POST))
     {

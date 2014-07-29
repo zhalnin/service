@@ -11,9 +11,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 try {
 
 //    require_once( "dmn/view/utils/security_mod.php" );
-    require_once( "dmn/classes/class.PagerMysql.php" );
 
     require_once( "dmn/view/utils/printPage.php" );
+    require_once( "dmn/view/ViewHelper.php" );
+
+    $request    = \dmn\view\VH::getRequest();
+    $idp        = $request->getProperty('idp');
+    $newsBlock  = $request->getObject( 'news' );  // получаем объект PagerMySQL
 
     // Данные переменные определяют название страницы и подсказку
     $title      = 'Управление блоком "Блок новостей"';
@@ -25,30 +29,23 @@ try {
     require_once("dmn/view/templates/top.php");
 
     // Содержание страницы
+    if( is_object( $newsBlock ) ) {
+        // Получаем содержимое текущей страницы
+        $news = $newsBlock->get_page();
+    }
 
-        // Количество ссылок в постраничной навигации
-        $page_link = 3;
-        // Количество позиций на странице
-        $pnumber = 10;
-        // Объявляеи объект постраничной навигации
-        $obj = new \dmn\classes\PagerMysql('system_news',
-            "",
-            "ORDER BY pos",
-            $pnumber,
-            $page_link,
-            "&cmd=News");
+
 
         // Добавить блок
         echo "<a href=?cmd=News&pact=add&page=$_GET[page]
                     title=Добавить новостной блок>
                     Добавить новостной блок</a><br><br>";
 
-        // Получаем содержимое текущей страницы
-        $news = $obj->get_page();
+
         // Если имеется хотя бы одна запись - выводим ее
         if( ! empty( $news ) ) {
             // Выводим ссылки на другие страницы
-            echo $obj;
+            echo $newsBlock;
             echo "<br /><br />";
             ?>
 <table width="100%"
@@ -135,7 +132,7 @@ try {
     }
 
     // Выводим ссылки на другие страницы
-    echo $obj;
+    echo $newsBlock;
 
     // Включаем завершение страницы
     require_once("dmn/view/templates/bottom.php");

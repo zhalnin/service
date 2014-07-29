@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 28/07/14
- * Time: 23:18
+ * Date: 29/07/14
+ * Time: 22:13
  */
 
 namespace dmn\command;
@@ -16,7 +16,7 @@ require_once( "dmn/classes.php" );
 // Подключаем функцию изменения размера изображения
 require_once("dmn/view/utils/resizeImage.php");
 
-class ArtCatalogAdd extends Command {
+class ArtArtAdd extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
 
@@ -26,10 +26,8 @@ class ArtCatalogAdd extends Command {
             $_POST['name']);
         $description        = new \dmn\classes\FieldTextarea("description",
             "Описание",
-            false,
-            $_POST['description'],
-            '100',
-            '20');
+            true,
+            $_REQUEST['description']);
         $keywords           = new \dmn\classes\FieldText("keywords",
             "Ключевые слова",
             false,
@@ -41,29 +39,29 @@ class ArtCatalogAdd extends Command {
         $hide               = new \dmn\classes\FieldCheckbox("hide",
             "Отображать",
             $_REQUEST['hide']);
-        $idpar          = new \dmn\classes\FieldHiddenInt("idpar",
+        $idpar                = new \dmn\classes\FieldHiddenInt("idpar",
             true,
             $_REQUEST['idpar']);
         $page               = new \dmn\classes\FieldHiddenInt("page",
             false,
             $_REQUEST['page']);
-        $submitted      = new \dmn\classes\FieldHidden( "submitted",
+        $submitted          = new \dmn\classes\FieldHidden( "submitted",
             true,
             "yes" );
         // Форма
         $form               = new \dmn\classes\Form( array( "name"          => $name,
-                                                        "description"   => $description,
-                                                        "keywords"      => $keywords,
-                                                        "modrewrite"    => $modrewrite,
-                                                        "hide"          => $hide,
-                                                        "idpar"         => $idpar,
-                                                        "page"          => $page,
-                                                        "submitted"     => $submitted ),
-                                                    "Добавить",
-                                                    "field");
+                "description"   => $description,
+                "keywords"      => $keywords,
+                "modrewrite"    => $modrewrite,
+                "hide"          => $hide,
+                "idpar"         => $idpar,
+                "page"          => $page,
+                "submitted"     => $submitted ),
+            "Добавить",
+            "field");
 
 //        echo "<tt><pre>".print_r($form, true)."</pre></tt>";
-//                echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         if( $_POST['submitted'] == 'yes' ) {
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
             if( ! empty( $error ) ) { // если есть ошибки
@@ -77,7 +75,7 @@ class ArtCatalogAdd extends Command {
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
             } else {
 
-                $rawPos = \dmn\domain\ArtCatalog::findMaxPos( $form->fields['idpar']->value ); // работает \imei_service\domain\News - получаем коллекцию
+                $rawPos = \dmn\domain\ArtArt::findMaxPos( $form->fields['idpar']->value ); // работает \imei_service\domain\News - получаем коллекцию
 //                echo "<tt><pre>".print_r($rawPos, true)."</pre></tt>";
 //                echo "<tt><pre>".print_r($form->fields['idp']->value, true)."</pre></tt>";
                 $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
@@ -90,12 +88,14 @@ class ArtCatalogAdd extends Command {
                 }
 
                 // получаем объект News без id - значит будет INSERT
-                $catalogObj = new \dmn\domain\ArtCatalog();
+                $catalogObj = new \dmn\domain\ArtArt();
 
                 // устанавливаем название
                 $catalogObj->setName( $form->fields['name']->value );
                 // устанавливаем описание
                 $catalogObj->setDescription( $form->fields['description']->value );
+                // устанавливаем описание
+                $catalogObj->setUrl( 'article' );
                 // устанавливаем ключевые слова
                 $catalogObj->setKeywords( $form->fields['keywords']->value );
                 // устанавливаем флаг услуги
@@ -105,7 +105,7 @@ class ArtCatalogAdd extends Command {
                 // устанавливаем сокрытие/отображение
                 $catalogObj->setHide( $showhide );
                 // устанавливаем родительский id
-                $catalogObj->setIdParent( $form->fields['idpar']->value );
+                $catalogObj->setIdCatalog( $form->fields['idpar']->value );
 
                 $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
