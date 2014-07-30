@@ -108,7 +108,7 @@ class ArtArtAdd extends Command {
                 $catalogObj->setIdCatalog( $form->fields['idpar']->value );
 
 
-                \dmn\mapper\ObjectWatcher::instance()->performOperations();
+                \dmn\domain\ObjectWatcher::instance()->performOperations();
 
                 $artId = $catalogObj->getId();
 
@@ -116,6 +116,35 @@ class ArtArtAdd extends Command {
                     throw new \dmn\base\AppException( "Error ", " while INSERT paragraph" );
                 }
 
+
+
+
+
+
+
+
+
+
+
+                // Разбиваем текст на параграфы
+                $par = preg_split("|\r\n|",
+                    $form->fields['description']->value);
+                if(!empty($par))
+                {
+                    $i = 0;
+                    foreach($par as $parag)
+                    {
+                        $i++;
+                        $sql[] = "(NULL,
+                                '$parag',
+                                'text',
+                                'left',
+                                'show',
+                                $i,
+                                $id_position,
+                                {$form->fields[id_parent]->value})";
+                    }
+                }
 
 //                // получаем объект CartItems без id - значит будет INSERT
 //                $cartItems = new \dmn\domain\CartItems();
@@ -126,6 +155,10 @@ class ArtArtAdd extends Command {
 //                $cartItems->setQty( $form->fields['qty']->value );
 
 
+
+
+
+                
                 $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );

@@ -78,9 +78,9 @@ class ArtParagraphImg extends DomainObject {
 
     /**
      * Метод для поиска
-     * @param $id - id позиции
+     * @param $id - id параграфа
      * @param $idc - id каталога
-     * @param $pos - позиция элемента в таблице
+     * @param $idp - id позиции
      * @return mixed
      */
     static function find( $id, $idc, $idp ) {
@@ -150,14 +150,15 @@ class ArtParagraphImg extends DomainObject {
      * Метод для рекурсивного удаления подкаталогов и позиций
      * заданного каталога
      * @param $idc - id каталога
+     * @param $idp - id параграфа
      */
     static function delete( $idc, $idp ) {
         // находим каталог, включая родительский
         // с которого началось удаление и при рекурсивном вызове
         // будем находить каждый следующий каталог
-        $catParent = \dmn\domain\ArtParagraphImg::find( $idc, $idp );
-        if( is_object( $catParent ) ) {
-
+//        $catParent = \dmn\domain\ArtParagraphImg::find( $idc, $idp );
+//        if( is_object( $catParent ) ) {
+//
 //            $roundedFlag = $catParent->getRoundedFlag();
 //            if( ! empty( $roundedFlag ) ) { // если поле не пустое
 //                // путь до большого изображения
@@ -175,27 +176,27 @@ class ArtParagraphImg extends DomainObject {
 //                    @unlink( $path_country ); // удаляем
 //                }
 //            }
-
-            // ставим каталог в очередь на удаление
-            $catParent->markDeleted();
-            // по id_catalog каталога находим все его позиции
-            $posParent = \dmn\domain\ArtParagraphImgPosition::findAllPosition( $catParent->getId() );
-            if( is_object( $posParent ) ) {
-                // проходим по ним в цикле
-                foreach ( $posParent as $pos ) {
-//                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
-                    // и добавляем позиции в очередь на удаление
-                    $pos->markDeleted();
-                }
-                // находим у заданного каталога его подкаталоги по его id_catalog
-                $catChild = \dmn\domain\ArtParagraphImg::findParent( $catParent->getId() );
-                // проходим в цикле по полученным подкаталогам
-                foreach ( $catChild as $cat) {
-                    // и вызываем метод рекурсивно
-                    self::delete( $cat->getId(), $cat->getIdPositio() );
-                }
-            }
-        }
+//
+//            // ставим каталог в очередь на удаление
+//            $catParent->markDeleted();
+//            // по id_catalog каталога находим все его позиции
+//            $posParent = \dmn\domain\ArtParagraphImgPosition::findAllPosition( $catParent->getId() );
+//            if( is_object( $posParent ) ) {
+//                // проходим по ним в цикле
+//                foreach ( $posParent as $pos ) {
+////                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
+//                    // и добавляем позиции в очередь на удаление
+//                    $pos->markDeleted();
+//                }
+//                // находим у заданного каталога его подкаталоги по его id_catalog
+//                $catChild = \dmn\domain\ArtParagraphImg::findParent( $catParent->getId() );
+//                // проходим в цикле по полученным подкаталогам
+//                foreach ( $catChild as $cat) {
+//                    // и вызываем метод рекурсивно
+//                    self::delete( $cat->getId(), $cat->getIdPositio() );
+//                }
+//            }
+//        }
     }
 
 

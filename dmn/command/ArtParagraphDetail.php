@@ -27,9 +27,7 @@ class ArtParagraphDetail extends Command {
             $paragraphDetail = \dmn\domain\ArtParagraphImg::find( $idph, $idc, $idp );
             if( is_object( $paragraphDetail ) ) {
                 $request->setObject( 'paragraphDetail', $paragraphDetail ); // сохраняем объекты для передачи во вьюшку
-
             }
-//            echo "<tt><pre>".print_r($paragraphDetail, true)."</pre></tt>";
         } else {
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }

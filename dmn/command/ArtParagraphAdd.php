@@ -118,19 +118,12 @@ class ArtParagraphAdd extends Command {
             } else {
 
 //                Вставляем параграф
-
-//                $rawPos = \dmn\domain\ArtParagraph::findMaxPos( $form->fields['idc']->value, $form->fields['idp']->value ); // работает \imei_service\domain\News - получаем коллекцию
-//                echo "<tt><pre>".print_r($rawPos, true)."</pre></tt>";
-//                $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
                 // Выясняем, скрыта или открыта дректория
                 if($form->fields['hide']->value) {
                     $showhide = "show";
                 } else {
                     $showhide = "hide";
                 }
-
-
-
 
                 // если позиция меньше ноля
                 if( $form->fields['pos']->value < 0 ) {
@@ -205,11 +198,6 @@ class ArtParagraphAdd extends Command {
                                                 "imei_service/view/files/article/s_$img",
                                                 $rawPhotoSettings['width'],
                                                 $rawPhotoSettings['height'] );
-//                            echo "<tt><pre>".print_r($small, true)."</pre></tt>";
-//                \dmn\domain\ObjectWatcher::instance()->performOperations();
-
-
-
 
                 // получаем объект ArtParagraphImg без id - значит будет INSERT
                 $artParImg = new \dmn\domain\ArtParagraphImg();

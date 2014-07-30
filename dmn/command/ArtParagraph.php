@@ -35,8 +35,6 @@ class ArtParagraph  extends Command {
         // позицией в блоке
         if( ! empty( $position ) ) {
             \dmn\domain\ArtArt::position( $idp, $position );
-//            echo "<tt><pre>".print_r($idpar, true)."</pre></tt>";
-//            echo "<tt><pre>".print_r($_GET['idpar'], true)."</pre></tt>";
             $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar={$idpar}&page={$page}" );
         }
 
@@ -82,8 +80,6 @@ class ArtParagraph  extends Command {
         if( is_object( $paragraph ) ) {
             $request->setObject( 'paragraph', $paragraph );
         }
-
-
 //        echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($position, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($paragraph->get_page(), true)."</pre></tt>";

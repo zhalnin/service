@@ -108,8 +108,7 @@ try {
                     "&page=$_GET[page]";
             // Выясняем тип параграфа
             $type = "Параграф";
-            switch($paragraph[$i]['type'])
-            {
+            switch( $paragraph[$i]['type'] ) {
                 case 'text':
                     $type = 'Параграф';
                     break;
@@ -136,9 +135,8 @@ try {
                     break;
             }
             // Выясняем тип выравнивания параграфа
-            $aligh = "";
-            switch($paragraph[$i]['align'])
-            {
+            $align = "";
+            switch( $paragraph[$i]['align'] ) {
                 case 'left':
                     $align = "align=left";
                     break;
@@ -150,13 +148,10 @@ try {
                     break;
             }
             // Выясняем скрыт раздел или нет
-            if($paragraph[$i]['hide'] == 'hide')
-            {
+            if( $paragraph[$i]['hide'] == 'hide' )  {
                 $strhide = "<a href=?cmd=ArtParagraph&pact=show&$url>Отобразить</a>";
                 $style="class=hidden";
-            }
-            else
-            {
+            } else {
                 $strhide = "<a href=?cmd=ArtParagraph&pact=hide&$url>Скрыть</a>";
                 $style = "";
             }

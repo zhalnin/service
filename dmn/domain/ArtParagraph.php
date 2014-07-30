@@ -25,16 +25,15 @@ class ArtParagraph extends DomainObject {
     private $idCatalog;
 
     /**
-     *  Поля из БД - сохраняем из в переменные
+     * Поля из БД - сохраняем из в переменные
      * @param null $id
      * @param null $name
-     * @param null $description;
-     * @param null $url
-     * @param null $keywords
-     * @param null $modrewrite
-     * @param null $pos
+     * @param null $type
+     * @param null $align
      * @param string $hide
-     * @param null $idParent
+     * @param null $pos
+     * @param null $idPosition
+     * @param null $idCatalog
      */
     function __construct( $id=null,
                           $name=null,
@@ -112,7 +111,7 @@ class ArtParagraph extends DomainObject {
      * Метод для смены,
      * сокрытия или отображения позиции в блоке новостей
      * @param $id - id новости
-     * @param $direct - направление перемещения блока
+     * @param $action - направление перемещения блока
      */
     static function position( $id, $action ) {
         $result = array();
@@ -186,14 +185,15 @@ class ArtParagraph extends DomainObject {
      * Метод для рекурсивного удаления подкаталогов и позиций
      * заданного каталога
      * @param $idc - id каталога
+     * @param $idp - id параграфа
      */
     static function delete( $idc, $idp ) {
         // находим каталог, включая родительский
         // с которого началось удаление и при рекурсивном вызове
         // будем находить каждый следующий каталог
-        $catParent = \dmn\domain\ArtParagraph::find( $idc, $idp );
-        if( is_object( $catParent ) ) {
-
+//        $catParent = \dmn\domain\ArtParagraph::find( $idc, $idp );
+//        if( is_object( $catParent ) ) {
+//
 //            $roundedFlag = $catParent->getRoundedFlag();
 //            if( ! empty( $roundedFlag ) ) { // если поле не пустое
 //                // путь до большого изображения
@@ -211,27 +211,27 @@ class ArtParagraph extends DomainObject {
 //                    @unlink( $path_country ); // удаляем
 //                }
 //            }
-
-            // ставим каталог в очередь на удаление
-            $catParent->markDeleted();
-            // по id_catalog каталога находим все его позиции
-            $posParent = \dmn\domain\ArtParagraphPosition::findAllPosition( $catParent->getId() );
-            if( is_object( $posParent ) ) {
-                // проходим по ним в цикле
-                foreach ( $posParent as $pos ) {
-//                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
-                    // и добавляем позиции в очередь на удаление
-                    $pos->markDeleted();
-                }
-                // находим у заданного каталога его подкаталоги по его id_catalog
-                $catChild = \dmn\domain\ArtParagraph::findParent( $catParent->getId() );
-                // проходим в цикле по полученным подкаталогам
-                foreach ( $catChild as $cat) {
-                    // и вызываем метод рекурсивно
-                    self::delete( $cat->getId(), $cat->getIdPositio() );
-                }
-            }
-        }
+//
+//            // ставим каталог в очередь на удаление
+//            $catParent->markDeleted();
+//            // по id_catalog каталога находим все его позиции
+//            $posParent = \dmn\domain\ArtParagraphPosition::findAllPosition( $catParent->getId() );
+//            if( is_object( $posParent ) ) {
+//                // проходим по ним в цикле
+//                foreach ( $posParent as $pos ) {
+////                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
+//                    // и добавляем позиции в очередь на удаление
+//                    $pos->markDeleted();
+//                }
+//                // находим у заданного каталога его подкаталоги по его id_catalog
+//                $catChild = \dmn\domain\ArtParagraph::findParent( $catParent->getId() );
+//                // проходим в цикле по полученным подкаталогам
+//                foreach ( $catChild as $cat) {
+//                    // и вызываем метод рекурсивно
+//                    self::delete( $cat->getId(), $cat->getIdPositio() );
+//                }
+//            }
+//        }
     }
 
 
