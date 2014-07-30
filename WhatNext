@@ -20,5 +20,4 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-2. ArtCatalogDelete, ArtUrlDelete, ArtArtDelete
-3. В ArtArtAdd должно  быть добавление и в system_menu_paragraph
+2. ArtCatalogDelete, ArtUrlDelete, ArtArtDelete, ArtParagraph UP/DOWN/HIDE/EDIT/DELETE

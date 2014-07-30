@@ -15,6 +15,7 @@ require_once( 'dmn/command/Command.php' );
 require_once( "dmn/classes.php" );
 // Подключаем функцию изменения размера изображения
 require_once("dmn/view/utils/resizeImage.php");
+require_once( "dmn/domain/ArtParagraph.php" );
 
 class ArtArtAdd extends Command {
 
@@ -113,52 +114,43 @@ class ArtArtAdd extends Command {
                 $artId = $catalogObj->getId();
 
                 if( empty( $artId ) ) {
-                    throw new \dmn\base\AppException( "Error ", " while INSERT paragraph" );
+                    throw new \dmn\base\AppException( "Error ", " while INSERT article" );
                 }
 
 
 
+//                echo "<tt><pre>".print_r($catalogObj, true)."</pre></tt>";
+//                echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+//                echo "<tt><pre>".print_r($form, true)."</pre></tt>";
 
 
-
-
-
-
-
+//                // получаем объект ArtParagraph без id - значит будет INSERT
 
                 // Разбиваем текст на параграфы
-                $par = preg_split("|\r\n|",
-                    $form->fields['description']->value);
-                if(!empty($par))
-                {
+                $lines = preg_split("|\r\n|", $form->fields['description']->value);
+                if( ! empty( $lines ) ) {
                     $i = 0;
-                    foreach($par as $parag)
-                    {
+                    foreach( $lines as $line ) {
+                        $artParagraph = new \dmn\domain\ArtParagraph();
                         $i++;
-                        $sql[] = "(NULL,
-                                '$parag',
-                                'text',
-                                'left',
-                                'show',
-                                $i,
-                                $id_position,
-                                {$form->fields[id_parent]->value})";
+                        $artParagraph->setName( $line );
+                        $artParagraph->setType( 'text' );
+                        $artParagraph->setAlign( 'left' );
+                        $artParagraph->setHide( 'show' );
+                        $artParagraph->setPos( $i );
+                        $artParagraph->setIdPosition( $artId );
+                        $artParagraph->setIdCatalog( $form->fields['idpar']->value );
+
+                        \dmn\domain\ObjectWatcher::instance()->performOperations();
                     }
                 }
 
-//                // получаем объект CartItems без id - значит будет INSERT
-//                $cartItems = new \dmn\domain\CartItems();
-//                $cartItems->setProductId( $form->fields['product_id']->value );
-//                $cartItems->setOrderId( $orderId );
-//                $cartItems->setTitle( $form->fields['title']->value );
-//                $cartItems->setPrice( $form->fields['price']->value );
-//                $cartItems->setQty( $form->fields['qty']->value );
 
 
 
 
 
-                
+
                 $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );

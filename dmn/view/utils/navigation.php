@@ -37,7 +37,7 @@ function navigation( $id_catalog, $link, $catalog, $cmd ) {
 //    echo "<tt><pre>".print_r($raw, true)."</pre></tt>";
     if( ! empty( $raw ) ) { // если не пустой массив
         $link = "<a class='menu currentPos'
-                    href=dmn.php?cmd=$cmd&idp=".$raw['id_catalog'].">
+                    href=dmn.php?cmd=$cmd&idp=".$raw['id_catalog']."&idpar=".$raw['id_catalog'].">
                     ".$raw['name']."</a>-&gt;".$link;
         $link = navigation($raw['id_parent'],
                         $link,

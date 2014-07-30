@@ -79,15 +79,15 @@ class ArtArtEdit extends Command {
                 "yes" );
             // Форма
             $form               = new \dmn\classes\Form( array( "name"          => $name,
-                    "description"   => $description,
-                    "keywords"      => $keywords,
-                    "modrewrite"    => $modrewrite,
-                    "hide"          => $hide,
-                    "idc"           => $idc,
-                    "page"          => $page,
-                    "submitted"     => $submitted ),
-                "Редактировать",
-                "field");
+                                                            "description"   => $description,
+                                                            "keywords"      => $keywords,
+                                                            "modrewrite"    => $modrewrite,
+                                                            "hide"          => $hide,
+                                                            "idc"           => $idc,
+                                                            "page"          => $page,
+                                                            "submitted"     => $submitted ),
+                                                        "Редактировать",
+                                                        "field");
 //            echo "<tt><pre>".print_r($catalog->getUrl(), true)."</pre></tt>";
             $request->setObject('form', $form ); // выводим форму заново
 
@@ -123,6 +123,8 @@ class ArtArtEdit extends Command {
                 $catalog->setName( $form->fields['name']->value );
                 // устанавливаем описание
                 $catalog->setDescription( $form->fields['description']->value );
+                // устанавливаем описание
+                $catalog->setUrl( 'article' );
                 // устанавливаем ключевые слова
                 $catalog->setKeywords( $form->fields['keywords']->value );
                 // устанавливаем флаг услуги

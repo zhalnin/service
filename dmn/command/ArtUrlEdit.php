@@ -26,7 +26,7 @@ class ArtUrlEdit extends Command {
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         if( $idp ) { // если передан id_news
             $catalog = \dmn\domain\ArtUrl::find( $idp ); // находим элементы по заданному id_news
-            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
+//            echo "<tt><pre>".print_r($catalog, true)."</pre></tt>";
             // если еще не передан запрос и форма не была отправлена
             if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
 

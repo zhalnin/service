@@ -21,7 +21,7 @@ class ArtArtIdentityObject extends IdentityObject {
         parent::__construct( $field, array('id_position',
                                     'name',
                                     'description',
-//                                    'url',
+                                    'url',
                                     'keywords',
                                     'modrewrite',
                                     'pos',

@@ -30,7 +30,7 @@ class ArtArtUpdateFactory extends UpdateFactory{
         $cond = null;
         $values['name']         = $obj->getName();
         $values['description']  = $obj->getDescription();
-//        $values['url']          = $obj->getUrl();
+        $values['url']          = $obj->getUrl();
         $values['keywords']     = $obj->getKeywords();
         $values['modrewrite']   = $obj->getModrewrite();
         $values['pos']          = $obj->getPos();
