@@ -31,6 +31,14 @@ try {
 
     print date( "Y-m-d H:i:s", '1386755290' );
 
+
+
+
+    function pName(){
+        return "dfjdkjfkdf";
+    }
+//    print pName();
+
 } catch ( \dmn\base\AppException $ex ) {
     echo $ex->getErrorObject();
 } catch ( \dmn\base\DBException $ex ) {
