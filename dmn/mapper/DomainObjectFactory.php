@@ -98,7 +98,7 @@ class CartOrderObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\CartOrderObjectFactory
     }
 }
 
@@ -130,7 +130,7 @@ class CartItemsObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\CartItemsObjectFactory
     }
 }
 
@@ -170,7 +170,7 @@ class CatalogObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\CatalogObjectFactory
     }
 }
 
@@ -207,7 +207,7 @@ class CatalogPositionObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\CatalogPositionObjectFactory
     }
 
 }
@@ -242,7 +242,7 @@ class ArtCatalogObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\ArtCatalogObjectFactory
     }
 }
 
@@ -262,7 +262,7 @@ class ArtUrlObjectFactory extends DomainObjectFactory {
      */
     function createObject( array $array ) {
         $class = "\\dmn\\domain\\ArtUrl"; // название класса
-        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        $old = $this->getFromMap( $class, $array['id_position'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id_position'] ); // создаем экземпляр класса, в конструктор передаем id
         // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
@@ -276,7 +276,7 @@ class ArtUrlObjectFactory extends DomainObjectFactory {
 
         $this->addToMap( $obj );
         $obj->markClean();
-        return $obj; // возвращаем объект \dmn\domain\News
+        return $obj; // возвращаем объект \dmn\domain\ArtUrlObjectFactory
     }
 }
 
@@ -297,7 +297,7 @@ class ArtArtObjectFactory extends DomainObjectFactory {
      */
     function createObject( array $array ) {
         $class = "\\dmn\\domain\\ArtArt"; // название класса
-        $old = $this->getFromMap( $class, $array['id_catalog'] );
+        $old = $this->getFromMap( $class, $array['id_position'] );
         if( $old ) { return $old; }
         $obj = new $class( $array['id_position'] ); // создаем экземпляр класса, в конструктор передаем id
         // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
@@ -308,6 +308,74 @@ class ArtArtObjectFactory extends DomainObjectFactory {
         $obj->setPos( $array['pos'] );
         $obj->setHide( $array['hide'] );
         $obj->setIdCatalog( $array['id_catalog'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\ArtArtObjectFactory
+    }
+}
+
+/**
+ * Class ArtParagraphObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class ArtParagraphObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\ArtParagraphObjectFactory
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\ArtParagraph"; // название класса
+        $old = $this->getFromMap( $class, $array['id_paragraph'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_paragraph'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setType( $array['type'] );
+        $obj->setAlign( $array['align'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setIdPosition( $array['id_position'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
+/**
+ * Class ArtParagraphImgObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class ArtParagraphImgObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\ArtParagraphImg
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\ArtParagraphImg"; // название класса
+        $old = $this->getFromMap( $class, $array['id_image'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_image'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setAlt( $array['alt'] );
+        $obj->setSmall( $array['small'] );
+        $obj->setBig( $array['big'] );
+        $obj->setHide( $array['hide'] );
+        $obj->setPos( $array['pos'] );
+        $obj->setIdPosition( $array['id_position'] );
+        $obj->setIdCatalog( $array['id_catalog'] );
+        $obj->setIdParagraph( $array['id_paragraph'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

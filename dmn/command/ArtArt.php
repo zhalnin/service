@@ -86,7 +86,7 @@ class ArtArt extends Command {
             $request->setObject( 'artPosition', $artPosition );
 //            echo "<tt><pre>".print_r($artPosition->get_page(), true)."</pre></tt>";
         }
-        // возвращаем успешный результат и вызываем вьюшку ArtUrl
+        // возвращаем успешный результат и вызываем вьюшку
         return self::statuses( 'CMD_OK' );
     }
 }

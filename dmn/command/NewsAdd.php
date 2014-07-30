@@ -131,9 +131,9 @@ class NewsAdd extends Command {
                     $url_pict = "files/news/$str";
                     $url_pict_s = "files/news/s_$str";
                     \dmn\view\utils\resizeImg(  "imei_service/view/files/news/$str",
-                        "imei_service/view/files/news/s_$str",
-                        $rawPhotoSettings['width_news'],
-                        $rawPhotoSettings['height_news'] );
+                                                "imei_service/view/files/news/s_$str",
+                                                $rawPhotoSettings['width_news'],
+                                                $rawPhotoSettings['height_news'] );
                 } else {
                     $url_pict = "";
                     $url_pict_s = "";

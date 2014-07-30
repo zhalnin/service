@@ -88,4 +88,12 @@ interface ArtUrlCollection extends \Iterator {
 interface ArtArtCollection extends \Iterator {
     function add( DomainObject $artUrl );
 }
+
+interface ArtParagraphCollection extends \Iterator {
+    function add( DomainObject $artParagraph );
+}
+
+interface ArtParagraphImgCollection extends \Iterator {
+    function add( DomainObject $artParagraphImg );
+}
 ?>

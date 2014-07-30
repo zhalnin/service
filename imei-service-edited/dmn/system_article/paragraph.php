@@ -242,8 +242,8 @@ try
                     <a href=pardown.php?$url>Вниз</a></td>
                 </tr>";
          }
-                    echo "</table><br><br>";
     }
+    echo "</table><br><br>";
     echo "</form>";
     // Выводим ссылки на другие страницы
     echo $obj;

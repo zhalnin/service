@@ -135,6 +135,19 @@ class DomainObjectAssembler {
         return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
     }
 
+//    function updatePos( IdentityObject $idobj ) {
+////        echo "<tt><pre>".print_r($idobj, true)."</pre></tt>";
+//        $selfact = $this->factory->getSelectionFactory(); // из PersistenceFactory вызываем Select
+//        list( $selection, $values ) = $selfact->newSelectionMaxPos($idobj ); // из ...SelectionFactory получаем SELECT, если есть с WHERE и массив со значениями
+////        echo "<tt><pre>".print_r($selection, true)."</pre></tt>";
+////        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        $stmt = $this->getStatement( $selection ); // проверяем наличие такого запроса в кэше, если не было еще - сохраняем, а возвращается на уже с дескриптором соединения и после prepare
+//        $stmt->execute( $values ); // выполняем запрос
+//        $raw = $stmt->fetch(); // получаем результирующий массив
+//        $stmt->closeCursor();
+//        return $raw; // из PersistenceFactory возвращаем экземпляр ...Collection
+//    }
+
 
     /**
      * Получаем количество позиций POS элемента в БД

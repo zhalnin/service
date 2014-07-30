@@ -2,69 +2,56 @@
 /**
  * Created by PhpStorm.
  * User: zhalnin
- * Date: 26/07/14
- * Time: 18:56
+ * Date: 30/07/14
+ * Time: 13:40
  */
 
 namespace dmn\domain;
-
 error_reporting( E_ALL & ~E_NOTICE );
 
 require_once( "dmn/domain/DomainObject.php" );
-require_once( "dmn/mapper/CatalogPositionIdentityObject.php" );
-require_once( "dmn/mapper/CatalogPositionUpDownFactory.php" );
-
+require_once( "dmn/mapper/ArtArtIdentityObject.php" );
+require_once( "dmn/mapper/ArtArtUpDownFactory.php" );
+//require_once( "dmn/domain/ArtArtPosition.php" );
 require_once( "dmn/base/Registry.php" );
 
-class CatalogPosition extends DomainObject {
-    private $operator;
-    private $cost;
-    private $timeconsume;
-    private $compatible;
-    private $status;
-    private $currency;
+class ArtParagraph extends DomainObject {
+    private $name;
+    private $type;
+    private $align;
     private $hide;
     private $pos;
-    private $putdate;
+    private $idPosition;
     private $idCatalog;
 
     /**
-     * Поля из БД - сохраняем из в переменные
+     *  Поля из БД - сохраняем из в переменные
      * @param null $id
-     * @param null $operator
-     * @param null $cost
-     * @param null $timeconsume
-     * @param null $compatible
-     * @param null $status
-     * @param null $currency
-     * @param string $hide
+     * @param null $name
+     * @param null $description;
+     * @param null $url
+     * @param null $keywords
+     * @param null $modrewrite
      * @param null $pos
-     * @param null $putdate
-     * @param null $idCatalog
+     * @param string $hide
+     * @param null $idParent
      */
     function __construct( $id=null,
-                          $operator=null,
-                          $cost=null,
-                          $timeconsume=null,
-                          $compatible=null,
-                          $status=null,
-                          $currency=null,
+                          $name=null,
+                          $type=null,
+                          $align=null,
                           $hide='hide',
                           $pos=null,
-                          $putdate=null,
+                          $idPosition=null,
                           $idCatalog=null ) {
 
-        $this->operator     = $operator;
-        $this->cost         = $cost;
-        $this->timeconsume  = $timeconsume;
-        $this->compatible   = $compatible;
-        $this->status       = $status;
-        $this->currency     = $currency;
+        $this->name         = $name;
+        $this->type         = $type;
+        $this->align        = $align;
         $this->hide         = $hide;
         $this->pos          = $pos;
-        $this->putdate      = $putdate;
+        $this->idPosition   = $idPosition;
         $this->idCatalog    = $idCatalog;
-
 
         parent::__construct( $id ); // вызываем конструктор родительского класса
     }
@@ -77,41 +64,46 @@ class CatalogPosition extends DomainObject {
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
         $idobj = self::getIdentityObject( __CLASS__ ); // catalogIdentityObject
-        $catalogPositionIdobj = new \dmn\mapper\CatalogPositionIdentityObject(); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
+        $catalogIdobj = new \dmn\mapper\ArtParagraphIdentityObject(); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
 //        echo "<tt><pre>".print_r($catalogIdobj, true)."</pre></tt>";
-        return $finder->find( $catalogPositionIdobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
+        return $finder->find( $catalogIdobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
     }
 
     /**
      * Метод для поиска
-     * @param $id
+     * @param $id - id позиции
+     * @param $idc - id каталога
+     * @param $pos - позиция элемента в таблице
      * @return mixed
      */
-    static function find( $id ) {
+    static function find( $id, $idc, $pos=null ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
-        return $finder->findOne( $idobj->eq( $id ) );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
+        if( ! is_null( $pos ) ) {
+            return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'pos' )->gt( $pos ) );
+        }
+        return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc ) );
     }
 
     /**
-     * Метод для поиска
+     * Метод для поиска родительского каталога
      * @param $id
      * @return mixed
      */
-    static function findDetail( $id ) {
+    static function findParent( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_position' );
-        return $finder->findOne( $idobj->eq( $id ) );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_catalog' );
+        return $finder->find( $idobj->eq( $id ) );
     }
 
     /**
-     * Метод для поиска всех позиций
+     * Метод для поиска родительского каталога
      * @param $id
      * @return mixed
      */
-    static function findAllPosition( $id ) {
+    static function findCatalog( $id ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
         return $finder->find( $idobj->eq( $id ) );
     }
 
@@ -152,7 +144,7 @@ class CatalogPosition extends DomainObject {
                 break;
             case 'show': // отображение позиции
                 // создаем условный оператор для запроса в БД
-                $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_position' );
+                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
                 $obj = $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'hide' ));
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
                 $obj->setHide( $action );
@@ -160,7 +152,7 @@ class CatalogPosition extends DomainObject {
 
             case 'hide': // сокрытие позиции
                 // создаем условный оператор для запроса в БД
-                $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_position' );
+                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
                 $obj = $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ));
 //                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
@@ -172,12 +164,13 @@ class CatalogPosition extends DomainObject {
     /**
      * Метод для получения максимальной позиции
      * @param $id
+     * @param $idp
      * @return mixed
      */
-    static function findMaxPos( $id ) {
+    static function findMaxPos( $id, $idp ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
-        return $finder->findMaxPos( $idobj->eq( $id ) );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_catalog' );
+        return $finder->findMaxPos( $idobj->eq( $id )->field('id_position')->eq( $idp ) );
     }
 
     /**
@@ -190,63 +183,80 @@ class CatalogPosition extends DomainObject {
     }
 
     /**
-     * Метод для получения количество позиций по id каталога
-     * @param $id
-     * @return mixed
+     * Метод для рекурсивного удаления подкаталогов и позиций
+     * заданного каталога
+     * @param $idc - id каталога
      */
-    static function findCountPos( $id ) {
-        $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
-        return $finder->findCountPos( $idobj->eq( $id ) );
+    static function delete( $idc, $idp ) {
+        // находим каталог, включая родительский
+        // с которого началось удаление и при рекурсивном вызове
+        // будем находить каждый следующий каталог
+        $catParent = \dmn\domain\ArtParagraph::find( $idc, $idp );
+        if( is_object( $catParent ) ) {
+
+//            $roundedFlag = $catParent->getRoundedFlag();
+//            if( ! empty( $roundedFlag ) ) { // если поле не пустое
+//                // путь до большого изображения
+//                $path_rounded = str_replace( "//", "/","imei_service/view/".$catParent->getRoundedFlag() );
+//                if( file_exists( $path_rounded ) ) { // если большое изображение существует
+////                    print $path_rounded;
+//                    @unlink( $path_rounded ); // удаляем
+//                }
+//            }
+//            $countryFlag = $catParent->getUrlpict();
+//            if( ! empty( $countryFlag ) ) { // если поле не пустое
+//                $path_country = str_replace( "//", "/","imei_service/view/".$catParent->getUrlpict() ); // путь до малого изображения
+//                if( file_exists( $path_country ) ) { // если малое изображение существует
+////                    print $path_country;
+//                    @unlink( $path_country ); // удаляем
+//                }
+//            }
+
+            // ставим каталог в очередь на удаление
+            $catParent->markDeleted();
+            // по id_catalog каталога находим все его позиции
+            $posParent = \dmn\domain\ArtParagraphPosition::findAllPosition( $catParent->getId() );
+            if( is_object( $posParent ) ) {
+                // проходим по ним в цикле
+                foreach ( $posParent as $pos ) {
+//                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
+                    // и добавляем позиции в очередь на удаление
+                    $pos->markDeleted();
+                }
+                // находим у заданного каталога его подкаталоги по его id_catalog
+                $catChild = \dmn\domain\ArtParagraph::findParent( $catParent->getId() );
+                // проходим в цикле по полученным подкаталогам
+                foreach ( $catChild as $cat) {
+                    // и вызываем метод рекурсивно
+                    self::delete( $cat->getId(), $cat->getIdPositio() );
+                }
+            }
+        }
     }
 
 
     /**
-     * устанавливаем название
-     * @param $operator_s
+     * устанавливем имя
+     * @param $name_s
      */
-    function setOperator( $operator_s ) {
-        $this->operator = $operator_s;
+    function setName( $name_s ) {
+        $this->name = $name_s;
         $this->markDirty();
     }
     /**
-     * устанавливаем стоимость
-     * @param $cost_s
+     * устанавливаем тип параграфа
+     * @param $type_s
      */
-    function setCost( $cost_s ) {
-        $this->cost = $cost_s;
+    function setType( $type_s ) {
+        $this->type = $type_s;
         $this->markDirty();
     }
     /**
-     * устанавливаем время выполнения
-     * @param $timeconsume_s
+     * устанавливаем выравнивание
+     * @param $align_s
      */
-    function setTimeconsume( $timeconsume_s ) {
-        $this->timeconsume = $timeconsume_s;
-        $this->markDirty();
-    }
-    /**
-     * устанавливаем совместимость
-     * @param $compatible_s
-     */
-    function setCompatible( $compatible_s ) {
-        $this->compatible = $compatible_s;
-        $this->markDirty();
-    }
-    /**
-     * устанавливаем статус
-     * @param $status_s
-     */
-    function setStatus( $status_s ) {
-        $this->status = $status_s;
-        $this->markDirty();
-    }
-    /**
-     * устанавливаем валюту
-     * @param $currency_s
-     */
-    function setCurrency( $currency_s ) {
-        $this->currency = $currency_s;
+    function setAlign( $align_s ) {
+        $this->align = $align_s;
         $this->markDirty();
     }
     /**
@@ -266,11 +276,11 @@ class CatalogPosition extends DomainObject {
         $this->markDirty();
     }
     /**
-     * устанавливаем время создания
-     * @param $putdate_s
+     * устанавливаем id позиции
+     * @param $idPosition_s
      */
-    function setPutdate( $putdate_s ) {
-        $this->putdate = $putdate_s;
+    function setIdPosition( $idPosition_s ) {
+        $this->idPosition = $idPosition_s;
         $this->markDirty();
     }
     /**
@@ -282,48 +292,26 @@ class CatalogPosition extends DomainObject {
         $this->markDirty();
     }
 
-
     /**
-     * получаем название
+     * получаем имя
      * @return null
      */
-    function getOperator() {
-        return $this->operator;
+    function getName() {
+        return $this->name;
     }
     /**
-     * получаем стоимость
+     * получаем тип
      * @return null
      */
-    function getCost() {
-        return $this->cost;
+    function getType() {
+        return $this->type;
     }
     /**
-     * получаем время выполнения
+     * получаем выравнивание
      * @return null
      */
-    function getTimeconsume() {
-        return $this->timeconsume;
-    }
-    /**
-     * получаем совместимость
-     * @return null
-     */
-    function getCompatible() {
-        return $this->compatible;
-    }
-    /**
-     * получаем статус
-     * @return null
-     */
-    function getStatus() {
-        return $this->status;
-    }
-    /**
-     * получаем валюту
-     * @return null
-     */
-    function getCurrency() {
-        return $this->currency;
+    function getAlign() {
+        return $this->align;
     }
     /**
      * получаем сокрытие/отображение
@@ -340,14 +328,14 @@ class CatalogPosition extends DomainObject {
         return $this->pos;
     }
     /**
-     * получаем время создания
+     * Получаем id позиции
      * @return null
      */
-    function getPutdate() {
-        return $this->putdate;
+    function getIdPosition() {
+        return $this->idPosition;
     }
     /**
-     * получаем id каталога
+     * Получаем id каталога
      * @return null
      */
     function getIdCatalog() {

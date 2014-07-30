@@ -47,6 +47,12 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\ArtArt":
                 return new ArtArtPersistenceFactory();
                 break;
+            case "dmn\\domain\\ArtParagraph":
+                return new ArtParagraphPersistenceFactory();
+                break;
+            case "dmn\\domain\\ArtParagraphImg":
+                return new ArtParagraphImgPersistenceFactory();
+                break;
         }
     }
 }
@@ -381,6 +387,89 @@ class ArtArtPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new ArtArtUpDownFactory();
+    }
+}
+
+/**
+ * Class ArtParagraphPersistenceFactory
+ * для работы с блоком каталогов - статьей
+ * @package dmn\mapper
+ */
+class ArtParagraphPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new ArtParagraphMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new ArtParagraphObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new ArtParagraphCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new ArtParagraphSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new ArtParagraphUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new ArtParagraphIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new ArtParagraphDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new ArtParagraphUpDownFactory();
+    }
+}
+
+
+/**
+ * Class ArtParagraphImgPersistenceFactory
+ * для работы с блоком каталогов - статьей
+ * @package dmn\mapper
+ */
+class ArtParagraphImgPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new ArtParagraphImgMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new ArtParagraphImgObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new ArtParagraphImgCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new ArtParagraphImgSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new ArtParagraphImgUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new ArtParagraphImgIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new ArtParagraphImgDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new ArtParagraphImgUpDownFactory();
     }
 }
 ?>

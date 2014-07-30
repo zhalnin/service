@@ -29,7 +29,6 @@ try {
     // Включаем заголовок страницы
     require_once("dmn/view/templates/top.php");
 
-//    $_GET['idpar'] = intval($_GET['idpar']);
 
     // Содержание страницы
     if( is_object( $artCatalog ) ) {

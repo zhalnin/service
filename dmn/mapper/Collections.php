@@ -225,4 +225,22 @@ class ArtArtCollection
     }
 }
 
+class ArtParagraphCollection
+    extends Collection
+    implements \dmn\domain\ArtParagraphCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\ArtParagraph";
+    }
+}
+
+class ArtParagraphImgCollection
+    extends Collection
+    implements \dmn\domain\ArtParagraphImgCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\ArtParagraphImg";
+    }
+}
+
 ?>

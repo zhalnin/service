@@ -55,8 +55,25 @@
             ",width=" + vidWindowWidth +
             ",height=" + vidWindowHeight +
             ",toolbar=no,menubar=no,location=no" +
-            ",directories=no,scrollbars=no,resizable=no";
+            ",directories=no,scrollbars=yes,resizable=no";
         window.open( url,'',features,true );
+    }
+
+    function show_img(id_position, width, height) {
+        var a;
+        var b;
+        var url;
+        vidWindowWidth = width;
+        vidWindowHeight = height;
+        a = (screen.height-vidWindowHeight)/5;
+        b = (screen.width-vidWindowWidth)/2;
+        features = "top="+a +",left="+b+
+            ",width="+vidWindowWidth+
+            ",height="+vidWindowHeight+
+            ",toolbar=no,menubar=no,location=no,"+
+            "directories=no,scrollbars=no,resizable=no";
+        url = "../../show.php?id_position="+id_position;
+        window.open(url,'',features,true);
     }
     //-->
 </script>
