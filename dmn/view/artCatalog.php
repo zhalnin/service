@@ -42,7 +42,7 @@ try {
     echo '<table cellpadding="0" cellspacing="0" border="0">
             <tr valign="top"><td height="25"><p>';
     echo "<a class=menu
-                href=dmn.php?cmd=ArtCatalog&idpar=0&page=$_GET[page]>
+                href=dmn.php?cmd=ArtCatalog&idpar=0>
                     Корневой каталог</a>-&gt;".
         \dmn\view\utils\navigation($idpar, "", 'system_menu_catalog','ArtCatalog').
         "<a class=menu href=dmn.php?cmd=ArtCatalog&".

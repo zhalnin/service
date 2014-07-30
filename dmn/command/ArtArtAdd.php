@@ -107,6 +107,25 @@ class ArtArtAdd extends Command {
                 // устанавливаем родительский id
                 $catalogObj->setIdCatalog( $form->fields['idpar']->value );
 
+
+                \dmn\mapper\ObjectWatcher::instance()->performOperations();
+
+                $artId = $catalogObj->getId();
+
+                if( empty( $artId ) ) {
+                    throw new \dmn\base\AppException( "Error ", " while INSERT paragraph" );
+                }
+
+
+//                // получаем объект CartItems без id - значит будет INSERT
+//                $cartItems = new \dmn\domain\CartItems();
+//                $cartItems->setProductId( $form->fields['product_id']->value );
+//                $cartItems->setOrderId( $orderId );
+//                $cartItems->setTitle( $form->fields['title']->value );
+//                $cartItems->setPrice( $form->fields['price']->value );
+//                $cartItems->setQty( $form->fields['qty']->value );
+
+
                 $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idpar]&page=$_GET[page]" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
