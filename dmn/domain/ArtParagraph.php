@@ -77,33 +77,8 @@ class ArtParagraph extends DomainObject {
      */
     static function find( $id, $idc, $pos=null ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
-        if( ! is_null( $pos ) ) {
-            return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'pos' )->gt( $pos ) );
-        }
-        return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc ) );
-    }
-
-    /**
-     * Метод для поиска родительского каталога
-     * @param $id
-     * @return mixed
-     */
-    static function findParent( $id ) {
-        $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_catalog' );
-        return $finder->find( $idobj->eq( $id ) );
-    }
-
-    /**
-     * Метод для поиска родительского каталога
-     * @param $id
-     * @return mixed
-     */
-    static function findCatalog( $id ) {
-        $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
-        return $finder->find( $idobj->eq( $id ) );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_paragraph' );
+        return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'id_position' )->eq( $pos ) );
     }
 
 
@@ -121,8 +96,9 @@ class ArtParagraph extends DomainObject {
         switch( $action ) {
             case 'up': // движение позиции вверх
                 // получаем текущую позицию целевой строки в БД
-                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_position' )->eq( $id ), '' )->getPos();
+                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_paragraph' )->eq( $id ), '' )->getPos();
                 $tmp = $finder->upDownSelect( $prevobj->field('pos')->lt( $result['current']), ' ORDER BY pos DESC ' );
+//                echo "<tt><pre>".print_r( $tmp, true)."</pre></tt>";
                 if( !empty( $tmp ) ) { // если предыдущая позиция существует
                     // получаем предыдущую позицию относительно целевой строки в БД
                     $result['previous'] = $finder->upDownSelect( $prevobj->field('pos')->lt( $result['current']), ' ORDER BY pos DESC ' )->getPos();
@@ -132,7 +108,7 @@ class ArtParagraph extends DomainObject {
                 break;
             case 'down': // движение позиции вниз
                 // получаем текущую позицию целевой строки в БД
-                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_position' )->eq( $id ), '' )->getPos();
+                $result['current'] = $finder->upDownSelect( $curobj->field( 'id_paragraph' )->eq( $id ), '' )->getPos();
                 $tmp = $finder->upDownSelect( $prevobj->field('pos')->gt( $result['current']), ' ORDER BY pos ' );
                 if( !empty( $tmp ) ) { // если существует следующая позиция
                     // получаем предыдущую позицию относительно целевой строки в БД
@@ -143,7 +119,7 @@ class ArtParagraph extends DomainObject {
                 break;
             case 'show': // отображение позиции
                 // создаем условный оператор для запроса в БД
-                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
+                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_paragraph' );
                 $obj = $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'hide' ));
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
                 $obj->setHide( $action );
@@ -151,7 +127,7 @@ class ArtParagraph extends DomainObject {
 
             case 'hide': // сокрытие позиции
                 // создаем условный оператор для запроса в БД
-                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
+                $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_paragraph' );
                 $obj = $finder->findOne( $idobj->eq( $id )->field( 'hide' )->eq( 'show' ));
 //                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)

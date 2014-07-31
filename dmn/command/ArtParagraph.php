@@ -14,6 +14,7 @@ require_once( "dmn/classes/class.PagerMysql.php" );
 require_once( "dmn/domain/ArtArt.php" );
 require_once( "dmn/domain/ArtCatalog.php" );
 require_once( "dmn/domain/ArtParagraphImg.php" );
+require_once( "dmn/domain/ArtParagraph.php" );
 
 
 class ArtParagraph  extends Command {
@@ -25,6 +26,7 @@ class ArtParagraph  extends Command {
         $page      = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
         $idp       = intval( $request->getProperty( 'idp' ) );
         $idc       = intval( $request->getProperty( 'idc' ) );
+        $idph       = intval( $request->getProperty( 'idph' ) ); // id параграфа
         $idpar     = intval( $request->getProperty( 'idpar') ); // id родительского каталога ( если его нет, то FALSE === 0 )
         $page_link = 3; // Количество ссылок в постраничной навигации
         $pnumber   = 10; // Количество элементов на странице
@@ -34,8 +36,8 @@ class ArtParagraph  extends Command {
         // определенными параметрами для выполнения действия над
         // позицией в блоке
         if( ! empty( $position ) ) {
-            \dmn\domain\ArtArt::position( $idp, $position );
-            $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar={$idpar}&page={$page}" );
+            \dmn\domain\ArtParagraph::position( $idph, $position );
+            $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp={$idp}&idc={$idc}&idph={$idph}&page={$page}" );
         }
 
         if( ! empty( $action ) ) {

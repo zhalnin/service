@@ -30,7 +30,9 @@ class ArtParagraphUpDownFactory extends UpDownFactory {
         $fields = implode( ',', $obj->getObjectFields() );
         $core = "SELECT pos FROM system_menu_paragraph";
         list( $where, $values ) =  $this->buildSelect( $obj );
+//        echo "<tt><pre>".print_r($core, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($where, true)."</pre></tt>";
         return array( $core." ".$where." ".$orderBy ." LIMIT 1", $values );
     }
 

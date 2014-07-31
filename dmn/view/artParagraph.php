@@ -149,14 +149,12 @@ try {
             }
             // Выясняем скрыт раздел или нет
             if( $paragraph[$i]['hide'] == 'hide' )  {
-                $strhide = "<a href=?cmd=ArtParagraph&pact=show&$url>Отобразить</a>";
-                $style="class=hidden";
+                $strhide = "<a href=?cmd=ArtParagraph&ppos=show&$url>Отобразить</a>";
+                $style="class=hiddenrow";
             } else {
-                $strhide = "<a href=?cmd=ArtParagraph&pact=hide&$url>Скрыть</a>";
+                $strhide = "<a href=?cmd=ArtParagraph&ppos=hide&$url>Скрыть</a>";
                 $style = "";
             }
-
-
 
 
             // Вычисляем, сколько изображений у данного элемента
