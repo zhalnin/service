@@ -22,127 +22,275 @@ require_once( "dmn/domain/ArtParagraphImg.php" );
 class ArtParagraphEdit extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
 
         // получаем id_news редактируемой новости
-        $page      = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
-        $idp       = intval( $request->getProperty( 'idp' ) );
-        $idc       = intval( $request->getProperty( 'idc' ) );
-        $idph      = intval( $request->getProperty( 'idph' ) ); // id параграфа
-        $idpar     = intval( $request->getProperty( 'idpar') ); // id родительского каталога ( если его нет, то FALSE === 0 )
-//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
-//        if( ! empty( $idp ) && ! empty( $idc ) && ! empty( $idph ) ) { // если передан id_news
-            $paragraph = \dmn\domain\ArtParagraph::find( $idph, $idc, $idp ); // находим элементы по заданному id_news
-            $paragraphImg = \dmn\domain\ArtParagraphImg::find( $idph, $idc, $idp ); // находим элементы по заданному id_news
-//            echo "<tt><pre>".print_r($paragraph, true)."</pre></tt>";
-            echo "<tt><pre>".print_r($paragraphImg, true)."</pre></tt>";
-            // если еще не передан запрос и форма не была отправлена
-            if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
-//
-//                // Добавляем в глобальный массив данные из запроса к БД
-//                $_REQUEST['name']           = $catalog->getName(); // название
-//                $_REQUEST['url']            = $catalog->getUrl(); // тело новости
-//                $_REQUEST['keywords']       = $catalog->getKeywords(); // текст ссылки
-//                $_REQUEST['modrewrite']     = $catalog->getModrewrite(); // название изображения
-//
-//                // если новость не скрыта
-//                if( $catalog->getHide() == 'show' ) {
-//                    $_REQUEST['hide'] = true; // отмечаем чекбокс
-//                } else {
-//                    $_REQUEST['hide'] = false; // снимаем чекбокс
-//                }
-//                $_REQUEST['idc'] = $idc;
-//                $_REQUEST['idp'] = $idp;
-//                $_REQUEST['page'] = $_GET['page'];
-//            }
-//            $name               = new \dmn\classes\FieldText("name",
-//                "Название",
-//                true,
-//                $_REQUEST['name']);
-//            $url                = new \dmn\classes\FieldText("url",
-//                "URL",
-//                false,
-//                $_REQUEST['url']);
-//            $keywords           = new \dmn\classes\FieldText("keywords",
-//                "Ключевые слова",
-//                false,
-//                $_REQUEST['keywords']);
-//            $modrewrite         = new \dmn\classes\FieldTextEnglish("modrewrite",
-//                "Название для<br/>ReWrite",
-//                false,
-//                $_REQUEST['modrewrite']);
-//            $hide               = new \dmn\classes\FieldCheckbox("hide",
-//                "Отображать",
-//                $_REQUEST['hide']);
-//            $idc          = new \dmn\classes\FieldHiddenInt("idc",
-//                true,
-//                $_REQUEST['idc']);
-//            $page               = new \dmn\classes\FieldHiddenInt("page",
-//                false,
-//                $_REQUEST['page']);
-//            $submitted      = new \dmn\classes\FieldHidden( "submitted",
-//                true,
-//                "yes" );
-//            // Форма
-//            $form               = new \dmn\classes\Form( array( "name"          => $name,
-//                    "url"           => $url,
-//                    "keywords"      => $keywords,
-//                    "modrewrite"    => $modrewrite,
-//                    "hide"          => $hide,
-//                    "idc"           => $idc,
-//                    "page"          => $page,
-//                    "submitted"     => $submitted ),
-//                "Редактировать",
-//                "field");
-////            echo "<tt><pre>".print_r($form, true)."</pre></tt>";
-//            $request->setObject('form', $form ); // выводим форму заново
-//
+        $pageo           = intval( $request->getProperty( 'page' ) ); // номер страницы в постраничной навигации
+        $idpo            = intval( $request->getProperty( 'idp' ) );
+        $idco            = intval( $request->getProperty( 'idc' ) );
+        $idpho           = intval( $request->getProperty( 'idph' ) ); // id параграфа
+        $idpar          = intval( $request->getProperty( 'idpar') ); // id родительского каталога ( если его нет, то FALSE === 0 )
+        $paragraph      = \dmn\domain\ArtParagraph::find( $idpho, $idco, $idpo ); // находим параграф по заданному id_news
+        $paragraphImg   = \dmn\domain\ArtParagraphImg::find( $idpho, $idco, $idpo ); // находим изображения параграфа по заданному id_news
+
+//        echo "<tt><pre>".print_r($paragraph, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($paragraphImg, true)."</pre></tt>";
+
+        // если еще не передан запрос и форма не была отправлена
+        if( empty( $_POST ) &&  $_POST['submitted'] != 'yes' ) {
+
+            if( is_object( $paragraph ) ) { // если есть объект параграф
+                // Добавляем в глобальный массив данные из запроса к БД
+                $_REQUEST['name']    = $paragraph->getName(); // название
+                $_REQUEST['type']    = $paragraph->getType(); // тиn
+                $_REQUEST['align']   = $paragraph->getAlign(); // выравнивание
+//                    $_REQUEST['pos']     = $paragraph->getPos(); // позиция
+                // если параграф не скрыт
+                if( $paragraph->getHide() == 'show' ) {
+                    $_REQUEST['hide'] = true; // отмечаем чекбокс
+                } else {
+                    $_REQUEST['hide'] = false; // снимаем чекбокс
+                }
+                $_REQUEST['idc'] = $idco; // id каталога
+                $_REQUEST['idp'] = $idpo; // id позиции
+                $_REQUEST['page'] = $page; // номер страницы в навигации
+            }
+
+            if( is_object( $paragraphImg ) ) { // если есть объект изображения параграфа
+                $_REQUEST['namepict']   = $paragraphImg->getName(); // название
+                $_REQUEST['alt']        = $paragraphImg->getAlt(); // название изображения
+                $_REQUEST['small']      = $paragraphImg->getSmall(); // маленькое изображение
+                $_REQUEST['big']        = $paragraphImg->getBig(); // большое изображение
+                // если изображение не скрыто
+                if( $paragraphImg->getHide() == 'show' ) {
+                    $_REQUEST['hidepict'] = true; // отмечаем чекбокс
+                } else {
+                    $_REQUEST['hidepict'] = false; // снимаем чекбокс
+                }
+                $_REQUEST['pos']        = $paragraphImg->getPos(); // позиция
+                $_REQUEST['idp']        = $idpo; // id позици
+                $_REQUEST['idc']        = $idco; // id каталога
+                $_REQUEST['idph']       = $idpho; // id параграф
+            }
+        }
+
+        $name           = new \dmn\classes\FieldTextArea("name",
+            "Содержимое",
+            true,
+            $_REQUEST['name'],
+            50,
+            15 );
+        $namepict       = new \dmn\classes\FieldText("namepict",
+            "Название изображения",
+            true,
+            $_REQUEST['namepict'],
+            false);
+        $alt            = new \dmn\classes\FieldText("alt",
+            "ALT-тег",
+            false,
+            $_REQUEST['alt']);
+        $big       = new \dmn\classes\FieldFile("big",
+            "Изображение",
+            false,
+            $_FILES,
+            "imei_service/view/files/article/",
+            "par_");
+        $type           = new \dmn\classes\FieldSelect("type",
+            "Тип параграфа",
+            array("text"        => "Параграф",
+                "title_h1"      => "Заголовок H1",
+                "title_h2"      => "Заголовок H2",
+                "title_h3"      => "Заголовок H3",
+                "title_h4"      => "Заголовок H4",
+                "title_h5"      => "Заголовок H5",
+                "title_h6"      => "Заголовок H6",
+                "list"          => "Список"),
+            $_REQUEST['type']);
+        $align          = new \dmn\classes\FieldSelect("align",
+            "Выравнивание параграфа",
+            array("left"    => "Слева",
+                "center"    => "По центру",
+                "right"     => "Справа"),
+            $_REQUEST['align']);
+        $hidepict       = new \dmn\classes\FieldCheckbox("hidepict",
+            "Отображать фото",
+            $_REQUEST['hidepict']);
+        $hide               = new \dmn\classes\FieldCheckbox("hide",
+            "Отображать",
+            $_REQUEST['hide']);
+        $idpar                = new \dmn\classes\FieldHiddenInt("idpar",
+            true,
+            $_REQUEST['idpar']);
+        $idp                = new \dmn\classes\FieldHiddenInt("idp",
+            true,
+            $_REQUEST['idp']);
+        $idc               = new \dmn\classes\FieldHiddenInt("idc",
+            true,
+            $_REQUEST['idc']);
+//        $pos            = new \dmn\classes\FieldHidden("pos",
+//            false,
+//            $_REQUEST['pos']);
+        $page               = new \dmn\classes\FieldHiddenInt("page",
+            false,
+            $_REQUEST['page']);
+        $submitted          = new \dmn\classes\FieldHidden( "submitted",
+            true,
+            "yes" );
+        // Форма
+        $form           = new \dmn\classes\Form(array("name"        => $name,
+                                                    "namepict"      => $namepict,
+                                                    "alt"           => $alt,
+                                                    "big"           => $big,
+                                                    "hidepict"      => $hidepict,
+                                                    "type"          => $type,
+                                                    "align"         => $align,
+                                                    "hide"          => $hide,
+                                                    "idc"           => $idc,
+                                                    "idp"           => $idp,
+//                                                    "pos"           => $pos,
+                                                    "page"          => $page,
+                                                    "submitted"     => $submitted ),
+                                                "Редактировать",
+                                                "field");
+//            echo "<tt><pre>".print_r($form, true)."</pre></tt>";
+            $request->setObject('form', $form ); // выводим форму заново
+
 //        }
-//
-//        // если форма была передана
-//        if( ! empty( $_POST ) && $_POST['submitted'] == 'yes' ) {
-//            // проверяем на наличие пустых полей
-//            $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
-//            if( ! empty( $error ) ) { // если есть ошибки
-//                if( is_array( $error ) ) { // если это массив
-//                    foreach ( $error as $er ) { // проходим в цикле
-//                        $request->addFeedback( $er ); // добавляем сообщение об ошибке
-//                    }
-//                }
-//                $request->setObject('form', $form ); // выводим форму заново
-//
-//                return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
-//            } else {
-//
-//                //
-//                //            $rawPos = \dmn\domain\News::findMaxPos(); // работает \imei_service\domain\News - получаем коллекцию
-//                //            $position = $rawPos['pos'] + 1; // увеличиваем позицию на единицу
-//                // Выясняем, скрыта или открыта дректория
-//                if($form->fields['hide']->value) {
-//                    $showhide = "show";
-//                } else {
-//                    $showhide = "hide";
-//                }
-//
-////                echo "<tt><pre>".print_r( $form , true)."</pre></tt>";
-//                // устанавливаем название
-//                $catalog->setName( $form->fields['name']->value );
-//                // устанавливаем ссылку
-//                $catalog->setUrl( $form->fields['url']->value );
-//                // устанавливаем ключевые слова
-//                $catalog->setKeywords( $form->fields['keywords']->value );
-//                // устанавливаем флаг услуги
-//                $catalog->setModrewrite( $form->fields['modrewrite']->value );
-////                // устанавливаем позицию
-////                $catalog->setPos( $form->fields['pos']->value );
-//                // устанавливаем сокрытие/отображение
-//                $catalog->setHide( $showhide );
-//                // устанавливаем родительский id
-//                $catalog->setIdCatalog( $form->fields['idc']->value );
-//
-//                $this->reloadPage( 0, "dmn.php?cmd=ArtCatalog&idpar=$_REQUEST[idc]&page=$_GET[page]" ); // перегружаем страничку
-//                // возвращаем статус и переадресацию на messageSuccess
-//                return self::statuses( 'CMD_OK' );
-//            }
+
+        // если форма была передана
+        if( ! empty( $_POST ) && $_POST['submitted'] == 'yes' ) {
+            // проверяем на наличие пустых полей
+            $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
+            if( ! empty( $error ) ) { // если есть ошибки
+                if( is_array( $error ) ) { // если это массив
+                    foreach ( $error as $er ) { // проходим в цикле
+                        $request->addFeedback( $er ); // добавляем сообщение об ошибке
+                    }
+                }
+                $request->setObject('form', $form ); // выводим форму заново
+
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
+            } else {
+                // Выясняем, скрыта или открыта дректория
+                if( $form->fields['hide']->value ) {
+                    $showhide = "show";
+                } else {
+                    $showhide = "hide";
+                }
+
+                if( is_object( $paragraph ) ) {
+                    // устанавливаем название
+                    $paragraph->setName( $form->fields['name']->value );
+                    // устанавливаем описание
+                    $paragraph->setType( $form->fields['type']->value );
+                    // устанавливаем описание
+                    $paragraph->setAlign( $form->fields['align']->value );
+    //                // устанавливаем позицию
+    //                $paragraph->setPos( $pos );
+                    // устанавливаем сокрытие/отображение
+                    $paragraph->setHide( $showhide );
+                    // устанавливаем  id позиции
+                    $paragraph->setIdPosition( $idpo );
+                    // устанавливаем id каталога
+                    $paragraph->setIdCatalog( $idco );
+                }
+
+
+                // Скрытая или открытая позиция
+                if( $form->fields['hidepict']->value ) $showhidepict = "show";
+                else $showhidepict = "hide";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Формируем SQL-запрос на редактирование фото
+                if( ! empty( $_FILES['big']['name'] ) ) {
+                    // Новые изображения
+                    $img = $form->fields['big']->getFilename();
+                    $rawPhotoSettings = \dmn\domain\ArtParagraphImg::findPhotoSetting(); // работает \imei_service\domain\News - получаем коллекцию
+                    if( is_object( $paragraphImg ) ) { // если существует, то UPDATE
+                        $bigOld = $paragraphImg->getBig();
+                        $smallOld = $paragraphImg->getSmall();
+                        if( ! empty( $bigOld ) ) {
+                            // Удаляем старые изображения
+                            if( file_exists(  "imei_service/view/".$bigOld ) ) {
+                                @unlink( "imei_service/view/".$bigOld );
+                            }
+                        }
+                        if( ! empty( $smallOld ) ){
+                            // Удаляем старые изображения
+                            if( file_exists(  "imei_service/view/".$smallOld ) ) {
+                                @unlink( "imei_service/view/".$smallOld );
+                            }
+                        }
+
+
+                        if( ! empty( $img ) ) {
+                            $big = "files/article/$img";
+                            $small = "files/article/s_$img";
+                            \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
+                                                        "imei_service/view/files/article/s_$img",
+                                                        $rawPhotoSettings['width'],
+                                                        $rawPhotoSettings['height'] );
+                                                    $paragraphImg->setSmall( $small );
+                                                    $paragraphImg->setBig( $big );
+                        }
+//                        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
+//                        echo "<tt><pre>".print_r($idc, true)."</pre></tt>";
+//                        echo "<tt><pre>".print_r($idph, true)."</pre></tt>";
+
+                        // получаем объект ArtParagraphImg\
+                        $paragraphImg->setName( $form->fields['namepict']->value );
+                        $paragraphImg->setAlt(  $form->fields['alt']->value );
+                        $paragraphImg->setHide( $showhidepict );
+//                $paragraphImg->setPos( $pos );
+                        $paragraphImg->setIdPosition( $idpo );
+                        $paragraphImg->setIdCatalog( $idco );
+                        $paragraphImg->setIdParagraph( $idpho );
+//                        echo "<tt><pre>".print_r($paragraphImg, true)."</pre></tt>";
+
+                    } else { // если не существует - INSERT
+                        $paragraphImgNew = new \dmn\domain\ArtParagraphImg(); // получаем объект ArtParagraphImg
+                        $imgPos = \dmn\domain\ArtParagraphImg::findMaxPos( $idco, $idpo  ); // получаем позицию
+                        $positionImg = $imgPos['pos'] + 1; // увеличиваем позицию на единицу
+
+                        if( ! empty( $img ) ) {
+                            $big = "files/article/$img";
+                            $small = "files/article/s_$img";
+                            \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
+                                                        "imei_service/view/files/article/s_$img",
+                                                        $rawPhotoSettings['width'],
+                                                        $rawPhotoSettings['height'] );
+                                                        $paragraphImgNew->setSmall( $small );
+                                                        $paragraphImgNew->setBig( $big );
+                        }
+                        $paragraphImgNew->setName( $form->fields['namepict']->value );
+                        $paragraphImgNew->setAlt(  $form->fields['alt']->value );
+                        $paragraphImgNew->setHide( $showhidepict );
+                        $paragraphImgNew->setPos( $positionImg );
+                        $paragraphImgNew->setIdPosition( $idpo );
+                        $paragraphImgNew->setIdCatalog( $idco );
+                        $paragraphImgNew->setIdParagraph( $idpho );
+//                        echo "<tt><pre>".print_r($paragraphImgNew, true)."</pre></tt>";
+                    }
+                }
+                $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$idpo&idc=$idco&idph=$idpho&page=$pageo" ); // перегружаем страничку
+                // возвращаем статус и переадресацию на messageSuccess
+                return self::statuses( 'CMD_OK' );
+            }
             } else {
                 $request->setObject('form', $form ); // выводим форму заново
             }

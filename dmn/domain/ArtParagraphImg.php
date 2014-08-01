@@ -115,13 +115,14 @@ class ArtParagraphImg extends DomainObject {
 
     /**
      * Метод для получения максимальной позиции
-     * @param $id
+     * @param $id - id каталога
+     * @param $idp - id позиции
      * @return mixed
      */
-    static function findMaxPos( $id ) {
+    static function findMaxPos( $id, $idp ) {
         $finder = self::getFinder( __CLASS__ );
         $idobj = new \dmn\mapper\ArtParagraphImgIdentityObject( 'id_catalog' );
-        return $finder->findMaxPos( $idobj->eq( $id ) );
+        return $finder->findMaxPos( $idobj->eq( $id )->field( 'id_position' )->eq( $idp ) );
     }
 
     /**
