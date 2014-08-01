@@ -197,7 +197,7 @@ try {
                         <a href=?cmd=ArtUrl&ppos=up&$url>Вверх</a><br>
                         $strhide<br>
                         <a href=$edit&$url>Редактировать</a><br>
-                        <a href=# onclick=\"delete_position('?cmd=ArtUrl&pact=delete&$url',".
+                        <a href=# onclick=\"delete_position('?cmd=ArtUrl&pact=del&$url',".
                 "'Вы действительно хотите удалить позицию?');\">Удалить</a><br>
                         <a href=?cmd=ArtUrl&ppos=down&$url>Вниз</a>
                     </td>

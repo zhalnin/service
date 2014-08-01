@@ -145,6 +145,20 @@ class CatalogEdit extends Command {
                         $request->addFeedback( $er ); // добавляем сообщение об ошибке
                     }
                 }
+                $urlpictTmp = $form->fields['urlpict']->getFilename();
+                if( ! empty( $urlpictTmp ) ) {
+                    // Удаляем старые изображения
+                    if( file_exists(  "imei_service/view/images/country_flag/".$urlpictTmp ) ) {
+                        @unlink( "imei_service/view/images/country_flag/".$urlpictTmp );
+                    }
+                }
+                $rounded_flagTmp = $form->fields['rounded_flag']->getFilename();
+                if( ! empty( $rounded_flagTmp ) ) {
+                    // Удаляем старые изображения
+                    if( file_exists(  "imei_service/view/images/rounded_flag/".$rounded_flagTmp ) ) {
+                        @unlink( "imei_service/view/images/rounded_flag/".$rounded_flagTmp );
+                    }
+                }
                 $request->setObject('form', $form ); // выводим форму заново
 
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой

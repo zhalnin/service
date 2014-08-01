@@ -50,7 +50,7 @@ class ArtParagraphImg extends DomainObject {
                           $idCatalog=null,
                           $idParagraph=null ) {
 
-        $this->namePict     = $name;
+        $this->name         = $name;
         $this->alt          = $alt;
         $this->small        = $small;
         $this->big          = $big;
@@ -78,16 +78,21 @@ class ArtParagraphImg extends DomainObject {
 
     /**
      * Метод для поиска
-     * @param $id - id параграфа
+     * @param $idph - id параграфа
      * @param $idc - id каталога
      * @param $idp - id позиции
      * @return mixed
      */
-    static function find( $id, $idc, $idp ) {
-//        echo "<tt><pre>".print_r($id, true)."</pre></tt>";
+    static function find( $idph, $idc, $idp=null ) {
+//        echo "<tt><pre>".print_r($idc, true)."</pre></tt>";
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\ArtParagraphImgIdentityObject( 'id_paragraph' );
-        return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'id_position' )->eq( $idp ) );
+        if( ! is_null( $idp ) ) {
+            $idobj = new \dmn\mapper\ArtParagraphImgIdentityObject( 'id_paragraph' );
+            return $finder->findOne( $idobj->eq( $idph )->field( 'id_catalog' )->eq( $idc )->field( 'id_position' )->eq( $idp ) );
+        } else {
+            $idobj = new \dmn\mapper\ArtParagraphImgIdentityObject( 'id_position' );
+            return $finder->find( $idobj->eq( $idph )->field( 'id_catalog' )->eq( $idc ) );
+        }
     }
 
     /**

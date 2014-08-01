@@ -25,12 +25,12 @@ class ArtParagraphEdit extends Command {
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
 
         // получаем id_news редактируемой новости
-        $pageo           = intval( $request->getProperty( 'page' ) ); // номер страницы в постраничной навигации
-        $idpo            = intval( $request->getProperty( 'idp' ) );
-        $idco            = intval( $request->getProperty( 'idc' ) );
-        $idpho           = intval( $request->getProperty( 'idph' ) ); // id параграфа
+        $pageo          = intval( $request->getProperty( 'page' ) ); // номер страницы в постраничной навигации
+        $idpo           = intval( $request->getProperty( 'idp' ) );
+        $idco           = intval( $request->getProperty( 'idc' ) );
+        $idpho          = intval( $request->getProperty( 'idph' ) ); // id параграфа
         $idpar          = intval( $request->getProperty( 'idpar') ); // id родительского каталога ( если его нет, то FALSE === 0 )
-        $paragraph      = \dmn\domain\ArtParagraph::find( $idpho, $idco, $idpo ); // находим параграф по заданному id_news
+        $paragraph      = \dmn\domain\ArtParagraph::find( $idpho, $idco, $idpo ); // находим параграф по заданному id
         $paragraphImg   = \dmn\domain\ArtParagraphImg::find( $idpho, $idco, $idpo ); // находим изображения параграфа по заданному id_news
 
 //        echo "<tt><pre>".print_r($paragraph, true)."</pre></tt>";
@@ -44,16 +44,15 @@ class ArtParagraphEdit extends Command {
                 $_REQUEST['name']    = $paragraph->getName(); // название
                 $_REQUEST['type']    = $paragraph->getType(); // тиn
                 $_REQUEST['align']   = $paragraph->getAlign(); // выравнивание
-//                    $_REQUEST['pos']     = $paragraph->getPos(); // позиция
                 // если параграф не скрыт
                 if( $paragraph->getHide() == 'show' ) {
                     $_REQUEST['hide'] = true; // отмечаем чекбокс
                 } else {
                     $_REQUEST['hide'] = false; // снимаем чекбокс
                 }
-                $_REQUEST['idc'] = $idco; // id каталога
-                $_REQUEST['idp'] = $idpo; // id позиции
-                $_REQUEST['page'] = $page; // номер страницы в навигации
+                $_REQUEST['idc']    = $idco; // id каталога
+                $_REQUEST['idp']    = $idpo; // id позиции
+                $_REQUEST['page']   = $pageo; // номер страницы в навигации
             }
 
             if( is_object( $paragraphImg ) ) { // если есть объект изображения параграфа
@@ -155,22 +154,12 @@ class ArtParagraphEdit extends Command {
 //            echo "<tt><pre>".print_r($form, true)."</pre></tt>";
             $request->setObject('form', $form ); // выводим форму заново
 
-//        }
-
         // если форма была передана
         if( ! empty( $_POST ) && $_POST['submitted'] == 'yes' ) {
             // проверяем на наличие пустых полей
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
-            if( ! empty( $error ) ) { // если есть ошибки
-                if( is_array( $error ) ) { // если это массив
-                    foreach ( $error as $er ) { // проходим в цикле
-                        $request->addFeedback( $er ); // добавляем сообщение об ошибке
-                    }
-                }
-                $request->setObject('form', $form ); // выводим форму заново
-
-                return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
-            } else {
+//            echo "<tt><pre>".print_r(! empty($error), true)."</pre></tt>";
+            if( empty( $error ) ) { // если нет ошибок
                 // Выясняем, скрыта или открыта дректория
                 if( $form->fields['hide']->value ) {
                     $showhide = "show";
@@ -185,8 +174,6 @@ class ArtParagraphEdit extends Command {
                     $paragraph->setType( $form->fields['type']->value );
                     // устанавливаем описание
                     $paragraph->setAlign( $form->fields['align']->value );
-    //                // устанавливаем позицию
-    //                $paragraph->setPos( $pos );
                     // устанавливаем сокрытие/отображение
                     $paragraph->setHide( $showhide );
                     // устанавливаем  id позиции
@@ -199,22 +186,6 @@ class ArtParagraphEdit extends Command {
                 // Скрытая или открытая позиция
                 if( $form->fields['hidepict']->value ) $showhidepict = "show";
                 else $showhidepict = "hide";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 // Формируем SQL-запрос на редактирование фото
                 if( ! empty( $_FILES['big']['name'] ) ) {
@@ -242,25 +213,20 @@ class ArtParagraphEdit extends Command {
                             $big = "files/article/$img";
                             $small = "files/article/s_$img";
                             \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
-                                                        "imei_service/view/files/article/s_$img",
-                                                        $rawPhotoSettings['width'],
-                                                        $rawPhotoSettings['height'] );
-                                                    $paragraphImg->setSmall( $small );
-                                                    $paragraphImg->setBig( $big );
+                                "imei_service/view/files/article/s_$img",
+                                $rawPhotoSettings['width'],
+                                $rawPhotoSettings['height'] );
+                            $paragraphImg->setSmall( $small );
+                            $paragraphImg->setBig( $big );
                         }
-//                        echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
-//                        echo "<tt><pre>".print_r($idc, true)."</pre></tt>";
-//                        echo "<tt><pre>".print_r($idph, true)."</pre></tt>";
 
                         // получаем объект ArtParagraphImg\
                         $paragraphImg->setName( $form->fields['namepict']->value );
                         $paragraphImg->setAlt(  $form->fields['alt']->value );
                         $paragraphImg->setHide( $showhidepict );
-//                $paragraphImg->setPos( $pos );
                         $paragraphImg->setIdPosition( $idpo );
                         $paragraphImg->setIdCatalog( $idco );
                         $paragraphImg->setIdParagraph( $idpho );
-//                        echo "<tt><pre>".print_r($paragraphImg, true)."</pre></tt>";
 
                     } else { // если не существует - INSERT
                         $paragraphImgNew = new \dmn\domain\ArtParagraphImg(); // получаем объект ArtParagraphImg
@@ -271,11 +237,11 @@ class ArtParagraphEdit extends Command {
                             $big = "files/article/$img";
                             $small = "files/article/s_$img";
                             \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
-                                                        "imei_service/view/files/article/s_$img",
-                                                        $rawPhotoSettings['width'],
-                                                        $rawPhotoSettings['height'] );
-                                                        $paragraphImgNew->setSmall( $small );
-                                                        $paragraphImgNew->setBig( $big );
+                                "imei_service/view/files/article/s_$img",
+                                $rawPhotoSettings['width'],
+                                $rawPhotoSettings['height'] );
+                            $paragraphImgNew->setSmall( $small );
+                            $paragraphImgNew->setBig( $big );
                         }
                         $paragraphImgNew->setName( $form->fields['namepict']->value );
                         $paragraphImgNew->setAlt(  $form->fields['alt']->value );
@@ -284,16 +250,31 @@ class ArtParagraphEdit extends Command {
                         $paragraphImgNew->setIdPosition( $idpo );
                         $paragraphImgNew->setIdCatalog( $idco );
                         $paragraphImgNew->setIdParagraph( $idpho );
-//                        echo "<tt><pre>".print_r($paragraphImgNew, true)."</pre></tt>";
                     }
                 }
                 $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$idpo&idc=$idco&idph=$idpho&page=$pageo" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
-            }
             } else {
+                if( is_array( $error ) ) { // если это массив
+                    foreach ( $error as $er ) { // проходим в цикле
+                        $request->addFeedback( $er ); // добавляем сообщение об ошибке
+                    }
+                    $bigTmp = $form->fields['big']->getFilename();
+                    if( ! empty( $bigTmp ) ) {
+                        // Удаляем старые изображения
+                        if( file_exists(  "imei_service/view/files/article/".$bigTmp ) ) {
+                            @unlink( "imei_service/view/files/article/".$bigTmp );
+                        }
+                    }
+                }
                 $request->setObject('form', $form ); // выводим форму заново
+
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой
             }
+        } else {
+            $request->setObject('form', $form ); // выводим форму заново
         }
     }
+}
 ?>

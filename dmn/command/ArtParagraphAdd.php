@@ -188,7 +188,7 @@ class ArtParagraphAdd extends Command {
                     if($form->fields['hidepict']->value) $showhidepict = "show";
                     else $showhidepict = "hide";
 
-                    $imgPos = \dmn\domain\ArtParagraphImg::findMaxPos( $form->fields['idc']->value ); // получаем позицию
+                    $imgPos = \dmn\domain\ArtParagraphImg::findMaxPos( $form->fields['idc']->value, $form->fields['idp']->value ); // получаем позицию
                     $positionImg = $imgPos['pos'] + 1; // увеличиваем позицию на единицу
                     $rawPhotoSettings = \dmn\domain\ArtParagraphImg::findPhotoSetting(); // получаем массив с размерами фото
 //                echo "<tt><pre>".print_r($rawPhotoSettings, true)."</pre></tt>";

@@ -70,15 +70,20 @@ class ArtParagraph extends DomainObject {
 
     /**
      * Метод для поиска
-     * @param $id - id позиции
+     * @param $id - id параграфа
      * @param $idc - id каталога
-     * @param $pos - позиция элемента в таблице
+     * @param $idp - id позиции
      * @return mixed
      */
-    static function find( $id, $idc, $pos=null ) {
+    static function find( $id, $idc, $idp=null ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_paragraph' );
-        return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'id_position' )->eq( $pos ) );
+        if( ! is_null( $idp ) ) {
+            $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_paragraph' );
+            return $finder->findOne( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'id_position' )->eq( $idp ) );
+        } else {
+            $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
+            return $finder->find( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc ) );
+        }
     }
 
 

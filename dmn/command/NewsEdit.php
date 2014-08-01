@@ -163,6 +163,13 @@ class NewsEdit extends Command {
                         $request->addFeedback( $er ); // добавляем сообщение об ошибке
                     }
                 }
+                $filenameTmp = $form->fields['filename']->getFilename();
+                if( ! empty( $filenameTmp ) ) {
+                    // Удаляем старые изображения
+                    if( file_exists(  "imei_service/view/files/news/".$filenameTmp ) ) {
+                        @unlink( "imei_service/view/files/news/".$filenameTmp );
+                    }
+                }
                 $request->setObject('form', $form ); // выводим форму заново
 
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' ); // возвращаем статус обработки с ошибкой

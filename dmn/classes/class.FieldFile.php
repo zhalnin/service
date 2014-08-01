@@ -29,8 +29,7 @@ class FieldFile extends Field {
                                 $dir,
                                 $prefix = "",
                                 $help = "",
-                                $help_url = "" )
-    {
+                                $help_url = "" ) {
 //      echo "<tt><pre>".print_r($value, true)."</pre></tt>";
         // Invoke construct of parent class Field
         // for initiation of params
