@@ -35,7 +35,7 @@ class NewsDelete extends Command {
             // удаление блока новостей
 //            $news->finder()->delete( $news );
 //            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $news->markDeleted();
+            $news->markDeleted(); // отмечаем для удаления
 
             $this->reloadPage( 0, "dmn.php?cmd=News&page=$_GET[page]" ); // перегружаем страничку
             return self::statuses( 'CMD_OK' );

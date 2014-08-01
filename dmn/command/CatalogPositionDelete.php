@@ -27,7 +27,7 @@ class CatalogPositionDelete extends Command {
             // удаление блока новостей
 //            $news->finder()->delete( $news );
 //            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $catalogPosition->markDeleted();
+            $catalogPosition->markDeleted(); // отмечаем для удаления
 
             $this->reloadPage( 0, "dmn.php?cmd=CatalogPosition&idc=$_REQUEST[idc]&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
             // возвращаем статус и переадресацию на messageSuccess

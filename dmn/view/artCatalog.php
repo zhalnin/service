@@ -18,7 +18,7 @@ try {
     $idpar      = intval( $request->getProperty( 'idpar' ) );
     $artCatalog = $request->getObject( 'artCatalog' );  // получаем объект PagerMySQL
 
-//    echo "<tt><pre>".print_r($request, true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($artCatalog->get_page(), true)."</pre></tt>";
 
     // Данные переменные определяют название страницы и подсказку
     $title      = 'Администрирование перечня услуг';
@@ -78,6 +78,7 @@ try {
             // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
             $url = "idc={$catalog[$i][id_catalog]}&".
                 "idpar={$catalog[$i][id_parent]}&".
+                "idParent={$catalog[$i]['id_catalog']}&".
                 "&page=$_GET[page]";
             if($catalog[$i]['hide'] == 'show') {
                 $showhide = "<a href=?cmd=ArtCatalog&ppos=hide&$url

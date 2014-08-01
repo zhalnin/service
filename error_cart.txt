@@ -1,0 +1,8 @@
+Error in 0
+Error in item_number_1 0
+Error: item_number_1 = 0
+Error: item_number_1 = 0
+Error: amount_1 = 0
+Error in DB: $items_price is empty\n\rError in DB: $items_price is empty
+Error in DB: $items_price is empty
+

@@ -106,12 +106,12 @@ class DomainObjectAssembler {
         $delfact = $this->factory->getDeleteFactory();
         // инициализируем переменные значениями UPDATE и VALUES
         list( $delete, $values ) = $delfact->newDelete( $obj );
-        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
-        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($delete, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($values, true)."</pre></tt>";
         // формируем запрос
         $stmt = $this->getStatement( $delete );
         // выполняем запрос
-//        $stmt->execute( $values );
+        $stmt->execute( $values );
         $stmt->closeCursor();
         // очищаем массивы
         $obj->markClean();

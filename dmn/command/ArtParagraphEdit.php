@@ -81,7 +81,7 @@ class ArtParagraphEdit extends Command {
             15 );
         $namepict       = new \dmn\classes\FieldText("namepict",
             "Название изображения",
-            true,
+            false,
             $_REQUEST['namepict'],
             false);
         $alt            = new \dmn\classes\FieldText("alt",

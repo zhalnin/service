@@ -41,7 +41,7 @@ class ArtParagraphDelete  extends Command {
                     @unlink( "imei_service/view/".$smallOld );
                 }
             }
-            $paragraphImg->markDeleted();
+            $paragraphImg->markDeleted(); // отмечаем для удаления
 
 
             $paragraph = \dmn\domain\artParagraph::find( $idph, $idc, $idp ); // находим элементы по заданному id_news
@@ -49,7 +49,7 @@ class ArtParagraphDelete  extends Command {
             // удаление параграфа
 //            $news->finder()->delete( $news );
 //            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $paragraph->markDeleted();
+            $paragraph->markDeleted(); // отмечаем для удаления
 //
             $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idph=$idph&idc=$idc&idp=$idp&page=$page" ); // перегружаем страничку
 //            // возвращаем статус и переадресацию на messageSuccess

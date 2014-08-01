@@ -31,8 +31,8 @@ class CartOrderDelete extends Command {
             // удаление блока c заказом
 //            $news->finder()->delete( $news );
 //            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $cartOrder->markDeleted();
-            $cartItems->markDeleted();
+            $cartOrder->markDeleted(); // отмечаем для удаления
+            $cartItems->markDeleted(); // отмечаем для удаления
 
             $this->reloadPage( 0, "dmn.php?cmd=CartOrder&page=$_GET[page]" ); // перегружаем страничку
             return self::statuses( 'CMD_OK' );

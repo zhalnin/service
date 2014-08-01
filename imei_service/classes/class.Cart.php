@@ -202,6 +202,17 @@ class Cart {
         }
         // проходим в цикле, чтобы инициализировать нужные нам переменные для вставки в system_cart_items
         for( $i=1; $i <= $count; $i++ ) {
+            // защита от воров первая
+            if( $params["item_number_{$i}"] <= 0 ) {
+                file_put_contents('error_cart.txt', "Error: item_number_{$i} = {$params['item_number_'.$i]}"."\n\r", FILE_APPEND );
+                return false;
+            } elseif( $params["amount_{$i}"] <= 0 ) {
+                file_put_contents('error_cart.txt', "Error: amount_{$i} = {$params['amount_'.$i]}"."\n\r", FILE_APPEND );
+                return false;
+            } elseif( $params["total_cost_{$i}"] <= 0 ) {
+                file_put_contents('error_cart.txt', "Error: total_cost_{$i} = {$params['total_cost_'.$i]}"."\n\r", FILE_APPEND );
+                return false;
+            }
             // инициализируем две переменные из строки, типа: 36_2
             list($id_catalog, $position ) = explode( '_', $params["item_number_{$i}"] );
             $sth = $this->pdo->prepare( 'SELECT cost FROM system_position
@@ -210,10 +221,20 @@ class Cart {
             $result = $sth->execute( array( $position, $id_catalog ) );
             if( $result ) {
                 $item_price = $sth->fetch();
+                if( empty( $item_price ) ) {
+                    file_put_contents('error_cart.txt', 'Error in DB: $items_price is empty'."\n\r", FILE_APPEND );
+                }
                 $amount += $item_price['cost'] * $params["quantity_{$i}"];
+            } else {
+                file_put_contents('error_cart.txt', "Error in DB: item_number_{$i} = {$params['item_number_'.$i]},
+                                                    amount_{$i} = {$params['amount_'.$i]},
+                                                    total_cost_{$i} = {$params['total_cost_'.$i]},
+                                                    subtotal = {$params['subtotal']}"."\n\r", FILE_APPEND );
             }
         }
+        // защита от воров вторая
         if( ( $amount ) == $params['subtotal'] ) {
+            file_put_contents('error_cart.txt', "Error: subtotal = {$params['subtotal']}"."\n\r", FILE_APPEND );
             return true;
         } else {
             return false;

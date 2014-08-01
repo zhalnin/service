@@ -24,7 +24,7 @@ class CatalogDelete extends Command {
         $idc = $request->getProperty( 'idc' );
         if( $idc ) { // если передан id каталога
 
-            \dmn\domain\Catalog::delete( $idc );
+            \dmn\domain\Catalog::delete( $idc ); // рекурсивно удаляем все зависимости каталога
 
             $this->reloadPage( 0, "dmn.php?cmd=Catalog&idc=$_REQUEST[idc]&idp=$_REQUEST[idp]&page=$_GET[page]" ); // перегружаем страничку
             return self::statuses( 'CMD_OK' );

@@ -19,9 +19,9 @@ class ArtCatalog extends Command {
 
         $action     = $request->getProperty( 'pact' ); // действие над позицией
         $position   = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
-        $page       = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
-        $idc        = $request->getProperty( 'idc' ); // id каталога
-        $idpar        = intval( $request->getProperty( 'idpar' ) ); // id родительского каталога ( если его нет, то FALSE === 0 )
+        $page       = intval( $request->getProperty( 'page' ) ); // номер страницы в постраничной навигации
+        $idc        = intval(  $request->getProperty( 'idc' ) ); // id каталога
+        $idpar      = intval( $request->getProperty( 'idpar' ) ); // id родительского каталога ( если его нет, то FALSE === 0 )
         $page_link  = 3; // Количество ссылок в постраничной навигации
         $pnumber    = 10; // Количество позиций на странице
 

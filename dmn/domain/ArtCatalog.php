@@ -176,59 +176,6 @@ class ArtCatalog extends DomainObject {
     }
 
     /**
-     * Метод для рекурсивного удаления подкаталогов и позиций
-     * заданного каталога
-     * @param $idc - id каталога
-     */
-    static function delete( $idc ) {
-        // находим каталог, включая родительский
-        // с которого началось удаление и при рекурсивном вызове
-        // будем находить каждый следующий каталог
-        $catParent = \dmn\domain\ArtCatalog::find( $idc );
-        if( is_object( $catParent ) ) {
-
-//            $roundedFlag = $catParent->getRoundedFlag();
-//            if( ! empty( $roundedFlag ) ) { // если поле не пустое
-//                // путь до большого изображения
-//                $path_rounded = str_replace( "//", "/","imei_service/view/".$catParent->getRoundedFlag() );
-//                if( file_exists( $path_rounded ) ) { // если большое изображение существует
-////                    print $path_rounded;
-//                    @unlink( $path_rounded ); // удаляем
-//                }
-//            }
-//            $countryFlag = $catParent->getUrlpict();
-//            if( ! empty( $countryFlag ) ) { // если поле не пустое
-//                $path_country = str_replace( "//", "/","imei_service/view/".$catParent->getUrlpict() ); // путь до малого изображения
-//                if( file_exists( $path_country ) ) { // если малое изображение существует
-////                    print $path_country;
-//                    @unlink( $path_country ); // удаляем
-//                }
-//            }
-
-            // ставим каталог в очередь на удаление
-            $catParent->markDeleted();
-            // по id_catalog каталога находим все его позиции
-            $posParent = \dmn\domain\ArtCatalogPosition::findAllPosition( $catParent->getId() );
-            if( is_object( $posParent ) ) {
-                // проходим по ним в цикле
-                foreach ( $posParent as $pos ) {
-//                    echo "<tt><pre> 1 - ".print_r($pos, true)."</pre></tt>";
-                    // и добавляем позиции в очередь на удаление
-                    $pos->markDeleted();
-                }
-                // находим у заданного каталога его подкаталоги по его id_catalog
-                $catChild = \dmn\domain\ArtCatalog::findParent( $catParent->getId() );
-                // проходим в цикле по полученным подкаталогам
-                foreach ( $catChild as $cat) {
-                    // и вызываем метод рекурсивно
-                    self::delete( $cat->getId() );
-                }
-            }
-        }
-    }
-
-
-    /**
      * устанавливем имя
      * @param $name_s
      */
