@@ -53,6 +53,9 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\ArtParagraphImg":
                 return new ArtParagraphImgPersistenceFactory();
                 break;
+            case "dmn\\domain\\Accounts":
+                return new AccountsPersistenceFactory();
+                break;
         }
     }
 }
@@ -472,4 +475,46 @@ class ArtParagraphImgPersistenceFactory extends PersistenceFactory {
         return new ArtParagraphImgUpDownFactory();
     }
 }
+
+/**
+ * Class AccountsPersistenceFactory
+ * для работы с блоком каталогов - статьей
+ * @package dmn\mapper
+ */
+class AccountsPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new AccountsMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new AccountsObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new AccountsCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new AccountsSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new AccountsUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new AccountsIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new AccountsDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new AccountsUpDownFactory();
+    }
+}
+
 ?>

@@ -382,4 +382,32 @@ class ArtParagraphImgObjectFactory extends DomainObjectFactory {
         return $obj; // возвращаем объект \dmn\domain\News
     }
 }
+
+/**
+ * Class AccountsObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class AccountsObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\Accounts
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\Accounts"; // название класса
+        $old = $this->getFromMap( $class, $array['id_account'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id_account'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setName( $array['name'] );
+        $obj->setPass( $array['pass'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
 ?>

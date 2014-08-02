@@ -52,11 +52,11 @@ class PagerMysql extends Pager {
     parent::__construct();
   }
 
-   /**
-   * Total quantity of position in list.
-   * @return quantity fo records
-   */
-  public function get_total()  {
+    /**
+     * Total quantity of position in list.
+     * @throws \dmn\base\AppException
+     */
+    public function getTotal()  {
     // Form query for take
     // total quantity of records in table
     $query = "SELECT COUNT(*) FROM {$this->tablename}
@@ -68,7 +68,7 @@ class PagerMysql extends Pager {
 
     if( ! $result ) {
         throw new \dmn\base\AppException(  "Ошибка обращения к таблице
-                              позиций - get_total()");
+                              позиций - getTotal()");
     }
     return $sth->fetchColumn();
   }
@@ -77,7 +77,7 @@ class PagerMysql extends Pager {
    * Quantity of position on the page.
    * @return int
    */
-  public function get_pnumber() {
+  public function getPnumber() {
     // Quantity of position on the page
     return $this->pnumber;
   }
@@ -87,7 +87,7 @@ class PagerMysql extends Pager {
    * form current page.
    * @return int
    */
-  public function get_page_link() {
+  public function getPageLink() {
     // Quantity of references from left and right
     // from current page
     return $this->page_link;
@@ -98,43 +98,44 @@ class PagerMysql extends Pager {
    * to the other page.
    * @return string
    */
-  public function get_parameters()  {
+  public function getParameters()  {
     // Additional parameters that
     // is necessarily to take by reference
     return $this->parameters;
   }
 
 
-  /**
-   * Return array of Files's strings
-   * by number page $index
-   * @return array $arr
-   */
-  public function get_page() {
+    /**
+     * Return array of Files's strings
+     * by number page $index
+     * @return mixed
+     * @throws \dmn\base\AppException
+     */
+    public function getPage() {
     // Current page
     $page = intval($_GET['page']);
     if(empty($page)) $page = 1;
     // Quantity records in file
-    $total = $this->get_total();
+    $total = $this->getTotal();
     // Calculate number of pages in system
-    $number = (int)($total/$this->get_pnumber());
-    if((float)($total/$this->get_pnumber()) - $number != 0) $number++;
+    $number = (int)($total/$this->getPnumber());
+    if((float)($total/$this->getPnumber()) - $number != 0) $number++;
     // Eject position of current page
     $arr = array();
     // Number, from whom begin choose
     // strings from file
-    $first = ($page - 1) * $this->get_pnumber();
+    $first = ($page - 1) * $this->getPnumber();
     // Take positions for current page
     $query = "SELECT * FROM {$this->tablename}
               {$this->where}
               {$this->order}
-              LIMIT $first, {$this->get_pnumber()}";
+              LIMIT $first, {$this->getPnumber()}";
     $sth = $this->getStatement( $query );
     $result = $sth->execute();
 
     if( ! $result ) {
       throw new \dmn\base\AppException(  "Ошибка обращения к таблице
-                              позиций - get_page()");
+                              позиций - getPage()");
     }
 //      echo "<tt><pre>".print_r($arr, true)."</pre></tt>";
 

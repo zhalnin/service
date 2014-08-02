@@ -109,7 +109,7 @@ class Form {
                     default:
                         // Elements of control by default
                         echo "<tr>
-                    <td width=\"100\"
+                    <td width=\"130\"
                         $style $class valign=\"top\">$caption:</td>
                     <td $style $class valign=\"top\">$tag</td>
                   </tr>\n";
@@ -139,7 +139,7 @@ class Form {
      * return form
      */
     public function __toString(){
-        $this->print_form();
+        return $this->print_form();
     }
 
     /**

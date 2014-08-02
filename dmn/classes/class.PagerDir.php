@@ -41,7 +41,7 @@ class PagerDir extends Pager {
    * Total quantity of position in list.
    * @return quantity fo records
    */
-  public function get_total()  {
+  public function getTotal()  {
     $countline = 0;
     // Test for file not to start with .(.htaccess)
     $pattern = "|^[^\.].*$|";
@@ -63,7 +63,7 @@ class PagerDir extends Pager {
    * Quantity of position on the page.
    * @return int
    */
-  public function get_pnumber() {
+  public function getPnumber() {
     // Quantity of position on page
     return $this->pnumber;
   }
@@ -73,7 +73,7 @@ class PagerDir extends Pager {
    * form current page.
    * @return int
    */
-  public function get_page_link() {
+  public function getPageLink() {
     // Quantity of references from left and right
     // from current page
     return $this->page_link;
@@ -84,7 +84,7 @@ class PagerDir extends Pager {
    * to the other page.
    * @return string
    */
-  public function get_parameters() {
+  public function getParameters() {
     // Additional parameters, which
     // necessary to take along by reference
     return $this->parameters;
@@ -95,25 +95,25 @@ class PagerDir extends Pager {
    * by number page $index
    * @return array $arr
    */
-  public function get_page() {
+  public function getPage() {
     // Test for file not to start with .(.htaccess)
     $pattern = "|^[^\.].*$|";
     // Current page
     $page = intval( $_GET['page'] );
     if( empty( $page ) ) $page = 1;
     // Quantity of records in file
-    $total = $this->get_total();
+    $total = $this->getTotal();
     // Calculate quantity of pages in system
-    $number = (int)( $total/$this->get_pnumber() );
-    if( (float)( $total/$this->get_pnumber() ) - $number != 0 ) $number++;
+    $number = (int)( $total/$this->getPnumber() );
+    if( (float)( $total/$this->getPnumber() ) - $number != 0 ) $number++;
     // Check requested number of page is
-    // between 1 and get_total
+    // between 1 and getTotal
     if( $page <= 0 || $page > $number ) return 0;
     // Eject positions from current page
     $arr = array();
     // Number, from whom begin choose
     // strings from file
-    $first = ( $page - 1 )*$this->get_pnumber();
+    $first = ( $page - 1 )*$this->getPnumber();
     // Open directory
     if( ( $dir = opendir( $this->dirname ) ) === false ) return 0;
     $i = -1;
@@ -129,7 +129,7 @@ class PagerDir extends Pager {
         if( $i < $first ) continue;
         // If end sample is reached
         // leave cycle
-        if( $i > $first + $this->get_pnumber() - 1 ) break;
+        if( $i > $first + $this->getPnumber() - 1 ) break;
         // Place path to files in array
         // which are going to be returned by method
         $arr[] = $this->dirname."/".$file;

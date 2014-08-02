@@ -243,4 +243,13 @@ class ArtParagraphImgCollection
     }
 }
 
+class AccountsCollection
+    extends Collection
+    implements \dmn\domain\AccountsCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\Accounts";
+    }
+}
+
 ?>

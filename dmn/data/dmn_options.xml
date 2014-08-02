@@ -5,6 +5,10 @@
 
 
     <menu>
+        <point name="Accounts">
+            <title>Аккаунты</title>
+            <description>Управление аккаунтами</description>
+        </point>
         <point name="News">
             <title>Новости</title>
             <description>Управление новостным блоком</description>
@@ -30,6 +34,36 @@
         <view status="CMD_ERROR">error</view>
 
 
+        <command name="Accounts">
+            <view>accounts</view>
+            <status value="CMD_ADD">
+                <forward>AccountsAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>AccountsEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>AccountsDelete</forward>
+            </status>
+        </command>
+        <command name="AccountsAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="AccountsEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="AccountsDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
 
         <command name="News">
             <view>news</view>
@@ -41,6 +75,9 @@
             </status>
             <status value="CMD_DELETE">
                 <forward>NewsDelete</forward>
+            </status>
+            <status value="CMD_DETAIL">
+                <forward>NewsDetail</forward>
             </status>
         </command>
         <command name="NewsAdd">
@@ -56,6 +93,12 @@
             </status>
         </command>
         <command name="NewsDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="NewsDetail">
+            <view>newsDetail</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>

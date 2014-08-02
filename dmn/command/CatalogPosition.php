@@ -8,6 +8,8 @@
 
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
+if( ! defined( 'AZ' ) ) die();
+define( 'CatalogPosition', true );
 
 require_once( "dmn/command/Command.php" );
 require_once( "dmn/domain/CatalogPosition.php" );

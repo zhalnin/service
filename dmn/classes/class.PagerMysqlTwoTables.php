@@ -10,7 +10,8 @@ error_reporting( E_ALL & ~E_NOTICE );
 
 
 // Include parent class
-require_once( "dmn/classes/class.Pager.php" );
+//require_once( "dmn/classes/class.Pager.php" );
+require_once( "dmn/classes/class.PagerMysql.php" );
 // Include exception for error handling
 require_once( "dmn/base/Exceptions.php" );
 
@@ -18,22 +19,22 @@ require_once( "dmn/base/Exceptions.php" );
 /**
  * Describe pager navigation for MySQL.
  */
-class PagerMysqlTwoTables extends \dmn\classes\Pager {
-    // Name of table
-    protected $tablename;
+class PagerMysqlTwoTables extends PagerMysql {
+//    // Name of table
+//    protected $tablename;
     // Sort by id
     protected $id;
-    // WHERE-condition
-    protected $where;
-    // Sorting ORDER
-    protected $order;
-    // Quantity of position on the page
-    private $pnumber;
-    // Quantity or reference from left and right
-    // from current page
-    private $page_link;
-    // Parameters
-    protected $parameters;
+//    // WHERE-condition
+//    protected $where;
+//    // Sorting ORDER
+//    protected $order;
+//    // Quantity of position on the page
+//    private $pnumber;
+//    // Quantity or reference from left and right
+//    // from current page
+//    private $page_link;
+//    // Parameters
+//    protected $parameters;
 
     // Constructor
     public function __construct($tablename,
@@ -45,22 +46,29 @@ class PagerMysqlTwoTables extends \dmn\classes\Pager {
                                 $id)  {
 
 
-        $this->tablename   = $tablename;
-        $this->where       = $where;
-        $this->order       = $order;
-        $this->pnumber     = $pnumber;
-        $this->page_link   = $page_link;
-        $this->parameters  = $parameters;
+//        $this->tablename   = $tablename;
+//        $this->where       = $where;
+//        $this->order       = $order;
+//        $this->pnumber     = $pnumber;
+//        $this->page_link   = $page_link;
+//        $this->parameters  = $parameters;
+
         $this->id          = $id;
 
-        parent::__construct();
+        parent::__construct( $tablename,
+                            $where,
+                            $order,
+                            $pnumber,
+                            $page_link,
+                            $parameters );
     }
 
     /**
      * Total quantity of position in list.
-     * @return quantity fo records
+     * @return quantity
+     * @throws \dmn\base\AppException
      */
-    public function get_total()  {
+    public function getTotal()  {
         // Form query for take
         // total quantity of records in table
         $query = "SELECT COUNT(*) FROM {$this->tablename[1]}
@@ -72,43 +80,10 @@ class PagerMysqlTwoTables extends \dmn\classes\Pager {
 
         if( ! $result ) {
             throw new \dmn\base\AppException(  "Ошибка обращения к таблице
-                              позиций - get_total()");
+                              позиций - getTotal()");
         }
         return $sth->fetchColumn();
     }
-
-    /**
-     * Quantity of position on the page.
-     * @return int
-     */
-    public function get_pnumber() {
-        // Quantity of position on the page
-        return $this->pnumber;
-    }
-
-    /**
-     * Quantity of position from left and right
-     * form current page.
-     * @return int
-     */
-    public function get_page_link() {
-        // Quantity of references from left and right
-        // from current page
-        return $this->page_link;
-    }
-
-    /**
-     * String to take along by reference
-     * to the other page.
-     * @return string
-     */
-    public function get_parameters()  {
-        // Additional parameters that
-        // is necessarily to take by reference
-        return $this->parameters;
-    }
-
-
 
 //SELECT * FROM system_cart_orders t1
 //INNER JOIN system_cart_items t2 ON t2.order_id = t1.id
@@ -120,35 +95,36 @@ class PagerMysqlTwoTables extends \dmn\classes\Pager {
     /**
      * Return array of Files's strings
      * by number page $index
-     * @return array $arr
+     * @return array
+     * @throws \dmn\base\AppException
      */
     public function getPage() {
         // Current page
         $page = intval($_GET['page']);
         if(empty($page)) $page = 1;
         // Quantity records in file
-        $total = $this->get_total();
+        $total = $this->getTotal();
         // Calculate number of pages in system
-        $number = (int)($total/$this->get_pnumber());
-        if((float)($total/$this->get_pnumber()) - $number != 0) $number++;
+        $number = (int)($total/$this->getPnumber());
+        if((float)($total/$this->getPnumber()) - $number != 0) $number++;
         // Eject position of current page
         $arr = array();
         // Number, from whom begin choose
         // strings from file
-        $first = ($page - 1) * $this->get_pnumber();
+        $first = ($page - 1) * $this->getPnumber();
         // Take positions for current page
         $query = "SELECT * FROM {$this->tablename[0]} t1
                   INNER JOIN {$this->tablename[1]} t2
                   ON t2.{$this->id[1]} = t1.{$this->id[0]}
               {$this->where}
               {$this->order}
-              LIMIT $first, {$this->get_pnumber()}";
+              LIMIT $first, {$this->getPnumber()}";
         $sth = $this->getStatement( $query );
         $result = $sth->execute();
 
         if( ! $result ) {
             throw new \dmn\base\AppException(  "Ошибка обращения к таблице
-                              позиций - get_page()");
+                              позиций - getPage()");
         }
 //      echo "<tt><pre>".print_r($arr, true)."</pre></tt>";
 

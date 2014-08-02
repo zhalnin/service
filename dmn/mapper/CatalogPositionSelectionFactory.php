@@ -28,7 +28,8 @@ class CatalogPositionSelectionFactory extends SelectionFactory {
 
     /**
      * Для получения максимальной позиции в таблице
-     * @return string
+     * @param IdentityObject $obj
+     * @return array
      */
     function newSelectionMaxPos( IdentityObject $obj ) {
         $fields = implode( ',', $obj->getObjectFields() );
@@ -39,8 +40,9 @@ class CatalogPositionSelectionFactory extends SelectionFactory {
     }
 
     /**
-     * Для получения максимальной позиции в таблице
-     * @return string
+     * Для получения количества позиции в таблице
+     * @param IdentityObject $obj
+     * @return array
      */
     function newSelectionCountPos( IdentityObject $obj ) {
         $fields = implode( ',', $obj->getObjectFields() );

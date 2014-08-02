@@ -36,7 +36,7 @@ try {
     // Содержание страницы
     if( is_object( $catalogPositions ) ) {
         // Получаем содержимое текущей страницы
-        $catalog = $catalogPositions->get_page();
+        $catalog = $catalogPositions->getPage();
     }
     // Если это не корневой каталог выводим ссылки для возврата
     // и для добавления подкаталога

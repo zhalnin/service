@@ -12,6 +12,8 @@ try {
     require_once( "dmn/base/Exceptions.php" );
 
 
+    define( 'AZ', true ); // определяем основную константу
+
     dmn\Controller\controller::run();
 
 

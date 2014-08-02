@@ -8,7 +8,7 @@
 
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
-
+if( ! defined( 'ArtParagraph' ) ) die();
 // Подключаем родительский класс
 require_once( 'dmn/command/Command.php' );
 

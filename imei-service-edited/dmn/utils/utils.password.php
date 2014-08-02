@@ -11,8 +11,7 @@
 // $number - количество символов в пароле
 //////////////////////////////////////////////////////////
 
-function generate_password($number = 10)
-{
+function generate_password($number = 10) {
     $arr = array('a','b','c','d','e','f',
                 'g','h','i','j','k','l',
                 'm','n','o','p','q','r','s',
@@ -25,8 +24,7 @@ function generate_password($number = 10)
                 '7','8','9','0','_');
     // Генерируем пароль
     $pass = "";
-    for($i = 0; $i < $number; $i++)
-    {
+    for($i = 0; $i < $number; $i++) {
         // Вычисляем случайный индекс массива
         $index = rand(0, count($arr) - 1);
         $pass .= $arr[$index];

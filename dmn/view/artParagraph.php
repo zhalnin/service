@@ -22,7 +22,7 @@ try {
 //    echo "<tt><pre>".print_r($request, true)."</pre></tt>";
     if( is_object( $paragraphs ) ) {
         // Получаем содержимое текущей страницы
-        $paragraph = $paragraphs->get_page();
+        $paragraph = $paragraphs->getPage();
     }
 
     // Данные переменные определяют название страницы и подсказку
@@ -159,11 +159,21 @@ try {
 
             // Вычисляем, сколько изображений у данного элемента
             $countImg = \dmn\domain\ArtParagraphImg::findCountPos( $paragraph[$i]['id_paragraph'], $idp, $idc );
+            $paragraphImg = \dmn\domain\ArtParagraphImg::find( $paragraph[$i]['id_paragraph'], $idc, $idp );
+            if( is_object( $paragraphImg ) ) {
+                $img = $paragraphImg->getBig();
+                if( ! empty( $img ) ) {
+                    if( file_exists(  "imei_service/view/$img" ) ) {
+                        $size = @getimagesize( "imei_service/view/$img" );
+                    }
+                }
+            }
+
             $total_image = $countImg['count'];
             if( ! empty( $countImg ) ) $print_image = " ($total_image)";
             else $print_image = "";
 
-//        echo "<tt><pre>".print_r($total_image, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($size, true)."</pre></tt>";
 
             echo "<tr $style $class>
                     <td align=center>
@@ -174,7 +184,7 @@ try {
                 "</p></td>";
             if( $total_image > 0 ) {
                 echo "<td align=center>
-                        <a href=# onclick=\"show_detail( '?cmd=ArtParagraph&pact=detail&{$url}', 1900, 980); return false\">Изображения$print_image</a>
+                        <a href=# onclick=\"show_detail( '?cmd=ArtParagraph&pact=detail&{$url}', {$size[0]}, {$size[1]} ); return false\">Изображения$print_image</a>
                     </td>";
             } else {
                 echo "<td align=center>

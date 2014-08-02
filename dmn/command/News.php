@@ -8,6 +8,8 @@
 
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
+if( ! defined( 'AZ' ) ) die();
+define( 'News', true );
 
 require_once( "dmn/command/Command.php" );
 require_once( "dmn/mapper/PersistenceFactory.php" );
@@ -47,6 +49,9 @@ class News extends Command {
                     break;
                 case 'del':
                     return self::statuses( 'CMD_DELETE');
+                    break;
+                case 'detail':
+                    return self::statuses( 'CMD_DETAIL');
                     break;
             }
         }

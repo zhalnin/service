@@ -48,7 +48,7 @@ try {
 
     if( is_object( $catalogs ) ) {
         // Получаем содержимое текущей страницы
-        $catalog = $catalogs->get_page();
+        $catalog = $catalogs->getPage();
     }
     // Если имеется хотя бы одна запись - выводим ее
     if( ! empty( $catalog ) ) {

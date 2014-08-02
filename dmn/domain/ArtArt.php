@@ -110,7 +110,7 @@ class ArtArt extends DomainObject {
      * Метод для смены,
      * сокрытия или отображения позиции в блоке новостей
      * @param $id - id новости
-     * @param $direct - направление перемещения блока
+     * @param $action - направление перемещения блока
      */
     static function position( $id, $action ) {
         $result = array();

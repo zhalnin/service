@@ -18,7 +18,7 @@ try {
     $idpar      = intval( $request->getProperty( 'idpar' ) );
     $artCatalog = $request->getObject( 'artCatalog' );  // получаем объект PagerMySQL
 
-//    echo "<tt><pre>".print_r($artCatalog->get_page(), true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($artCatalog->getPage(), true)."</pre></tt>";
 
     // Данные переменные определяют название страницы и подсказку
     $title      = 'Администрирование перечня услуг';
@@ -33,7 +33,7 @@ try {
     // Содержание страницы
     if( is_object( $artCatalog ) ) {
         // Получаем содержимое текущей страницы
-        $catalog = $artCatalog->get_page();
+        $catalog = $artCatalog->getPage();
     }
 //    echo "<tt><pre>".print_r($idpar, true)."</pre></tt>";
     // Если это не корневой каталог выводим ссылки для возврата
@@ -142,7 +142,7 @@ try {
         $artPosition = $request->getObject( 'artPosition' );
         if( is_object( $artPosition ) ) {
             // Получаем содержимое текущей страницы
-            $position = $artPosition->get_page();
+            $position = $artPosition->getPage();
         }
 //        echo "<tt><pre>".print_r($_GET[page], true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($position, true)."</pre></tt>";

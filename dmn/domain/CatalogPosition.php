@@ -118,9 +118,9 @@ class CatalogPosition extends DomainObject {
 
     /**
      * Метод для смены,
-     * сокрытия или отображения позиции в блоке новостей
-     * @param $id - id новости
-     * @param $direct - направление перемещения блока
+     * сокрытия или отображения позиции в блоке каталога
+     * @param $id
+     * @param $action
      */
     static function position( $id, $action ) {
         $result = array();

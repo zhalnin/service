@@ -8,6 +8,7 @@
 
 namespace dmn\view;
 error_reporting(E_ALL & ~E_NOTICE);
+
 try {
 
 //    require_once( "dmn/view/utils/security_mod.php" );
@@ -31,7 +32,7 @@ try {
     // Содержание страницы
     if( is_object( $newsBlock ) ) {
         // Получаем содержимое текущей страницы
-        $news = $newsBlock->get_page();
+        $news = $newsBlock->getPage();
     }
 
 
@@ -76,12 +77,17 @@ try {
             $style = " class=hiddenrow";
         }
 
-//    echo "<tt><pre>".print_r($news[$i][urlpict], true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($news, true)."</pre></tt>";
         // Проверяем наличие изображения
         if($news[$i]['urlpict'] != '' &&
             $news[$i]['urlpict'] != '-'&&
-            is_file("imei_service/view/".$news[$i]['urlpict'])) {
-            $url_pict = "<b><a href=imei_service/view/{$news[$i][urlpict]}>есть</a></b>";
+            is_file( "imei_service/view/".$news[$i]['urlpict'] ) ) {
+            if( file_exists( "imei_service/view/".$news[$i]['urlpict'] ) ) {
+                $size = @getimagesize( ( "imei_service/view/".$news[$i]['urlpict'] ) );
+                $url_pict = "<a href=# onclick=\"show_detail( '?cmd=News&pact=detail&{$url}', {$size[0]}, {$size[1]} ); return false\">есть</a>";
+            }
+//            $url_pict = "<b><a href=imei_service/view/{$news[$i][urlpict]}>есть</a></b>";
+//            echo "<tt><pre>".print_r( $size, true)."</pre></tt>";
         } else {
             $url_pict = "нет";
         }
