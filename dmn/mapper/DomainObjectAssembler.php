@@ -151,6 +151,7 @@ class DomainObjectAssembler {
 
     /**
      * Получаем количество позиций POS элемента в БД
+     * @param IdentityObject $idobj
      * @return mixed
      */
     function findCountPos( IdentityObject $idobj ) {

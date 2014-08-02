@@ -100,4 +100,8 @@ interface ArtParagraphImgCollection extends \Iterator {
 interface AccountsCollection extends \Iterator {
     function add( DomainObject $accounts );
 }
+
+interface UsersCollection extends \Iterator {
+    function add( DomainObject $users );
+}
 ?>

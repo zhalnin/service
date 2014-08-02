@@ -410,4 +410,42 @@ class AccountsObjectFactory extends DomainObjectFactory {
         return $obj; // возвращаем объект \dmn\domain\News
     }
 }
+
+/**
+ * Class UsersObjectFactory
+ * @package dmn\mapper
+ * Как аргумент в классе PersistenceFactory
+ */
+class UsersObjectFactory extends DomainObjectFactory {
+
+    /**
+     * Вызываем из класса Collection с итератором из метода
+     * getRow()
+     * @param array $array - результирующий набор данных (после SELECT)
+     * @return mixed - возвращаем объект \dmn\domain\Users
+     */
+    function createObject( array $array ) {
+        $class = "\\dmn\\domain\\Users"; // название класса
+        $old = $this->getFromMap( $class, $array['id'] );
+        if( $old ) { return $old; }
+        $obj = new $class( $array['id'] ); // создаем экземпляр класса, в конструктор передаем id
+        // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
+        $obj->setFio( $array['fio'] );
+        $obj->setCity( $array['city'] );
+        $obj->setEmail( $array['email'] );
+        $obj->setUrl( $array['url'] );
+        $obj->setLogin( $array['login'] );
+        $obj->setActivation( $array['activation'] );
+        $obj->setStatus( $array['status'] );
+        $obj->setPass( $array['pass'] );
+        $obj->setPutdate( $array['putdate'] );
+        $obj->setLastvisit( $array['lastvisit'] );
+        $obj->setBlock( $array['block'] );
+
+        $this->addToMap( $obj );
+        $obj->markClean();
+        return $obj; // возвращаем объект \dmn\domain\News
+    }
+}
+
 ?>

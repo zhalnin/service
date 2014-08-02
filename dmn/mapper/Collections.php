@@ -252,4 +252,13 @@ class AccountsCollection
     }
 }
 
+class UsersCollection
+    extends Collection
+    implements \dmn\domain\UsersCollection {
+
+    function targetClass() {
+        return "\\dmn\\domain\\Users";
+    }
+}
+
 ?>

@@ -37,6 +37,9 @@ try {
     echo "<a href=?cmd=Accounts&pact=add&page=$_GET[page]
                     title='Добавить новый аккаунт'>
                     Добавить аккаунт</a><br><br>";
+    // Выводим ссылки на другие страницы
+    echo $accounts;
+    echo "<br /><br />";
     ?>
     <table width="100%"
            class="table"
@@ -69,8 +72,9 @@ try {
 
     }
     echo "</table><br><br>";
-    echo "</form>";
 
+    // Выводим ссылки на другие страницы
+    echo $accounts;
 
     // Включаем завершение страницы
     require_once("dmn/view/templates/bottom.php");

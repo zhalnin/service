@@ -104,9 +104,9 @@ class ArtCatalog extends DomainObject {
 
     /**
      * Метод для смены,
-     * сокрытия или отображения позиции в блоке новостей
-     * @param $id - id новости
-     * @param $direct - направление перемещения блока
+     * сокрытия или отображения позиции в блоке
+     * @param $id
+     * @param $action
      */
     static function position( $id, $action ) {
         $result = array();
@@ -151,6 +151,22 @@ class ArtCatalog extends DomainObject {
 //                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
                 $obj->setHide( $action );
+                break;
+            case 'block': // сокрытие позиции
+                // создаем условный оператор для запроса в БД
+                $idobj = new \dmn\mapper\ArtCatalogIdentityObject( 'id_catalog' );
+                $obj = $finder->findOne( $idobj->eq( $id )->field( 'block' )->eq( 'unblock' ));
+//                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
+                // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
+                $obj->setBlock( $action );
+                break;
+            case 'unblock': // сокрытие позиции
+                // создаем условный оператор для запроса в БД
+                $idobj = new \dmn\mapper\ArtCatalogIdentityObject( 'id_catalog' );
+                $obj = $finder->findOne( $idobj->eq( $id )->field( 'block' )->eq( 'block' ));
+//                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
+                // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
+                $obj->setBlock( $action );
                 break;
         }
     }

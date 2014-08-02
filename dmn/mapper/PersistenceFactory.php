@@ -56,6 +56,9 @@ abstract class PersistenceFactory {
             case "dmn\\domain\\Accounts":
                 return new AccountsPersistenceFactory();
                 break;
+            case "dmn\\domain\\Users":
+                return new UsersPersistenceFactory();
+                break;
         }
     }
 }
@@ -514,6 +517,47 @@ class AccountsPersistenceFactory extends PersistenceFactory {
 
     function getUpDownFactory() {
         return new AccountsUpDownFactory();
+    }
+}
+
+/**
+ * Class UsersPersistenceFactory
+ * для работы с блоком пользователей
+ * @package dmn\mapper
+ */
+class UsersPersistenceFactory extends PersistenceFactory {
+
+    function getMapper() {
+        return new UsersMapper();
+    }
+
+    function getDomainObjectFactory() {
+        return new UsersObjectFactory();
+    }
+
+    function getCollection( array $array ) {
+        return new UsersCollection( $array, $this->getDomainObjectFactory() );
+    }
+
+    function getSelectionFactory() {
+//        echo "<tt><pre>".print_r("ksdjfkdsjfkjds", true)."</pre></tt>";
+        return new UsersSelectionFactory();
+    }
+
+    function getUpdateFactory() {
+        return new UsersUpdateFactory();
+    }
+
+    function getIdentityObject() {
+        return new UsersIdentityObject();
+    }
+
+    function getDeleteFactory() {
+        return new UsersDeleteFactory();
+    }
+
+    function getUpDownFactory() {
+        return new UsersUpDownFactory();
     }
 }
 

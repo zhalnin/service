@@ -43,7 +43,7 @@ class Accounts extends DomainObject {
     static function findAll() {
         $finder = self::getFinder( __CLASS__ ); // из родительского класса вызываем, получаем DomainObjectAssembler( PersistenceFactory )
         $idobj = self::getIdentityObject( __CLASS__ ); // catalogIdentityObject
-        $catalogIdobj = new \dmn\mapper\ArtArtIdentityObject(); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
+        $catalogIdobj = new \dmn\mapper\AccountsIdentityObject(); // здесь без фабрики создаем экземпляр, чтобы передать имя поля для класса IdentityObect
 //        echo "<tt><pre>".print_r($catalogIdobj, true)."</pre></tt>";
         return $finder->find( $catalogIdobj ); // из DomainObjectAssembler возвращаем Коллекцию с итератором
     }

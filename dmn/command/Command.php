@@ -25,7 +25,9 @@ abstract class Command {
         'CMD_ADD'               => 9,
         'CMD_EDIT'              => 10,
         'CMD_DELETE'            => 11,
-        'CMD_DETAIL'            => 12
+        'CMD_DETAIL'            => 12,
+        'CMD_BLOCK'             => 13,
+        'CMD_UNBLOCK'           => 14
     );
     private $status = 0;
 

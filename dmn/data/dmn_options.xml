@@ -25,6 +25,10 @@
             <title>Статьи</title>
             <description>Управление блоком статей</description>
         </point>
+        <point name="Users">
+            <title>Пользователи сайта</title>
+            <description>Управление пользователями сайта</description>
+        </point>
     </menu>
 
 
@@ -347,6 +351,46 @@
         </command>
         <command name="ArtParagraphDetail">
             <view>artParagraphDetail</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+
+
+        <command name="Users">
+            <view>users</view>
+            <status value="CMD_ADD">
+                <forward>UsersAdd</forward>
+            </status>
+            <status value="CMD_EDIT">
+                <forward>UsersEdit</forward>
+            </status>
+            <status value="CMD_DELETE">
+                <forward>UsersDelete</forward>
+            </status>
+            <status value="CMD_DETAIL">
+                <forward>UsersDetail</forward>
+            </status>
+        </command>
+        <command name="UsersAdd">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="UsersEdit">
+            <view>messageEdit</view>
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="UsersDelete">
+            <status value="CMD_OK">
+                <view>messageSuccess</view>
+            </status>
+        </command>
+        <command name="UsersDetail">
+            <view>usersDetail</view>
             <status value="CMD_OK">
                 <view>messageSuccess</view>
             </status>
