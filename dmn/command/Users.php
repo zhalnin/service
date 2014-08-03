@@ -28,6 +28,28 @@ class Users extends Command {
         $idp        = intval( $request->getProperty( 'idp' ) );
 
 
+
+        // Устанавливаем фильтр
+        $begin = "";
+        if( ! empty( $_POST['chk_begin'] ) ) {
+            $begin = mktime( $_POST['b_date_hour'],
+                $_POST['b_date_minute'],
+                0,
+                $_POST['b_date_month'],
+                $_POST['b_date_day'],
+                $_POST['b_date_year'] );
+        }
+        $end = "";
+        if( ! empty( $_POST['chk_end'] ) ) {
+            $end = mktime( $_POST['e_date_hour'],
+                $_POST['e_date_minute'],
+                0,
+                $_POST['e_date_month'],
+                $_POST['e_date_day'],
+                $_POST['e_date_year'] );
+        }
+
+
         // в зависимости от действия вызываем метод с
         // определенными параметрами для выполнения действия над
         // позицией в блоке
@@ -57,14 +79,15 @@ class Users extends Command {
 
         $url = "&begin_date=$_GET[begin_date]".
             "&end_date=$_GET[end_date]";
+
         $where = "WHERE 1=1";
-        if( ! empty( $_GET['begin_date'] ) ) {
+        if( ! empty( $begin ) ) {
             $where .= " AND putdate >= '".
-                date( "Y-n-d H:i:s", $_GET['begin_date'] )."'";
+                date( "Y-n-d H:i:s", $begin )."'";
         }
-        if( ! empty( $_GET['end_date'] ) ) {
+        if( ! empty( $end ) ) {
             $where .= " AND putdate <= '".
-                date( "Y-n-d H:i:s", $_GET['end_date'] ). "'";
+                date( "Y-n-d H:i:s", $end ). "'";
         }
 
         // Объявляем объект постраничной навигации

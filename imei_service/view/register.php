@@ -132,6 +132,8 @@ try {
                                                 </div>
                                                 <input id="item" type="hidden" name="item" value="Форма входа" />
                                                 <input id="type" type="hidden" name="type" value="login" />
+                                                <input id="putdate" type="hidden" name="putdate" value="<?php echo date('Y-m-d H:i:s', time() ); ?>" />
+                                                <input id="lastvisit" type="hidden" name="lastvisit" value="<?php echo date('Y-m-d H:i:s', time() ); ?>" />
                                                 <input type="hidden" name="sid_add_message" value="<?php echo $sid_add_message; ?>" />
                                                 <input type="hidden" name="submitted" value="yes" />
                                                 <input id="type" type="hidden" name="type" value="register" />

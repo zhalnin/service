@@ -28,7 +28,7 @@ class Login extends Command {
         // Удаляем из таблицы IP, которые дольше 3 минут, проверяем наличие соответствия и количество ошибок текущего IP
         $loginOshibka = \imei_service\domain\LoginOshibka::find( $ip );
         $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) ); // проверяем наличие логина и пароля
-
+//        echo "<tt><pre>".print_r($logPassExist, true)."</pre></tt>";
         if( $request->getProperty( 'submitted') !== 'yes' ) { // если форма не отправлена
 //            $this->error = 'error'; // присваиваем значение
 //            $request->addFeedback( "Заполните форму, чтобы закончить вход" ); // добавляем текст ошибки
@@ -67,7 +67,11 @@ class Login extends Command {
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         } else {
             if( $logPassExist->getStatus() != 1 ) { // если учетная запись не активирована (status=0)
-                $request->addFeedback( 'Ваша учетная запись еще не активирована: <a href="?RActivation">Повторно выслать письмо для активации учетной записи.</a>' );
+                $request->addFeedback( 'Ваша учетная запись еще не активирована: <a href="?cmd=RActivation">Повторно выслать письмо для активации учетной записи.</a>' );
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
+            if( $logPassExist->getBlock() != 'unblock' ) { // если учетная запись не активирована (status=0)
+                $request->addFeedback( 'Ваша учетная запись заблокирована, обратитесь к администратору сайта: <a href="?cmd=Contacts">Контакты для связи</a>' );
                 return self::statuses( 'CMD_INSUFFICIENT_DATA' );
             }
         }

@@ -25,7 +25,7 @@ $pass           = $usersDetail->getPass();
 $putdate        = $usersDetail->getPutdate();
 $lastvisit      = $usersDetail->getLastvisit();
 $block          = $usersDetail->getBlock();
-//echo "<tt><pre>".print_r($usersDetail, true)."</pre></tt>";
+
 
 ?>
 
@@ -72,12 +72,12 @@ $block          = $usersDetail->getBlock();
                     if( ! empty( $url ) ) {
                         echo "<tr><td align=right>Сайт</td><td>".htmlspecialchars( $url )."</td></tr>";
                     }
-                    if( ! empty( $status ) ) {
+                    if( isset( $status ) ) {
                         if( $status == 1 )
                             $statusActiv = 'Да';
                         else
                             $statusActiv = 'Нет';
-                        echo "<tr><td align=right>Активирован?</td><td>$statusActiv</td></tr>";
+                        echo "<tr><td align=right>Активирован</td><td>$statusActiv</td></tr>";
                     }
                     if( ! empty( $block ) ){
                         if( $block == 'block' )
@@ -85,7 +85,7 @@ $block          = $usersDetail->getBlock();
                         else
                             $statususer = 'Нет';
                         echo "<tr>
-                    <td align=right>Заблокирован?</td>
+                    <td align=right>Заблокирован</td>
                     <td>$statususer</td>
                  </tr>";
                     }

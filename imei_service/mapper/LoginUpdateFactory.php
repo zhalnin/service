@@ -16,14 +16,17 @@ class LoginUpdateFactory extends UpdateFactory {
     function newUpdate( \imei_service\domain\DomainObject $obj ) {
         $id = $obj->getId();
         $cond = null;
-        $values['fio'] = $obj->getFio();
-        $values['city'] = $obj->getCity();
-        $values['email'] = $obj->getEmail();
-        $values['url'] = $obj->getUrl();
-        $values['login'] = $obj->getLogin();
-        $values['pass'] = $obj->getPass();
-        $values['activation'] = $obj->getActivation();
-        $values['status'] = $obj->getStatus();
+        $values['fio']          = $obj->getFio();
+        $values['city']         = $obj->getCity();
+        $values['email']        = $obj->getEmail();
+        $values['url']          = $obj->getUrl();
+        $values['login']        = $obj->getLogin();
+        $values['pass']         = $obj->getPass();
+        $values['activation']   = $obj->getActivation();
+        $values['status']       = $obj->getStatus();
+        $values['putdate']      = $obj->getPutdate();
+        $values['lastvisit']    = $obj->getLastvisit();
+        $values['block']        = $obj->getBlock();
         if( $id > -1 ) {
             $cond['id'] = $id;
         }

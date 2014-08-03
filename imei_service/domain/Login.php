@@ -22,6 +22,9 @@ class Login extends DomainObject {
     private $pass;
     private $activation;
     private $status;
+    private $putdate;
+    private $lastvisit;
+    private $block;
 
     function __construct(   $id=null,
                             $fio=null,
@@ -31,7 +34,10 @@ class Login extends DomainObject {
                             $login=null,
                             $pass=null,
                             $activation=null,
-                            $status=null ) {
+                            $status=0,
+                            $putdate=null,
+                            $lastvisit=null,
+                            $block='unblock' ) {
 
         $this->fio          = $fio;
         $this->city         = $city;
@@ -41,6 +47,9 @@ class Login extends DomainObject {
         $this->pass         = $pass;
         $this->activation   = $activation;
         $this->status       = $status;
+        $this->putdate      = $putdate;
+        $this->lastvisit    = $lastvisit;
+        $this->block        = $block;
 
         parent::__construct( $id );
 
@@ -116,6 +125,18 @@ class Login extends DomainObject {
         $this->status = $status_s;
         $this->markDirty();
     }
+    function setPutdate( $putdate_s ) {
+        $this->putdate = $putdate_s;
+        $this->markDirty();
+    }
+    function setLastvisit( $lastvisit_s ) {
+        $this->lastvisit = $lastvisit_s;
+        $this->markDirty();
+    }
+    function setBlock( $block_s ) {
+        $this->block = $block_s;
+        $this->markDirty();
+    }
 
 
     function getFio() {
@@ -141,6 +162,15 @@ class Login extends DomainObject {
     }
     function getStatus() {
         return $this->status;
+    }
+    function getPutdate() {
+        return $this->putdate;
+    }
+    function getLastvisit() {
+        return $this->lastvisit;
+    }
+    function getBlock() {
+        return $this->block;
     }
 }
 ?>

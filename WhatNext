@@ -22,22 +22,6 @@ command сделал Activation, BlacklistCheck
 
 2. Аутентификацию на админку
 
-
-CREATE TABLE `system_account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fio` text NOT NULL,
-  `city` tinytext,
-  `email` text NOT NULL,
-  `url` tinytext NOT NULL,
-  `login` tinytext NOT NULL,
-  `pass` text NOT NULL,
-  `activation` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `putdate` datetime NOT NULL,
-  `lastvisit` datetime NOT NULL,
-  `block` enum('block','unblock') NOT NULL DEFAULT 'unblock',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=82 ;
-
 3. Lastvisit обновлять при посещении
-4. filter.php, filterset.php - образец в test.php
+
+4. ArtParagraphAdd - добавление параграфа в разные позиции

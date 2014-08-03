@@ -10,6 +10,7 @@
     /*Название страницы ( по функционалу)*/
     .namepage{font-size: 16px; color: #3C6194; margin: 10px 30px 5px 0px}
     .hiddenrow{background-color: #fce0fc; color: #818181}
+    .hiddenstatus{background-color: rgba(255, 19, 36, 0.51);}
 
     /*Таблица с самыми верхними навигационными ссылками и названием приложения*/
     table.topmenu{color: #7C7C7C; background-color: #F5F5F5; width: 100%;

@@ -150,6 +150,22 @@ class Users extends DomainObject {
                 // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
                 $obj->setBlock( $action );
                 break;
+            case 'activate': // сокрытие позиции
+                // создаем условный оператор для запроса в БД
+                $idobj = new \dmn\mapper\UsersIdentityObject( 'id' );
+                $obj = $finder->findOne( $idobj->eq( $id )->field( 'status' )->eq( 0 ));
+//                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
+                // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
+                $obj->setStatus( 1 );
+                break;
+            case 'deactivate': // сокрытие позиции
+                // создаем условный оператор для запроса в БД
+                $idobj = new \dmn\mapper\UsersIdentityObject( 'id' );
+                $obj = $finder->findOne( $idobj->eq( $id )->field( 'status' )->eq( 1 ));
+//                echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
+                // обновляем значение поля (в контроллере будет выполнена команда UPDATE)
+                $obj->setStatus( 0 );
+                break;
         }
     }
 

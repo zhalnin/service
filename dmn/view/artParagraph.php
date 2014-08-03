@@ -54,7 +54,7 @@ try {
                   <tr valign="top">
                     <td height="25"><p>';
         echo "<a class=menu href=?cmd=ArtCatalog&idpar=0>
-                Корневой каталог</a>-&gt;".
+                Корневой каталог</a>&nbsp;/&nbsp;".
             \dmn\view\utils\navigation($idc,
                 "",
                 'system_menu_catalog','ArtCatalog' ) .$position->getName();

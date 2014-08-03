@@ -131,13 +131,13 @@ class ArtParagraphAdd extends Command {
                     // находим такой параграф с id параграфа и каталога
                     $paragraphObjLs = \dmn\domain\ArtParagraph::find( $form->fields['idp']->value,
                                                                       $form->fields['idc']->value );
+//                    echo "<tt><pre>".print_r($paragraphObjLs, true)."</pre></tt>";
                     if( is_object( $paragraphObjLs ) ) {
                         $pos = $paragraphObjLs->getPos() + 1; // получаем его позицию и инкрементируем
                         $paragraphObjLs->setPos( $pos ); // обновляем значение
                     }
                     $position = 1; // позицию приравниваем к единице
                     \dmn\domain\ObjectWatcher::instance()->performOperations(); // выполняем UPDATE
-//                    echo "<tt><pre>".print_r($paragraphObjLs, true)."</pre></tt>";
                 } else {
                     // находим такой параграф с id параграфа и каталога и позицией
                     $paragraphObjGr = \dmn\domain\ArtParagraph::find( $form->fields['idp']->value,

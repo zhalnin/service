@@ -44,7 +44,7 @@ try {
             <tr valign="top"><td height="25"><p>';
     echo "<a class=menu
                 href=dmn.php?cmd=Catalog&idp=0&page=$_GET[page]>
-                    Корневой каталог</a>-&gt;".
+                    Корневой каталог</a>&nbsp;/&nbsp;".
         \dmn\view\utils\navigation($idc, "", 'system_catalog', 'Catalog' ).
         "<a class=menu href=dmn.php?cmd=CatalogPosition&".
         "pact=add&".

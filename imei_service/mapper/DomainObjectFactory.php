@@ -479,6 +479,10 @@ class LoginObjectFactory extends DomainObjectFactory {
         $obj->setPass( $array['pass'] );
         $obj->setActivation( $array['activation'] );
         $obj->setStatus( $array['status'] );
+        $obj->setPutdate( $array['putdate'] );
+        $obj->setLastvisit( $array['lastvisit'] );
+        $obj->setBlock( $array['block'] );
+
 
         $this->addToMap( $obj );
         $obj->markClean();

@@ -20,6 +20,7 @@ require_once( "imei_service/domain/Login.php" );
 class Register extends Command {
 
     function doExecute( \imei_service\controller\Request $request ) {
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         $fio        = $_POST['fio'];
         $city       = $_POST['city'];
         $email      = $_POST['email'];
@@ -28,6 +29,8 @@ class Register extends Command {
         $pass       = $_POST['pass'];
         $repass     = $_POST['repass'];
         $code       = $_POST['code'];
+        $putdate    = $_POST['putdate'];
+        $lastvisit  = $_POST['lastvisit'];
         $recode     = $_SESSION['code'];
         $submitted  = $_POST['submitted'];
         $email_admin = 'imei_service@icloud.com';
@@ -99,7 +102,10 @@ class Register extends Command {
                                                     $login,
                                                     $pass,
                                                     $activation,
-                                                    0 );
+                                                    0,
+                                                    $putdate,
+                                                    $lastvisit,
+                                                      'unblock' );
 
         // Если учетные данные добавлены успешно ( будет создан объект, если не будет добавлена, то объект не будет создан )
         if( is_object( $login_obj ) ) {

@@ -22,7 +22,10 @@ class LoginIdentityObject extends IdentityObject {
                                             'login',
                                             'pass',
                                             'activation',
-                                            'status' )
+                                            'status',
+                                            'putdate',
+                                            'lastvisit',
+                                            'block' )
         );
     }
 }
