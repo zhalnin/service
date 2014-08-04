@@ -28,6 +28,8 @@ class Users extends DomainObject {
     private $putdate;
     private $lastvisit;
     private $block;
+    private $online;
+    private $rights;
 
 
     /**
@@ -38,12 +40,14 @@ class Users extends DomainObject {
      * @param null $email
      * @param null $url
      * @param null $login
-     * @param int $activation
-     * @param null $status
+     * @param null $activation
+     * @param int $status
      * @param null $pass
      * @param null $putdate
      * @param null $lastvisit
      * @param string $block
+     * @param int $online
+     * @param string $rights
      */
     function __construct( $id=null,
                           $fio=null,
@@ -51,12 +55,14 @@ class Users extends DomainObject {
                           $email=null,
                           $url=null,
                           $login=null,
-                          $activation=0,
-                          $status=null,
+                          $activation=null,
+                          $status=0,
                           $pass=null,
                           $putdate=null,
                           $lastvisit=null,
-                          $block='unblock' ) {
+                          $block='unblock',
+                          $online=0,
+                          $rights='user' ) {
 
         $this->fio          = $fio;
         $this->city         = $city;
@@ -69,6 +75,8 @@ class Users extends DomainObject {
         $this->putdate      = $putdate;
         $this->lastvisit    = $lastvisit;
         $this->block        = $block;
+        $this->online       = $online;
+        $this->rights       = $rights;
 
         parent::__construct( $id ); // вызываем конструктор родительского класса
     }
@@ -268,6 +276,24 @@ class Users extends DomainObject {
         $this->markDirty();
     }
 
+    /**
+     * устанавливаем флаг онлайн
+     * @param $online_s
+     */
+    function setOnline( $online_s ) {
+        $this->online = $online_s;
+        $this->markDirty();
+    }
+
+    /**
+     * устанавливаем статус юзера
+     * @param $rights_s
+     */
+    function setRights( $rights_s ) {
+        $this->rights = $rights_s;
+        $this->markDirty();
+    }
+
 
     /**
      * получаем имя
@@ -354,6 +380,22 @@ class Users extends DomainObject {
      */
     function getBlock() {
         return $this->block;
+    }
+
+    /**
+     * получаем флаг онлайн
+     * @return null|string
+     */
+    function getOnline() {
+        return $this->online;
+    }
+
+    /**
+     * получаем статус юзера
+     * @return mixed
+     */
+    function getRights() {
+        return $this->rights;
     }
 }
 ?>

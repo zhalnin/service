@@ -7,7 +7,7 @@
  */
  error_reporting(E_ALL & ~E_NOTICE);
 ?>
-
+</div> <!-- end of tableform -->
 </div>
 <br/><br/></td>
 <td width=10%>&nbsp;</td>

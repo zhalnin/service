@@ -8,7 +8,7 @@
 
 require_once( "dmn/view/ViewHelper.php" );
 $request = \dmn\view\VH::getRequest();
-//header( "Location:?cmd=News" );
+header( "Location: dmn.php?cmd=Login" );
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,6 @@ $request = \dmn\view\VH::getRequest();
     <title>IMEI-SEVICE</title>
 </head>
 <body>
-<?php print 'main.php'; ?>
 <table>
     <tr>
         <td><?php print $request->getFeedbackString("</td></tr><tr><td>"); ?></td>

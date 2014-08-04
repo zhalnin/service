@@ -442,6 +442,8 @@ class UsersObjectFactory extends DomainObjectFactory {
         $obj->setPutdate( $array['putdate'] );
         $obj->setLastvisit( $array['lastvisit'] );
         $obj->setBlock( $array['block'] );
+        $obj->setOnline( $array['online'] );
+        $obj->setRights( $array['rights'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

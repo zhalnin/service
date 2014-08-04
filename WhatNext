@@ -20,8 +20,4 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-2. Аутентификацию на админку
-
-3. Lastvisit обновлять при посещении
-
-4. ArtParagraphAdd - добавление параграфа в разные позиции
+2. ArtParagraphAdd - добавление параграфа в разные позиции

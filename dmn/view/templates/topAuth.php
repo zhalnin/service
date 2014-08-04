@@ -113,6 +113,7 @@ error_reporting(E_ALL & ~E_NOTICE);
             <div class="headerform"><p class="nameaction"><?php echo htmlspecialchars($title, ENT_QUOTES) ?></p></div>
             <div class="bodyform">
             <div class='blockremark'><?php echo $pageinfo ?><br/></div>
+            <div class="tableform">
 
 
 

@@ -28,6 +28,8 @@ class UsersUpdateFactory  extends UpdateFactory{
         $values['putdate']      = $obj->getPutdate();
         $values['lastvisit']    = $obj->getLastvisit();
         $values['block']        = $obj->getBlock();
+        $values['online']       = $obj->getOnline();
+        $values['rights']       = $obj->getRights();
 
         if( $id > -1 ) {
             $cond['id'] = $id;

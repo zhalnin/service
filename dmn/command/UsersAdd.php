@@ -45,10 +45,10 @@ class UsersAdd extends Command {
             "Сайт",
             false,
             $_REQUEST['url']);
-        $login = new \dmn\classes\FieldText("login",
+        $usersLogin = new \dmn\classes\FieldText("usersLogin",
             "Ник",
             true,
-            $_REQUEST['login']);
+            $_REQUEST['usersLogin']);
         $activation = new \dmn\classes\FieldText("activation",
             "Код активации",
             false,
@@ -56,18 +56,18 @@ class UsersAdd extends Command {
         $status = new \dmn\classes\FieldCheckbox("status",
             "Активировать",
             $_REQUEST['status']);
-        $pass = new \dmn\classes\FieldPassword("pass",
+        $usersPass = new \dmn\classes\FieldPassword("usersPass",
             "Пароль",
             true,
-            $_REQUEST['pass'],
+            $_REQUEST['usersPass'],
             255,
             41,
             "",
             "Например: $passExample");
-        $passagain = new \dmn\classes\FieldPassword("passagain",
+        $usersPassagain = new \dmn\classes\FieldPassword("usersPassagain",
             "Повтор",
             true,
-            $_REQUEST['passagain'],
+            $_REQUEST['usersPassagain'],
             255,
             41,
             "",
@@ -81,6 +81,10 @@ class UsersAdd extends Command {
         $block = new \dmn\classes\FieldCheckbox("block",
             "Блокировать",
             $_REQUEST['block']);
+        $usersRights = new \dmn\classes\FieldSelect("usersRights",
+            "Тип юзера",
+            array( 'user' => 'user', 'admin' => 'admin' ),
+            $_REQUEST['usersRights']);
         $page = new \dmn\classes\FieldHiddenInt("page",
             false,
             $_REQUEST['page']);
@@ -92,30 +96,31 @@ class UsersAdd extends Command {
                                             "city"          => $city,
                                             "email"         => $email,
                                             "url"           => $url,
-                                            "login"         => $login,
+                                            "usersLogin"    => $usersLogin,
                                             "activation"    => $activation,
                                             "status"        => $status,
-                                            "pass"          => $pass,
-                                            "passagain"     => $passagain,
+                                            "usersPass"     => $usersPass,
+                                            "usersPassagain"=> $usersPassagain,
                                             "putdate"       => $putdate,
                                             "lastvisit"     => $lastvisit,
                                             "block"         => $block,
+                                            "usersRights"   => $usersRights,
                                             "page"          => $page,
                                             "submitted"     => $submitted ),
                                         "Добавить",
                                         "field");
 
         if( $_POST['submitted'] == 'yes' ) {
-            if($form->fields['pass']->value != $form->fields['passagain']->value) {
+            if($form->fields['usersPass']->value != $form->fields['usersPassagain']->value) {
                 $error[] = "Пароли не равны";
             }
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
 
-            $accountsCount = \dmn\domain\Users::findCountPos( $form->fields['login']->value );
+            $accountsCount = \dmn\domain\Users::findCountPos( $form->fields['usersLogin']->value );
             if( is_array( $accountsCount ) ) {
                 if( $accountsCount['count'] >= 1 ) {
                     $error[] = "Пользователь с именем
-                        <b>{$form->fields['login']->value}</b> уже
+                        <b>{$form->fields['usersLogin']->value}</b> уже
                         зарегистрирован";
                 }
             }
@@ -168,23 +173,25 @@ class UsersAdd extends Command {
                 // устанавливаем сайт
                 $userObj->setUrl( $form->fields['url']->value );
                 // устанавливаем логин
-                $userObj->setLogin( $form->fields['login']->value );
+                $userObj->setLogin( $form->fields['usersLogin']->value );
                 // устанавливаем код активации
                 $userObj->setActivation( $form->fields['activation']->value );
                 // устанавливаем статус
                 $userObj->setStatus( $statusUn );
                 // устанавливаем пароль
-                $userObj->setPass( md5( $form->fields['pass']->value ) );
+                $userObj->setPass( md5( $form->fields['usersPass']->value ) );
                 // устанавливаем дату регистрации
                 $userObj->setPutdate( $form->fields['putdate']->getMysqlFormat() );
                 // устанавливаем дату последнего визита
                 $userObj->setLastvisit( $form->fields['lastvisit']->getMysqlFormat() );
                 // устанавливаем флаг блокировки
                 $userObj->setBlock( $blockUnblock);
+                 // устанавливаем флаг тип юзера
+                $userObj->setRights( $form->fields['usersRights']->value );
 //
 //                echo "<tt><pre>".print_r($form, true)."</pre></tt>";
                 $this->reloadPage( 0, "dmn.php?cmd=Users&page=" ); // перегружаем страничку
-//                // возвращаем статус и переадресацию на messageSuccess
+//                 возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }
         } else {

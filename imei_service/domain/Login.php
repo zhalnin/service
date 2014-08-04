@@ -25,6 +25,8 @@ class Login extends DomainObject {
     private $putdate;
     private $lastvisit;
     private $block;
+    private $online;
+    private $rights;
 
     function __construct(   $id=null,
                             $fio=null,
@@ -37,7 +39,9 @@ class Login extends DomainObject {
                             $status=0,
                             $putdate=null,
                             $lastvisit=null,
-                            $block='unblock' ) {
+                            $block='unblock',
+                            $online=0,
+                            $rights='user' ) {
 
         $this->fio          = $fio;
         $this->city         = $city;
@@ -50,6 +54,8 @@ class Login extends DomainObject {
         $this->putdate      = $putdate;
         $this->lastvisit    = $lastvisit;
         $this->block        = $block;
+        $this->online       = $online;
+        $this->rights       = $rights;
 
         parent::__construct( $id );
 
@@ -57,15 +63,21 @@ class Login extends DomainObject {
 
     /**
      * Метод, проверяющий на соответствие
-     * логина и пароля
+     * логина и пароля, если это массив
+     * или по id в БД
      * @param $args
      * @return mixed
      */
     static function find( $args ) {
         $finder = self::getFinder( __CLASS__ );
-        list( $login, $pass ) = $args;
-        $logpassobj = self::getIdentityObject( __CLASS__ );
-        return $finder->findOne( $logpassobj->field( 'login' )->eq( $login )->field( 'pass' )->eq( $pass ) );
+        if( is_array( $args ) ) {
+            list( $login, $pass ) = $args;
+            $logpassobj = self::getIdentityObject( __CLASS__ );
+            return $finder->findOne( $logpassobj->field( 'login' )->eq( $login )->field( 'pass' )->eq( $pass ) );
+        } else {
+            $logobj = self::getIdentityObject( __CLASS__ );
+            return $finder->findOne( $logobj->field( 'id' )->eq( $args ) );
+        }
     }
 
     /**
@@ -137,6 +149,23 @@ class Login extends DomainObject {
         $this->block = $block_s;
         $this->markDirty();
     }
+    /**
+     * устанавливаем флаг онлайн
+     * @param $online_s
+     */
+    function setOnline( $online_s ) {
+        $this->online = $online_s;
+        $this->markDirty();
+    }
+
+    /**
+     * устанавливаем статус юзера
+     * @param $rights_s
+     */
+    function setRights( $rights_s ) {
+        $this->rights = $rights_s;
+        $this->markDirty();
+    }
 
 
     function getFio() {
@@ -171,6 +200,21 @@ class Login extends DomainObject {
     }
     function getBlock() {
         return $this->block;
+    }
+    /**
+     * получаем флаг онлайн
+     * @return null|string
+     */
+    function getOnline() {
+        return $this->online;
+    }
+
+    /**
+     * получаем статус юзера
+     * @return mixed
+     */
+    function getRights() {
+        return $this->rights;
     }
 }
 ?>

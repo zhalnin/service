@@ -80,6 +80,9 @@ class Login extends Command {
             }
         }
 
+        $logPassExist->setLastvisit( date( 'Y-m-d H:i:s', time() ) ); //  Обновление поля lastvisit
+        $logPassExist->setOnline( 1 ); //  Обновление поля онлайн
+
         SessionRegistry::setSession( 'login', $login ); // добавляем в сессию логин
         SessionRegistry::setSession( 'pass', $pass ); // добавляем в сессию пароль
         SessionRegistry::setSession( 'auto', 1 ); // добавляем в сессию флаг для автоматического входа

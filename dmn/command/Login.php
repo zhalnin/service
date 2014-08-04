@@ -10,6 +10,7 @@ namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'AZ' ) ) die();
 define( 'LoginAdmin', true );
+require_once( 'dmn/view/utils/security_mod.php' );
 require_once( "dmn/command/Command.php" );
 // Подключаем вспомогательные классы
 require_once( "dmn/classes.php" );
@@ -24,7 +25,7 @@ class Login  extends Command {
         $form_comment = new \dmn\classes\FieldParagraph($text);
 
         $loginEnter = new \dmn\classes\FieldText("loginEnter",
-            "Ник",
+            "Логин",
             true,
             $_REQUEST['loginEnter']);
         $passEnter = new \dmn\classes\FieldPassword("passEnter",

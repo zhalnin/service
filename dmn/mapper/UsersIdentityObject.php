@@ -29,7 +29,9 @@ class UsersIdentityObject extends IdentityObject {
                 'pass',
                 'putdate',
                 'lastvisit',
-                'block',)
+                'block',
+                'online',
+                'rights' )
         );
     }
 }

@@ -68,7 +68,7 @@ class UsersEdit extends Command {
                 $_REQUEST['city']       = $users->getCity(); // город
                 $_REQUEST['email']      = $users->getEmail(); // электронный адрес
                 $_REQUEST['url']        = $users->getUrl(); // сайт
-                $_REQUEST['login']      = $users->getLogin(); // логин
+                $_REQUEST['usersLogin']      = $users->getLogin(); // логин
                 $_REQUEST['activation'] = $users->getActivation(); // код активации
 //                $_REQUEST['status']     = $users->getStatus(); // статус
 //                $_REQUEST['pass']       = $users->getPass(); // пароль
@@ -105,10 +105,10 @@ class UsersEdit extends Command {
                 "Сайт",
                 false,
                 $_REQUEST['url']);
-            $login = new \dmn\classes\FieldText("login",
+            $usersLogin = new \dmn\classes\FieldText("usersLogin",
                 "Ник",
                 true,
-                $_REQUEST['login']);
+                $_REQUEST['usersLogin']);
             $activation = new \dmn\classes\FieldText("activation",
                 "Код активации",
                 false,
@@ -116,18 +116,18 @@ class UsersEdit extends Command {
             $status = new \dmn\classes\FieldCheckbox("status",
                 "Активировать",
                 $_REQUEST['status']);
-            $pass = new \dmn\classes\FieldPassword("pass",
+            $usersPass = new \dmn\classes\FieldPassword("usersPass",
                 "Пароль",
                 true,
-                $_REQUEST['pass'],
+                $_REQUEST['usersPass'],
                 255,
                 41,
                 "",
                 "Например: $passExample");
-            $passagain = new \dmn\classes\FieldPassword("passagain",
+            $usersPassagain = new \dmn\classes\FieldPassword("usersPassagain",
                 "Повтор",
                 true,
-                $_REQUEST['passagain'],
+                $_REQUEST['usersPassagain'],
                 255,
                 41,
                 "",
@@ -141,6 +141,10 @@ class UsersEdit extends Command {
             $block = new \dmn\classes\FieldCheckbox("block",
                 "Блокировать",
                 $_REQUEST['block']);
+            $usersRights = new \dmn\classes\FieldSelect("usersRights",
+                "Тип юзера",
+                array( 'user' => 'user', 'admin' => 'admin' ),
+                $_REQUEST['usersRights']);
             $page = new \dmn\classes\FieldHiddenInt("page",
                 false,
                 $_REQUEST['page']);
@@ -152,14 +156,15 @@ class UsersEdit extends Command {
                     "city"          => $city,
                     "email"         => $email,
                     "url"           => $url,
-                    "login"         => $login,
+                    "usersLogin"    => $usersLogin,
                     "activation"    => $activation,
                     "status"        => $status,
-                    "pass"          => $pass,
-                    "passagain"     => $passagain,
+                    "usersPass"     => $usersPass,
+                    "usersPassagain"=> $usersPassagain,
                     "putdate"       => $putdate,
                     "lastvisit"     => $lastvisit,
                     "block"         => $block,
+                    "usersRights"   => $usersRights,
                     "page"          => $page,
                     "submitted"     => $submitted ),
                 "Редактировать",
@@ -168,16 +173,16 @@ class UsersEdit extends Command {
 
         // если форма была передана
         if( ! empty( $_POST ) && $_POST['submitted'] == 'yes' ) {
-            if($form->fields['pass']->value != $form->fields['passagain']->value) {
+            if($form->fields['usersPass']->value != $form->fields['usersPassagain']->value) {
                 $error[] = "Пароли не равны";
             }
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
 
-            $accountsCount = \dmn\domain\Users::findCountPos( $form->fields['login']->value );
+            $accountsCount = \dmn\domain\Users::findCountPos( $form->fields['usersLogin']->value );
             if( is_array( $accountsCount ) ) {
                 if( $accountsCount['count'] >= 1 ) {
                     $error[] = "Пользователь с именем
-                        <b>{$form->fields['login']->value}</b> уже
+                        <b>{$form->fields['usersLogin']->value}</b> уже
                         зарегистрирован";
                 }
             }
@@ -228,19 +233,23 @@ class UsersEdit extends Command {
                 // устанавливаем сайт
                 $users->setUrl( $form->fields['url']->value );
                 // устанавливаем логин
-                $users->setLogin( $form->fields['login']->value );
+                $users->setLogin( $form->fields['usersLogin']->value );
                 // устанавливаем код активации
                 $users->setActivation( $form->fields['activation']->value );
                 // устанавливаем статус
                 $users->setStatus( $statusUn );
                 // устанавливаем пароль
-                $users->setPass( md5( $form->fields['pass']->value ) );
+                $users->setPass( md5( $form->fields['usersPass']->value ) );
                 // устанавливаем дату регистрации
                 $users->setPutdate( $form->fields['putdate']->getMysqlFormat() );
                 // устанавливаем дату последнего визита
                 $users->setLastvisit( $form->fields['lastvisit']->getMysqlFormat() );
                 // устанавливаем флаг блокировки
                 $users->setBlock( $blockUnblock);
+//                // устанавливаем флаг онлайн
+//                $users->setOnline( 0 );
+                // устанавливаем флаг типа юзера
+                $users->setRights( $form->fields['usersRights']->value );
 //
 //                echo "<tt><pre>".print_r($form, true)."</pre></tt>";
                 $this->reloadPage( 0, "dmn.php?cmd=Users&page=" ); // перегружаем страничку

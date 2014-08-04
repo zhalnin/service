@@ -25,6 +25,8 @@ $pass           = $usersDetail->getPass();
 $putdate        = $usersDetail->getPutdate();
 $lastvisit      = $usersDetail->getLastvisit();
 $block          = $usersDetail->getBlock();
+$online         = $usersDetail->getOnline();
+$rights         = $usersDetail->getRights();
 
 
 ?>
@@ -108,6 +110,16 @@ $block          = $usersDetail->getBlock();
                     <td align=right>Дата последнего визита</td>
                     <td>$day.$month.$year $time</td>
                  </tr>";
+                    }
+                    if( isset( $online ) ) {
+                        if( $online == 1 )
+                            $onlineUser = 'Да';
+                        else
+                            $onlineUser = 'Нет';
+                        echo "<tr><td align=right>Онлайн</td><td>$onlineUser</td></tr>";
+                    }
+                    if( ! empty( $rights ) ) {
+                        echo "<tr><td align=right>Тип юзера</td><td>".htmlspecialchars( $rights )."</td></tr>";
                     }
 
             echo "</table><br /><br />";

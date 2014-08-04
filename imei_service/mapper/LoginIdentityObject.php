@@ -25,7 +25,9 @@ class LoginIdentityObject extends IdentityObject {
                                             'status',
                                             'putdate',
                                             'lastvisit',
-                                            'block' )
+                                            'block',
+                                            'online',
+                                            'rights' )
         );
     }
 }

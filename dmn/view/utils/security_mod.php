@@ -11,11 +11,12 @@ error_reporting( E_ALL & ~E_NOTICE );
 require_once( "dmn/domain/Accounts.php" );
 use dmn\base\SessionRegistry;
 
-//echo "<tt><pre>".print_r( $_SESSION , true ) ."</pre></tt>";
+//echo "<tt><pre>".print_r( $_COOKIE , true ) ."</pre></tt>";
+//echo "<tt><pre>".print_r( SessionRegistry::getSession('uid') , true ) ."</pre></tt>";
 function isAuth() {
     $sesUid  = SessionRegistry::getSession('uid');
     if( isset( $_COOKIE['auto'] ) ) {
-        print 'kuki';
+//        print 'kuki';
         if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
             $login = $_COOKIE['login'];
             $pass  = $_COOKIE['pass'];
@@ -35,7 +36,7 @@ function isAuth() {
             return false;
         }
     } elseif( isset( $sesUid )  ) {
-        print 'sessia';
+//        print 'sessia';
         $sesLogin = SessionRegistry::getSession('login');
         $sesPass  = SessionRegistry::getSession('pass');
         $uid      = \dmn\domain\Accounts::find( SessionRegistry::getSession('uid') );
