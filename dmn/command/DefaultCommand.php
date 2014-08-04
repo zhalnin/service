@@ -7,7 +7,7 @@
  */
 
 namespace dmn\command;
-
+//require_once( 'dmn/view/utils/security_mod.php' );
 require_once( "dmn/command/Command.php" );
 
 class DefaultCommand extends Command {

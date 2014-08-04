@@ -5,11 +5,11 @@
  * Date: 26/07/14
  * Time: 18:51
  */
-
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'AZ' ) ) die();
 define( 'CatalogPosition', true );
+require_once( 'dmn/view/utils/security_mod.php' );
 
 require_once( "dmn/command/Command.php" );
 require_once( "dmn/domain/CatalogPosition.php" );

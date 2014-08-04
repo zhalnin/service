@@ -8,7 +8,7 @@
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'News' ) ) die();
-
+require_once( 'dmn/view/utils/security_mod.php' );
 // Подключаем родительский класс
 require_once( 'dmn/command/Command.php' );
 // Подключаем вспомогательные классы

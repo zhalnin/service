@@ -38,12 +38,12 @@ class Users extends DomainObject {
      * @param null $email
      * @param null $url
      * @param null $login
-     * @param null $activation
+     * @param int $activation
      * @param null $status
      * @param null $pass
      * @param null $putdate
      * @param null $lastvisit
-     * @param null $block
+     * @param string $block
      */
     function __construct( $id=null,
                           $fio=null,

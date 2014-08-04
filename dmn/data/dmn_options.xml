@@ -37,6 +37,10 @@
         <view status="CMD_OK">main</view>
         <view status="CMD_ERROR">error</view>
 
+        <command name="Login">
+            <view>login</view>
+        </command>
+
 
         <command name="Accounts">
             <view>accounts</view>

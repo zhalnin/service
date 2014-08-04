@@ -52,6 +52,7 @@ class FieldText extends Field {
     public function getHtml() {
         // Check if not empty style
         if( ! empty($this->css_style ) ) {
+//            echo "<tt><pre>". print_r($this->css_style,    TRUE) . "</pre></tt>";
             $style = "style=\"".$this->css_style."\"";
         }
         else $style = "";

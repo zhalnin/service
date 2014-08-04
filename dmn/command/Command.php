@@ -9,8 +9,7 @@
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 require_once( "dmn/view/utils/getNameServer.php" );
-
-
+//require_once( 'dmn/view/utils/security_mod.php' );
 abstract class Command {
     private static $STATUS_STRINGS = array(
         'CMD_DEFAULT'           => 0,

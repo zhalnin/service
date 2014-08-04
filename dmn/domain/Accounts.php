@@ -18,19 +18,23 @@ require_once( "dmn/base/Registry.php" );
 class Accounts extends DomainObject {
     private $name;
     private $pass;
+    private $lastvisit;
 
     /**
      * Поля из БД - сохраняем из в переменные
      * @param null $id
      * @param null $name
      * @param null $pass
+     * @param null $lastvisit
      */
     function __construct( $id=null,
                           $name=null,
-                          $pass=null ) {
+                          $pass=null,
+                          $lastvisit=null ) {
 
-        $this->name     = $name;
-        $this->pass     = $pass;
+        $this->name      = $name;
+        $this->pass      = $pass;
+        $this->lastvisit = $lastvisit;
 
         parent::__construct( $id ); // вызываем конструктор родительского класса
     }
@@ -75,6 +79,13 @@ class Accounts extends DomainObject {
         }
     }
 
+
+    static function authUser( $name, $pass ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \dmn\mapper\AccountsIdentityObject( 'name' );
+        return $finder->findOne( $idobj->eq( $name )->field( 'pass' )->eq( $pass ) );
+    }
+
     /**
      * устанавливем имя
      * @param $name_s
@@ -91,6 +102,14 @@ class Accounts extends DomainObject {
         $this->pass = $pass_s;
         $this->markDirty();
     }
+    /**
+     * устанавливаем время посещения
+     * @param $lastvisit_s
+     */
+    function setLastvisit( $lastvisit_s ) {
+        $this->lastvisit = $lastvisit_s;
+        $this->markDirty();
+    }
 
     /**
      * получаем имя
@@ -105,6 +124,14 @@ class Accounts extends DomainObject {
      */
     function getPass() {
         return $this->pass;
+    }
+
+    /**
+     * получаем время посещения
+     * @return null
+     */
+    function getLastvisit() {
+        return $this->lastvisit;
     }
 }
 ?>

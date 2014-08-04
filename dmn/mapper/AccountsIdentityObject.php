@@ -20,7 +20,8 @@ class AccountsIdentityObject extends IdentityObject {
     function __construct( $field=null ) {
         parent::__construct( $field, array('id_account',
                 'name',
-                'pass' )
+                'pass',
+                'lastvisit' )
         );
     }
 }

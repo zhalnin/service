@@ -404,6 +404,7 @@ class AccountsObjectFactory extends DomainObjectFactory {
         // используем методы set...( array ) - и добавляем результат запроса в класс, получим их, соответственно методами get...()
         $obj->setName( $array['name'] );
         $obj->setPass( $array['pass'] );
+        $obj->setLastvisit( $array['lastvisit'] );
 
         $this->addToMap( $obj );
         $obj->markClean();

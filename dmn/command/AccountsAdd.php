@@ -9,7 +9,7 @@
 namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'Accounts' ) ) die();
-
+require_once( 'dmn/view/utils/security_mod.php' );
 // Подключаем родительский класс
 require_once( 'dmn/command/Command.php' );
 // Подключаем вспомогательные классы
@@ -91,7 +91,9 @@ class AccountsAdd extends Command {
                 $accountObj->setName( $form->fields['name']->value );
                 // устанавливаем пароль
                 $accountObj->setPass( md5( $form->fields['pass']->value ) );
-
+                // устанавливаем время
+                $accountObj->setLastvisit( date( 'Y-m-d H:i:s', time() ) );
+//                echo "<tt><pre>".print_r( date( 'Y-m-d H:i:s', time() ) , true )."</pre></tt>";
                 $this->reloadPage( 0, "dmn.php?cmd=Accounts" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );

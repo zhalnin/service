@@ -7,6 +7,7 @@
  */
 namespace dmn\view;
 error_reporting(E_ALL & ~E_NOTICE);
+if( ! defined( 'Users' ) ) die();
 try {
     require_once( "dmn/view/utils/navigation.php" );
     require_once( "dmn/view/utils/printPage.php" );

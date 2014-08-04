@@ -76,4 +76,21 @@
     select{background-color: #F5F5F5; border-width: 2px;}
 
     .help{color: #264769; font-weight: bold; padding-left: 10px; text-align: left;}
+
+    /*Для меню навигации по пройденным ссылкам*/
     .currentPos { color: #5F6169; }
+
+    /*Форма входа*/
+    .headerform {
+        background-color: #84a4b3; background-image: url("../images/form/header.gif"); background-repeat: repeat-x;
+        border-color: #c4d2c6 #a2a2a2 #a2a2a2; border-right: 1px solid #a2a2a2; border-style: solid;
+        border-width: 1px; height: 56px;width: 580px; }
+
+    .bodyform{ background-color: #ffffff; background-image: url("../images/form/paper.gif"); border-color: #c2c2c2;
+        border-right: 1px solid #c2c2c2; border-style: solid; border-width: 0 1px 1px; height: 270px;
+        width: 500px; padding: 10px 40px;}
+
+    .blockremark { background-color: #f5f5f5; border-color: #cfcfcf; border-style: solid; border-width: 1px;
+        margin:10px auto; padding: 10px; width: 418px; }
+
+    .nameaction {color: #ffffff; font-size: 16px; font-weight: bold; margin: 0; padding-top: 20px; text-align: center;}

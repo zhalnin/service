@@ -17,8 +17,9 @@ class AccountsUpdateFactory  extends UpdateFactory{
 
         $id = $obj->getId();
         $cond = null;
-        $values['name'] = $obj->getName();
-        $values['pass'] = $obj->getPass();
+        $values['name']      = $obj->getName();
+        $values['pass']      = $obj->getPass();
+        $values['lastvisit'] = $obj->getLastvisit();
 
         if( $id > -1 ) {
             $cond['id_account'] = $id;

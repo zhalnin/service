@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
+ * Created by PhpStorm.
  * User: zhalnin
- * Date: 22.12.12
- * Time: 15:08
- * To change this template use File | Settings | File Templates.
+ * Date: 04/08/14
+ * Time: 14:19
  */
  error_reporting(E_ALL & ~E_NOTICE);
 ?>
 
+</div>
 <br/><br/></td>
 <td width=10%>&nbsp;</td>
 </tr>

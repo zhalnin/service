@@ -268,7 +268,12 @@ fieldset > div .mbsIframe {
 
 #showcase .checkbox-field input {
     border: 1px solid #D6D6D6;
-    box-shadow: 0 1px 1px #AAAAAA inset;
+    /*box-shadow: 0 1px 1px #AAAAAA inset;*/
+    /*-khtml-box-shadow:  0 1px 1px #AAAAAA inset;*/
+    /*-ms-box-shadow:  0 1px 1px #AAAAAA inset;*/
+    /*-o-box-shadow:  0 1px 1px #AAAAAA inset;*/
+    /*-moz-box-shadow:  0 1px 1px #AAAAAA inset;*/
+    /*-webkit-box-shadow:  0 1px 1px #AAAAAA inset;*/
     font-size: 12px;
     height: 24px;
     width: 24px;
@@ -288,6 +293,11 @@ fieldset > div .mbsIframe {
     -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-radius: 4px 4px 4px 4px;
     box-shadow: 0 1px 0 #E5E5E5 inset;
+    -khtml-box-shadow:  0 1px 0 #E5E5E5 inset;
+    -ms-box-shadow:  0 1px 0 #E5E5E5 inset;
+    -o-box-shadow:  0 1px 0 #E5E5E5 inset;
+    -moz-box-shadow:  0 1px 0 #E5E5E5 inset;
+    -webkit-box-shadow:  0 1px 0 #E5E5E5 inset;
     padding: 3px 2px;
 }
 #showcase .shipping-box .lastName-field input, #showcase .payment-method-box .lastName-field input {

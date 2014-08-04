@@ -12,6 +12,9 @@ error_reporting( E_ALL & ~E_NOTICE );
 use imei_service\base\SessionRegistry;
 
 
+//if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
+//    print $_COOKIE['login']."<br />".$_COOKIE['pass'];
+//}
     $enter = SessionRegistry::getSession('auto');
     $login = SessionRegistry::getSession('login');
 //echo "<tt><pre>".print_r( $enter , true ) ."</pre></tt>";

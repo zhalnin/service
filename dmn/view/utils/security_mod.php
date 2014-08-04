@@ -8,48 +8,55 @@
 
 namespace dmn\view\utils;
 error_reporting( E_ALL & ~E_NOTICE );
-//require_once( "imei_service/base/Registry.php" );
+require_once( "dmn/domain/Accounts.php" );
 use dmn\base\SessionRegistry;
 
+//echo "<tt><pre>".print_r( $_SESSION , true ) ."</pre></tt>";
+function isAuth() {
+    $sesUid  = SessionRegistry::getSession('uid');
+    if( isset( $_COOKIE['auto'] ) ) {
+        print 'kuki';
+        if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
+            $login = $_COOKIE['login'];
+            $pass  = $_COOKIE['pass'];
+            $uid   = \dmn\domain\Accounts::find( SessionRegistry::getSession('uid') );
 
-    $enter = SessionRegistry::getSession('auto');
-    $login = SessionRegistry::getSession('login');
-//echo "<tt><pre>".print_r( $enter , true ) ."</pre></tt>";
-    if( intval( $enter ) === 1 ) {
-        ?>
-
-        <ul id="login-wrap">
-            <li>
-                <a id="login-nav" class="login-globalNavLink login-elem" href="#">
-                    <span class="nav-link login-elem">
-                        <img class="login-avatar" width="26" height="26" title="alezhal" alt="alezhal" data-random="11237289575920228" data-height="26" data-username="alezhal" data-avatarid="1316" src="imei_service/view/files/login/avatar/26_rounded.png">
-                        <span class="login-user-name login-username-navLabel">Добро пожаловать, <?php print $login; ?></span>
-                    </span>
-                </a>
-                |
-                <a href="?cmd=Logout">Выйти</a>
-                <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
-            </li>
-        </ul>
-
-    <?php
+            if( is_object( $uid ) ) {
+                if( $login !== $uid->getName() && $pass !== $uid->getPass() ) {
+                    return false;
+                } else {
+                    $uid->setLastvisit( date( 'Y-m-d H:i:s', time() ) );
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } elseif( isset( $sesUid )  ) {
+        print 'sessia';
+        $sesLogin = SessionRegistry::getSession('login');
+        $sesPass  = SessionRegistry::getSession('pass');
+        $uid      = \dmn\domain\Accounts::find( SessionRegistry::getSession('uid') );
+            if( is_object( $uid ) ) {
+                if( $sesLogin !== $uid->getName() && $sesPass !== $uid->getPass() ) {
+                    return false;
+                } else {
+                    $uid->setLastvisit( date( 'Y-m-d H:i:s', time() ) );
+                    return true;
+                }
+            } else {
+                return false;
+            }
     } else {
-        ?>
-
-        <ul id="login-wrap">
-            <li>
-                <ul id="login-nav">
-                    <li class="welcome-guest">Добро пожаловать, Гость</li>
-                    <li class="login">
-                        |
-                        <a title="Login" href="?cmd=Login">Войти</a>
-                    </li>
-                </ul>
-                <div id="j-satNav-menu" class="clearfix" style="display:none;"></div>
-            </li>
-        </ul>
-
-    <?php
-
+        return false;
     }
+}
+
+if( isAuth() === false ) {
+    header( 'Location: dmn.php?cmd=Login' );
+}
+
+
 ?>

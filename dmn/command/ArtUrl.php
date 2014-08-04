@@ -10,7 +10,7 @@ namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'AZ' ) ) die();
 define( 'ArtUrl', true );
-
+require_once( 'dmn/view/utils/security_mod.php' );
 require_once( "dmn/command/Command.php" );
 require_once( "dmn/domain/ArtUrl.php" );
 require_once( "dmn/classes/class.PagerMysql.php" );

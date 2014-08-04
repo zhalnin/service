@@ -46,6 +46,10 @@ class Login extends Command {
             $request->addFeedback( 'Введите логин' ); // поле логина пустое
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
+        if( ! preg_match('|[a-zA-Z0-9]+|', $login ) ) {
+            $request->addFeedback( 'Логин должен состоять из латинских букв и/или цифр' ); // поле логина содержит недопустимые символы
+            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+        }
         if( empty( $pass_u ) ) {
             $request->addFeedback( 'Введите пароль' ); // поле пароля пустое
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
@@ -79,11 +83,12 @@ class Login extends Command {
         SessionRegistry::setSession( 'login', $login ); // добавляем в сессию логин
         SessionRegistry::setSession( 'pass', $pass ); // добавляем в сессию пароль
         SessionRegistry::setSession( 'auto', 1 ); // добавляем в сессию флаг для автоматического входа
+        SessionRegistry::setSession( 'uid', $logPassExist->getId() ); // добавляем в сессию id пользователя
 
         if( isset( $auto ) ) { // если был отмечен checkbox при входе "Запомнить меня", то устанавливаем куки
 
             setcookie( 'login', $login, time()+9999999 ); // для логина
-            setcookie( 'pass', $pass_u, time()+9999999 ); // для пароля
+            setcookie( 'pass', md5( $pass_u ), time()+9999999 ); // для пароля
             setcookie( 'auto', 1, time()+9999999 ); // для автоматического входа
         }
         return self::statuses( 'CMD_LOGIN_OK' );

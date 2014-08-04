@@ -48,6 +48,7 @@ try {
            cellpadding="0">
         <tr class="header" align="center">
             <td>Пользователь</td>
+            <td>Последний визит</td>
             <td>Действия</td>
         </tr>
     <?php
@@ -60,7 +61,8 @@ try {
             // Выводим строку таблицы
             echo "<tr>
                     <td align=center>{$account[$i][name]}</td>
-                    <td align=center>
+                    <td align=center width='150px' >{$account[$i][lastvisit]}</td>
+                    <td align=center width='10%' >
                         <a href=#
                             onClick=\"delete_position('".
                             "?cmd=Accounts&pact=del&page=$_GET[page]&".

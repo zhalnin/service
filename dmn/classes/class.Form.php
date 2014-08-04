@@ -58,13 +58,13 @@ class Form {
         $enctype = "";
         if( ! empty($this->fields ) ) {
             foreach( $this->fields as $obj ) {
-//        echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                 // Give all control elements style
                 if( ! empty( $this->css_fld_class ) ) {
                     $obj->css_class = $this->css_fld_class;
 //          echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                 }
                 if( ! empty( $this->css_fld_style ) ) {
+//                    echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
                     $obj->css_style = $this->css_fld_style;
                 }
                 // Check for field "file"
@@ -84,6 +84,7 @@ class Form {
             $class = "class=\"".$this->css_td_class."\"";
         }  else $class = "";
 
+//        echo "<tt><pre>". print_r($obj, TRUE) . "</pre></tt>";
         // Print form
         echo "<form name=\"form\" $enctype method=\"post\">";
         echo "<table>";
