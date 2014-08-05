@@ -21,3 +21,4 @@ view - полностью
 command сделал Activation, BlacklistCheck
 
 2. ArtParagraphAdd - добавление параграфа в разные позиции
+3. В Login.php изменить имена переменных, чтобы в форму не добавлялись

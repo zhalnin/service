@@ -87,6 +87,20 @@ class ArtParagraph extends DomainObject {
     }
 
     /**
+     * Метод для добавления параграфа на место существующего
+     * с перемещением остальных на позицию выше
+     * @param $id
+     * @param $idc
+     * @param $idp
+     * @return mixed
+     */
+    static function findPos( $id, $idc, $idp ) {
+        $finder = self::getFinder( __CLASS__ );
+        $idobj = new \dmn\mapper\ArtParagraphIdentityObject( 'id_position' );
+        return $finder->find( $idobj->eq( $id )->field( 'id_catalog' )->eq( $idc )->field( 'pos' )->gt( $idp ) );
+    }
+
+    /**
      * Метод для поиска родительского каталога
      * @param $id
      * @return mixed

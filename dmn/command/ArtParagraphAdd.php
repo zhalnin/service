@@ -133,19 +133,25 @@ class ArtParagraphAdd extends Command {
                                                                       $form->fields['idc']->value );
 //                    echo "<tt><pre>".print_r($paragraphObjLs, true)."</pre></tt>";
                     if( is_object( $paragraphObjLs ) ) {
-                        $pos = $paragraphObjLs->getPos() + 1; // получаем его позицию и инкрементируем
-                        $paragraphObjLs->setPos( $pos ); // обновляем значение
+                        foreach ( $paragraphObjLs as $paragraphObjL) {
+                            $pos = $paragraphObjL->getPos() + 1; // получаем его позицию и инкрементируем
+                            $paragraphObjL->setPos( $pos ); // обновляем значение
+                        }
+
                     }
                     $position = 1; // позицию приравниваем к единице
                     \dmn\domain\ObjectWatcher::instance()->performOperations(); // выполняем UPDATE
-                } else {
+                } else { // то добавляем параграф ниже выбранного
                     // находим такой параграф с id параграфа и каталога и позицией
-                    $paragraphObjGr = \dmn\domain\ArtParagraph::find( $form->fields['idp']->value,
+                    $paragraphObjGr = \dmn\domain\ArtParagraph::findPos( $form->fields['idp']->value,
                                                                         $form->fields['idc']->value,
                                                                         $form->fields['pos']->value );
+//                    echo "<tt><pre>".print_r($paragraphObjGr, true)."</pre></tt>";
                     if( is_object( $paragraphObjGr ) ) {
-                        $pos =  $form->fields['pos']->value + 1;  // получаем позицию из формы и инкрементируем
-                        $paragraphObjGr->setPos( $pos ); // обновляем значение
+                        foreach( $paragraphObjGr as $paragraphObjG ) {
+                            $pos =  $paragraphObjG->getPos() + 1;  // получаем позицию из формы и инкрементируем
+                            $paragraphObjG->setPos( $pos ); // обновляем значение
+                        }
                     }
                     $position = $form->fields['pos']->value + 1; // позицию приравниваем к значению из формы + один
                     \dmn\domain\ObjectWatcher::instance()->performOperations(); // выполняем UPDATE
@@ -214,7 +220,7 @@ class ArtParagraphAdd extends Command {
 
                 }
                 $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$_REQUEST[idp]&idc=$_REQUEST[idc]&page=$_GET[page]" ); // перегружаем страничку
-//                // возвращаем статус и переадресацию на messageSuccess
+                // возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }
 

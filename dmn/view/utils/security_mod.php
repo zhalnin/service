@@ -16,6 +16,7 @@ use dmn\base\SessionRegistry;
 function isAuth() {
     $sesUid  = SessionRegistry::getSession('uid');
     if( isset( $_COOKIE['auto'] ) ) {
+//        file_put_contents('security.txt', 'cookie'."\n", FILE_APPEND );
 //        print 'kuki';
         if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
             $login = $_COOKIE['login'];
@@ -36,6 +37,7 @@ function isAuth() {
             return false;
         }
     } elseif( isset( $sesUid )  ) {
+//        file_put_contents('security.txt', 'session'."\n", FILE_APPEND );
 //        print 'sessia';
         $sesLogin = SessionRegistry::getSession('login');
         $sesPass  = SessionRegistry::getSession('pass');
@@ -55,8 +57,10 @@ function isAuth() {
     }
 }
 
-if( isAuth() === false ) {
+if( isAuth() == false ) {
+//    file_put_contents('security.txt', 'false'."\n", FILE_APPEND );
     header( 'Location: dmn.php?cmd=Login' );
+    exit();
 }
 
 

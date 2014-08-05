@@ -16,10 +16,12 @@ if(!isset($_SERVER['PHP_AUTH_USER']))
 {
     Header("WWW-Authenticate: Basic realm=\"Admin1 Page\"");
     Header("HTTP/1.0 401 Unauthorized");
+    file_put_contents('security.txt', 'false'."\n", FILE_APPEND );
     exit();
 }
 else
 {
+    file_put_contents('security.txt', 'true'."\n", FILE_APPEND );
     // Проверяем переменные $_SERVER['PHP_AUTH_USER']
     // и $_SERVER['PHP_AUTH_PW'], чтобы предотвратить
     // SQL-инъекцию
