@@ -9,16 +9,58 @@
 namespace imei_service\view\utils;
 error_reporting( E_ALL & ~E_NOTICE );
 //require_once( "imei_service/base/Registry.php" );
+require_once( "imei_service/domain/Login.php" );
 use imei_service\base\SessionRegistry;
 
 
-//if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
-//    print $_COOKIE['login']."<br />".$_COOKIE['pass'];
-//}
-    $enter = SessionRegistry::getSession('auto');
-    $login = SessionRegistry::getSession('login');
+function isAuth() {
+    $sesUid  = SessionRegistry::getSession('uidu');
+    if( isset( $_COOKIE['autou'] ) ) {
+//        file_put_contents('security.txt', 'cookie'."\n", FILE_APPEND );
+//        print 'kuki';
+        if( isset( $_COOKIE['loginu'] ) && isset( $_COOKIE['passu'] ) ) {
+            $login = $_COOKIE['loginu'];
+            $pass  = $_COOKIE['passu'];
+            $uid   = \imei_service\domain\Login::find( SessionRegistry::getSession('uidu') );
+
+            if( is_object( $uid ) ) {
+                if( $login !== $uid->getLogin() && $pass !== $uid->getPass() ) {
+                    return false;
+                } else {
+                    $uid->setLastvisit( date( 'Y-m-d H:i:s', time() ) );
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } elseif( isset( $sesUid )  ) {
+//        file_put_contents('security.txt', 'session'."\n", FILE_APPEND );
+//        print 'sessia';
+        $sesLogin = SessionRegistry::getSession('loginu');
+        $sesPass  = SessionRegistry::getSession('passu');
+        $uid      = \imei_service\domain\Login::find( SessionRegistry::getSession('uidu') );
+        if( is_object( $uid ) ) {
+            if( $sesLogin !== $uid->getLogin() && $sesPass !== $uid->getPass() ) {
+                return false;
+            } else {
+                $uid->setLastvisit( date( 'Y-m-d H:i:s', time() ) );
+                return true;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+    $enter = SessionRegistry::getSession('autou');
+    $login = SessionRegistry::getSession('loginu');
 //echo "<tt><pre>".print_r( $enter , true ) ."</pre></tt>";
-    if( intval( $enter ) === 1 ) {
+    if( isAuth() === true ) {
 ?>
 
         <ul id="login-wrap">
@@ -88,10 +130,6 @@ use imei_service\base\SessionRegistry;
                 ?>
 
                 <a href="?cmd=Cart" >Корзина <?php echo $num_items; ?></a>
-
-<!--                --><?php //echo "<tt><pre>".print_r(  $_SESSION['cart_imei_service'], true )."</pre></tt>" ?>
-<!--                --><?php //echo "total - " . $_SESSION['total_items_imei_service']; ?>
-<!--                --><?php //echo "price - " . $_SESSION['total_price_imei_service']; ?>
             </li>
             <li>
                 <div id="globalsearch">

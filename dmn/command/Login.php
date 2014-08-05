@@ -86,17 +86,17 @@ class Login  extends Command {
 
 //            Сохранение в сессию
 
-                \dmn\base\SessionRegistry::setSession( 'login', $login ); // добавляем в сессию логин
-                \dmn\base\SessionRegistry::setSession( 'pass', $pass ); // добавляем в сессию пароль
-                \dmn\base\SessionRegistry::setSession( 'uid', $accounts->getId() ); // добавляем в сессию id пользователя
-                \dmn\base\SessionRegistry::setSession( 'auto', 1 ); // добавляем в сессию флаг для автоматического входа
+                \dmn\base\SessionRegistry::setSession( 'logina', $login ); // добавляем в сессию логин
+                \dmn\base\SessionRegistry::setSession( 'passa', $pass ); // добавляем в сессию пароль
+                \dmn\base\SessionRegistry::setSession( 'uida', $accounts->getId() ); // добавляем в сессию id пользователя
+                \dmn\base\SessionRegistry::setSession( 'autoa', 1 ); // добавляем в сессию флаг для автоматического входа
 
 //            Сохранение в куки
                 if( $auto === 1 ) { // если был отмечен checkbox при входе "Запомнить меня", то устанавливаем куки
 
-                    setcookie( 'login', $login, time()+9999999 ); // для логина
-                    setcookie( 'pass', md5( $pass ), time()+9999999 ); // для пароля
-                    setcookie( 'auto', 1, time()+9999999 ); // для автоматического входа
+                    setcookie( 'logina', $login, time()+9999999 ); // для логина
+                    setcookie( 'passa', md5( $pass ), time()+9999999 ); // для пароля
+                    setcookie( 'autoa', 1, time()+9999999 ); // для автоматического входа
                 }
 
 //                echo "<tt><pre>".print_r($auto, true)."</pre></tt>";

@@ -14,14 +14,14 @@ use dmn\base\SessionRegistry;
 //echo "<tt><pre>".print_r( $_COOKIE , true ) ."</pre></tt>";
 //echo "<tt><pre>".print_r( SessionRegistry::getSession('uid') , true ) ."</pre></tt>";
 function isAuth() {
-    $sesUid  = SessionRegistry::getSession('uid');
-    if( isset( $_COOKIE['auto'] ) ) {
+    $sesUid  = SessionRegistry::getSession('uida');
+    if( isset( $_COOKIE['autoa'] ) ) {
 //        file_put_contents('security.txt', 'cookie'."\n", FILE_APPEND );
 //        print 'kuki';
-        if( isset( $_COOKIE['login'] ) && isset( $_COOKIE['pass'] ) ) {
-            $login = $_COOKIE['login'];
-            $pass  = $_COOKIE['pass'];
-            $uid   = \dmn\domain\Accounts::find( SessionRegistry::getSession('uid') );
+        if( isset( $_COOKIE['logina'] ) && isset( $_COOKIE['passa'] ) ) {
+            $login = $_COOKIE['logina'];
+            $pass  = $_COOKIE['passa'];
+            $uid   = \dmn\domain\Accounts::find( SessionRegistry::getSession('uida') );
 
             if( is_object( $uid ) ) {
                 if( $login !== $uid->getName() && $pass !== $uid->getPass() ) {
@@ -39,9 +39,9 @@ function isAuth() {
     } elseif( isset( $sesUid )  ) {
 //        file_put_contents('security.txt', 'session'."\n", FILE_APPEND );
 //        print 'sessia';
-        $sesLogin = SessionRegistry::getSession('login');
-        $sesPass  = SessionRegistry::getSession('pass');
-        $uid      = \dmn\domain\Accounts::find( SessionRegistry::getSession('uid') );
+        $sesLogin = SessionRegistry::getSession('logina');
+        $sesPass  = SessionRegistry::getSession('passa');
+        $uid      = \dmn\domain\Accounts::find( SessionRegistry::getSession('uida') );
             if( is_object( $uid ) ) {
                 if( $sesLogin !== $uid->getName() && $sesPass !== $uid->getPass() ) {
                     return false;
@@ -57,11 +57,9 @@ function isAuth() {
     }
 }
 
-if( isAuth() == false ) {
+if( isAuth() === false ) {
 //    file_put_contents('security.txt', 'false'."\n", FILE_APPEND );
     header( 'Location: dmn.php?cmd=Login' );
     exit();
 }
-
-
 ?>

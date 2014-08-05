@@ -76,6 +76,14 @@ abstract class Collection {
     }
 
     /**
+     * Возвращает количество элементов в выборке
+     * @return int
+     */
+    public function getTotal() {
+        return $this->total;
+    }
+
+    /**
      *  - 1 -
      * Ставим итератор на позицию 0
      */

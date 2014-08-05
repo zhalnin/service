@@ -25,7 +25,7 @@ try {
     // содержимое тега meta
     $description    = $catalog->getDescription();
 
-//    echo "<tt><pre>".print_r( $catalog, true )."</pre></tt>";
+//    echo "<tt><pre>".print_r( $cols, true )."</pre></tt>";
 
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
@@ -70,17 +70,20 @@ try {
                                 <div class='faq-info'>";
 //                                проходим в цикле по коллекции
                                 foreach ($catalog->getFaqPosition() as $pos ) {
+                                    echo "<div class='two-cols-faq'>";
                                     // если это статья
                                     if($pos->getUrl() != 'article') {
-                                        echo "<p><a href=\"".$pos->getUrl()."\"
+                                        echo "<a href=\"".$pos->getUrl()."\" style='display:block; height:100%; text-align:center; margin: 0;'
                                                             class=\"main_txt_lnk\">
-                                                            ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a></p>";
+                                                            ".htmlspecialchars( stripslashes( $pos->getName() ) )."</a>";
                                     } else { // если это ссылка
-                                        echo "<p><a href=\"?cmd=Faq&idc={$pos->getIdCatalog()}&".
-                                            "idp={$pos->getId()}\"
-                                                            class=\"main_txt_lnk\">".
-                                            htmlspecialchars($pos->getName())."</a></p>";
+
+                                            echo "<a style='display:block; height:100%; text-align:center; margin: 0;' href=\"?cmd=Faq&idc={$pos->getIdCatalog()}&".
+                                                "idp={$pos->getId()}\"
+                                                                class=\"main_txt_lnk\">".
+                                                htmlspecialchars($pos->getName())."</a>";
                                     }
+                                    echo "</div>";
                                 }
                         echo "</div> "; // faq-info
 ?>

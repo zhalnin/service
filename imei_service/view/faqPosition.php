@@ -26,7 +26,7 @@ try {
 //    $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
     // подключаем верхний шаблон
     require_once("imei_service/view/templates/top.php");
-//    echo "<tt><pre>".print_r( $position, true )."</pre></tt>";
+//    echo "<tt><pre>".print_r( "dfjdkjfdkjf", true )."</pre></tt>";
 ?>
     <div id="header">
         <ul id="navigation" role="navigation">

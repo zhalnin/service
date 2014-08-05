@@ -20,5 +20,4 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-2. ArtParagraphAdd - добавление параграфа в разные позиции
-3. В Login.php изменить имена переменных, чтобы в форму не добавлялись
+2. В Login.php изменить имена переменных, чтобы в форму не добавлялись

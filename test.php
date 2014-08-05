@@ -1,4 +1,5 @@
 <?php
 
-print date( 'Y-m-d H:i:s', time() );
+$u = sprintf('%u',23 / 2);
+print $u;
 ?>

@@ -29,6 +29,10 @@ class Login extends Command {
         $loginOshibka = \imei_service\domain\LoginOshibka::find( $ip );
         $logPassExist = \imei_service\domain\Login::find( array($login, $pass ) ); // проверяем наличие логина и пароля
 //        echo "<tt><pre>".print_r($logPassExist, true)."</pre></tt>";
+//        echo "<tt><pre> pass - ".print_r($pass, true)."</pre></tt>";
+//        echo "<tt><pre> pass_u - ".print_r($pass_u        , true)."</pre></tt>";$pass_u = $_POST['pass']; // получаем пароль из формы
+
+//        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         if( $request->getProperty( 'submitted') !== 'yes' ) { // если форма не отправлена
 //            $this->error = 'error'; // присваиваем значение
 //            $request->addFeedback( "Заполните форму, чтобы закончить вход" ); // добавляем текст ошибки
@@ -83,16 +87,16 @@ class Login extends Command {
         $logPassExist->setLastvisit( date( 'Y-m-d H:i:s', time() ) ); //  Обновление поля lastvisit
         $logPassExist->setOnline( 1 ); //  Обновление поля онлайн
 
-        SessionRegistry::setSession( 'login', $login ); // добавляем в сессию логин
-        SessionRegistry::setSession( 'pass', $pass ); // добавляем в сессию пароль
-        SessionRegistry::setSession( 'auto', 1 ); // добавляем в сессию флаг для автоматического входа
-        SessionRegistry::setSession( 'uid', $logPassExist->getId() ); // добавляем в сессию id пользователя
+        SessionRegistry::setSession( 'loginu', $login ); // добавляем в сессию логин
+        SessionRegistry::setSession( 'passu', $pass ); // добавляем в сессию пароль
+        SessionRegistry::setSession( 'autou', 1 ); // добавляем в сессию флаг для автоматического входа
+        SessionRegistry::setSession( 'uidu', $logPassExist->getId() ); // добавляем в сессию id пользователя
 
         if( isset( $auto ) ) { // если был отмечен checkbox при входе "Запомнить меня", то устанавливаем куки
 
-            setcookie( 'login', $login, time()+9999999 ); // для логина
-            setcookie( 'pass', md5( $pass_u ), time()+9999999 ); // для пароля
-            setcookie( 'auto', 1, time()+9999999 ); // для автоматического входа
+            setcookie( 'loginu', $login, time()+9999999 ); // для логина
+            setcookie( 'passu', md5( $pass_u ), time()+9999999 ); // для пароля
+            setcookie( 'autou', 1, time()+9999999 ); // для автоматического входа
         }
         return self::statuses( 'CMD_LOGIN_OK' );
     }
