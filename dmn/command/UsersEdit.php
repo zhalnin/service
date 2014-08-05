@@ -73,6 +73,7 @@ class UsersEdit extends Command {
 //                $_REQUEST['status']     = $users->getStatus(); // статус
 //                $_REQUEST['pass']       = $users->getPass(); // пароль
 //                $_REQUEST['block']      = $users->getBlock(); // флаг блокировки
+                $_REQUEST['usersRights']     = $users->getRights(); // права пользователя
 
                 if( $users->getStatus() == 1 ) {
                     $_REQUEST['status'] = 'on';
@@ -84,7 +85,7 @@ class UsersEdit extends Command {
                 } else {
                     $_REQUEST['block'] = 'off';
                 }
-
+//                echo "<tt><pre>".print_r($users, true)."</pre></tt>";
             }
 
             $text = "Поля, отмеченные звездочкой *, являются обязательными к заполнению";
@@ -195,7 +196,10 @@ class UsersEdit extends Command {
                         зарегистрирован";
                 }
             }
-
+            if( ! preg_match('|[a-zA-Z0-9]+|', $form->fields['usersLogin']->value ) ) {
+                $request->addFeedback( 'Логин должен состоять из латинских букв и/или цифр' ); // поле логина содержит недопустимые символы
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
 //            echo "<tt><pre>".print_r( is_array( $accountsCount ), true )."</pre></tt>";
 
             if( ! empty( $error ) ) { // если есть ошибки

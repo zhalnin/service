@@ -133,7 +133,10 @@ class UsersAdd extends Command {
                         зарегистрирован";
                 }
             }
-
+            if( ! preg_match('|[a-zA-Z0-9]+|', $form->fields['usersLogin']->value ) ) {
+                $request->addFeedback( 'Логин должен состоять из латинских букв и/или цифр' ); // поле логина содержит недопустимые символы
+                return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+            }
 //            echo "<tt><pre>".print_r( is_array( $accountsCount ), true )."</pre></tt>";
 
             if( ! empty( $error ) ) { // если есть ошибки

@@ -162,7 +162,7 @@ class ArtParagraphEdit extends Command {
 //            echo "<tt><pre>".print_r(! empty($error), true)."</pre></tt>";
             if( empty( $error ) ) { // если нет ошибок
                 // Выясняем, скрыта или открыта дректория
-                if( $form->fields['hide']->value ) {
+                if( $form->fields['hide']->value == 'on' ) {
                     $showhide = "show";
                 } else {
                     $showhide = "hide";
@@ -185,7 +185,7 @@ class ArtParagraphEdit extends Command {
 
 
                 // Скрытая или открытая позиция
-                if( $form->fields['hidepict']->value ) $showhidepict = "show";
+                if( $form->fields['hidepict']->value == 'on' ) $showhidepict = "show";
                 else $showhidepict = "hide";
 
                 // Формируем SQL-запрос на редактирование фото
@@ -252,6 +252,8 @@ class ArtParagraphEdit extends Command {
                         $paragraphImgNew->setIdCatalog( $idco );
                         $paragraphImgNew->setIdParagraph( $idpho );
                     }
+                } else {
+                    $paragraphImg->setHide( $showhidepict );
                 }
                 $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$idpo&idc=$idco&idph=$idpho&page=$pageo" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess

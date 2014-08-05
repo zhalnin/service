@@ -22,7 +22,8 @@ require_once( 'dmn/domain/Accounts.php' );
 class UsersDelete extends Command {
 
     function doExecute( \dmn\controller\Request $request ) {
-        $idp = $request->getProperty( 'idp' );
+        $idp = intval( $request->getProperty( 'idp' ) );
+        $page = intval( $request->getProperty( 'page' ) );
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         if( $idp ) { // если передан id_news
 
@@ -36,7 +37,7 @@ class UsersDelete extends Command {
                 $accounts->markDeleted(); // отмечаем для удаления
             }
         }
-        $this->reloadPage( 0, "dmn.php?cmd=Users&page=$_GET[page]" ); // перегружаем страничку
+        $this->reloadPage( 0, "dmn.php?cmd=Users&page=$page" ); // перегружаем страничку
         // возвращаем статус и переадресацию на messageSuccess
         return self::statuses( 'CMD_OK' );
     }

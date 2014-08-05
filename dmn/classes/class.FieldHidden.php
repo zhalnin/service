@@ -9,7 +9,7 @@
 namespace dmn\classes;
 // Error handling
 error_reporting(E_ALL & ~E_NOTICE);
-
+require_once( 'dmn/classes/class.Field.php' );
 /**
  * Describe control element "hidden"
  * <input type="hidden">

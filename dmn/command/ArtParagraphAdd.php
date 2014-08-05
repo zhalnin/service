@@ -103,7 +103,7 @@ class ArtParagraphAdd extends Command {
                                                 "Добавить",
                                                 "field");
 
-//        echo "<tt><pre>".print_r($form, true)."</pre></tt>";
+//        echo "<tt><pre>".print_r($form->fields['pos']->value, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($request, true)."</pre></tt>";
         if( $_POST['submitted'] == 'yes' ) {
             $error = $form->check(); // сохраняем в переменную массив сообщений об ошибках
@@ -126,12 +126,18 @@ class ArtParagraphAdd extends Command {
                     $showhide = "hide";
                 }
 
+                $formPos = $form->fields['pos']->value;
                 // если позиция меньше ноля
-                if( $form->fields['pos']->value < 0 ) {
+                if( empty( $formPos ) ) {
+                    $paragraphObjNul = \dmn\domain\ArtParagraph::findMaxPos( $form->fields['idc']->value,
+                                                                      $form->fields['idp']->value );
+                    $position = $paragraphObjNul['pos'] + 1;
+//                    echo "<tt><pre> nul - ".print_r($paragraphObjNul, true)."</pre></tt>";
+                } elseif( $form->fields['pos']->value < 0 ) {
                     // находим такой параграф с id параграфа и каталога
                     $paragraphObjLs = \dmn\domain\ArtParagraph::find( $form->fields['idp']->value,
                                                                       $form->fields['idc']->value );
-//                    echo "<tt><pre>".print_r($paragraphObjLs, true)."</pre></tt>";
+//                    echo "<tt><pre> less - ".print_r($paragraphObjLs, true)."</pre></tt>";
                     if( is_object( $paragraphObjLs ) ) {
                         foreach ( $paragraphObjLs as $paragraphObjL) {
                             $pos = $paragraphObjL->getPos() + 1; // получаем его позицию и инкрементируем
@@ -146,7 +152,7 @@ class ArtParagraphAdd extends Command {
                     $paragraphObjGr = \dmn\domain\ArtParagraph::findPos( $form->fields['idp']->value,
                                                                         $form->fields['idc']->value,
                                                                         $form->fields['pos']->value );
-//                    echo "<tt><pre>".print_r($paragraphObjGr, true)."</pre></tt>";
+//                    echo "<tt><pre> gr - ".print_r($paragraphObjGr, true)."</pre></tt>";
                     if( is_object( $paragraphObjGr ) ) {
                         foreach( $paragraphObjGr as $paragraphObjG ) {
                             $pos =  $paragraphObjG->getPos() + 1;  // получаем позицию из формы и инкрементируем
@@ -220,7 +226,7 @@ class ArtParagraphAdd extends Command {
 
                 }
                 $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$_REQUEST[idp]&idc=$_REQUEST[idc]&page=$_GET[page]" ); // перегружаем страничку
-                // возвращаем статус и переадресацию на messageSuccess
+//                 возвращаем статус и переадресацию на messageSuccess
                 return self::statuses( 'CMD_OK' );
             }
 

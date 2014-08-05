@@ -20,4 +20,8 @@ system_menu_paragraph_image - фото из параграфов - id_image(prim
 view - полностью
 command сделал Activation, BlacklistCheck
 
-2. В Login.php изменить имена переменных, чтобы в форму не добавлялись
+2. Count.php и весь счетчик
+
+3. Изменить title и description в админке
+
+4. imei_service/view/faqParagraph.php

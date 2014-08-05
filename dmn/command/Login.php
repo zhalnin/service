@@ -10,7 +10,7 @@ namespace dmn\command;
 error_reporting( E_ALL & ~E_NOTICE );
 if( ! defined( 'AZ' ) ) die();
 define( 'LoginAdmin', true );
-//require_once( 'dmn/view/utils/security_mod.php' );
+require_once( 'dmn/view/utils/security_mod.php' );
 require_once( "dmn/command/Command.php" );
 // Подключаем вспомогательные классы
 require_once( "dmn/classes.php" );

@@ -47,7 +47,7 @@ class CartOrder extends DomainObject {
                             $city               =null,
                             $zipCode            =null,
                             $state              =null,
-                            $status             =null,
+                            $status             ='Waiting',
                             $amount             =null,
                             $paypalTransId      =null,
                             $createdAt          =null) {

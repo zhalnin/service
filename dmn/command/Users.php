@@ -96,7 +96,7 @@ class Users extends Command {
             " ORDER BY putdate DESC",
             $pnumber,
             $page_link,
-            $url);
+            "&cmd=Users$url" );
 
 //        echo "<tt><pre>".print_r($where, true)."</pre></tt>";
         if( is_object( $users ) ) {

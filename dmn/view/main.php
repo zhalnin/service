@@ -8,7 +8,7 @@
 
 require_once( "dmn/view/ViewHelper.php" );
 $request = \dmn\view\VH::getRequest();
-header( "Location: dmn.php?cmd=Login" );
+//header( "Location: dmn.php?cmd=Login" );
 ?>
 
 <!DOCTYPE html>

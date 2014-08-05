@@ -1200,7 +1200,7 @@ span #uah.currency{
 }
 .faq-info {
     margin: 19px 0;
-    width: 70%;
+    width: 75%;
     float: right;
     font-size: 14px;
 }
@@ -1220,9 +1220,9 @@ span #uah.currency{
     display: block;
     line-height: 1.2em;
     text-align: left;
-    background-color: #efefef;
+    background-color: #ededed;
     margin: 2px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #d8d8d8;
     border-radius: 4px;
     -khtml-border-radius: 4px;
     -ms-border-radius: 4px;

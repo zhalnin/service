@@ -509,7 +509,7 @@ abstract class ClientMail extends Mail {
                              <p> Ваш адрес электронной почты $email_client был указан при регистрации на сайте imei-servcie.ru </p>
                              <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
                              <p> Для завершения регистрации и активации учетной записи пройдите, пожалуйста, по ссылке: </p>
-                             <p> $nameServer?cmd=Activation&lgn=$login&cAct=$activation</p>
+                             <p> $nameServer.runner.php?cmd=Activation&lgn=$login&cAct=$activation</p>
                              <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
                 $body = $top . $middle . $footer;
                 break;
@@ -526,7 +526,7 @@ abstract class ClientMail extends Mail {
                                 <li>Ваш пароль: $activation</li>
                              </ul></p>
                              <p> Используя ваш логин: $login и пароль: $activation вы можете зайти на сайт: </p>
-                             <p><a href=\"$nameServer?cmd=Login\">Войти на сайт</a> под своим именем</p>";
+                             <p><a href=\"$nameServer.runner.php?cmd=Login\">Войти на сайт</a> под своим именем</p>";
                 $body = $top . $middle . $footer;
                 break;
             case 'ractivation':
@@ -538,7 +538,7 @@ abstract class ClientMail extends Mail {
                              <p> Ваш адрес электронной почты $email_client был указан при запросе повторной отправки кода активации регистрации на сайте imei-servcie.ru </p>
                              <h3> Если вы не регистрировались на сайте , то просто проигнорируйте это сообщение! </h3>
                              <p> Для завершения регистрации и активации учетной записи пройдите, пожалуйста, по ссылке: </p>
-                             <p> $nameServer?cmd=Activation&lgn=$login&cAct=$activation</p>
+                             <p> $nameServer.runner.php?cmd=Activation&lgn=$login&cAct=$activation</p>
                              <p> После успешной активации вашей учетной записи вы можете зайти на сайт под своим именем! </p>";
                 $body = $top . $middle . $footer;
                 break;

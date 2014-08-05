@@ -89,7 +89,7 @@ try {
                  cellspacing='0'>
              <tr class='header' align='center'>
                 <td width='20' align='center'>
-                    <input type='radio' name='pos' value='-1' checked>
+                    <input type='radio' name='pos' value='-1' >
                 </td>
                 <td align='center'>Содержимое</td>
                 <td width='100' align='center'>Изображение<br/> и файлы</td>

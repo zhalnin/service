@@ -73,6 +73,10 @@ class Register extends Command {
             $request->addFeedback( 'Этот "Логин" уже использовался при регистрации' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );
         }
+        if( ! preg_match('|[a-zA-Z0-9]+|', $login ) ) {
+            $request->addFeedback( 'Логин должен состоять из латинских букв и/или цифр' ); // поле логина содержит недопустимые символы
+            return self::statuses( 'CMD_INSUFFICIENT_DATA' );
+        }
         if( empty( $pass ) ) {
             $request->addFeedback( 'Заполните поле "Пароль"' );
             return self::statuses( 'CMD_INSUFFICIENT_DATA' );

@@ -26,31 +26,37 @@ class ArtParagraphDelete  extends Command {
         $idph = intval( $request->getProperty( 'idph' ) ); // id параграфа
         $page = intval( $_GET['page'] ); // номер страницы навигации
         if( ! empty( $idp ) &&  ! empty( $idc ) &&  ! empty( $idph ) ) { // если переданы нужные id
+
             $paragraphImg = \dmn\domain\ArtParagraphImg::find( $idph, $idc, $idp );
 
-            $bigOld = $paragraphImg->getBig();
-            $smallOld = $paragraphImg->getSmall();
-            if( ! empty( $bigOld ) ) {
-                // Удаляем старые изображения
-                if( file_exists(  "imei_service/view/".$bigOld ) ) {
-                    @unlink( "imei_service/view/".$bigOld );
+            if( is_object( $paragraphImg ) ){
+//                echo "<tt><pre>".print_r($paragraphImg, true)."</pre></tt>";
+                $bigOld = $paragraphImg->getBig();
+                $smallOld = $paragraphImg->getSmall();
+                if( ! empty( $bigOld ) ) {
+                    // Удаляем старые изображения
+                    if( file_exists(  "imei_service/view/".$bigOld ) ) {
+                        @unlink( "imei_service/view/".$bigOld );
+                    }
                 }
-            }
-            if( ! empty( $smallOld ) ){
-                // Удаляем старые изображения
-                if( file_exists(  "imei_service/view/".$smallOld ) ) {
-                    @unlink( "imei_service/view/".$smallOld );
+                if( ! empty( $smallOld ) ){
+                    // Удаляем старые изображения
+                    if( file_exists(  "imei_service/view/".$smallOld ) ) {
+                        @unlink( "imei_service/view/".$smallOld );
+                    }
                 }
+                $paragraphImg->markDeleted(); // отмечаем для удаления
             }
-            $paragraphImg->markDeleted(); // отмечаем для удаления
 
 
             $paragraph = \dmn\domain\artParagraph::find( $idph, $idc, $idp ); // находим элементы по заданному id_news
-//        echo "<tt><pre>".print_r($paragraph, true)."</pre></tt>";
-            // удаление параграфа
-//            $news->finder()->delete( $news );
-//            \dmn\domain\ObjectWatcher::instance()->performOperations();
-            $paragraph->markDeleted(); // отмечаем для удаления
+            if( is_object( $paragraph ) ) {
+//            echo "<tt><pre>".print_r($paragraph, true)."</pre></tt>";
+                // удаление параграфа
+    //            $news->finder()->delete( $news );
+    //            \dmn\domain\ObjectWatcher::instance()->performOperations();
+                $paragraph->markDeleted(); // отмечаем для удаления
+            }
 //
             $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idph=$idph&idc=$idc&idp=$idp&page=$page" ); // перегружаем страничку
 //            // возвращаем статус и переадресацию на messageSuccess

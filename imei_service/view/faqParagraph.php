@@ -36,7 +36,7 @@ try {
     if( empty( $description ) ) { // если отсутствует описание
         $description    = "Часто задаваемые вопросы помогут вам найти ответ на интересующий вас вопрос относительно прошивки iPhone/iPod/iPad, непривязанного или привязанного джейлбрейка, официального анлока, регистрации UDID в аккаунте разработчика.";
     }
-//    echo "<tt><pre>".print_r( $position, true )."</pre></tt>";
+//    echo "<tt><pre>".print_r( $request, true )."</pre></tt>";
     // подключаем верхний шаблон
     require_once( "imei_service/view/templates/top.php" );
 ?>
@@ -101,110 +101,169 @@ try {
                                     break;
                             }
 
-
+//                            echo "<tt><pre>".print_r( $paragraph, true )."</pre></tt>";
                             // Получаем изображения параграфа
                             foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
-                                // Изобажение элемента
-                                $image_print = "";
-                                $image_big = 'imei_service/view/'.$paragraphImage->getBig();
-                                $image_small = 'imei_service/view/'.$paragraphImage->getSmall();
-                                $image_alt = $paragraphImage->getAlt();
-                                $image_name = $paragraphImage->getName();
+                                if( is_object( $paragraphImage ) ) {
+//                                echo "<tt><pre>  - ".print_r( $paragraphImage, true )."</pre></tt>";
+                                    // Изобажение элемента
+                                    $image_print = "";
+                                    $image_big = 'imei_service/view/'.$paragraphImage->getBig();
+                                    $image_small = 'imei_service/view/'.$paragraphImage->getSmall();
+                                    $image_alt = $paragraphImage->getAlt();
+                                    $image_name = $paragraphImage->getName();
 
-                                if( ! empty( $image_big ) ) {
-                                    // Извлекаем изображения
-                                    unset( $img_arr );
-                                        // ALT-тэг
-                                        if( ! empty( $image_alt ) ) $alt = "alt='$image_alt'";
-                                        else $alt = "";
-                                        // Размер малого изображения
-                                        $size_small = @getimagesize( $image_small );
-                                        // Название изображения
-                                        if( ! empty( $image_name ) ) {
-                                            $name = "<br/><br/><br/>".$paragraphImage->getName()."</b>";
-                                        }
-                                        else $name = "";
-                                        // Большое изображение
-                                        if( empty (  $image_big ) )  {
-                                            $img_arr[] = "<img $alt src='$image_small'
-                                            width=$size_small[0]
-                                            height=$size_small[1]>$name";
-                                        } else {
-                                            $size = @getimagesize( $image_big );
-                                            $img_arr[] = "<a href=#
-                                            onclick=\"show_img({$paragraphImage->getId()},".
-                                                $size[0].",".$size[1]."); return false \">
-                                            <img $alt src='$image_small''
-                                                    border=0
-                                                    width=$size_small[0]
-                                                    height=$size_small[1]></a>$name";
-                                        }
-                                    for( $i = 0; $i < count($img_arr)%3; $i++ ) $img_arr[] = "";
-                                    // Выводим изображение
-                                    for($i = 0, $k = 0; $i < count($img_arr); $i++,$k++) {
-                                        if($k == 0)  {
-    //                    $image_print .= "</td><table cellpadding=5>";
-    //                      $image_print .= "<tr valign=top>";
-                                            $image_print .= "<td class=\"main_txt \">".$img_arr[$i]."</td>";
-                                            if($k == 2) {
-                                                $k = -1;
-                                                $image_print .=  "</tr></table>";
+                                    if( ! empty( $image_big ) ) {
+                                        // Извлекаем изображения
+                                        unset( $img_arr );
+                                            // ALT-тэг
+                                            if( ! empty( $image_alt ) ) $alt = "alt='$image_alt'";
+                                            else $alt = "";
+                                            // Размер малого изображения
+                                            $size_small = @getimagesize( $image_small );
+                                            // Название изображения
+                                            if( ! empty( $image_name ) ) {
+                                                $name = "<br/><br/><br/>".$paragraphImage->getName()."</b>";
                                             }
-                                        }
+                                            else $name = "";
+                                            // Большое изображение
+                                            if( empty (  $image_big ) )  {
+                                                $img_arr = "<img $alt src='$image_small'
+                                                width=$size_small[0]
+                                                height=$size_small[1]>$name";
+                                            } else {
+                                                $size = @getimagesize( $image_big );
+                                                $img_arr = "<a href=#
+                                                onclick=\"show_detail( 'dmn.php?cmd=ArtParagraph&pact=detail&idc={$idc}&idp={$idp}&idph={$paragraphImage->getIdParagraph()}',".
+                                                    $size[0].",".$size[1]."); return false \">
+                                                <img $alt src='$image_small''
+                                                        border=0
+                                                        width=$size_small[0]
+                                                        height=$size_small[1]></a>$name";
+                                            }
+                                        // Выводим изображение
+
+                                            $image_print .= "</td><table cellpadding=5>";
+                                            $image_print .= "<tr valign=top>";
+                                            $image_print .= "<td class=\"main_txt \">".$img_arr."</td>";
+                                            $image_print .=  "</tr></table>";
                                     }
                                 }
 
+
+
+
+
+
+                                // Выясняем тип параграфа
+    //                            echo "<tt><pre>".print_r( $paragraph->getType(), true )."</pre></tt>";
+                                $class = "rightpanel_txt ";
+                                switch( $paragraph->getType() ) {
+                                    case 'text':
+                                        $class = "main_txt ";
+                                        echo "<div align=$align class=\"$class\">".
+                                            nl2br(\imei_service\view\utils\printPage($paragraph->getName())).
+                                            "<br/>$image_print</div>";
+                                        break;
+                                    case 'title_h1':
+                                        $class = "main_ttl ";
+                                        echo "<h1 align=$align class=\"$class h1\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h1>";
+                                        break;
+                                    case 'title_h2':
+                                        $class = "main_ttl ";
+                                        echo "<h2 align=$align class=\"$class h2\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h2>";
+                                        break;
+                                    case 'title_h3':
+                                        $class = "main_ttl ";
+                                        echo "<h3 align=$align class=\"$class h3\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h3>";
+                                        break;
+                                    case 'title_h4':
+                                        $class = "main_ttl ";
+                                        echo "<h4 align=$align class=\"$class h4\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h4>";
+                                        break;
+                                    case 'title_h5':
+                                        $class = "main_ttl ";
+                                        echo "<h5 align=$align class=\"$class h5\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h5>";
+                                        break;
+                                    case 'title_h6':
+                                        $class = "main_ttl ";
+                                        echo "<h6 align=$align class=\"$class h6\">".
+                                            \imei_service\view\utils\printPage($paragraph->getName()).
+                                            "<br/>$image_print</h6>";
+                                        break;
+                                    case 'list':
+                                        $arr = explode("\r\n", $paragraph->getName());
+                                        $class = "main_txt ";
+                                        if( ! empty( $arr ) )  {
+                                            echo "<div align=$align class=\"$class\"><ul>";
+                                            for( $i = 0; $i < count($arr); $i++ ) {
+                                                echo "<li>".\imei_service\view\utils\printPage($arr[$i])."<br/>$image_print</li>";
+                                            }
+                                            echo "</ul></div><br/>";
+                                        }
+                                        break;
+                                }
                             }
 
 
 
 
 
-
                             // Выясняем тип параграфа
+//                            echo "<tt><pre>".print_r( $paragraph->getType(), true )."</pre></tt>";
                             $class = "rightpanel_txt ";
                             switch( $paragraph->getType() ) {
                                 case 'text':
                                     $class = "main_txt ";
                                     echo "<div align=$align class=\"$class\">".
                                         nl2br(\imei_service\view\utils\printPage($paragraph->getName())).
-                                        "<br/>$image_print</div>";
+                                        "<br/> </div>";
                                     break;
                                 case 'title_h1':
                                     $class = "main_ttl ";
                                     echo "<h1 align=$align class=\"$class h1\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h1>";
+                                        "<br/> </h1>";
                                     break;
                                 case 'title_h2':
                                     $class = "main_ttl ";
                                     echo "<h2 align=$align class=\"$class h2\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h2>";
+                                        "<br/> </h2>";
                                     break;
                                 case 'title_h3':
                                     $class = "main_ttl ";
                                     echo "<h3 align=$align class=\"$class h3\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h3>";
+                                        "<br/> </h3>";
                                     break;
                                 case 'title_h4':
                                     $class = "main_ttl ";
                                     echo "<h4 align=$align class=\"$class h4\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h4>";
+                                        "<br/> </h4>";
                                     break;
                                 case 'title_h5':
                                     $class = "main_ttl ";
                                     echo "<h5 align=$align class=\"$class h5\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h5>";
+                                        "<br/> </h5>";
                                     break;
                                 case 'title_h6':
                                     $class = "main_ttl ";
                                     echo "<h6 align=$align class=\"$class h6\">".
                                         \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/>$image_print</h6>";
+                                        "<br/> </h6>";
                                     break;
                                 case 'list':
                                     $arr = explode("\r\n", $paragraph->getName());
@@ -212,7 +271,7 @@ try {
                                     if( ! empty( $arr ) )  {
                                         echo "<div align=$align class=\"$class\"><ul>";
                                         for( $i = 0; $i < count($arr); $i++ ) {
-                                            echo "<li>".\imei_service\view\utils\printPage($arr[$i])."<br/>$image_print</li>";
+                                            echo "<li>".\imei_service\view\utils\printPage($arr[$i])."<br/> </li>";
                                         }
                                         echo "</ul></div><br/>";
                                     }
@@ -229,7 +288,6 @@ try {
                                 </div><!-- shipping-button -->
                             </div>";
                         ?>
-
                     </div>  <!-- End of faq-body -->
                 </div>  <!--   End of news-container -->
             </div> <!-- End of news-content clear-fix -->
