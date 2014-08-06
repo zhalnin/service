@@ -1957,3 +1957,13 @@ ul#login-nav {
     z-index: 1;
 }
 
+.image_faq_caption{
+    font-size: 11px;
+    font-style: italic;
+}
+.image_faq {
+    /*width: 100%;*/
+    width: 480px;
+    margin: 0 auto;
+    display: block;
+}

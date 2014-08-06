@@ -21,7 +21,3 @@ view - полностью
 command сделал Activation, BlacklistCheck
 
 2. Count.php и весь счетчик
-
-3. Изменить title и description в админке
-
-4. imei_service/view/faqParagraph.php

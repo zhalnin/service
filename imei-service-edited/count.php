@@ -47,7 +47,7 @@ try {
 
     // Параметры соединения
     $dblocation         = 'localhost';
-    $dbname             = 'imei_service';
+    $dbname             = 'imei-service';
     $dbuser             = 'root';
     $dbpasswd           = 'zhalnin5334';
 

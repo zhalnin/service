@@ -7,6 +7,24 @@
  */
 namespace imei_service\view\utils;
 
+/**
+ * Адрес сайта
+ * протокол
+ * доменное имя
+ * и путь от корневого каталога сайта
+ * @param null $ssl
+ * @return string
+ */
+function getNS( $ssl=null ) {
+    $name = $_SERVER['SERVER_NAME'];
+    $path = $_SERVER['PHP_SELF'];
+    if( is_null( $ssl ) ) {
+        return "http://$name$path";
+    } else {
+        return "https://$name$path";
+    }
+}
+
 function getNameServer() {
     $name = $_SERVER['SERVER_NAME'];
     if( stripos( $name, 'www' ) === 0 ) {

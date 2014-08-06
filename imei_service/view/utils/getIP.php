@@ -12,9 +12,15 @@ function getIP() {
         if( $ip == "" || $ip == 'unknown' ) {
             $ip = getenv('remote_addr');
         }
+        if( count( $ip ) < 4 ) {
+            $ip = "127.0.0.1";
+        }
         return $ip;
     }
     if( $ip = getenv('remote_addr') ) {
+        if( count( $ip ) < 4 ) {
+            $ip = "127.0.0.1";
+        }
         return $ip;
     }
 }

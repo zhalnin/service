@@ -215,8 +215,8 @@ class ArtParagraphEdit extends Command {
                             $small = "files/article/s_$img";
                             \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
                                 "imei_service/view/files/article/s_$img",
-                                $rawPhotoSettings['width'],
-                                $rawPhotoSettings['height'] );
+                                $rawPhotoSettings['width_faq'],
+                                $rawPhotoSettings['height_faq'] );
                             $paragraphImg->setSmall( $small );
                             $paragraphImg->setBig( $big );
                         }
@@ -253,7 +253,9 @@ class ArtParagraphEdit extends Command {
                         $paragraphImgNew->setIdParagraph( $idpho );
                     }
                 } else {
-                    $paragraphImg->setHide( $showhidepict );
+                    if( is_object( $paragraphImg ) ) {
+                        $paragraphImg->setHide( $showhidepict );
+                    }
                 }
                 $this->reloadPage( 0, "dmn.php?cmd=ArtParagraph&idp=$idpo&idc=$idco&idph=$idpho&page=$pageo" ); // перегружаем страничку
                 // возвращаем статус и переадресацию на messageSuccess

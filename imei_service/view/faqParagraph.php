@@ -100,7 +100,7 @@ try {
                                     $align = 'right';
                                     break;
                             }
-
+                            $image_print = "";
 //                            echo "<tt><pre>".print_r( $paragraph, true )."</pre></tt>";
                             // Получаем изображения параграфа
                             foreach ($paragraph->getFaqParagraphImage() as $paragraphImage ) {
@@ -123,7 +123,7 @@ try {
                                             $size_small = @getimagesize( $image_small );
                                             // Название изображения
                                             if( ! empty( $image_name ) ) {
-                                                $name = "<br/><br/><br/>".$paragraphImage->getName()."</b>";
+                                                $name = "<br/><span class='image_faq_caption' >".$paragraphImage->getName()."</span>";
                                             }
                                             else $name = "";
                                             // Большое изображение
@@ -143,15 +143,13 @@ try {
                                             }
                                         // Выводим изображение
 
-                                            $image_print .= "</td><table cellpadding=5>";
-                                            $image_print .= "<tr valign=top>";
+                                            $image_print .= "<div class='image_faq'><table cellpadding=5>";
+                                            $image_print .= "<tr valign='top'>";
                                             $image_print .= "<td class=\"main_txt \">".$img_arr."</td>";
-                                            $image_print .=  "</tr></table>";
+                                            $image_print .=  "</tr></table></div><br />";
                                     }
                                 }
-
-
-
+                            }
 
 
 
@@ -215,69 +213,6 @@ try {
                                 }
                             }
 
-
-
-
-
-                            // Выясняем тип параграфа
-//                            echo "<tt><pre>".print_r( $paragraph->getType(), true )."</pre></tt>";
-                            $class = "rightpanel_txt ";
-                            switch( $paragraph->getType() ) {
-                                case 'text':
-                                    $class = "main_txt ";
-                                    echo "<div align=$align class=\"$class\">".
-                                        nl2br(\imei_service\view\utils\printPage($paragraph->getName())).
-                                        "<br/> </div>";
-                                    break;
-                                case 'title_h1':
-                                    $class = "main_ttl ";
-                                    echo "<h1 align=$align class=\"$class h1\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h1>";
-                                    break;
-                                case 'title_h2':
-                                    $class = "main_ttl ";
-                                    echo "<h2 align=$align class=\"$class h2\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h2>";
-                                    break;
-                                case 'title_h3':
-                                    $class = "main_ttl ";
-                                    echo "<h3 align=$align class=\"$class h3\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h3>";
-                                    break;
-                                case 'title_h4':
-                                    $class = "main_ttl ";
-                                    echo "<h4 align=$align class=\"$class h4\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h4>";
-                                    break;
-                                case 'title_h5':
-                                    $class = "main_ttl ";
-                                    echo "<h5 align=$align class=\"$class h5\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h5>";
-                                    break;
-                                case 'title_h6':
-                                    $class = "main_ttl ";
-                                    echo "<h6 align=$align class=\"$class h6\">".
-                                        \imei_service\view\utils\printPage($paragraph->getName()).
-                                        "<br/> </h6>";
-                                    break;
-                                case 'list':
-                                    $arr = explode("\r\n", $paragraph->getName());
-                                    $class = "main_txt ";
-                                    if( ! empty( $arr ) )  {
-                                        echo "<div align=$align class=\"$class\"><ul>";
-                                        for( $i = 0; $i < count($arr); $i++ ) {
-                                            echo "<li>".\imei_service\view\utils\printPage($arr[$i])."<br/> </li>";
-                                        }
-                                        echo "</ul></div><br/>";
-                                    }
-                                    break;
-                            }
-                        }
 
                         echo "<div class=\"gs grid4 gs-last r-align\" style=\"\" onclick=window.history.back(); >
                                 <div id=\"button_back\" class=\"button rect transactional blues\" title=\"Сбросить\" type=\"button\" style=\"\">

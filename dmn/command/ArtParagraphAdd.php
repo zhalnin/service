@@ -209,8 +209,8 @@ class ArtParagraphAdd extends Command {
                     $small = "files/article/s_$img";
                     \dmn\view\utils\resizeImg(  "imei_service/view/files/article/$img",
                                                 "imei_service/view/files/article/s_$img",
-                                                $rawPhotoSettings['width'],
-                                                $rawPhotoSettings['height'] );
+                                                $rawPhotoSettings['width_faq'],
+                                                $rawPhotoSettings['height_faq'] );
 
                 // получаем объект ArtParagraphImg без id - значит будет INSERT
                 $artParImg = new \dmn\domain\ArtParagraphImg();

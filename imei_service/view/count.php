@@ -8,41 +8,36 @@
  */
 namespace imei_service\view;
 error_reporting(E_ALL & ~E_NOTICE);
+require_once( 'imei_service/view/utils/getIP.php' );
+require_once( 'imei_service/view/utils/utf8_win.php' );
+require_once( 'imei_service/view/utils/getNameServer.php' );
+require_once( 'imei_service/base/Registry.php' );
+require_once( 'imei_service/view/ViewHelper.php' );
+
+
+function getPDO() {
+    if( ! isset( $pdo ) ) {
+        $pdo = \imei_service\base\DBRegistry::getDB();
+    }
+    return $pdo;
+}
+
+function getStmt( $stmt ) {
+    return getPDO()->prepare( $stmt );
+}
+
+function getId() {
+    return getPDO()->lastinsertId();
+}
+
 
 try {
-
-
-    // Преобразование кодировки UTF-8 в Windows-1251
-    function utf8_win($str) {
-        $win = array("а","б","в","г","д","е","ё","ж","з","и",
-            "й","к","л","м","н","о","п","р","с","т",
-            "у","ф","х","ц","ч","ш","щ","ъ","ы","ь",
-            "э","ю","я","А","Б","В","Г","Д","Е","Ё",
-            "Ж","З","И","Й","К","Л","М","Н","О","П",
-            "Р","С","Т","У","Ф","Х","Ц","Ч","Ш","Щ",
-            "Ъ","Ы","Ь","Э","Ю","Я","");
-        $utf8 = array("\xD0\xB0","\xD0\xB1","\xD0\xB2","\xD0\xB3","\xD0\xB4",
-            "\xD0\xB5","\xD0\x91","\xD0\xB6","\xD0\xB7","\xD0\xB8",
-            "\xD0\xB9","\xD0\xBA","\xD0\xBB","\xD0\xBC","\xD0\xBD",
-            "\xD0\xBE","\xD0\xBF","\xD1\x80","\xD1\x81","\xD1\x82",
-            "\xD1\x83","\xD1\x84","\xD1\x85","\xD1\x86","\xD1\x87",
-            "\xD1\x88","\xD1\x89","\xD1\x8A","\xD1\x8B","\xD1\x8C",
-            "\xD1\x8D","\xD1\x8E","\xD1\x8F","\xD0\x90","\xD0\x91",
-            "\xD0\x92","\xD0\x93","\xD0\x94","\xD0\x95","\xD0\x81",
-            "\xD0\x96","\xD0\x97","\xD0\x98","\xD0\x99","\xD0\x9A",
-            "\xD0\x9B","\xD0\x9C","\xD0\x9D","\xD0\x9E","\xD0\x9F",
-            "\xD0\xA0","\xD0\xA1","\xD0\xA2","\xD0\xA3","\xD0\xA4",
-            "\xD0\xA5","\xD0\xA6","\xD0\xA7","\xD0\xA8","\xD0\xA9",
-            "\xD0\xAA","\xD0\xAB","\xD0\xAC","\xD0\xAD","\xD0\xAE",
-            "\xD0\xAF","+");
-        return str_replace($utf8, $win, $str);
-    }
-
     // Название таблиц
     $tbl_ip             = 'powercounter_ip';
     $tbl_pages          = 'powercounter_pages';
     $tbl_refferer       = 'powercounter_refferer';
     $tbl_searchquerys   = 'powercounter_searchquerys';
+
 
     // Параметры соединения
     $dblocation         = 'localhost';
@@ -50,84 +45,128 @@ try {
     $dbuser             = 'root';
     $dbpasswd           = 'zhalnin5334';
 
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $request            = VH::getRequest();
+    $cmd                = $request->getProperty( 'cmd' );
 
-    // $ip, если с 127.0.0.1 - возвращает ::1, поэтому проверяю на количество символов
-    $ips = explode(":",$ip);
-    if($ips[0] == '') {
-        $ip_len = count($ips);
-        if($ip_len < 4) $ip = '127.0.0.1';
-    }
+    $ip                 = getIP(); // получаем ip, с которого зашел пользователь
+    if(empty($ip)) $ip  = '0.0.0.0';
 
 
-    if(empty($ip)) $ip = '0.0.0.0';
 
-    // Соединяемся с сервером базы данных
-    $dbcnx = @mysql_connect($dblocation,$dbuser,$dbpasswd);
-//    if(!$dbcnx) return;
-    if(!$dbcnx) {
-        throw new \Exception('Error in connect DB');
-    }
-    // Выбираем базу данных
-//    if(!@mysql_select_db($dbname, $dbcnx)) exit();
-    if(!@mysql_select_db($dbname, $dbcnx)) {
-        throw new \Exception('Error in select DB');
-    }
+//    echo "<tt><pre>".print_r( getStmt( 'Select' ), true )."</pre></tt>";
+
+//    // Соединяемся с сервером базы данных
+//    $dbcnx = @mysql_connect($dblocation,$dbuser,$dbpasswd);
+////    if(!$dbcnx) return;
+//    if(!$dbcnx) {
+//        throw new \Exception('Error in connect DB');
+//    }
+//    // Выбираем базу данных
+////    if(!@mysql_select_db($dbname, $dbcnx)) exit();
+//    if(!@mysql_select_db($dbname, $dbcnx)) {
+//        throw new \Exception('Error in select DB');
+//    }
+
     // Если название не указано - формируем URL
-    if(empty($titlepage))
-    {
-        $titlepage = "http://".$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
+    if( empty( $titlepage ) ) {
+        $titlepage = \imei_service\view\utils\getNS()."?cmd=$cmd";
     }
-
-    // Экранируем спец_символы
-    $titlepage = mysql_real_escape_string($titlepage);
     // Проверяем нет ли такой страницы в базе данных
-    $query = "SELECT id_page FROM $tbl_pages
-                WHERE title = '$titlepage'";
-    $pgs = mysql_query($query);
-    if($pgs)
-    {
+    $selectStmt = getStmt( "SELECT id_page FROM $tbl_pages
+                WHERE title = ?" );
+    $sth = $selectStmt->execute( array( $titlepage ) );
+    $result = $selectStmt->fetch();
+
+    if( $sth ) { // если вызов успешен
         // Выясним, первичный ключ(id_page)
         // текущей страницы (по названию страницы)
-        if(mysql_num_rows($pgs) > 0) $id_page = mysql_result($pgs,0);
-        // Если название данной страницы отсутсвует в таблице pages
-        // то проверяем страницу по ее адресу
-        else
-        {
-            $query = "SELECT id_page FROM $tbl_pages
-                        WHERE name='$_SERVER[PHP_SELF]'";
-            $pgs = mysql_query($query);
-            if($pgs)
-            {
-                // Страница существует - обновляем её название
-                if(mysql_num_rows($pgs)>0)
-                {
-                    $id_page = mysql_result($pgs, 0);
-                    $query = "UPDATE $tbl_pages
-                                SET title = '$titlepage'
-                                WHERE id_page = $id_page";
-                    mysql_query($query);
-                }
+        if( $result['id_page'] > 0 ) { // если id_page больше 0, т.е. имеется в БД
+            $id_page = $result['id_page'];
+        } else { // если нет в БД
+            // Если название данной страницы отсутсвует в таблице pages
+            // то проверяем страницу по ее адресу
+            $selectStmt2 = getStmt( "SELECT id_page FROM $tbl_pages
+                        WHERE name=?" );
+            $sth2 = $selectStmt2->execute( array( $_SERVER[PHP_SELF]."?cmd=$cmd" ) );
+            $result2 = $selectStmt2->fetch();
+            if( $sth2 ) {
+                if( $result2['id_page'] > 0 ) {  // Страница существует - обновляем её название
+                    $id_page = $result2['id_page'];
+                    $updateStmt = getStmt( "UPDATE $tbl_pages
+                                SET title = ?
+                                WHERE id_page = ?" );
+                    $sth3 = $updateStmt->execute( array( $titlepage, $id_page ) );
+                    if( ! $sth3 ) {
+                        throw new \imei_service\base\AppException('Error in UPDATE 1');
+                    }
                 // Если данная страница отсутствует в таблице pages
                 // и не разу не учитывалась - добавляем данную
                 // страницу в таблицу
-                else
-                {
-                    $query = "INSERT INTO $tbl_pages
-                                VALUES(NULL,
-                                        '$_SERVER[PHP_SELF]',
-                                        '$titlepage',
-                                        0)";
-                    @mysql_query($query);
+                } else {
+                    $insertStmt = getStmt( "INSERT INTO $tbl_pages VALUES( ?, ?, ?, ? )" );
+                    $sth3 = $insertStmt->execute( array( null, $_SERVER['PHP_SELF']."?cmd=$cmd", $titlepage, 0 ) );
+                    if( ! $sth3 ) {
+                        throw new \imei_service\base\AppException('Error in UPDATE 2');
+                    }
                     // Выясняем первичный ключ только что добавленной
                     // страницы
-                    $id_page = mysql_insert_id();
+                    $id_page = getId();
+//                        echo "<tt><pre>".print_r( $id_page, true )."</pre></tt>";
                 }
+            } else {
+                throw new \imei_service\base\AppException('Error in SELECT 2');
             }
         }
-    } else {
-        throw new \Exception('Error in first SELECT');
     }
+
+
+//    // Проверяем нет ли такой страницы в базе данных
+//    $query = "SELECT id_page FROM $tbl_pages
+//                WHERE title = '$titlepage'";
+//    $pgs = mysql_query($query);
+//    if($pgs)
+//    {
+//        // Выясним, первичный ключ(id_page)
+//        // текущей страницы (по названию страницы)
+//        if(mysql_num_rows($pgs) > 0) $id_page = mysql_result($pgs,0);
+//        // Если название данной страницы отсутсвует в таблице pages
+//        // то проверяем страницу по ее адресу
+//        else
+//        {
+//            $query = "SELECT id_page FROM $tbl_pages
+//                        WHERE name='$_SERVER[PHP_SELF]'";
+//            $pgs = mysql_query($query);
+//            if($pgs)
+//            {
+//                // Страница существует - обновляем её название
+//                if(mysql_num_rows($pgs)>0)
+//                {
+//                    $id_page = mysql_result($pgs, 0);
+//                    $query = "UPDATE $tbl_pages
+//                                SET title = '$titlepage'
+//                                WHERE id_page = $id_page";
+//                    mysql_query($query);
+//                }
+//                // Если данная страница отсутствует в таблице pages
+//                // и не разу не учитывалась - добавляем данную
+//                // страницу в таблицу
+//                else
+//                {
+//                    $query = "INSERT INTO $tbl_pages
+//                                VALUES(NULL,
+//                                        '$_SERVER[PHP_SELF]',
+//                                        '$titlepage',
+//                                        0)";
+//                    @mysql_query($query);
+//                    // Выясняем первичный ключ только что добавленной
+//                    // страницы
+//                    $id_page = mysql_insert_id();
+//                }
+//            }
+//        }
+//    } else {
+//        throw new \imei_service\base\AppException('Error in first SELECT');
+//    }
     // Пользовательский агент
     $useragent = $_SERVER['HTTP_USER_AGENT'];
     $browser = 'none';
@@ -254,7 +293,9 @@ try {
     }
 
 
-}  catch( \Exception $ex ) {
-    echo $ex->getMessage();
+} catch( \imei_service\base\AppException $exc ) {
+    print $exc->getErrorObject();
+} catch( \imei_service\base\DBException $exc ) {
+    print $exc->getErrorObject();
 }
 ?>
