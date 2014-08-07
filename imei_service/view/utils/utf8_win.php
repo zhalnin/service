@@ -33,3 +33,4 @@ function utf8_win( $str ) {
         "\xD0\xAF","+");
     return str_replace(  $utf8, $win, $str );
 }
+?>

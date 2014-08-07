@@ -1,5 +1,6 @@
 <?php
 
 $u = sprintf('%u',23 / 2);
-print $u;
+$t = time();
+print  "Error at: ".date('Y-m-d H:i:s', time() );
 ?>

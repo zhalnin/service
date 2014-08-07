@@ -32,15 +32,15 @@ function getNameServer() {
     }
 
     // Для дебаггинга
-//    if( ! empty( $_SERVER['SERVER_PORT'] ) ) {
-//        $port = ':'.$_SERVER['SERVER_PORT'];
-//    } else {
-//        $port = '';
-//    }
+    if( ! empty( $_SERVER['SERVER_PORT'] ) ) {
+        $port = ':'.$_SERVER['SERVER_PORT'];
+    } else {
+        $port = '';
+    }
     $path = $_SERVER['PHP_SELF'];
     preg_match('|(.*)(?:\/.*\.php)|i', $path, $ar);
-//    return "http://".$name.$port.$ar[1]."/";
-    return "http://".$name.$ar[1]."/";
+    return "http://".$name.$port.$ar[1]."/";
+//    return "http://".$name.$ar[1]."/";
     // конец
 
 
@@ -54,14 +54,14 @@ function getNameServerWithExt() {
     }
 
     // Для дебаггинга
-//    if( ! empty( $_SERVER['SERVER_PORT'] ) ) {
-//        $port = ':'.$_SERVER['SERVER_PORT'];
-//    } else {
-//        $port = '';
-//    }
+    if( ! empty( $_SERVER['SERVER_PORT'] ) ) {
+        $port = ':'.$_SERVER['SERVER_PORT'];
+    } else {
+        $port = '';
+    }
     $path = $_SERVER['PHP_SELF'];
-    return "http://".$name.$path;
-//    return "http://".$name.$port.$path;
+//    return "http://".$name.$path;
+    return "http://".$name.$port.$path;
     // конец
 
 

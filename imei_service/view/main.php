@@ -13,7 +13,7 @@ require_once( "imei_service/view/ViewHelper.php" );
 // получаем объект request
 $request = \imei_service\view\VH::getRequest();
 // переадресация на страницу с новостями - главная
-header( "Location:?cmd=News" );
+//header( "Location:?cmd=News" );
 ?>
 
 <!DOCTYPE html>

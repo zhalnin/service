@@ -120,6 +120,7 @@ class DomainObjectAssembler {
 
     /**
      * Получаем максимальную позицию POS элемента в БД
+     * @param IdentityObject $idobj
      * @return mixed
      */
     function findMaxPos( IdentityObject $idobj ) {

@@ -204,13 +204,13 @@ class Cart {
         for( $i=1; $i <= $count; $i++ ) {
             // защита от воров первая
             if( $params["item_number_{$i}"] <= 0 ) {
-                file_put_contents('error_cart.txt', "Error: item_number_{$i} = {$params['item_number_'.$i]}"."\n\r", FILE_APPEND );
+                file_put_contents('error_cart.txt', "Error at: ".date('Y-m-d H:i:s', time() ) ." : item_number_{$i} = {$params['item_number_'.$i]}"."\n\r", FILE_APPEND );
                 return false;
             } elseif( $params["amount_{$i}"] <= 0 ) {
-                file_put_contents('error_cart.txt', "Error: amount_{$i} = {$params['amount_'.$i]}"."\n\r", FILE_APPEND );
+                file_put_contents('error_cart.txt', "Error at: ".date('Y-m-d H:i:s', time() ) ." : amount_{$i} = {$params['amount_'.$i]}"."\n\r", FILE_APPEND );
                 return false;
             } elseif( $params["total_cost_{$i}"] <= 0 ) {
-                file_put_contents('error_cart.txt', "Error: total_cost_{$i} = {$params['total_cost_'.$i]}"."\n\r", FILE_APPEND );
+                file_put_contents('error_cart.txt', "Error at: ".date('Y-m-d H:i:s', time() ) ." : total_cost_{$i} = {$params['total_cost_'.$i]}"."\n\r", FILE_APPEND );
                 return false;
             }
             // инициализируем две переменные из строки, типа: 36_2
@@ -222,7 +222,7 @@ class Cart {
             if( $result ) {
                 $item_price = $sth->fetch();
                 if( empty( $item_price ) ) {
-                    file_put_contents('error_cart.txt', 'Error in DB: $items_price is empty'."\n\r", FILE_APPEND );
+                    file_put_contents('error_cart.txt', "Error at DB: ".date('Y-m-d H:i:s', time() ) ." : items_price is empty"."\n\r", FILE_APPEND );
                 }
                 $amount += $item_price['cost'] * $params["quantity_{$i}"];
             } else {
