@@ -51,7 +51,6 @@ function getId() {
  * вставлена или обновлена запись с именем
  * страницы на которой сработал счетчик
  * @param $titlepage - имя страницы
- * @param $tbl_pages - имя таблицы в БД
  * @param null $cmd - доп. параметр в строке запроса
  * @return mixed - id_pages
  * @throws \imei_service\base\AppException
@@ -77,7 +76,7 @@ function getIdByTitlepage( $titlepage, $cmd=null ) {
             if( $sth2 ) {
                 if( $result2['id_page'] > 0 ) {  // Страница существует - обновляем её название
                     $id_page = $result2['id_page'];
-                    $updateStmt = getStmt( "UPDATE $tbl_pages
+                    $updateStmt = getStmt( "UPDATE powercounter_pages
                                 SET title = ?
                                 WHERE id_page = ?" );
                     $sth3 = $updateStmt->execute( array( $titlepage, $id_page ) );

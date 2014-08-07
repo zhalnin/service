@@ -33,10 +33,10 @@ try {
 
         // Вычисляем размеры уменьшенной копии, чтобы при
         // масштабировании сохранились пропорции исходного изображения
-        if($ratio<$src_ratio) {
-            $height = $width/$src_ratio;
+        if($ratio < $src_ratio) {
+            $height = $width / $src_ratio;
         } else {
-            $width = $height*$src_ratio;
+            $width = $height * $src_ratio;
         }
 
         if($size_img[2] == 2) $res_img = imagecreatefromjpeg($big);

@@ -21,3 +21,5 @@ view - полностью
 command сделал Activation, BlacklistCheck
 
 2. Count.php и весь счетчик
+
+3. faqParagraph - сделать увеличение по клику

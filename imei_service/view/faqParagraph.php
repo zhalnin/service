@@ -128,22 +128,32 @@ try {
                                             else $name = "";
                                             // Большое изображение
                                             if( empty (  $image_big ) )  {
-                                                $img_arr = "<img $alt src='$image_small'
+
+                                                $img_arr = "<img $alt src=\"$image_small\"
                                                 width=$size_small[0]
                                                 height=$size_small[1]>$name";
                                             } else {
+
+
                                                 $size = @getimagesize( $image_big );
-                                                $img_arr = "<a href=#
-                                                onclick=\"show_detail( 'dmn.php?cmd=ArtParagraph&pact=detail&idc={$idc}&idp={$idp}&idph={$paragraphImage->getIdParagraph()}',".
-                                                    $size[0].",".$size[1]."); return false \">
-                                                <img $alt src='$image_small''
+                                                $img_arr = "<img $alt src=\"$image_small\"
                                                         border=0
                                                         width=$size_small[0]
-                                                        height=$size_small[1]></a>$name";
+                                                        height=$size_small[1]>$name";
+
+
+//                                                $size = @getimagesize( $image_big );
+//                                                $img_arr = "<a href=#
+//                                                onclick=\"show_detail( 'dmn.php?cmd=ArtParagraph&pact=detail&idc={$idc}&idp={$idp}&idph={$paragraphImage->getIdParagraph()}',".
+//                                                    $size[0].",".$size[1]."); return false \">
+//                                                <img $alt src=\"$image_small\"
+//                                                        border=0
+//                                                        width=$size_small[0]
+//                                                        height=$size_small[1]></a>$name";
                                             }
                                         // Выводим изображение
 
-                                            $image_print .= "<div class='image_faq'><table cellpadding=5>";
+                                            $image_print .= "<div class='image_faq'><table cellpadding=5  style='margin: 0 auto;'>";
                                             $image_print .= "<tr valign='top'>";
                                             $image_print .= "<td class=\"main_txt \">".$img_arr."</td>";
                                             $image_print .=  "</tr></table></div><br />";

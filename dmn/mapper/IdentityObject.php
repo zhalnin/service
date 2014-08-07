@@ -151,6 +151,16 @@ class IdentityObject {
         return $this->operator( ">", $value );
     }
 
+    /**
+     * Метод "<>"
+     * @param $value - поле для сравнения
+     * @return $this
+     */
+    function neq( $value ) {
+        return $this->operator( "<>", $value );
+    }
+
+
 
     /**
      * Вызываем из методов операторов сравнения
