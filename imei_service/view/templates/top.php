@@ -21,16 +21,17 @@ if( ! isset( $_SESSION['cart'] ) ) {
 <html lang="ru">
 <head>
     <title><?php echo htmlspecialchars($title, ENT_QUOTES); ?></title>
-    <meta content="text/html; charset=utf-8" http-equiv="content-type">
-    <meta content="width=1024" name="viewport">
-    <meta content="<? echo htmlspecialchars($description, ENT_QUOTES); ?>" name="Description">
-    <link rel="shortcut icon" href="/favicon.ico"/>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link href="imei_service/view/css/animatedCSS.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/form.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/style.css" type="text/css" rel="stylesheet">
-    <link href="imei_service/view/css/home-style.css" type="text/css" rel="stylesheet">
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta content="width=1024" name="viewport" />
+    <meta content="<? echo htmlspecialchars($description, ENT_QUOTES); ?>" name="Description" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="imei_service/view/css/reset.css" type="text/css" rel="stylesheet" />
+    <link href="imei_service/view/css/animatedCSS.css" type="text/css" rel="stylesheet" />
+    <link href="imei_service/view/css/form.css" type="text/css" rel="stylesheet" />
+    <link href="imei_service/view/css/style.css" type="text/css" rel="stylesheet" />
+    <link href="imei_service/view/css/home-style.css" type="text/css" rel="stylesheet" />
 <!--    <link href="css/wysiwyg.css" type="text/css" rel="stylesheet">-->
     <!--    <link href="css/style_enhanced.css" type="text/css" rel="stylesheet">-->
     <script type="text/javascript" src="imei_service/view/js/AlezhalModules.js"></script>
