@@ -10,6 +10,18 @@ ini_set( 'memory_limit', -1 );
 
 try {
 
+    function resizeImgSimple( $img, $max_width, $max_height ) {
+        // Имя файла с масштабируемой копией
+        $img = "$img";
+        list( $width, $height ) = getimagesize( $img );
+        $ratioh = $max_height / $height;
+        $ratiow = $max_width / $width;
+        $ratio  = min( $ratioh, $ratiow );
+        $width  = intval( $ratio * $width );
+        $height = intval( $ratiow * $height );
+        return array( $width, $height );
+    }
+
 
     function resizeImg($big, $small, $width, $height) {
         // Имя файла с масштабируемой копией

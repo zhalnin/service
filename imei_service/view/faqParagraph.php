@@ -135,21 +135,21 @@ try {
                                             } else {
 
 
-                                                $size = @getimagesize( $image_big );
-                                                $img_arr = "<img $alt src=\"$image_small\"
-                                                        border=0
-                                                        width=$size_small[0]
-                                                        height=$size_small[1]>$name";
-
-
 //                                                $size = @getimagesize( $image_big );
-//                                                $img_arr = "<a href=#
-//                                                onclick=\"show_detail( 'dmn.php?cmd=ArtParagraph&pact=detail&idc={$idc}&idp={$idp}&idph={$paragraphImage->getIdParagraph()}',".
-//                                                    $size[0].",".$size[1]."); return false \">
-//                                                <img $alt src=\"$image_small\"
+//                                                $img_arr = "<img $alt src=\"$image_small\"
 //                                                        border=0
 //                                                        width=$size_small[0]
-//                                                        height=$size_small[1]></a>$name";
+//                                                        height=$size_small[1]>$name";
+
+
+                                                $size = @getimagesize( $image_big );
+                                                $img_arr = "<a href=#
+                                                onclick=\"show_detail( '$image_big',".
+                                                    $size[0].",".$size[1]."); return false \">
+                                                <img $alt src=\"$image_small\"
+                                                        border=0
+                                                        width=$size_small[0]
+                                                        height=$size_small[1]></a>$name";
                                             }
                                         // Выводим изображение
 
