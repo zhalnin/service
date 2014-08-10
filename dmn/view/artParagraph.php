@@ -184,7 +184,7 @@ try {
                 "</p></td>";
             if( $total_image > 0 ) {
                 echo "<td align=center>
-                        <a href=# onclick=\"show_detail( '?cmd=ArtParagraph&pact=detail&{$url}', {$size[0]}, {$size[1]} ); return false\">Изображения$print_image</a>
+                        <a href=# onclick=\"show_detail( 'dmn.php?cmd=ArtParagraph&pact=detail&{$url}', {$size[0]}, {$size[1]} ); return false\">Изображения$print_image</a>
                     </td>";
             } else {
                 echo "<td align=center>
@@ -194,10 +194,10 @@ try {
             echo "<td align=center>".\dmn\view\utils\printPage( $type )."</td>
                     <td align=center>".$paragraph[$i]['pos']."</td>
                     <td>
-                        <a href=?cmd=ArtParagraph&ppos=up&$url>Вверх</a><br>
+                        <a href=dmn.php?cmd=ArtParagraph&ppos=up&$url>Вверх</a><br>
                     $strhide<br>
-                    <a href=?cmd=ArtParagraph&pact=edit&$url>Редактировать</a><br>
-                    <a href=# onClick=\"delete_position('?cmd=ArtParagraph&pact=del&$url',".
+                    <a href=dmn.php?cmd=ArtParagraph&pact=edit&$url>Редактировать</a><br>
+                    <a href=# onClick=\"delete_position('dmn.php?cmd=ArtParagraph&pact=del&$url',".
                 "'Вы действительно хотите удалить параграф');\">Удалить</a><br>
                     <a href=?cmd=ArtParagraph&ppos=down&$url>Вниз</a></td>
                 </tr>";
