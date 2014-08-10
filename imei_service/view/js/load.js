@@ -186,9 +186,17 @@ AM.Event.addEvent(window, 'load', function() {
                         guestbookReply.value = am['idp'];
                         divGuestbookAllReply[num].appendChild(guestbookForm);
 
+//                        setTimeout( function() {
+//                            var iframes = document.getElementsByTagName('iframe');
+//                            for (var j = 0, lenj = iframes.length, doc; j < lenj; ++j) {
+//                                doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
+//                                doc.designMode = "On";
+//                            }
+//
+//                        }, 1000 );
                         setTimeout( function() {
                             var iframes = document.getElementsByTagName('iframe');
-                            for (var j = 0, lenj = iframes.length, doc; j < lenj; ++j) {
+                            for (var j = 0, lenj = iframes.length; j < lenj; ++j) {
                                 doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
                                 doc.designMode = "On";
                             }
@@ -392,17 +400,23 @@ AM.Event.addEvent(window, 'load', function() {
             '<div id="modalTitle"></div>';
         document.body.appendChild(modal);
 
-
-        (function() {
-            setTimeout( function() {
-                var iframes = document.getElementsByTagName('iframe');
-                for (var j = 0, leni = iframes.length, doc; j < leni; ++j) {
-                    doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
+        if( AM.DOM.$('iframe_redactor') != null ) {
+            (function() {
+                setTimeout( function() {
+//                    var d = document, g = 'getElementsByTagName';
+////                    var iframes = document.getElementsByTagName('iframe');
+//                    var iframes = d[g]('iframe');
+//                    for (var j = 0, leni = iframes.length, doc; j < leni; ++j) {
+//                        doc = iframes[j].contentDocument || iframes[j].contentWindow.document;
+//                        doc.designMode = "On";
+//                    }
+                    var ifr = AM.DOM.$('iframe_redactor');
+                    doc = ifr.contentDocument || ifr.contentWindow.document;
                     doc.designMode = "On";
-                }
 
-            }, 1000 );
-        }());
+                }, 1000 );
+            }());
+        }
 
     } catch(e) {
 //        alert('error in load.js');
