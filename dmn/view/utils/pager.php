@@ -21,6 +21,9 @@ function pager($page, $total, $pnumber, $page_link, $parameters){
     // Вычисляем число страниц в системе
     $number = (int)( $total/$pnumber );
     if( (float)( $total/$pnumber ) - $number != 0 ) $number++;
+
+
+
     // Проверяем есть ли ссылки слева
     if($page - $page_link > 1) {
         echo "<span class=main_txt><a class=\"news_txt_lnk\" href=$_SERVER[PHP_SELF]?page=1{$parameters}>[1-$pnumber]</a>&nbsp;&nbsp;...&nbsp;&nbsp;</span>";
@@ -36,6 +39,9 @@ function pager($page, $total, $pnumber, $page_link, $parameters){
                 ( ( $i - 1 )*$pnumber + 1 )."-".$i*$pnumber."]</a>&nbsp;></span>";
         }
     }
+
+
+
     // Проверяем есть ли ссылки справа
     if($page + $page_link < $number) {
         // Есть
