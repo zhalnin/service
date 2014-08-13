@@ -81,7 +81,7 @@ try {
         // ссылку "отобразить", если как видимая (hide='show') - "скрыть"
         $url = "idc={$catalog[$i]['id_catalog']}&".
             "idp={$catalog[$i]['id_position']}&".
-            "&page=$_GET[page]";
+            "page=$_GET[page]";
         if($catalog[$i]['hide'] == 'show') {
             $showhide = "<a href=?cmd=CatalogPosition&ppos=hide&$url
                                     title='Скрыть каталог'>
@@ -94,7 +94,7 @@ try {
             $style = " class=hiddenrow";
         }
 
-//    echo "<tt><pre>".print_r($catalog[$i][urlpict], true)."</pre></tt>";
+//    echo "<tt><pre>".print_r($catalog[$i][id_position], true)."</pre></tt>";
 
         // Выводим каталог
         echo "<tr $style>

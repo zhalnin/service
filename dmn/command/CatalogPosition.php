@@ -24,8 +24,8 @@ class CatalogPosition extends Command {
         $action         = $request->getProperty( 'pact' ); // действие над позицией
         $position       = $request->getProperty( 'ppos' ); // перемещение, сокрытие/отображение позиции
         $page           = $request->getProperty( 'page' ); // номер страницы в постраничной навигации
-        $idc            = $request->getProperty( 'idc' ); // id каталога
-        $idp            = intval( $request->getProperty( 'idp' ) ); // id родительского каталога
+        $idc            = intval($request->getProperty('idc')); // id каталога
+        $idp            = intval($request->getProperty('idp')); // id родительского каталога
         $page_link      = 3; // Количество ссылок в постраничной навигации
         $pnumber        = 10; // Количество позиций на странице
         // в зависимости от действия вызываем метод с

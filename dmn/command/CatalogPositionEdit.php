@@ -22,11 +22,14 @@ class CatalogPositionEdit extends Command {
     function doExecute( \dmn\controller\Request $request ) {
 
         // получаем id_news редактируемой новости
-        $idc = $request->getProperty( 'idc' );
-        $idp = $request->getProperty( 'idp' ); // id родительского каталога
-        if( $idc ) { // если передан id_news
-            $catalogPosition = \dmn\domain\CatalogPosition::find( $idc ); // находим элементы по заданному id_news
+        $idc = intval($request->getProperty('idc')); // id_catalog
+        $idp = intval($request->getProperty('idp')); // id_position
+        if( $idc ) { // если передан id
+            $catalogPosition = \dmn\domain\CatalogPosition::find( $idc, $idp ); // находим элементы по заданному id_news
             $catalogPositionDate = $catalogPosition->getPutdate();
+
+//            echo "<tt><pre>".print_r($idc, true)."</pre></tt>";
+//            echo "<tt><pre>".print_r($idp, true)."</pre></tt>";
 //        echo "<tt><pre>".print_r($catalogPosition, true)."</pre></tt>";
 
             // если еще не передан запрос и форма не была отправлена

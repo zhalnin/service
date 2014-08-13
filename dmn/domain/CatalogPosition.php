@@ -85,12 +85,18 @@ class CatalogPosition extends DomainObject {
     /**
      * Метод для поиска
      * @param $id
+     * @param null $idp
      * @return mixed
      */
-    static function find( $id ) {
+    static function find( $id, $idp=null ) {
         $finder = self::getFinder( __CLASS__ );
-        $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
-        return $finder->findOne( $idobj->eq( $id ) );
+        if (is_null($idp)) {
+            $idobj = new \dmn\mapper\CatalogPositionIdentityObject( 'id_catalog' );
+            return $finder->findOne( $idobj->eq( $id ) );
+        } else {
+            $idobj = new \dmn\mapper\CatalogPositionIdentityObject('id_catalog');
+            return $finder->findOne( $idobj->eq( $id )->field('id_position')->eq($idp));
+        }
     }
 
     /**
