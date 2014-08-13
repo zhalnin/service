@@ -1,17 +1,9 @@
 <?php
-
-$p = '';
-
-if (! empty($p)) print (int)$p;
-else print 'no';
+require_once( "imei_service/view/utils/getNameServer.php" );
 
 
-echo intval($p);
-
-
-
-
-
+$nameServer = \imei_service\view\utils\getNameServer();
+print $nameServer;
 
 ?>
 <div id="start">Start</div>
