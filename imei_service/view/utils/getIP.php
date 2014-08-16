@@ -6,6 +6,10 @@
  * Time: 18:18
  * To change this template use File | Settings | File Templates.
  */
+/**
+ * Получаем IP адрес
+ * @return string
+ */
 function getIP() {
     if( $ip = getenv('http_client_ip') ) return $ip;
     if( $ip = getenv('http_x_forwarded_for') ) {
