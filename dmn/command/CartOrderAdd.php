@@ -69,7 +69,7 @@ class CartOrderAdd extends Command {
                                                             $_POST['state'] );
         $status             = new \dmn\classes\FieldSelect( "status",
                                                             "Статус",
-                                                            array( 'Waiting' => 'Waiting', 'Processing' => 'Processing', 'Completed' => 'Completed'),
+                                                            array( 'Waiting' => 'Waiting', 'Processing' => 'Processing', 'Completed' => 'Completed', 'Rejected' => 'Rejected'),
                                                             $_POST['status'] );
         $amount             = new \dmn\classes\FieldText( "amount",
                                                             "Сумма",

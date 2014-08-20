@@ -115,7 +115,7 @@ class CartOrderEdit extends Command {
                                                            $_REQUEST['state'] );
             $status             = new \dmn\classes\FieldSelect( "status",
                                                             "Статус",
-                array( 'Waiting' => 'Waiting', 'Processing' => 'Processing', 'Completed' => 'Completed'),
+                array( 'Waiting' => 'Waiting', 'Processing' => 'Processing', 'Completed' => 'Completed', 'Rejected' => 'Rejected'),
                                                            $_REQUEST['status'] );
             $amount             = new \dmn\classes\FieldText( "amount",
                                                             "Сумма",
