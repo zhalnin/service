@@ -107,20 +107,20 @@ class News extends DomainObject {
         $this->urlpict_s = $urlpict_s;
         $this->markDirty();
     }
-    function setAlt( $alt ) {
-        $this->alt = $alt;
+    function setAlt( $alt_s ) {
+        $this->alt = $alt_s;
         $this->markDirty();
     }
-    function setUrl( $url ) {
-        $this->url = $url;
+    function setUrl( $url_s ) {
+        $this->url = $url_s;
         $this->markDirty();
     }
-    function setUrltext( $urltext ) {
-        $this->urltext = $urltext;
+    function setUrltext( $urltext_s ) {
+        $this->urltext = $urltext_s;
         $this->markDirty();
     }
-    function setHidepict( $hidepict ) {
-        $this->hidepict = $hidepict;
+    function setHidepict( $hidepict_s ) {
+        $this->hidepict = $hidepict_s;
         $this->markDirty();
     }
 
