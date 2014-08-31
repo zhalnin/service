@@ -71,7 +71,7 @@ function getIdByTitlepage( $titlepage, $cmd=null ) {
             // то проверяем страницу по ее адресу
             $selectStmt2 = getStmt( "SELECT id_page FROM powercounter_pages
                         WHERE name=?" );
-            $sth2 = $selectStmt2->execute( array( $_SERVER[PHP_SELF]."?cmd=$cmd" ) );
+            $sth2 = $selectStmt2->execute( array( $_SERVER['PHP_SELF']."?cmd=$cmd" ) );
             $result2 = $selectStmt2->fetch();
             if( $sth2 ) {
                 if( $result2['id_page'] > 0 ) {  // Страница существует - обновляем её название
@@ -133,7 +133,7 @@ function setIp( $ip_s, $id_page_s, $browser_s, $os_s ) {
  * @throws \imei_service\base\DBException
  */
 function setIpRef( $reff_s, $ip_s, $id_page_s ) {
-    $insertStmt = 'INSERT INTO powercounter_refferer VALUES( ?, ?, ?, INET_ATON(?), ? )';
+    $insertStmt =  getStmt('INSERT INTO powercounter_refferer VALUES( ?, ?, ?, INET_ATON(?), ? )');
     if( ! $insertStmt ) {
         throw new \imei_service\base\DBException('Error in setIpRef() - 1');
     }
@@ -153,7 +153,7 @@ function setIpRef( $reff_s, $ip_s, $id_page_s ) {
  * @throws \imei_service\base\DBException
  */
 function setSearchquerys($query_s, $ip_s, $id_page_s, $search_s ) {
-    $insertStmt = 'INSERT INTO powercounter_searchquerys VALUES( ?, ?, ?, INET_ATON(?), ?, ? )';
+    $insertStmt = getStmt( 'INSERT INTO powercounter_searchquerys VALUES( ?, ?, ?, INET_ATON(?), ?, ? )');
     if( ! $insertStmt ) {
         throw new \imei_service\base\DBException('Error in setSearchquerys() - 1');
     }
