@@ -166,7 +166,7 @@ try {
                                             if( $sum_subtotal <= 10 ) {
                                                 $sum_shipping = $sum_subtotal;
                                             } else {
-                                                $sum_shipping = $sum_subtotal / 100  * 3.9  + 10;
+                                                $sum_shipping = $sum_subtotal / 100  * 4.02 + 10;
                                             }
                                         }
                                         ?>
@@ -206,7 +206,7 @@ try {
                                                 if( $cost <= 10 ) {
                                                     $shipping = $cost;
                                                 } else {
-                                                    $shipping = $cost / 100  * 3.9  + 10;
+                                                    $shipping = $cost / 100  * 4.02 + 10;
                                                 }
                                                     ?>
 
@@ -224,7 +224,7 @@ try {
                                             if( $sum_subtotal <= 10 ) {
                                                 $sum_shipping = $sum_subtotal;
                                             } else {
-                                                $sum_shipping = $sum_subtotal / 100  * 3.9  + 10;
+                                                $sum_shipping = $sum_subtotal / 100  * 4.02 + 10;
                                             }
                                         }
                                             ?>
