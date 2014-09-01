@@ -250,7 +250,7 @@ try {
                     break;
                 }
             case 'mail': {
-                    preg_match( "|q=([^&]+)is", $reff."&", $out );
+                    preg_match( "|q=([^&]+)|is", $reff."&", $out );
                     $quer = $out[1];
                     break;
                 }

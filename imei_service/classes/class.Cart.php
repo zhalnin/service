@@ -177,7 +177,7 @@ class Cart {
         }
         file_put_contents('payment8.txt',$amount."\n",FILE_APPEND );
         file_put_contents('payment7.txt',$params['mc_gross']."\n",FILE_APPEND );
-        if( ( $amount / 100 * 4.02 + 10) == $params['mc_gross'] ) {
+        if( round( $amount / 100 * 4.02 + 10) + $amount == $params['mc_gross'] ) {
             return true;
         } else {
             return false;
